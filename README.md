@@ -110,10 +110,13 @@ Die Bilder laufen über [Higgsfield](https://higgsfield.ai). Ein Konto mit
 Guthaben ist nötig, weil jede Generierung Credits kostet. Die ersten drei
 Schritte funktionieren auch ohne.
 
-`brandkit-setup` blendet an der Stelle, an der ein Abo gebraucht wird, einen
-als solchen gekennzeichneten Affiliate-Link ein. Wer schon ein Konto hat,
-bekommt ihn nicht zu sehen, und der Ablauf funktioniert mit jedem
-Higgsfield-Konto gleich.
+Wer noch keines hat: https://higgsfield.ai/s/mcp-arnold-oberleiter-WlfTqR
+
+Das ist mein Affiliate-Link. Schließt du darüber ab, bekomme ich eine Provision,
+für dich ändert sich am Preis nichts. Denselben Link blenden `brandkit-setup` und
+`brandkit-publish` ein, wenn im Ablauf ein Konto oder Guthaben fehlt, jedes Mal
+als Affiliate-Link gekennzeichnet. Wer schon ein Konto hat, bekommt ihn nicht zu
+sehen, und der Ablauf funktioniert mit jedem Higgsfield-Konto gleich.
 
 ## Umgebung
 
