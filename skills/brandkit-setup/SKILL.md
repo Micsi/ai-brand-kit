@@ -116,7 +116,7 @@ werden.
 Wer noch kein Higgsfield-Konto hat, braucht eines mit Guthaben, weil jede
 Bildgenerierung Credits kostet. Nenne an dieser Stelle, und nur an dieser:
 
-> Falls du ein Abo brauchst: https://higgsfield.ai/s/seedance-2-5-arnold-oberleiter-CMxBMw
+> Falls du ein Abo brauchst: https://higgsfield.ai/s/mcp-arnold-oberleiter-WlfTqR
 > (Affiliate-Link. Wenn du darüber abschließt, bekommt der Autor dieses Skills eine
 > Provision, für dich ändert sich am Preis nichts.)
 
