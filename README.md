@@ -1,0 +1,119 @@
+# Brand Kit Skills
+
+Vier Skills für Claude Code, die von der leeren Installation bis zur fertigen,
+markengerechten Webseite führen. Sie bauen **dein** Brand Kit auf, nicht meines.
+
+Entstanden beim Aufbau der Marke „AI mit Arnie". Der Ablauf hat funktioniert,
+also ist er hier so aufgeschrieben, dass er sich nachbauen lässt.
+
+## Was am Ende dasteht
+
+Ein Ordner mit deiner Marke darin: verbindliche Regeln, Farben und Schriften als
+ausführbare CSS-Tokens, Wordmark, Referenzflächen. Dazu ein `CLAUDE.md`, das
+dafür sorgt, dass die Regeln greifen, ohne dass du sie jedes Mal erwähnst.
+
+Und die Fähigkeit, daraus Webseiten, PDFs und gekennzeichnete KI-Bilder zu bauen,
+die alle gleich aussehen.
+
+## Warum überhaupt
+
+Ohne Marke fällt jede Designentscheidung neu und zufällig aus. Das Ergebnis sieht
+dann aus wie das, was Sprachmodelle am häufigsten gesehen haben: blau-violette
+Verläufe, abgerundete Karten, Inter als Schrift. Nicht falsch, nur
+austauschbar.
+
+Ein Brand Kit dreht das um. Statt jedes Mal zu entscheiden, entscheidest du
+einmal, und danach wird umgesetzt.
+
+## Die vier Schritte
+
+| Skill | Wann | Was er macht |
+|---|---|---|
+| `brandkit-setup` | einmal | Prüft Voraussetzungen, installiert die Skills, verbindet die Higgsfield CLI |
+| `brandkit-interview` | einmal je Marke | Hartnäckiges Interview, am Ende steht eine ausführliche Rohfassung |
+| `brandkit-build` | einmal je Marke | Verdichtet die Rohfassung zum benutzbaren Kit |
+| `brandkit-publish` | immer wieder | Baut damit Webseiten, PDFs und Bilder |
+
+## Installation
+
+```bash
+npx skills add ArnoldOberleiter/ai-brand-kit -g -y
+```
+
+Danach eine neue Sitzung starten, weil die Skill-Liste beim Start gelesen wird.
+Dann einfach sagen: „Ich will ein Brand Kit aufbauen." Oder direkt
+`/brandkit-setup` aufrufen.
+
+## Voraussetzungen
+
+`brandkit-setup` prüft das alles selbst und sagt dir, was fehlt.
+
+| Was | Wofür | Ohne das geht nicht |
+|---|---|---|
+| Node ab v18 | Higgsfield CLI, Skill-Installation | fast alles |
+| Python mit Pillow | AI-Kennzeichnung der Bilder | Bilder veröffentlichen |
+| Chrome oder Edge | PDF-Druck aus HTML | PDFs |
+| git | Kit versionieren | nichts Akutes, aber du verlierst es |
+| exiftool | maschinenlesbare Bildmarkierung | nur die sichtbare Kennzeichnung |
+
+## Diese Skills werden mitinstalliert
+
+Nicht von mir geschrieben, nur eingebunden. `brandkit-setup` installiert sie an
+der jeweils passenden Stelle:
+
+- [unslop](https://github.com/cursor/plugins/tree/main/pstack/skills/unslop) von Cursor, entfernt KI-Sprachmuster aus Texten
+- [grill-with-docs](https://github.com/mattpocock/skills) von Matt Pocock, führt das Interview. Braucht zusätzlich `grilling` und `domain-modeling` aus demselben Repo, sonst greift er ins Leere
+- [web-design-guidelines](https://github.com/vercel-labs/agent-skills) von Vercel Labs, Barrierefreiheit und Webplattform
+- [seo-audit](https://github.com/coreyhaines31/marketingskills) von Corey Haines, technisches und inhaltliches SEO
+
+Dank an die Autoren. Dieses Repo enthält keine Kopien davon, nur die Befehle,
+die sie aus den Originalquellen holen. Updates kommen so direkt von dort.
+
+## KI-Bilder und das EU-Recht
+
+Wer erzeugte Bilder veröffentlicht, muss sie kennzeichnen. `brandkit-publish`
+bringt ein Skript mit, das eine kleine Markierung unten rechts einbrennt, in den
+Farben deines Kits, und die Bilder gleich fürs Web verkleinert.
+
+```bash
+python scripts/ai_label.py roh.png -o hero.jpg --width 1120 --aspect 16:9 --iptc
+```
+
+Wichtig zu verstehen: Artikel 50 der KI-Verordnung trennt zwei Rollen. Absatz 2
+verpflichtet den **Anbieter** des Bildmodells zur maschinenlesbaren Markierung.
+Absatz 4 verpflichtet den **Betreiber**, also dich, zur Offenlegung. Das
+sichtbare Zeichen erfüllt Absatz 4, nicht Absatz 2. Die Pflichten gelten ab dem
+2. August 2026.
+
+Das ist kein Rechtsrat. Wer gewerblich veröffentlicht, lässt es prüfen.
+
+## Bildgenerierung
+
+Die Bilder laufen über [Higgsfield](https://higgsfield.ai). Ein Konto mit
+Guthaben ist nötig, weil jede Generierung Credits kostet. Die ersten drei
+Schritte funktionieren auch ohne.
+
+`brandkit-setup` blendet an der Stelle, an der ein Abo gebraucht wird, einen
+als solchen gekennzeichneten Affiliate-Link ein. Wer schon ein Konto hat,
+bekommt ihn nicht zu sehen, und der Ablauf funktioniert mit jedem
+Higgsfield-Konto gleich.
+
+## Umgebung
+
+Gebaut und getestet in Claude Code. Die Skills selbst sind Markdown und
+grundsätzlich portabel, aber Teile des Ablaufs (Design-Canvas, Artifacts, das
+Skill-System) sind Claude-Code-Funktionen. In anderen Agenten funktioniert das
+Brand Kit und die Bildkennzeichnung, der Rest je nachdem.
+
+Die Skill-Dateien sind auf Deutsch. Die Skills antworten in der Sprache, in der
+du schreibst.
+
+## Lizenz
+
+MIT, siehe [LICENSE](LICENSE). Nimm es, ändere es, teile es.
+
+Die eingebundenen Fremdskills stehen unter den Lizenzen ihrer jeweiligen Repos.
+
+---
+
+Gebaut von Arnold Oberleiter · AI mit Arnie

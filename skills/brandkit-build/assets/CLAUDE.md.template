@@ -1,0 +1,29 @@
+# Arbeitsregeln in diesem Ordner
+
+<!--
+  Vorlage. Ersetze <MARKE> und die eckigen Klammern durch die Werte aus BRAND.md.
+  Diese Datei greift automatisch, sobald in diesem Ordner gearbeitet wird.
+  Halte sie kurz: Sie regelt nur den Umgang mit den anderen Dateien.
+-->
+
+Hier liegt das Brand Kit von **<MARKE>**. Für jede Design-, Web- oder
+Grafikarbeit gilt:
+
+1. **`BRAND.md` ist verbindlich** und schlägt allgemeine Design-Konventionen.
+   `REFERENCE.md` ist Nachschlagewerk. Bei Widerspruch gewinnt `BRAND.md`.
+2. **Nur die definierten Tokens.** Keine neuen Farben, keine neuen Schriften,
+   keine rohen Hex-Werte im Layout, immer `var(--…)` aus `brand-helmet.html`.
+3. **[Grundsatzentscheidung eintragen]**, zum Beispiel: Es gibt keinen Light
+   Mode, auch Dokumente und Druck sind dunkel.
+4. **[Akzentregel eintragen]**, zum Beispiel: Akzentfarbe bleibt unter 10 %
+   der Fläche. Nie als Sektionshintergrund, nie als Verlauf, nie als Glow.
+5. **Wordmark nicht neu erfinden.** `wordmark.svg` benutzen, für kleine Flächen
+   `mark.svg`. [Verbotene Bildsprache eintragen.]
+6. **Vor dem Neuerfinden nachsehen:** `beispiel/` enthält alle Bausteine in
+   korrekten Maßen. Bestehende Muster wiederverwenden.
+7. **[Sprachregel eintragen]**, zum Beispiel: Text auf Deutsch, technische
+   Labels englisch. Verbotene Floskeln stehen in `BRAND.md`.
+8. **Vor dem Abgeben** die Prüfliste in `BRAND.md` durchgehen.
+
+Änderungen am Kit selbst: erst fragen. Diese Dateien sind die einzige Quelle
+der Wahrheit für die Marke.

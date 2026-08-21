@@ -1,0 +1,96 @@
+<!-- Vorlage fuer <MARKE> Brand Kit.
+     Platzhalter in spitzen Klammern durch die Werte aus BRAND.md ersetzen,
+     nicht benoetigte Tokens loeschen. Danach im Layout ausschliesslich
+     var(--...) benutzen, keine rohen Hex-Werte.
+
+     In einem normalen HTML-Dokument gehoert der <style>-Block in den <head>.
+     In einem Design-Component-Artboard kommt der ganze Block direkt nach
+     <x-dc> und bleibt in <helmet> eingefasst. -->
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=<DISPLAY_FONT>:wght@600;700&family=<BODY_FONT>:wght@400;500;600&family=<MONO_FONT>:wght@400;500&display=swap">
+  <style>
+    :root {
+      /* Flaechen */
+      --bg:     <HEX>;   /* Grundflaeche */
+      --surf:   <HEX>;   /* Karten, Panels, Navigation */
+      --fg:     <HEX>;   /* Haupttext */
+      --mut:    <HEX>;   /* Beschreibungen, Labels, Metadaten */
+      --line:   <HEX>;   /* Rahmen, Trenner, 1px */
+      --line-2: <HEX>;   /* kraeftigerer Rahmen, Secondary-Buttons */
+
+      /* Marke */
+      --acc:     <HEX>;  /* Akzent. Anteilsregel steht in BRAND.md */
+      --acc-ink: <HEX>;  /* Text auf Akzentflaeche */
+
+      /* Funktional. Nur mit Bedeutung, nie dekorativ,
+         nie als zweiter Markenakzent. */
+      --info: <HEX>;
+      --warn: <HEX>;
+      --neg:  <HEX>;
+
+      /* Schrift. Ersatzschriften mit aehnlichen Maßen waehlen:
+         beim PDF-Export und im Druck greifen sie wirklich. */
+      --display: '<DISPLAY_FONT>', <FALLBACK>, sans-serif;
+      --body:    '<BODY_FONT>', <FALLBACK>, sans-serif;
+      --mono:    '<MONO_FONT>', Consolas, ui-monospace, monospace;
+
+      /* Raster */
+      --pad-x:   <PX>px;   /* Seitenrand Desktop */
+      --content: <PX>px;   /* Inhaltsbreite */
+      --r:       <PX>px;   /* Standard-Radius */
+      --r-card:  <PX>px;   /* grosse Karten */
+      --r-btn:   <PX>px;   /* Buttons */
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--body);
+      font-size: 16px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3 {
+      margin: 0;
+      font-family: var(--display);
+      letter-spacing: -0.02em;
+      text-wrap: balance;
+    }
+    h1 { font-weight: 700; }
+    h2, h3 { font-weight: 600; }
+
+    p { margin: 0; text-wrap: pretty; }
+
+    /* Linkfarben immer setzen. Sonst rendern spaeter ergaenzte Links
+       im Browser-Standardblau. */
+    a { color: var(--fg); text-decoration: none; }
+    a:hover { color: var(--acc); }
+
+    /* Sichtbarer Fokus. Ohne das ist die Seite per Tastatur unbenutzbar. */
+    :focus-visible { outline: 3px solid var(--acc); outline-offset: 3px; }
+
+    /* Label: das technische Kleinstelement der Marke */
+    .lbl {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--mut);
+    }
+
+    /* Zahlen, Preise, Versionen: gleiche Ziffernbreite, damit Spalten stehen */
+    .val { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+
+    /* Nur fuer Screenreader */
+    .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+
+    img { max-width: 100%; height: auto; display: block; }
+    table { border-collapse: collapse; width: 100%; }
+    button { font: inherit; cursor: pointer; }
+  </style>
+</helmet>
