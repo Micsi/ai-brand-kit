@@ -34,15 +34,32 @@ einmal, und danach wird umgesetzt.
 | `brandkit-build` | einmal je Marke | Verdichtet die Rohfassung zum benutzbaren Kit |
 | `brandkit-publish` | immer wieder | Baut damit Webseiten, PDFs und Bilder |
 
-## Installation
+## Loslegen
 
-```bash
-npx skills add ArnoldOberleiter/ai-brand-kit -g -y
-```
+Wenn du diese Seite gerade einem Coding Agent gegeben hast: Der Rest dieses
+Abschnitts ist an ihn gerichtet. Lehn dich zurück und antworte auf seine Fragen.
 
-Danach eine neue Sitzung starten, weil die Skill-Liste beim Start gelesen wird.
-Dann einfach sagen: „Ich will ein Brand Kit aufbauen." Oder direkt
-`/brandkit-setup` aufrufen.
+> **An den Agent:** Jemand hat dir diese URL gegeben, weil er ein Brand Kit
+> aufbauen will. Dein Auftrag:
+>
+> 1. Installiere die vier Skills:
+>    `npx skills add Arnie936/ai-brand-kit -g -y`
+> 2. Erkläre der Person in zwei, drei Sätzen, was jetzt passiert: vier Schritte,
+>    die ersten drei einmalig, der vierte immer wieder. Kein Vortrag.
+> 3. Starte mit dem Skill `brandkit-setup` und arbeite dich durch bis
+>    `brandkit-publish`. Jeder Skill sagt am Ende, welcher als nächstes dran ist.
+> 4. Sprich mit der Person in ihrer Sprache und frage nach, statt zu raten. Vor
+>    allem beim Interview in Schritt 2: Dort entstehen die Festlegungen, an denen
+>    später alles hängt.
+>
+> Falls `npx skills add` nicht verfügbar ist: Die vier `SKILL.md` unter
+> `skills/` sind gewöhnliches Markdown. Lies sie der Reihe nach und folge ihnen
+> direkt. Das Skript unter `skills/brandkit-publish/scripts/` brauchst du erst
+> in Schritt 4.
+
+Nach der Installation ist eine neue Sitzung nötig, weil die Skill-Liste beim
+Start gelesen wird. Danach genügt der Satz „Ich will ein Brand Kit aufbauen",
+oder der direkte Aufruf von `/brandkit-setup`.
 
 ## Voraussetzungen
 
