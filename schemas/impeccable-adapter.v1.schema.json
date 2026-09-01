@@ -1,0 +1,32 @@
+{
+  "$id": "impeccable-adapter.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "contract_version", "upstream", "adapted_release", "capability_matrix", "installation", "inventory", "defaults", "artifacts", "token_namespaces", "unknown_policy", "conflict_policy", "reverse_sync"],
+  "properties": {
+    "schema_version": {"const": "impeccable-adapter.v1"},
+    "contract_version": {"const": "1.0.0"},
+    "upstream": {
+      "type": "object", "additionalProperties": false,
+      "required": ["repository", "commit", "tree", "package_version", "plugin_version", "canonical_skill_subtree", "canonical_skill_tree", "license", "license_sha256", "notice_path", "notice_sha256", "committed_at"],
+      "properties": {
+        "repository": {"const": "github:pbakaus/impeccable"},
+        "commit": {"$ref": "#/$defs/sha1"}, "tree": {"$ref": "#/$defs/sha1"},
+        "package_version": {"$ref": "#/$defs/semver"}, "plugin_version": {"$ref": "#/$defs/semver"},
+        "canonical_skill_subtree": {"const": ".agents/skills/impeccable"}, "canonical_skill_tree": {"$ref": "#/$defs/sha1"},
+        "license": {"const": "Apache-2.0"},
+        "license_sha256": {"$ref": "#/$defs/sha256"}, "notice_path": {"const": "NOTICE.md"}, "notice_sha256": {"$ref": "#/$defs/sha256"}, "committed_at": {"type": "string", "format": "date-time"}
+      }
+    },
+    "adapted_release": {"type": "object", "additionalProperties": false, "required": ["tree_sha256", "marker"], "properties": {"tree_sha256": {"$ref": "#/$defs/sha256"}, "marker": {"type": "object", "additionalProperties": false, "required": ["schema_version", "version", "upstream_commit", "upstream_tree", "upstream_skill_tree"], "properties": {"schema_version": {"const": "brandkit-impeccable-release.v2"}, "version": {"type": "string"}, "upstream_commit": {"$ref": "#/$defs/sha1"}, "upstream_tree": {"$ref": "#/$defs/sha1"}, "upstream_skill_tree": {"$ref": "#/$defs/sha1"}}}}},
+    "capability_matrix": {"type": "object", "additionalProperties": false, "required": ["direct_entrypoints", "import_safe_direct_checks", "indirect_owned"], "properties": {"direct_entrypoints": {"$ref": "#/$defs/capMap"}, "import_safe_direct_checks": {"$ref": "#/$defs/capMap"}, "indirect_owned": {"type": "object", "additionalProperties": {"type": "object", "additionalProperties": false, "required": ["owner", "capabilities"], "properties": {"owner": {"type": "string"}, "capabilities": {"$ref": "#/$defs/caps"}}}}}},
+    "installation": {"type": "object", "required": ["status", "release_store", "activation", "canonical_discovery", "claude_bridge", "codex_discovery", "hermes_discovery", "collision_identity", "collision_policy", "rollback", "copy_upstream_into_brandkit_skill"], "additionalProperties": false,
+      "properties": {"status": {"const": "implemented-active"}, "release_store": {"type": "string"}, "activation": {"const": "atomic-symlink-swap"}, "canonical_discovery": {"const": ".agents/skills/impeccable"}, "claude_bridge": {"type": "string"}, "codex_discovery": {"type": "string"}, "hermes_discovery": {"type": "string"}, "collision_identity": {"const": "frontmatter.name"}, "collision_policy": {"const": "fail-closed"}, "rollback": {"type": "string"}, "copy_upstream_into_brandkit_skill": {"const": false}}},
+    "inventory": {"type": "object", "additionalProperties": false, "required": ["path_manifest", "provider_skill_outputs", "routes", "reference_count", "script_count", "roles", "hook_manifests", "runtime_features", "blob_count", "blob_set_sha256"], "properties": {"path_manifest": {"const": "impeccable-upstream-inventory.v1.json"}, "provider_skill_outputs": {"type": "array", "minItems": 17, "items": {"type": "string"}}, "routes": {"type": "array", "minItems": 23, "items": {"type": "string"}}, "reference_count": {"const": 39}, "script_count": {"const": 108}, "roles": {"type": "array", "minItems": 5, "items": {"type": "string"}}, "hook_manifests": {"type": "array", "minItems": 5, "items": {"type": "string"}}, "runtime_features": {"type": "object", "minProperties": 6, "additionalProperties": {"type": "array", "minItems": 1, "items": {"type": "string"}}}, "blob_count": {"const": 155}, "blob_set_sha256": {"$ref": "#/$defs/sha256"}}},
+    "defaults": {"type": "object", "additionalProperties": false, "required": ["hooks", "update", "browser", "live", "image_generation", "network", "required_provider"], "properties": {"hooks": {"const": false}, "update": {"const": false}, "browser": {"const": false}, "live": {"const": false}, "image_generation": {"const": false}, "network": {"const": false}, "required_provider": {"type": "null"}}},
+    "artifacts": {"type": "object", "additionalProperties": false, "required": ["product", "design", "impeccable_sidecar", "impeccable_config", "policy", "review"], "properties": {"product": {"const": "PRODUCT.md"}, "design": {"const": "DESIGN.md"}, "impeccable_sidecar": {"const": ".impeccable/design.json"}, "impeccable_config": {"const": ".impeccable/config.json"}, "policy": {"const": ".brandkit/impeccable-policy.json"}, "review": {"const": ".brandkit/review/impeccable-design-contract.md"}}},
+    "token_namespaces": {"const": ["shared", "ui", "web", "pdf"]},
+    "unknown_policy": {"const": "TODO"}, "conflict_policy": {"const": "hard-stop-with-diff-and-review-todo"}, "reverse_sync": {"const": "human-review-only"}
+  },
+  "$defs": {"sha1": {"type": "string", "pattern": "^[0-9a-f]{40}$"}, "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "semver": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"}, "caps": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"enum": ["hooks", "update", "browser", "live", "image_generation", "network"]}}, "capMap": {"type": "object", "minProperties": 1, "additionalProperties": {"$ref": "#/$defs/caps"}}}
+}

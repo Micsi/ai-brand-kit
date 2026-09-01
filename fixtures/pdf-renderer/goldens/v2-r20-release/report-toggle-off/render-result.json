@@ -1,0 +1,95 @@
+{
+  "hmac_sha256": "5a054a132e48522b3710a7026369557fcacce3049f185598e55533f74133f317",
+  "issuer": "brandkit-production-renderer-v1",
+  "payload": {
+    "assets": [],
+    "binding": {
+      "activation_sha256": "5378622db3b8d1a060a23f9d95ab9d30705be0a23ca4c009e5eda7123d3ba5a2",
+      "brand": {
+        "content_sha256": "16d6b19fda42168490931ac315679ab47c04d3cbf0a3c68e47025f2f8b64390e",
+        "id": "neutral-fixture",
+        "manifest_sha256": "09815a03cb08f8c87755460338a9614ffc6e568116783dbf68bf6c0e395e6c82",
+        "version": "1.0.0"
+      },
+      "document_type": {
+        "id": "report",
+        "sha256": "37102e2e1903b0174bdea9e687ef38758acec95e1d3f52b2ee471f6a29de0aa1",
+        "version": "1.0.0"
+      },
+      "humanizer_audit_sha256": "26486a4628fcd926bf29ca8b73105489bc9611fe3f06cb0ece52f4388370ddea",
+      "markdown_contract_sha256": "b0b7947a6eb11293481b52fb7ec1aca89d1af660e374009b22e4d6a9353e39a3",
+      "owner_approval_sha256": "cbec85420832ae02483824ac5e4e22629a13a250e80b8f2d73cbf94fc6090a62",
+      "project_identity_sha256": "5355265fb5c91830051d7e0834cd332071eafe38973b8fb9eebc6fb1baceaa6c"
+    },
+    "brand_assets": [
+      {
+        "id": "neutral-font",
+        "media_type": "font/woff2",
+        "path": "assets/fonts/neutral.woff2",
+        "rights_path": "rights/neutral-font.rights.json",
+        "rights_sha256": "1f7f606406a8c38e9ca870cca72bffdca4a323c48618f38f1f17f90121d18bfd",
+        "sha256": "90e63b7ece5be977129137c0c774b6764adac69399b6c20d9ddc147cbe01819d"
+      },
+      {
+        "id": "neutral-logo",
+        "media_type": "image/svg+xml",
+        "path": "assets/logos/neutral.svg",
+        "rights_path": "rights/neutral-logo.rights.json",
+        "rights_sha256": "5fd7475dbdb7d8eb02e31cdf9c66f7e89c2c2c35e7d40282516a7c7e5a0c0af9",
+        "sha256": "b82446b1cbeb5bb1cf9de3138dbb7e2877c081806ff8006ee7bb565275cb4f57"
+      }
+    ],
+    "created_at": "2026-08-26T00:00:00Z",
+    "engine": {
+      "lock_path": "toolchain/pdf-renderer.production.v1.lock.json",
+      "lock_sha256": "4763f39e3df08b677362a55a93a292f36f5d90de341e749cb7431e0ec70ac5c1",
+      "name": "brandkit-pdf-renderer",
+      "version": "1.2.26"
+    },
+    "exit": {
+      "code": 0,
+      "errors": [],
+      "warnings": []
+    },
+    "final_input_sha256": "79ab20c672aa36c73b8609fb1b47c8be12d630f69155b10535b4c95c698e0be9",
+    "mermaid": [],
+    "nonce": "brandkit-render-0001",
+    "output_pdf": {
+      "path": "report-toggle-off.pdf",
+      "sha256": "f13b39c93eca328c041f4bf4721b9c0b4346f902c89319cdf7ce89083db42d0c"
+    },
+    "pages": {
+      "content": [
+        {
+          "index": 2,
+          "label": "Seite 1 von 1",
+          "number": 1
+        }
+      ],
+      "count": 2,
+      "title": {
+        "index": 1,
+        "label": null
+      }
+    },
+    "visual_qa": {
+      "dpi": 144,
+      "page_pngs": [
+        {
+          "index": 1,
+          "path": "pages/page-1.png",
+          "sha256": "f43cf34e5a12a5c45abcd948df46db64e926b43d6bdd0211a83057c8cbadaf92"
+        },
+        {
+          "index": 2,
+          "path": "pages/page-2.png",
+          "sha256": "999854b49649e54e94605a78e41057bfe5a69b2d5a1d80b1052c0c1440c5ac49"
+        }
+      ],
+      "path": "visual-qa.json",
+      "sha256": "62d139451459c0b61e655ace23c83a9a2d46210fb77fd4d86f6f424322271c9e",
+      "status": "pass"
+    }
+  },
+  "schema_version": "render-result.v1"
+}

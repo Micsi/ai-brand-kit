@@ -1,0 +1,6 @@
+{
+  "allowed_elements": ["heading", "paragraph", "ordered-list", "unordered-list", "link", "footnote", "table", "image", "callout", "mermaid", "page-break"], "allowed_overrides": {"section_numbering": [false, true], "toc": [false, true]}, "engine_compatibility": "^1.0.0", "extends": null,
+  "forbidden_features": ["active-content", "embedded-credentials", "external-resources", "raw-html", "embedded-css", "unknown-directives", "unknown-code-fences"], "hash_policy": "sha256", "id": "freeform", "layout": {"footer": true, "header": false, "manual_page_break": true, "toc": false}, "minimum_margin_mm": 15,
+  "pagination": {"content_start": 1, "format": "Seite X von Y", "title_page_number": null}, "publication_gates": ["contract-valid", "no-open-todos", "assets-resolved", "rights-valid", "protected-hashes-stable", "render-success"], "rights_required": true, "schema_version": "document-type.v1",
+  "sections": {"optional": ["sources"], "order": ["content", "sources"], "required": ["content"]}, "version": "1.0.0"
+}

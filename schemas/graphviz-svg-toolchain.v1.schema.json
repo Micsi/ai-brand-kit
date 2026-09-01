@@ -1,0 +1,18 @@
+{
+  "$id": "graphviz-svg-toolchain.v1.schema.json", "type": "object", "additionalProperties": false,
+  "required": ["schema_version", "platform", "artifact_bundle", "graphviz", "node", "package", "font", "scripts", "command", "network", "environment", "portability", "clean_room_evidence"],
+  "properties": {
+    "schema_version": {"const": "graphviz-svg-toolchain.v1"}, "platform": {"const": "darwin-arm64"},
+    "artifact_bundle": {"$ref": "#/$defs/bundle"},
+    "graphviz": {"type": "object", "additionalProperties": false, "required": ["version", "engine", "wasm_backend_sha256", "runtime_version_source"], "properties": {"version": {"const": "15.1.1"}, "engine": {"const": "dot"}, "wasm_backend_sha256": {"$ref": "#/$defs/hash"}, "runtime_version_source": {"const": "@viz-js/viz instance.graphvizVersion"}}},
+    "node": {"type": "object", "additionalProperties": false, "required": ["version", "archive_path", "archive_sha256", "executable_sha256", "system_libraries"], "properties": {"version": {"const": "22.18.0"}, "archive_path": {"type": "string"}, "archive_sha256": {"$ref": "#/$defs/hash"}, "executable_sha256": {"$ref": "#/$defs/hash"}, "system_libraries": {"const": ["/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation", "/System/Library/Frameworks/Security.framework/Versions/A/Security", "/usr/lib/libc++.1.dylib", "/usr/lib/libSystem.B.dylib"]}}},
+    "package": {"type": "object", "additionalProperties": false, "required": ["name", "version", "archive_path", "archive_sha256", "npm_integrity", "executable_sha256"], "properties": {"name": {"const": "@viz-js/viz"}, "version": {"const": "3.29.0"}, "archive_path": {"type": "string"}, "archive_sha256": {"$ref": "#/$defs/hash"}, "npm_integrity": {"type": "string", "pattern": "^sha512-"}, "executable_sha256": {"$ref": "#/$defs/hash"}}},
+    "font": {"type": "object", "additionalProperties": false, "required": ["name", "archive_path", "archive_sha256"], "properties": {"name": {"const": "Abel"}, "archive_path": {"const": "fonts/abel.ttf"}, "archive_sha256": {"$ref": "#/$defs/hash"}}},
+    "scripts": {"type": "object", "additionalProperties": false, "required": ["render_mjs_sha256", "install_sha256", "render_sha256", "verify_bundle_sha256", "verify_clean_rooms_sha256"], "properties": {"render_mjs_sha256": {"$ref": "#/$defs/hash"}, "install_sha256": {"$ref": "#/$defs/hash"}, "render_sha256": {"$ref": "#/$defs/hash"}, "verify_bundle_sha256": {"$ref": "#/$defs/hash"}, "verify_clean_rooms_sha256": {"$ref": "#/$defs/hash"}}},
+    "command": {"const": ["node", "render.mjs", "viz.js", "INPUT.dot", "OUTPUT.svg"]},
+    "network": {"const": {"mode": "disabled", "control": "sandbox-exec-deny-network"}}, "environment": {"const": {"LANG": "C", "LC_ALL": "C", "TZ": "UTC", "SOURCE_DATE_EPOCH": "0"}},
+    "portability": {"const": {"contract": "darwin-arm64-with-listed-apple-system-libraries", "wasm_graphviz_has_no-host-dynamic-libraries": true}},
+    "clean_room_evidence": {"type": "object", "additionalProperties": false, "required": ["fresh_directories", "network", "svg_sha256", "byte_identical"], "properties": {"fresh_directories": {"const": 2}, "network": {"const": "disabled"}, "svg_sha256": {"$ref": "#/$defs/hash"}, "byte_identical": {"const": true}}}
+  },
+  "$defs": {"hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "bundle": {"type": "object", "additionalProperties": false, "required": ["path", "tree_sha256", "manifest_sha256", "file_count"], "properties": {"path": {"type": "string", "pattern": "^/Volumes/Daten/"}, "tree_sha256": {"$ref": "#/$defs/hash"}, "manifest_sha256": {"$ref": "#/$defs/hash"}, "file_count": {"const": 3}}}}
+}

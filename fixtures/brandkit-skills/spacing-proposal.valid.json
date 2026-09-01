@@ -1,0 +1,8 @@
+{
+  "schema_version": "spacing-proposal.v1",
+  "status": "unconfirmed",
+  "mode": "explicit-nonnormative",
+  "source": {"kind": "user-supplied", "reference": "owner answer spacing-01"},
+  "primitives": ["24px"],
+  "roles": [{"name": "section-gap", "primitive": "24px"}]
+}

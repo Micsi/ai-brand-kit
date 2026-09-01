@@ -1,0 +1,33 @@
+{
+  "schema_version": "brandkit-humanizer-provenance.v1",
+  "before_sha256": "89a4dd3f5e7bbaa7369d9f1286d90e2a2e35c240a419b108a96d6f02310a5cf3",
+  "after_sha256": "1e526ad0d89b11e9ef820f3a50fa48421a95e1988b5668201dba80173f25c0e5",
+  "candidate_edits": [
+    {
+      "candidate_id": "generic-smoothing-1",
+      "source": "Insgesamt ist das Ergebnis wirklich sehr gut.",
+      "action": "delete",
+      "pattern_ids": [
+        "5",
+        "64"
+      ],
+      "start_codepoint": 92,
+      "end_codepoint": 137,
+      "old_substring_sha256": "c2c276dfaf6d3809e3b4100e348874fcc0e4022d600df79201c03f82f8e2907d",
+      "new_substring_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "raw_model_call_sha256": {
+    "audit": "c15d130fe0568b529a4e2c45a6212f7ebcbd43adab38a0d67c66e51d99756119",
+    "rewrite": "d1937b3c391a64606ec63db2a201969499933d9a8bc7f23645b34abb982d378f"
+  },
+  "pattern_catalog": {
+    "path": "references/patterns.md",
+    "source_revision": "17059735ba1cd2eea7e66a517f79b91b0797b366",
+    "sha256": "9664a1c8c5bbb7700447042babba1c1b78cbf999f349643160cfd517bb6b5f2d"
+  },
+  "runner": {
+    "source_revision": "17059735ba1cd2eea7e66a517f79b91b0797b366",
+    "sha256": "c1f62ed72120bc46e32c3a77555933bdac9dc2b6951ff79803809432c204e0d7"
+  }
+}

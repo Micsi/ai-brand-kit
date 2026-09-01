@@ -1,0 +1,5 @@
+#!/bin/sh
+set -eu
+if [ "$#" -ne 3 ]; then echo "usage: build-runtime RUNTIME_CAS_PARENT IMMUTABLE_BUNDLE LOG_DIR" >&2; exit 64; fi
+script_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd -P)
+exec /opt/homebrew/bin/python3.12 "$script_dir/runtime.py" build-runtime "$1" "$2" "$3"

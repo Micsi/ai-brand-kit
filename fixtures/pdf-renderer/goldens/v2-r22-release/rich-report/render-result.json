@@ -1,0 +1,179 @@
+{
+  "hmac_sha256": "ba1e32b5ce339f0a1b5d7235f234f42743f0081572803c13a68249dc255b16d1",
+  "issuer": "brandkit-production-renderer-v1",
+  "payload": {
+    "assets": [
+      {
+        "id": "diagram",
+        "media_type": "image/svg+xml",
+        "path": "assets/diagram.svg",
+        "sha256": "4b6886f23a350748f85bf941b7a0568aa7375bf806e354842c5bd61f3c053e6b"
+      },
+      {
+        "id": "e2e-raster",
+        "media_type": "image/png",
+        "path": "assets/raster.png",
+        "sha256": "9cd75a808e3b1be94516d46e3a7eab4c52d0d4623da1b779a5aee2528389d1cf"
+      }
+    ],
+    "binding": {
+      "activation_sha256": "79e2c40772121db09fe5bf220d93f5a22e668d5d2fbb6c815d974f4a4d368d68",
+      "brand": {
+        "content_sha256": "0e897b278d46a1b520485eea3716a8113fc4b2f0356c139af0ceee6215b02008",
+        "id": "neutral-fixture",
+        "manifest_sha256": "e93a2580b892e0aee93132232d0aaa61256a4e5ddf3b509413f1d312f86fba49",
+        "version": "1.0.0"
+      },
+      "document_type": {
+        "id": "report",
+        "sha256": "3856f2e86321ef4842813a781f6e6204ded898597a5a83eff9e09f93082c5fe5",
+        "version": "1.0.0"
+      },
+      "humanizer_audit_sha256": "26ebf0085894ae76e213238f5dd37b3b5e6f87e6b575574df002f16f41390661",
+      "markdown_contract_sha256": "5e54a95b00e8b778384f5cf1bfbcdbe721136e6142b9b31b9e6ffa1fce868ba4",
+      "owner_approval_sha256": "cbec85420832ae02483824ac5e4e22629a13a250e80b8f2d73cbf94fc6090a62",
+      "project_identity_sha256": "86aa7be41d5b6c6cfb50b388d8e6b948824c614c799a2095ee6b9b4c8be8d128"
+    },
+    "brand_assets": [
+      {
+        "id": "neutral-font",
+        "media_type": "font/woff2",
+        "path": "assets/fonts/neutral.woff2",
+        "rights_path": "rights/neutral-font.rights.json",
+        "rights_sha256": "1f7f606406a8c38e9ca870cca72bffdca4a323c48618f38f1f17f90121d18bfd",
+        "sha256": "90e63b7ece5be977129137c0c774b6764adac69399b6c20d9ddc147cbe01819d"
+      },
+      {
+        "id": "neutral-logo",
+        "media_type": "image/svg+xml",
+        "path": "assets/logos/neutral.svg",
+        "rights_path": "rights/neutral-logo.rights.json",
+        "rights_sha256": "5fd7475dbdb7d8eb02e31cdf9c66f7e89c2c2c35e7d40282516a7c7e5a0c0af9",
+        "sha256": "b82446b1cbeb5bb1cf9de3138dbb7e2877c081806ff8006ee7bb565275cb4f57"
+      }
+    ],
+    "created_at": "2026-08-26T00:00:00Z",
+    "engine": {
+      "lock_path": "toolchain/pdf-renderer.production.v1.lock.json",
+      "lock_sha256": "0535f6a7d74c49f50e86d3e79942bf3da269b4c98a8f0308b964ab3482027866",
+      "name": "brandkit-pdf-renderer",
+      "version": "1.2.27"
+    },
+    "exit": {
+      "code": 0,
+      "errors": [],
+      "warnings": []
+    },
+    "final_input_sha256": "fead28a84bb2fa04889dec9a21e6711e80ba468a3ebc320c6652a695401f0746",
+    "graphviz": [
+      {
+        "id": "dependencies-rich",
+        "source_path": "renderer-work/dependencies-rich.dot",
+        "source_sha256": "d97a42e92ec9f6d719457968ae23ba1a9c9533f6cd7f2dc9231ef14e7f434db5",
+        "svg_path": "renderer-work/dependencies-rich.svg",
+        "svg_sha256": "e4ea3b30895848c1a3a915d10901bdb62e5b87faab78a2e1ef7601a6505a48b5",
+        "toolchain_lock_sha256": "7e5fadcbb32a7038b96c1535f0c0e58ed581f08adb959d7bbb341e03191de5ef"
+      }
+    ],
+    "mermaid": [
+      {
+        "id": "flow-rich",
+        "linux_worker": {
+          "base_image_id": "sha256:3fa41c728e866a57795cd61b2c6ec8b886684e43be9f87c6d20b5c2e39a4ed0d",
+          "duration_seconds": 17.89746,
+          "network": "none",
+          "node_image_id": "sha256:c610fcdfb1d5b4740dd70c284ed3cb16bb857e0f7166196e36a5501df7a3aa32",
+          "png_sha256": "be3ad0ff3e73bb09da916a3d2c9760b5a95def6434aaef4539c71adca0a58212",
+          "runtime_mount_inventory_sha256": "e84af93266c2e067e08e55cb24f0b061529475f5948a2ec916ce19b63423fba4",
+          "sandbox_disable_flags": [],
+          "svg_sha256": "b52f688d8795e3574ae9401a0c6e92e724d18113320637e77246a581efea729f"
+        },
+        "raster_path": "renderer-work/flow-rich-linux-worker/output.png",
+        "raster_sha256": "be3ad0ff3e73bb09da916a3d2c9760b5a95def6434aaef4539c71adca0a58212",
+        "source_path": "renderer-work/flow-rich-linux-worker/input.mmd",
+        "source_sha256": "00fccde88b9ef19c089677244362d827b4dc6720f667e80bb814c1f54d526e7c",
+        "svg_path": "renderer-work/flow-rich-linux-worker/output.svg",
+        "svg_sha256": "b52f688d8795e3574ae9401a0c6e92e724d18113320637e77246a581efea729f",
+        "toolchain_lock_sha256": "81f59995cd2dfdcc8c4744b590b4d39e8b8914f10b67847a51ae1d97a308adcd"
+      }
+    ],
+    "nonce": "brandkit-render-0001",
+    "output_pdf": {
+      "path": "rich-report.pdf",
+      "sha256": "0f6e68bcd7c0517145a757a89d063e975cc00307d5b881dd3b1a894fb5b74ae4"
+    },
+    "pages": {
+      "content": [
+        {
+          "index": 2,
+          "label": "Seite 1 von 5",
+          "number": 1
+        },
+        {
+          "index": 3,
+          "label": "Seite 2 von 5",
+          "number": 2
+        },
+        {
+          "index": 4,
+          "label": "Seite 3 von 5",
+          "number": 3
+        },
+        {
+          "index": 5,
+          "label": "Seite 4 von 5",
+          "number": 4
+        },
+        {
+          "index": 6,
+          "label": "Seite 5 von 5",
+          "number": 5
+        }
+      ],
+      "count": 6,
+      "title": {
+        "index": 1,
+        "label": null
+      }
+    },
+    "visual_qa": {
+      "dpi": 144,
+      "page_pngs": [
+        {
+          "index": 1,
+          "path": "pages/page-1.png",
+          "sha256": "df44019074be174f7ac537ec40163ad971ba191e82f3d0e602d292191c62e3b3"
+        },
+        {
+          "index": 2,
+          "path": "pages/page-2.png",
+          "sha256": "4143aebf684d341ab0cfe60b1a69f0bfc4277db68eb1827c994aa440ba45dbca"
+        },
+        {
+          "index": 3,
+          "path": "pages/page-3.png",
+          "sha256": "2799a8f8b1e73d450ae3cffdcc7bf210a1a2a6778542f84fe3c4fdc4153d99a1"
+        },
+        {
+          "index": 4,
+          "path": "pages/page-4.png",
+          "sha256": "bab818b9a7d6d7354474c5cec0a037fbd7585627472da4dc04c560fe5b2f34dc"
+        },
+        {
+          "index": 5,
+          "path": "pages/page-5.png",
+          "sha256": "168f33a9dbf67a5985af9a69b41869e37ad7c8f3e2cda3e5dc00a932407e2d6c"
+        },
+        {
+          "index": 6,
+          "path": "pages/page-6.png",
+          "sha256": "104bc5ba5a4b83b86d7849ba44579e72a74fa843518c9c3bcf990601b64c92a3"
+        }
+      ],
+      "path": "visual-qa.json",
+      "sha256": "6a9edce72f5b043837a28e38811f676b3966f5a96edd922abac8f987abe0f56c",
+      "status": "pass"
+    }
+  },
+  "schema_version": "render-result.v1"
+}

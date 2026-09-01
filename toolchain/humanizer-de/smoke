@@ -1,0 +1,100 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT=$(cd "$(dirname "$0")" && pwd)
+LOCK="$ROOT/toolchain.lock.json"
+MODE=active
+if [ "${1:-}" = "--staged" ]; then MODE=staged; shift; fi
+REQUESTED_SKILL=${1:-"${HUMANIZER_HOME:-$HOME}/.agents/skills/humanizer-de"}
+SKILL=$(python3 -c 'import os,sys; print(os.path.realpath(sys.argv[1]))' "$REQUESTED_SKILL")
+PY="$SKILL/.venv/bin/python"
+
+read_lock() {
+  python3 - "$LOCK" "$1" <<'PY'
+import json, sys
+value = json.load(open(sys.argv[1], encoding="utf-8"))
+for part in sys.argv[2].split("."):
+    value = value[part]
+print(value)
+PY
+}
+
+content_hash() {
+  python3 - "$1" <<'PY'
+import hashlib, os, pathlib, sys
+root=pathlib.Path(sys.argv[1]); digest=hashlib.sha256()
+skip={'.git','.venv','__pycache__','.pytest_cache'}
+for path in sorted(root.rglob('*'), key=lambda p: p.relative_to(root).as_posix()):
+    rel=path.relative_to(root)
+    if any(part in skip for part in rel.parts) or path.suffix == '.pyc':
+        continue
+    encoded=rel.as_posix().encode()
+    if path.is_symlink():
+        digest.update(b'L\0'+encoded+b'\0'+os.readlink(path).encode()+b'\0')
+    elif path.is_file():
+        digest.update(b'F\0'+encoded+b'\0'+hashlib.sha256(path.read_bytes()).digest())
+print(digest.hexdigest())
+PY
+}
+
+[ -f "$SKILL/SKILL.md" ]
+[ -x "$PY" ]
+entry_count=$(find "$SKILL" -path "$SKILL/.venv" -prune -o -type f -name SKILL.md -print | wc -l | tr -d ' ')
+[ "$entry_count" = 1 ] || { echo "expected exactly one discoverable SKILL.md entry, found $entry_count" >&2; exit 1; }
+[ "$(awk 'FNR <= 30 && /^name:[[:space:]]*humanizer-de[[:space:]]*$/{n++} END{print n+0}' "$SKILL/SKILL.md")" = 1 ] || {
+  echo "sole discovery entry is not canonically named humanizer-de" >&2; exit 1;
+}
+[ "$(content_hash "$SKILL")" = "$(read_lock skill.content_sha256)" ]
+[ "$($PY -c 'import platform; print(platform.python_version())')" = "$(read_lock python.version)" ]
+[ "$($PY -m pip freeze | shasum -a 256 | awk '{print $1}')" = "$(read_lock python.freeze_sha256)" ]
+[ "$($PY -m pip list --format=freeze --disable-pip-version-check | wc -l | tr -d ' ')" = "$(read_lock python.installed_distribution_count)" ]
+[ "$($PY -m pip list --format=freeze --disable-pip-version-check | LC_ALL=C sort -f | shasum -a 256 | awk '{print $1}')" = \
+  "$(read_lock python.installed_distributions_sha256)" ]
+[ "$(git -C "$SKILL" rev-parse HEAD)" = "$(read_lock skill.source_revision)" ]
+[ "$(git -C "$SKILL" archive --format=tar HEAD | shasum -a 256 | awk '{print $1}')" = "$(read_lock skill.git_archive_sha256)" ]
+
+for formula in hunspell languagetool openjdk@17; do
+  expected=$(read_lock "system_tools.homebrew.$formula.version")
+  actual=$(brew list --versions "$formula" | awk '{print $2}')
+  [ "$actual" = "$expected" ] || { echo "$formula version differs from verified lock state" >&2; exit 1; }
+done
+for suffix in aff dic; do
+  expected=$(read_lock "system_tools.hunspell_dictionary.${suffix}_sha256")
+  actual=$(shasum -a 256 "${HUMANIZER_HOME:-$HOME}/Library/Spelling/de_DE.$suffix" | awk '{print $1}')
+  [ "$actual" = "$expected" ]
+done
+
+PATH="/opt/homebrew/bin:/usr/bin:/bin" "$PY" "$SKILL/scripts/doctor.py" --require-full >/dev/null
+"$PY" "$SKILL/scripts/humanizer_audit.py" \
+  --file "$SKILL/tests/corpus/case_01_input.md" --mode sachlich --precise --no-profile >/dev/null
+"$PY" "$SKILL/scripts/register_lint.py" \
+  --text 'Die Idee war neu. Sie überzeugte sofort.' --mode sachlich --precise --fail-on never >/dev/null
+"$PY" "$SKILL/scripts/rhythm_lint.py" \
+  --text 'Kurz. Der zweite Satz erklärt den Zusammenhang genauer. Dann folgt ein knapper Abschluss.' \
+  --scope user_text --mode sachlich --fail-on never >/dev/null
+"$PY" "$SKILL/scripts/evidence_lint.py" \
+  --before 'Im Jahr 2025 sank der Wert um 12 Prozent.' \
+  --after '2025 ging der Wert um 12 Prozent zurück.' --precise --fail-on blocker >/dev/null
+"$PY" "$SKILL/scripts/spell_lint.py" \
+  --before 'Das Verfahren ist nachvollziehbar.' \
+  --after 'Das Verfahren bleibt nachvollziehbar.' --fail-on any >/dev/null
+"$PY" "$SKILL/scripts/syntax_lint.py" \
+  --text 'Die Redaktion prüft den Text, bevor sie ihn veröffentlicht.' >/dev/null
+
+if [ "$MODE" = active ]; then
+  ACTIVE_HOME=${HUMANIZER_HOME:-$HOME}
+  [ "$(python3 -c 'import os,sys; print(os.path.realpath(sys.argv[1]))' "$ACTIVE_HOME/.agents/skills/humanizer-de")" = \
+    "$(python3 -c 'import os,sys; print(os.path.realpath(sys.argv[1]))' "$ACTIVE_HOME/.claude/skills/humanizer-de")" ]
+  if [ "$ACTIVE_HOME" = "$HOME" ]; then
+    codex debug prompt-input 'discovery-only' | python3 -c '
+import json,re,sys
+data=json.load(sys.stdin)
+text="\n".join(block.get("text","") for item in data for block in item.get("content",[]) if isinstance(block,dict))
+hits=re.findall(r"(?m)^- humanizer-de:humanizer-de: ", text)
+raise SystemExit(0 if len(hits)==1 else f"Codex discovered {len(hits)} humanizer-de entries")'
+    [ "$(claude plugin list 2>/dev/null | grep -c 'humanizer-de@skills-dir')" = 1 ]
+    [ "$(hermes skills list 2>/dev/null | grep -c '│ humanizer-de[[:space:]]')" = 1 ]
+  fi
+fi
+
+echo "humanizer-de $MODE smoke passed"

@@ -1,0 +1,54 @@
+{
+  "$id": "renderer-trust.v1.schema.json",
+  "additionalProperties": false,
+  "properties": {
+    "engine": {
+      "additionalProperties": false,
+      "properties": {
+        "lock_path": {
+          "const": "toolchain/pdf-renderer.production.v1.lock.json"
+        },
+        "lock_sha256": {
+          "const": "56cc17845289ff807c5252bb38cb64c0c880322c22beb509e6460dbd7494a522"
+        },
+        "name": {
+          "const": "brandkit-pdf-renderer"
+        },
+        "version": {
+          "const": "1.2.28"
+        }
+      },
+      "required": [
+        "name",
+        "version",
+        "lock_path",
+        "lock_sha256"
+      ],
+      "type": "object"
+    },
+    "environment": {
+      "const": "production"
+    },
+    "issuer": {
+      "const": "brandkit-production-renderer-v1"
+    },
+    "issuer_key_sha256": {
+      "const": "55547dbdba3ec03f26c5c2100f511698b7f85a4baf24ea3306563d738d1a1de3"
+    },
+    "schema_version": {
+      "const": "renderer-trust.v1"
+    },
+    "status": {
+      "const": "installed"
+    }
+  },
+  "required": [
+    "schema_version",
+    "environment",
+    "status",
+    "issuer",
+    "issuer_key_sha256",
+    "engine"
+  ],
+  "type": "object"
+}

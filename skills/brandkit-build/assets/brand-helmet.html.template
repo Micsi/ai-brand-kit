@@ -7,7 +7,8 @@
      In einem Design-Component-Artboard kommt der ganze Block direkt nach
      <x-dc> und bleibt in <helmet> eingefasst. -->
 <helmet>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=<DISPLAY_FONT>:wght@600;700&family=<BODY_FONT>:wght@400;500;600&family=<MONO_FONT>:wght@400;500&display=swap">
+  <!-- Optional: Eine vom Projekt gewählte lokale oder externe Schriftquelle
+       hier eintragen. Ohne Eintrag greifen die definierten Ersatzschriften. -->
   <style>
     :root {
       /* Flaechen */

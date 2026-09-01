@@ -1,0 +1,19 @@
+{
+  "$id": "humanizer-baseline.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "issuer", "payload", "hmac_sha256"],
+  "properties": {
+    "schema_version": {"const": "humanizer-baseline.v1"},
+    "issuer": {"type": "string", "minLength": 1},
+    "hmac_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "payload": {"type": "object", "additionalProperties": false, "required": ["source_utf8_base64", "provenance", "provenance_sha256"], "properties": {
+      "source_utf8_base64": {"type": "string", "minLength": 1},
+      "provenance_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+      "provenance": {"type": "object", "additionalProperties": false, "required": ["source_sha256", "contract_sha256", "document_type_id", "document_type_sha256", "brand_package_path", "brand_package_manifest_sha256", "brand_package_sha256", "tool_version", "nonce", "created_at"], "properties": {
+        "source_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "contract_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "document_type_id": {"type": "string", "pattern": "^[a-z][a-z0-9-]{1,63}$"}, "document_type_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "brand_package_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "tool_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"}, "nonce": {"type": "string", "pattern": "^[A-Za-z0-9._-]{16,128}$"}, "created_at": {"type": "string", "format": "date-time"}
+        ,"brand_package_path": {"type": "string", "minLength": 1}, "brand_package_manifest_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }}
+    }}
+  }
+}

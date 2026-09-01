@@ -1,0 +1,13 @@
+{
+  "executablePath": "/usr/bin/chromium-browser",
+  "headless": true,
+  "pipe": true,
+  "args": [
+    "--disable-background-networking",
+    "--disable-component-update",
+    "--disable-default-apps",
+    "--disable-extensions",
+    "--disable-sync",
+    "--no-first-run"
+  ]
+}

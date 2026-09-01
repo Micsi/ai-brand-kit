@@ -1,0 +1,29 @@
+#!/bin/sh
+set -eu
+if [ "$#" -ne 2 ]; then echo "usage: install-offline DESTINATION IMMUTABLE_BUNDLE" >&2; exit 64; fi
+destination=$1
+bundle=$2
+script_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd -P)
+test ! -e "$destination" || { echo "destination must be fresh" >&2; exit 65; }
+"$script_dir/verify-bundle" "$bundle" >/dev/null
+mkdir -p "$destination"
+cp "$script_dir/package.json" "$script_dir/package-lock.json" "$script_dir/MERMAID_CONFIG.json" "$script_dir/PUPPETEER_CONFIG.json" "$destination/"
+mkdir -p "$destination/browser" "$destination/node"
+/usr/bin/unzip -q "$bundle/browser/chrome-mac-arm64.zip" -d "$destination/browser"
+/usr/bin/tar -xzf "$bundle/node/node-v22.18.0-darwin-arm64.tar.gz" -C "$destination/node"
+node_root="$destination/node/node-v22.18.0-darwin-arm64"
+python3.12 - "$script_dir/../mermaid-svg.v1.lock.json" "$destination" <<'PY'
+import hashlib,json,pathlib,sys
+lock=json.loads(pathlib.Path(sys.argv[1]).read_text(encoding="utf-8"));root=pathlib.Path(sys.argv[2]).resolve(strict=True)
+checks=((lock["node"]["executable_relative_path"],lock["node"]["executable_sha256"]),(lock["node"]["npm_cli_relative_path"],lock["node"]["npm_cli_sha256"]),(lock["browser"]["executable_relative_path"],lock["browser"]["executable_sha256"]))
+for relative,expected in checks:
+ path=(root/relative)
+ if path.is_symlink() or not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest()!=expected:raise SystemExit(f"installed Mermaid component hash failed: {relative}")
+config=json.loads((root/"PUPPETEER_CONFIG.json").read_text(encoding="utf-8"))
+expected="./"+lock["browser"]["executable_relative_path"]
+if config.get("executablePath")!=expected or pathlib.PurePosixPath(config["executablePath"]).is_absolute():raise SystemExit("Puppeteer browser binding is not the locked relative path")
+PY
+(
+  cd "$destination"
+  PATH="$node_root/bin:/usr/bin:/bin" PUPPETEER_SKIP_DOWNLOAD=true HTTP_PROXY=http://127.0.0.1:9 HTTPS_PROXY=http://127.0.0.1:9 ALL_PROXY=http://127.0.0.1:9 NO_PROXY=localhost,127.0.0.1 "$node_root/bin/npm" ci --offline --ignore-scripts --no-audit --no-fund --cache "$bundle/npm-cache"
+)

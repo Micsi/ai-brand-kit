@@ -1,0 +1,13 @@
+{
+  "engine": {
+    "lock_path": "toolchain/pdf-renderer.production.v1.lock.json",
+    "lock_sha256": "56cc17845289ff807c5252bb38cb64c0c880322c22beb509e6460dbd7494a522",
+    "name": "brandkit-pdf-renderer",
+    "version": "1.2.28"
+  },
+  "environment": "production",
+  "issuer": "brandkit-production-renderer-v1",
+  "issuer_key_sha256": "55547dbdba3ec03f26c5c2100f511698b7f85a4baf24ea3306563d738d1a1de3",
+  "schema_version": "renderer-trust.v1",
+  "status": "installed"
+}

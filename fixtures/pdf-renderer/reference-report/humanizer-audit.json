@@ -1,0 +1,29 @@
+{
+  "accepted_edits": [
+    {
+      "after": "Die Auswertung zeigt eine klare Entwicklung.",
+      "before": "Die Auswertung zeigt im Ergebnis eine klar erkennbare Entwicklung.",
+      "reason": "redundancy"
+    }
+  ],
+  "ast_skeleton_identical": true,
+  "changed_segments": [
+    {
+      "new_hash": "a683a624030904a2c2cdb3317a09ef1ee53ea4a5c2dbbefe10aa18a0802de6fe",
+      "old_hash": "5dc956266649968cb75d95f9ef19af2a5eba137fda8ac1a762744a4e33af2f09",
+      "segment_id": "mutable-917f5e137903c9316c95e819"
+    }
+  ],
+  "draft_sha256": "4b0a93ddbffdfc70b89087d224dea668c90158dcc4beb62b2eeb62b793437262",
+  "fact_changes": 0,
+  "final_sha256": "35916890493170240fffcb1ab7cb29fe6b6aaa55a010c0fc43c161bbfbfd1ff7",
+  "protected_bytes_identical": true,
+  "protected_partition_sha256": "1c200b4ab1d9ccb4d33c2fbc0482f78eab9c779d388f1f61ce422c136dfa77f8",
+  "rejected_edits": [],
+  "schema_version": "brand-voice-humanizer-audit.v1",
+  "scope": "mutable-prose-segments-only",
+  "tool": {
+    "name": "humanizer-de",
+    "version": "5.22.2-brandkit.2"
+  }
+}

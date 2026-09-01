@@ -1,0 +1,170 @@
+{
+  "$id": "agent-skill-architecture.v1.schema.json",
+  "title": "Agent skill architecture contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "contract_version", "canonical_roots", "providers",
+    "llmwiki_profile", "collision_policy", "trust_policy", "skill_portfolio",
+    "content_zones", "isolation", "versioning"
+  ],
+  "properties": {
+    "schema_version": {"const": "agent-skill-architecture.v1"},
+    "contract_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "canonical_roots": {
+      "type": "object", "additionalProperties": false,
+      "required": ["global", "project"],
+      "properties": {"global": {"const": "~/.agents/skills"}, "project": {"const": ".agents/skills"}}
+    },
+    "providers": {
+      "type": "object", "additionalProperties": false,
+      "required": ["claude", "codex", "hermes"],
+      "properties": {
+        "claude": {"$ref": "#/$defs/claude_provider"},
+        "codex": {"$ref": "#/$defs/codex_provider"},
+        "hermes": {"$ref": "#/$defs/hermes_provider"}
+      }
+    },
+    "llmwiki_profile": {
+      "type": "object", "additionalProperties": false,
+      "required": ["applies_when", "project_canonical_facade", "agents_bridge", "codex_bridge", "content_rule"],
+      "properties": {
+        "applies_when": {"const": "repository declares the LLMWiki project-skill convention"},
+        "project_canonical_facade": {"const": ".claude/skills"},
+        "agents_bridge": {"$ref": "#/$defs/llmwiki_agents_bridge"},
+        "codex_bridge": {"$ref": "#/$defs/llmwiki_codex_bridge"},
+        "content_rule": {"const": "Each .claude/skills entry is the sole project alias to one canonical skill source; no skill directory is copied."}
+      }
+    },
+    "collision_policy": {
+      "type": "object", "additionalProperties": false,
+      "required": ["mode", "identity", "allow_same_resolved_directory_alias", "allow_distinct_sources_with_same_name"],
+      "properties": {
+        "mode": {"const": "fail-closed"}, "identity": {"const": "frontmatter.name"},
+        "allow_same_resolved_directory_alias": {"const": true},
+        "allow_distinct_sources_with_same_name": {"const": false}
+      }
+    },
+    "trust_policy": {
+      "type": "object", "additionalProperties": false,
+      "required": ["review_before_enable", "human_approval_before_install", "hermes_project_trust_key", "hermes_project_trust_command", "trusted_root_must_equal_git_root", "symlink_targets_must_be_allowlisted"],
+      "properties": {
+        "review_before_enable": {"const": true}, "human_approval_before_install": {"const": true},
+        "hermes_project_trust_key": {"const": "skills.trusted_project_dirs"},
+        "hermes_project_trust_command": {"const": "hermes skills trust <repo>"},
+        "trusted_root_must_equal_git_root": {"const": true},
+        "symlink_targets_must_be_allowlisted": {"const": true}
+      }
+    },
+    "skill_portfolio": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/skill"}},
+    "content_zones": {
+      "type": "object", "additionalProperties": false,
+      "required": ["global_engine", "brand_package", "commercial_project"],
+      "properties": {
+        "global_engine": {"$ref": "#/$defs/global_engine_zone"},
+        "brand_package": {"$ref": "#/$defs/brand_package_zone"},
+        "commercial_project": {"$ref": "#/$defs/commercial_project_zone"}
+      }
+    },
+    "isolation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["activation_file", "lock_file", "work_root_template", "cache_root_template", "output_root_template", "cache_key_fields", "exactly_one_brand_per_run", "reject_unresolved_or_ambiguous_brand"],
+      "properties": {
+        "activation_file": {"const": ".brandkit/project.json"}, "lock_file": {"const": ".brandkit/skill-lock.json"},
+        "work_root_template": {"const": ".brandkit/work/<brand-id>/<run-id>"},
+        "cache_root_template": {"const": ".brandkit/cache/<project-root-realpath-hash>/<brand-id>/<brand-version>/<engine-version>"},
+        "output_root_template": {"const": "output/<brand-id>/<run-id>"},
+        "cache_key_fields": {"$ref": "#/$defs/cache_key_fields"},
+        "exactly_one_brand_per_run": {"const": true}, "reject_unresolved_or_ambiguous_brand": {"const": true}
+      }
+    },
+    "versioning": {
+      "type": "object", "additionalProperties": false,
+      "required": ["required_pin_fields", "source_locator_format", "immutable_release_store", "activation_strategy", "update_gate", "rollback_strategy", "floating_versions_allowed", "retain_previous_release"],
+      "properties": {
+        "required_pin_fields": {"$ref": "#/$defs/pin_fields"},
+        "source_locator_format": {"const": "snapshot:<normalized-relative-path>@sha256:<64-lowercase-hex>"},
+        "immutable_release_store": {"const": "~/.agents/skill-store/<skill-name>/<version>"},
+        "activation_strategy": {"const": "atomic-symlink-swap"},
+        "update_gate": {"const": "review-diff-validate-smoke-approve"},
+        "rollback_strategy": {"const": "restore-previous-lock-and-symlink-target"},
+        "floating_versions_allowed": {"const": false}, "retain_previous_release": {"const": true}
+      }
+    }
+  },
+  "$defs": {
+    "claude_provider": {
+      "type": "object", "additionalProperties": false,
+      "required": ["global_discovery", "global_bridge", "global_bridge_target", "project_discovery", "project_bridge", "project_bridge_target"],
+      "properties": {
+        "global_discovery": {"const": "~/.claude/skills"}, "global_bridge": {"const": "per-skill-symlink"},
+        "global_bridge_target": {"const": "~/.agents/skills/<skill-name>"}, "project_discovery": {"const": ".claude/skills"},
+        "project_bridge": {"const": "root-symlink"}, "project_bridge_target": {"const": "../.agents/skills"}
+      }
+    },
+    "codex_provider": {
+      "type": "object", "additionalProperties": false,
+      "required": ["global_discovery", "global_bridge", "global_bridge_target", "project_discovery", "project_bridge", "project_bridge_target"],
+      "properties": {
+        "global_discovery": {"const": "~/.agents/skills"}, "global_bridge": {"const": "native"},
+        "global_bridge_target": {"type": "null"}, "project_discovery": {"const": ".agents/skills"},
+        "project_bridge": {"const": "native"}, "project_bridge_target": {"type": "null"}
+      }
+    },
+    "hermes_provider": {
+      "type": "object", "additionalProperties": false,
+      "required": ["global_discovery", "global_bridge", "global_bridge_target", "project_discovery", "project_bridge", "project_bridge_target"],
+      "properties": {
+        "global_discovery": {"const": "skills.external_dirs"}, "global_bridge": {"const": "config-reference"},
+        "global_bridge_target": {"const": "~/.agents/skills"}, "project_discovery": {"const": ".agents/skills"},
+        "project_bridge": {"const": "trusted-native"}, "project_bridge_target": {"type": "null"}
+      }
+    },
+    "llmwiki_agents_bridge": {
+      "type": "object", "additionalProperties": false, "required": ["path", "target"],
+      "properties": {"path": {"const": ".agents/skills"}, "target": {"const": "../.claude/skills"}}
+    },
+    "llmwiki_codex_bridge": {
+      "type": "object", "additionalProperties": false, "required": ["path", "target"],
+      "properties": {"path": {"const": ".codex/skills"}, "target": {"const": "../.claude/skills"}}
+    },
+    "skill": {
+      "type": "object", "additionalProperties": false,
+      "required": ["name", "lifecycle", "scope", "kind", "source", "activation", "brand_content_allowed"],
+      "properties": {
+        "name": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$", "minLength": 1},
+        "lifecycle": {"enum": ["existing", "existing-external", "planned"]},
+        "scope": {"enum": ["global", "project-local", "optional"]},
+        "kind": {"enum": ["engine", "external-engine", "project-workflow", "catalog-policy", "project-workflow-set"]},
+        "source": {"type": "string", "minLength": 1},
+        "activation": {"enum": ["model-invoked", "explicit-project-opt-in", "llmwiki-projects-only", "per-skill-review-and-opt-in"]},
+        "brand_content_allowed": {"const": false}
+      }
+    },
+    "global_engine_zone": {
+      "type": "object", "additionalProperties": false, "required": ["allowed", "forbidden"],
+      "properties": {
+        "allowed": {"type": "array", "minItems": 5, "maxItems": 5, "uniqueItems": true, "items": {"enum": ["skill instructions", "provider-neutral scripts", "schemas", "shared runtime", "generic fixtures"]}},
+        "forbidden": {"type": "array", "minItems": 4, "maxItems": 4, "uniqueItems": true, "items": {"enum": ["brand assets", "customer inputs", "project outputs", "secrets"]}}
+      }
+    },
+    "brand_package_zone": {
+      "type": "object", "additionalProperties": false, "required": ["scope", "allowed", "forbidden"],
+      "properties": {
+        "scope": {"const": "private-versioned-data"},
+        "allowed": {"type": "array", "minItems": 7, "maxItems": 7, "uniqueItems": true, "items": {"enum": ["voice profile", "design tokens", "fonts", "logos", "document types", "rights metadata", "brand version"]}},
+        "forbidden": {"type": "array", "minItems": 4, "maxItems": 4, "uniqueItems": true, "items": {"enum": ["renderer fork", "customer content", "project outputs", "secrets"]}}
+      }
+    },
+    "commercial_project_zone": {
+      "type": "object", "additionalProperties": false, "required": ["scope", "allowed", "forbidden"],
+      "properties": {
+        "scope": {"const": "project-local"},
+        "allowed": {"type": "array", "minItems": 5, "maxItems": 5, "uniqueItems": true, "items": {"enum": ["explicit brand activation", "version lock", "customer inputs", "project overrides", "project outputs"]}},
+        "forbidden": {"type": "array", "minItems": 2, "maxItems": 2, "uniqueItems": true, "items": {"enum": ["silent brand fallback", "cross-project output paths"]}}
+      }
+    },
+    "cache_key_fields": {"type": "array", "minItems": 4, "maxItems": 4, "uniqueItems": true, "items": {"enum": ["project-root-realpath-hash", "brand-id", "brand-version", "engine-version"]}},
+    "pin_fields": {"type": "array", "minItems": 4, "maxItems": 4, "uniqueItems": true, "items": {"enum": ["name", "version", "source_locator", "content_sha256"]}}
+  }
+}

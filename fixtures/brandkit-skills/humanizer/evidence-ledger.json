@@ -1,0 +1,23 @@
+{
+  "schema_version": 2,
+  "extraction_policy": {
+    "mode": "default"
+  },
+  "anchors": {
+    "number": [
+      "200"
+    ],
+    "date": [],
+    "url": [],
+    "doi": [],
+    "paragraph": [],
+    "code": [],
+    "quote": [
+      "verlässlich"
+    ],
+    "proper_name": [
+      "BrandKit",
+      "Dokumentation Status"
+    ]
+  }
+}

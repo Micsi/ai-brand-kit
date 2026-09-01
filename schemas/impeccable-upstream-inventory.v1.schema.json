@@ -1,0 +1,8 @@
+{
+  "$id": "impeccable-upstream-inventory.v1.schema.json", "type": "object", "additionalProperties": false,
+  "required": ["schema_version", "commit", "references", "scripts"],
+  "properties": {"schema_version": {"const": "impeccable-upstream-inventory.v1"}, "commit": {"const": "fcd7622cd2d8e2b09344ba8ede9fcac82cec4e70"},
+    "references": {"type": "array", "minItems": 39, "maxItems": 39, "uniqueItems": true, "items": {"type": "string", "pattern": "^\\.agents/skills/impeccable/reference/.+"}},
+    "scripts": {"type": "array", "minItems": 108, "maxItems": 108, "uniqueItems": true, "items": {"type": "string", "pattern": "^\\.agents/skills/impeccable/scripts/.+"}}
+  }
+}

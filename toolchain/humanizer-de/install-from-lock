@@ -1,0 +1,298 @@
+#!/usr/bin/env bash
+set -eEuo pipefail
+ROOT=$(cd "$(dirname "$0")" && pwd); LOCK="$ROOT/toolchain.lock.json"; REQ="$ROOT/requirements-precise.lock.txt"
+INSTALL_HOME=${HUMANIZER_HOME:-$HOME}
+
+read_lock() { python3.12 - "$LOCK" "$1" <<'PY'
+import json,sys
+v=json.load(open(sys.argv[1]));
+for p in sys.argv[2].split('.'): v=v[p]
+print(v)
+PY
+}
+VERSION=$(read_lock skill.version); REVISION=$(read_lock skill.source_revision)
+REPOSITORY=${HUMANIZER_SOURCE_REPOSITORY:-$(read_lock skill.repository)}
+ARCHIVE_SHA=$(read_lock skill.git_archive_sha256); CONTENT_SHA=$(read_lock skill.content_sha256)
+PYTHON_VERSION=$(read_lock python.version)
+
+set_paths() {
+ RELEASE="$INSTALL_HOME/.agents/skill-store/humanizer-de/$VERSION"
+ ACTIVATION="$INSTALL_HOME/.agents/skills/humanizer-de"; CLAUDE_BRIDGE="$INSTALL_HOME/.claude/skills/humanizer-de"
+ ACTIVE_LOCK="$INSTALL_HOME/.agents/.skill-lock.json"; KNOWN="$INSTALL_HOME/.claude/plugins/known_marketplaces.json"
+}
+set_paths
+cleanup_path() { python3.12 - "$1" <<'PY'
+import os,pathlib,shutil,stat,sys
+p=pathlib.Path(sys.argv[1])
+if p.is_symlink() or p.is_file(): p.unlink(missing_ok=True)
+elif p.exists():
+ for root,dirs,files in os.walk(p):
+  os.chmod(root,stat.S_IRWXU)
+  for f in files:
+   try: os.chmod(pathlib.Path(root)/f,stat.S_IRWXU)
+   except OSError: pass
+ shutil.rmtree(p)
+PY
+}
+content_hash() { python3.12 - "$1" <<'PY'
+import hashlib,os,pathlib,sys
+r=pathlib.Path(sys.argv[1]); d=hashlib.sha256(); skip={'.git','.venv','__pycache__','.pytest_cache'}
+for p in sorted(r.rglob('*'),key=lambda x:x.relative_to(r).as_posix()):
+ q=p.relative_to(r)
+ if any(x in skip for x in q.parts) or p.suffix=='.pyc': continue
+ e=q.as_posix().encode()
+ if p.is_symlink(): d.update(b'L\0'+e+b'\0'+os.readlink(p).encode()+b'\0')
+ elif p.is_file(): d.update(b'F\0'+e+b'\0'+hashlib.sha256(p.read_bytes()).digest())
+print(d.hexdigest())
+PY
+}
+
+# Select documented path fields only; never emit config contents or arbitrary values.
+provider_roots() { python3.12 - "$LOCK" "$INSTALL_HOME" <<'PY'
+import json,os,pathlib,subprocess,sys,tomllib
+lock=json.load(open(sys.argv[1])); home=pathlib.Path(sys.argv[2]).resolve()
+def xp(v):
+ if not isinstance(v,str): return None
+ if v.startswith('~'): v=str(home)+v[1:]
+ p=pathlib.Path(os.path.expandvars(v)); return str(p.resolve(strict=False)) if p.is_absolute() else None
+roots={str((home/p).resolve(strict=False)) for p in ['.agents/skills','.codex/skills','.codex/plugins','.claude/skills','.claude/plugins/cache','.claude/plugins/marketplaces','.hermes/skills','.hermes/hermes-agent/skills','.hermes/hermes-agent/plugins']}
+p=home/'.codex/config.toml'
+if p.is_file():
+ for v in (tomllib.loads(p.read_text()).get('marketplaces') or {}).values():
+  q=xp(v.get('source')) if isinstance(v,dict) else None
+  if q: roots.add(q)
+for rel in ['.claude/plugins/known_marketplaces.json','.claude/plugins/installed_plugins.json']:
+ p=home/rel
+ if not p.is_file(): continue
+ def walk(v):
+  if isinstance(v,dict):
+   for k,x in v.items():
+    q=xp(x) if k in ('installLocation','installPath') else None
+    if q: roots.add(q)
+    elif k not in ('installLocation','installPath'): walk(x)
+  elif isinstance(v,list):
+   for x in v: walk(x)
+ walk(json.loads(p.read_text()))
+for p in [home/'.hermes/config.yaml',*sorted((home/'.hermes/profiles').glob('*/config.yaml'))]:
+ if not p.is_file(): continue
+ code='d=YAML.safe_load(File.read(ARGV[0]), aliases:false)||{}; puts JSON.generate(d.dig("skills","external_dirs")||[])'
+ out=subprocess.run(['ruby','-rjson','-ryaml','-e',code,str(p)],check=True,capture_output=True,text=True).stdout
+ for v in json.loads(out):
+  q=xp(v)
+  if q: roots.add(q)
+allowed={xp(v) for v in lock['provider_roots']}; allowed.discard(None)
+unknown=[r for r in roots if not any(pathlib.Path(r)==pathlib.Path(a) or pathlib.Path(a) in pathlib.Path(r).parents for a in allowed)]
+if unknown:
+ print('unknown provider-visible roots (add deliberately to lock allowlist):',file=sys.stderr)
+ for r in sorted(unknown): print(r,file=sys.stderr)
+ raise SystemExit(1)
+for r in sorted(roots): print(r)
+PY
+}
+
+inventory() {
+ mode=${1:-strict}; report=$(mktemp "${TMPDIR:-/tmp}/humanizer-inventory.XXXXXX"); collision=$(mktemp "${TMPDIR:-/tmp}/humanizer-collision.XXXXXX"); roots=()
+ while IFS= read -r p; do if [ -e "$p" ] || [ -L "$p" ]; then roots+=("$p"); fi; done < <(provider_roots)
+ if [ ${#roots[@]} -gt 0 ]; then
+  while IFS= read -r f; do
+   name=$(ruby -ryaml -rdate -e 'x=File.read(ARGV[0]); l=x.lines; exit unless l.first&.strip=="---"; i=l[1..]&.index{|z|z.strip=="---"}; abort("frontmatter") unless i; d=YAML.safe_load(l[1,i].join,permitted_classes:[Date],aliases:false); print d["name"] if d.is_a?(Hash)&&d["name"].is_a?(String)' "$f") || { cleanup_path "$report"; cleanup_path "$collision"; return 1; }
+   [[ "$name" == *humanizer* ]] || continue
+   real=$(dirname "$(python3.12 -c 'import os,sys;print(os.path.realpath(sys.argv[1]))' "$f")")
+   printf '%s\t%s\t%s\n' "$name" "$real" "$f" >> "$report"
+   if [ "$name" = humanizer-de ]; then printf '%s\t%s\n' "$real" "$f" >> "$collision"; fi
+  done < <(rg --follow -l --no-messages --glob SKILL.md --glob '!**/.venv/**' '^name:[[:space:]].*humanizer' "${roots[@]}" | sort -u)
+ fi
+ echo 'provider inventory (name, realpath, entry):'; if [ -s "$report" ]; then sort -u "$report"; else echo '(no Humanizer entries)'; fi
+ distinct=$(cut -f1 "$collision" | sort -u | wc -l | tr -d ' ')
+ if [ "$distinct" -gt 1 ]; then
+  [ "$mode" = migration ] || { echo "collision: $distinct canonical realpaths" >&2; cleanup_path "$report"; cleanup_path "$collision"; return 1; }
+  active=$(python3.12 -c 'import os,sys;print(os.path.realpath(sys.argv[1]))' "$ACTIVATION")
+  while IFS=$'\t' read -r real entry; do case "$real" in "$active"|"$active"/*|"$INSTALL_HOME/.claude/plugins/cache/humanizer-de"/*|"$INSTALL_HOME/.claude/plugins/marketplaces/humanizer-de"*) ;; *) echo "unapproved collision: $entry" >&2; return 1;; esac; done < "$collision"
+ fi
+ cleanup_path "$report"; cleanup_path "$collision"
+}
+
+closed_tree() { python3.12 - "$1" <<'PY'
+import pathlib,sys
+r=pathlib.Path(sys.argv[1]).resolve()
+for p in r.rglob('*'):
+ if p.is_symlink():
+  q=p.resolve(strict=True)
+  if q!=r and r not in q.parents: raise SystemExit(f'link escapes release: {p}')
+PY
+}
+verify_bootstrap() {
+ [ "$(python3.12 -c 'import ensurepip;print(ensurepip.version())')" = "$(read_lock python.bootstrap.version)" ]
+ wheel=$(python3.12 -c 'import ensurepip,pathlib;print(pathlib.Path(ensurepip.__file__).parent/"_bundled"/f"pip-{ensurepip.version()}-py3-none-any.whl")')
+ [ "$(shasum -a 256 "$wheel"|awk '{print $1}')" = "$(read_lock python.bootstrap.ensurepip_wheel_sha256)" ] || { echo 'ensurepip wheel differs' >&2; return 1; }
+}
+verify_python_environment() {
+ py=$1; [ "$($py -m pip --version|awk '{print $2}')" = "$(read_lock python.bootstrap.version)" ]
+ list=$($py -m pip list --format=freeze --disable-pip-version-check|LC_ALL=C sort -f)
+ [ "$(printf '%s\n' "$list"|wc -l|tr -d ' ')" = "$(read_lock python.installed_distribution_count)" ]
+ [ "$(printf '%s\n' "$list"|shasum -a 256|awk '{print $1}')" = "$(read_lock python.installed_distributions_sha256)" ]
+}
+verify_system_state() {
+ [ "$(uname -s)-$(uname -m)" = Darwin-arm64 ]; for c in git brew python3.12 ruby codex claude hermes rg; do command -v "$c" >/dev/null; done
+ [ "$(python3.12 -c 'import platform;print(platform.python_version())')" = "$PYTHON_VERSION" ]; verify_bootstrap
+ for f in hunspell languagetool openjdk@17; do [ "$(brew list --versions "$f"|awk '{print $2}')" = "$(read_lock system_tools.homebrew.$f.version)" ]; done
+ for x in aff dic; do file="$INSTALL_HOME/Library/Spelling/de_DE.$x"; [ "$(shasum -a 256 "$file"|awk '{print $1}')" = "$(read_lock system_tools.hunspell_dictionary.${x}_sha256)" ]; done
+ provider_roots >/dev/null
+}
+atomic_symlink() { target=$1; dest=$2; tmp="$(dirname "$dest")/.humanizer-next.$$"; ln -s "$target" "$tmp"; python3.12 - "$tmp" "$dest" <<'PY'
+import os,sys
+os.replace(sys.argv[1],sys.argv[2])
+PY
+}
+write_active_lock() { tmp="$ACTIVE_LOCK.next.$$"; python3.12 - "$ACTIVE_LOCK" "$tmp" "$VERSION" "$REVISION" "$CONTENT_SHA" "$RELEASE" <<'PY'
+import json,pathlib,sys
+s,t,v,r,h,p=sys.argv[1:]; q=pathlib.Path(s); d=json.loads(q.read_text()) if q.exists() else {'version':3,'skills':{}}
+d.setdefault('skills',{})['humanizer-de']={'name':'humanizer-de','version':v,'source_revision':r,'content_sha256':h,'release':p}
+pathlib.Path(t).write_text(json.dumps(d,indent=2,sort_keys=True)+'\n')
+PY
+ mv -f "$tmp" "$ACTIVE_LOCK"; }
+inject_failure() { [ "${HUMANIZER_FAIL_PHASE:-}" != "$1" ] || { echo "injected failure at $1" >&2; return 97; }; }
+cleanup_empty_archives() {
+ archive_parent="$INSTALL_HOME/.agents/skill-archive/humanizer-de"
+ [ ! -d "$archive_parent" ] || while IFS= read -r empty; do cleanup_path "$empty"; done < <(find "$archive_parent" -mindepth 1 -maxdepth 1 -type d -empty -print)
+}
+
+rollback_transaction() {
+ status=$1; set +e; errors=()
+ atomic_symlink "$OLD_ACTIVATION_TARGET" "$ACTIVATION" || errors+=('activation link')
+ atomic_symlink "$OLD_CLAUDE_TARGET" "$CLAUDE_BRIDGE" || errors+=('Claude link')
+ if [ -f "$BACKUP/skill-lock" ]; then cp -p "$BACKUP/skill-lock" "$ACTIVE_LOCK.restore" && mv -f "$ACTIVE_LOCK.restore" "$ACTIVE_LOCK" || errors+=('lock'); else cleanup_path "$ACTIVE_LOCK" || errors+=('new lock'); fi
+ if [ -f "$BACKUP/known" ]; then cp -p "$BACKUP/known" "$KNOWN.restore" && mv -f "$KNOWN.restore" "$KNOWN" || errors+=('marketplace'); else cleanup_path "$KNOWN" || errors+=('new marketplace'); fi
+ if [ -f "$ARCHIVED_PAIRS" ]; then
+  while IFS=$'\t' read -r src dst; do
+   if [ -e "$src" ] || [ -L "$src" ]; then
+    [ ! -e "$dst" ] && [ ! -L "$dst" ] || errors+=("legacy conflict $src")
+   elif [ -e "$dst" ] || [ -L "$dst" ]; then
+    mkdir -p "$(dirname "$src")" && mv "$dst" "$src" || errors+=("legacy $src")
+   else
+    errors+=("legacy missing $src")
+   fi
+  done < "$ARCHIVED_PAIRS"
+ fi
+ if [ -e "$RELEASE" ] || [ -L "$RELEASE" ]; then cleanup_path "$RELEASE" || errors+=('release'); fi
+ if [ -d "$ARCHIVE_ROOT" ]; then if [ -z "$(find "$ARCHIVE_ROOT" -mindepth 1 \( -type f -o -type l \) -print -quit)" ]; then cleanup_path "$ARCHIVE_ROOT" || errors+=('archive'); else errors+=('archive not empty'); fi; fi
+ [ "$(python3.12 -c 'import os,sys;print(os.path.realpath(sys.argv[1]))' "$ACTIVATION")" = "$OLD_ACTIVATION_REAL" ] || errors+=('activation postcondition')
+ [ "$(python3.12 -c 'import os,sys;print(os.path.realpath(sys.argv[1]))' "$CLAUDE_BRIDGE")" = "$OLD_CLAUDE_REAL" ] || errors+=('Claude postcondition')
+ set -e
+ if [ ${#errors[@]} -gt 0 ]; then echo "ROLLBACK FAILED: ${errors[*]}" >&2; return 98; fi
+ echo 'transaction rolled back completely' >&2; return "$status"
+}
+transaction_postcheck() { [ "${HUMANIZER_TRANSACTION_TEST:-0}" = 1 ] || { inventory strict; "$ROOT/smoke" "$ACTIVATION"; }; }
+
+# Every fallible mutation is checked explicitly. This remains correct even when
+# a caller invokes install_transaction in a conditional context where Bash
+# suppresses errexit recursively.
+transaction_step() {
+ line=$1; shift; "$@"; status=$?
+ if [ "$status" -ne 0 ]; then echo "transaction error at line $line" >&2; return "$status"; fi
+}
+install_transaction_body() {
+ transaction_step "$LINENO" mkdir -p "$(dirname "$RELEASE")" "$(dirname "$ACTIVATION")" "$(dirname "$CLAUDE_BRIDGE")" || return $?
+ transaction_step "$LINENO" mv "$STAGED_RELEASE" "$RELEASE" || return $?
+ transaction_step "$LINENO" chmod -R a-w "$RELEASE" || return $?
+ transaction_step "$LINENO" inject_failure after_release || return $?
+ for legacy in "$INSTALL_HOME/.claude/plugins/cache/humanizer-de" "$INSTALL_HOME/.claude/plugins/marketplaces/humanizer-de"; do
+  if [ -e "$legacy" ] || [ -L "$legacy" ]; then
+   relative=${legacy#"$INSTALL_HOME/.claude/plugins/"}; dst="$ARCHIVE_ROOT/$relative"
+   transaction_step "$LINENO" mkdir -p "$(dirname "$dst")" || return $?
+   transaction_step "$LINENO" mv "$legacy" "$dst" || return $?
+   transaction_step "$LINENO" printf '%s\t%s\n' "$legacy" "$dst" >> "$ARCHIVED_PAIRS" || return $?
+  fi
+ done
+ transaction_step "$LINENO" inject_failure after_archive || return $?
+ if [ -f "$KNOWN" ]; then transaction_step "$LINENO" python3.12 - "$KNOWN" <<'PY' || return $?
+import json,pathlib,sys
+p=pathlib.Path(sys.argv[1]); d=json.loads(p.read_text()); d.pop('humanizer-de',None); q=p.with_name(p.name+'.next'); q.write_text(json.dumps(d,indent=2)+'\n'); q.replace(p)
+PY
+ fi
+ transaction_step "$LINENO" inject_failure after_marketplace || return $?
+ transaction_step "$LINENO" atomic_symlink "../skill-store/humanizer-de/$VERSION" "$ACTIVATION" || return $?
+ transaction_step "$LINENO" atomic_symlink ../../.agents/skills/humanizer-de "$CLAUDE_BRIDGE" || return $?
+ transaction_step "$LINENO" inject_failure after_links || return $?
+ transaction_step "$LINENO" write_active_lock || return $?
+ transaction_step "$LINENO" inject_failure after_lock || return $?
+ transaction_step "$LINENO" transaction_postcheck || return $?
+ transaction_step "$LINENO" inject_failure after_smoke || return $?
+ release_real=$(python3.12 -c 'import os,sys;print(os.path.realpath(sys.argv[1]))' "$RELEASE")
+ transaction_step "$LINENO" test "$(python3.12 -c 'import os,sys;print(os.path.realpath(sys.argv[1]))' "$ACTIVATION")" = "$release_real" || return $?
+ transaction_step "$LINENO" test "$(python3.12 -c 'import os,sys;print(os.path.realpath(sys.argv[1]))' "$CLAUDE_BRIDGE")" = "$release_real" || return $?
+ transaction_step "$LINENO" inject_failure postconditions || return $?
+ transaction_step "$LINENO" cleanup_empty_archives || return $?
+}
+
+# Sole production mutation transaction; fault tests invoke this exact function.
+install_transaction() {
+ OLD_ACTIVATION_TARGET=$(readlink "$ACTIVATION"); OLD_CLAUDE_TARGET=$(readlink "$CLAUDE_BRIDGE")
+ OLD_ACTIVATION_REAL=$(python3.12 -c 'import os,sys;print(os.path.realpath(sys.argv[1]))' "$ACTIVATION"); OLD_CLAUDE_REAL=$(python3.12 -c 'import os,sys;print(os.path.realpath(sys.argv[1]))' "$CLAUDE_BRIDGE")
+ [ ! -f "$ACTIVE_LOCK" ] || cp -p "$ACTIVE_LOCK" "$BACKUP/skill-lock"; [ ! -f "$KNOWN" ] || cp -p "$KNOWN" "$BACKUP/known"
+ ARCHIVED_PAIRS="$BACKUP/archived-pairs"; : > "$ARCHIVED_PAIRS"
+ ARCHIVE_ROOT="$INSTALL_HOME/.agents/skill-archive/humanizer-de/$(date -u +%Y%m%dT%H%M%SZ)-$VERSION-$$"
+ set +e
+ install_transaction_body
+ status=$?
+ set -e
+ if [ "$status" -ne 0 ]; then
+  set +e; rollback_transaction "$status"; restored=$?; set -e
+  return "$restored"
+ fi
+}
+
+prepare_release() {
+ git clone --quiet --no-checkout "$REPOSITORY" "$STAGED_RELEASE"; git -C "$STAGED_RELEASE" checkout --quiet --detach "$REVISION"
+ [ "$(git -C "$STAGED_RELEASE" rev-parse HEAD)" = "$REVISION" ]; [ "$(git -C "$STAGED_RELEASE" archive --format=tar HEAD|shasum -a 256|awk '{print $1}')" = "$ARCHIVE_SHA" ]
+ python3.12 - "$STAGED_RELEASE" <<'PY'
+import pathlib,sys
+r=pathlib.Path(sys.argv[1]); old=r/'skills/humanizer-de/SKILL.md'; new=old.with_name('SKILL.bundle.md')
+if not old.is_file() or new.exists(): raise SystemExit('unexpected wrapper layout')
+old.rename(new); p=r/'scripts/doctor.py'; s=p.read_text(); n='root / "skills" / "humanizer-de" / "SKILL.md"'
+if s.count(n)!=2: raise SystemExit('unexpected doctor wrapper checks')
+p.write_text(s.replace(n,'root / "skills" / "humanizer-de" / "SKILL.bundle.md"'))
+PY
+ closed_tree "$STAGED_RELEASE"; [ "$(content_hash "$STAGED_RELEASE")" = "$CONTENT_SHA" ]; [ "$(find "$STAGED_RELEASE" -path '*/.venv' -prune -o -type f -name SKILL.md -print|wc -l|tr -d ' ')" = 1 ]
+ verify_bootstrap; python3.12 -m venv "$STAGED_RELEASE/.venv"; "$STAGED_RELEASE/.venv/bin/python" -m pip install --disable-pip-version-check --only-binary=:all: --require-hashes -r "$REQ"
+ verify_python_environment "$STAGED_RELEASE/.venv/bin/python"; "$ROOT/smoke" --staged "$STAGED_RELEASE"
+}
+
+run_rollback_tests() {
+ suite=$(mktemp -d "${TMPDIR:-/tmp}/humanizer-transaction-tests.XXXXXX"); trap 'cleanup_path "$suite"' EXIT
+ for phase in after_release after_archive after_marketplace after_links after_lock after_smoke postconditions; do
+  base="$suite/$phase"; INSTALL_HOME="$base/home"; set_paths; mkdir -p "$base/stage/release" "$base/old" "$INSTALL_HOME/.agents/skills" "$INSTALL_HOME/.claude/skills" "$INSTALL_HOME/.claude/plugins/cache/humanizer-de" "$INSTALL_HOME/.claude/plugins/marketplaces/humanizer-de"
+  printf x > "$base/stage/release/SKILL.md"; ln -s ../../../old "$ACTIVATION"; ln -s ../../.agents/skills/humanizer-de "$CLAUDE_BRIDGE"; printf '{"sentinel":"lock"}\n' > "$ACTIVE_LOCK"; printf '{"humanizer-de":{},"keep":true}\n' > "$KNOWN"; printf x > "$INSTALL_HOME/.claude/plugins/cache/humanizer-de/x"; printf x > "$INSTALL_HOME/.claude/plugins/marketplaces/humanizer-de/x"
+  cp -p "$ACTIVE_LOCK" "$base/lock"; cp -p "$KNOWN" "$base/known"; STAGE="$base/stage"; BACKUP="$STAGE/backup"; mkdir -p "$BACKUP"; STAGED_RELEASE="$STAGE/release"
+  set +e; output=$(export HUMANIZER_TRANSACTION_TEST=1 HUMANIZER_FAIL_PHASE="$phase"; install_transaction 2>&1); status=$?; set -e
+  [ "$status" -ne 0 ]; cmp -s "$base/lock" "$ACTIVE_LOCK"; cmp -s "$base/known" "$KNOWN"; [ "$(readlink "$ACTIVATION")" = ../../../old ]; [ -f "$INSTALL_HOME/.claude/plugins/cache/humanizer-de/x" ]; [ -f "$INSTALL_HOME/.claude/plugins/marketplaces/humanizer-de/x" ]; [ ! -e "$RELEASE" ]
+  [ "$(printf '%s\n' "$output" | grep -c '^transaction error at line ')" = 1 ]; [ "$(printf '%s\n' "$output" | grep -c '^transaction rolled back completely$')" = 1 ]; [ "$(printf '%s\n' "$output" | grep -c '^ROLLBACK FAILED:')" = 0 ]
+  archive_parent="$INSTALL_HOME/.agents/skill-archive/humanizer-de"
+  [ ! -d "$archive_parent" ] || [ -z "$(find "$archive_parent" -mindepth 1 -print -quit)" ]
+ done
+ # Reproduce the original postcheck return status (93) and prove that no
+ # command after it runs, while the same production transaction restores both
+ # nested legacy snapshots.
+ base="$suite/line93"; INSTALL_HOME="$base/home"; set_paths; mkdir -p "$base/stage/release" "$base/old" "$INSTALL_HOME/.agents/skills" "$INSTALL_HOME/.claude/skills" "$INSTALL_HOME/.claude/plugins/cache/humanizer-de/deep" "$INSTALL_HOME/.claude/plugins/marketplaces/humanizer-de/deep"
+ printf x > "$base/stage/release/SKILL.md"; ln -s ../../../old "$ACTIVATION"; ln -s ../../.agents/skills/humanizer-de "$CLAUDE_BRIDGE"; printf x > "$INSTALL_HOME/.claude/plugins/cache/humanizer-de/deep/x"; printf x > "$INSTALL_HOME/.claude/plugins/marketplaces/humanizer-de/deep/x"
+ STAGE="$base/stage"; BACKUP="$STAGE/backup"; mkdir -p "$BACKUP"; STAGED_RELEASE="$STAGE/release"
+ transaction_postcheck() { return 93; }
+ set +e; output=$(install_transaction 2>&1); status=$?; set -e
+ [ "$status" = 93 ]; [ "$(printf '%s\n' "$output" | grep -c '^transaction error at line ')" = 1 ]; [ "$(printf '%s\n' "$output" | grep -c '^transaction rolled back completely$')" = 1 ]
+ [ -f "$INSTALL_HOME/.claude/plugins/cache/humanizer-de/deep/x" ]; [ -f "$INSTALL_HOME/.claude/plugins/marketplaces/humanizer-de/deep/x" ]; [ ! -e "$RELEASE" ]
+ archive_parent="$INSTALL_HOME/.agents/skill-archive/humanizer-de"; [ ! -d "$archive_parent" ] || [ -z "$(find "$archive_parent" -mindepth 1 -print -quit)" ]
+ mkdir -p "$base/retry-stage/release" "$base/retry-stage/backup"; printf x > "$base/retry-stage/release/SKILL.md"
+ STAGE="$base/retry-stage"; BACKUP="$STAGE/backup"; STAGED_RELEASE="$STAGE/release"
+ transaction_postcheck() { while IFS= read -r _; do :; done < <(false); return 0; }
+ retry_output="$base/retry-output"; install_transaction > "$retry_output" 2>&1; [ "$(grep -c '^transaction error at line ' "$retry_output")" = 0 ]
+ release_real=$(python3.12 -c 'import os,sys;print(os.path.realpath(sys.argv[1]))' "$RELEASE"); [ "$(python3.12 -c 'import os,sys;print(os.path.realpath(sys.argv[1]))' "$ACTIVATION")" = "$release_real" ]; [ "$(python3.12 -c 'import os,sys;print(os.path.realpath(sys.argv[1]))' "$CLAUDE_BRIDGE")" = "$release_real" ]
+ [ -f "$ARCHIVE_ROOT/cache/humanizer-de/deep/x" ]; [ -f "$ARCHIVE_ROOT/marketplaces/humanizer-de/deep/x" ]; [ ! -e "$INSTALL_HOME/.claude/plugins/cache/humanizer-de" ]; [ ! -e "$INSTALL_HOME/.claude/plugins/marketplaces/humanizer-de" ]
+ echo 'production transaction rollback passed at 7 injected phases, post-smoke failure, status 93, and same-home retry'
+}
+
+case "${1:-}" in
+ --preflight-only) provider_roots >/dev/null; inventory migration;;
+ --test-rollback) run_rollback_tests;;
+ --migrate-legacy) verify_system_state; inventory migration; [ ! -e "$RELEASE" ] || { echo "release exists: $RELEASE" >&2; exit 1; }; [ -L "$ACTIVATION" ] && [ -L "$CLAUDE_BRIDGE" ]; STAGE=$(mktemp -d "${TMPDIR:-/tmp}/humanizer-de.XXXXXX"); BACKUP="$STAGE/backup"; mkdir -p "$BACKUP"; STAGED_RELEASE="$STAGE/release"; trap 'cleanup_path "$STAGE"' EXIT; prepare_release; install_transaction; echo "installed humanizer-de $VERSION; archive: $ARCHIVE_ROOT";;
+ *) echo "usage: $0 --preflight-only | --migrate-legacy | --test-rollback" >&2; exit 2;;
+esac

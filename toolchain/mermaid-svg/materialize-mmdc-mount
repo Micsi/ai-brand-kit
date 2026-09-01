@@ -1,0 +1,5 @@
+#!/bin/sh
+set -eu
+if [ "$#" -ne 2 ]; then echo "usage: materialize-mmdc-mount WORKSPACE INVENTORY" >&2; exit 64; fi
+script_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd -P)
+exec python3 "$script_dir/linux_worker.py" materialize-mount "$1" "$2"

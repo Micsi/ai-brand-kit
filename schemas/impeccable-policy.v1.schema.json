@@ -1,0 +1,10 @@
+{
+  "$id": "impeccable-policy.v1.schema.json", "type": "object", "additionalProperties": false,
+  "required": ["schema_version", "brand", "impeccable", "capabilities", "required_provider", "reverse_sync"],
+  "properties": {"schema_version": {"const": "brandkit-impeccable-policy.v1"},
+    "brand": {"type": "object", "additionalProperties": false, "required": ["id", "version", "content_sha256"], "properties": {"id": {"type": "string"}, "version": {"type": "string"}, "content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}},
+    "impeccable": {"type": "object", "additionalProperties": false, "required": ["commit", "plugin_version"], "properties": {"commit": {"const": "fcd7622cd2d8e2b09344ba8ede9fcac82cec4e70"}, "plugin_version": {"const": "4.1.1"}}},
+    "capabilities": {"type": "object", "additionalProperties": false, "required": ["hooks", "update", "browser", "live", "image_generation", "network"], "properties": {"hooks": {"const": false}, "update": {"const": false}, "browser": {"const": false}, "live": {"const": false}, "image_generation": {"const": false}, "network": {"const": false}}},
+    "required_provider": {"type": "null"}, "reverse_sync": {"const": "human-review-only"}
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "schema_version": "mermaid-linux-worker.v2",
+  "platform": "linux-arm64",
+  "engine": "colima-docker",
+  "execution_model": "buildless-image-and-bind-mounts",
+  "engine_requirements": {
+    "minimum_server_version": "29.0.0",
+    "image_mount": true
+  },
+  "base_image": {
+    "reference": "zenika/alpine-chrome@sha256:3fa41c728e866a57795cd61b2c6ec8b886684e43be9f87c6d20b5c2e39a4ed0d",
+    "digest": "sha256:3fa41c728e866a57795cd61b2c6ec8b886684e43be9f87c6d20b5c2e39a4ed0d",
+    "loaded_image_id": "sha256:2f7aa79c135e2e43fbc99f2dc27b7051bfed0bfb250a8b2003a2e2e611407169",
+    "archive_path": "/Volumes/Daten/AgentStores/joh/runtime-store/mermaid-linux-worker-base-images/2cf317f110bd76d7c2e083a8277dd849605986f953611420cb4ed1886d38e448/image.tar",
+    "archive_sha256": "2cf317f110bd76d7c2e083a8277dd849605986f953611420cb4ed1886d38e448",
+    "archive_size": 279333888,
+    "chromium_version": "124.0.6367.78",
+    "source_revision": "3c33c2a1de2fbf81405a42e69040ad9cc17486d0"
+  },
+  "node_image": {
+    "reference": "node:22-alpine@sha256:c610fcdfb1d5b4740dd70c284ed3cb16bb857e0f7166196e36a5501df7a3aa32",
+    "digest": "sha256:c610fcdfb1d5b4740dd70c284ed3cb16bb857e0f7166196e36a5501df7a3aa32",
+    "loaded_image_id": "sha256:828963118f6838ebdaf6b01b9b24d10c5dffe2f4aaf3ebca33d0d3f74366833e",
+    "archive_path": "/Volumes/Daten/AgentStores/joh/runtime-store/mermaid-linux-worker-base-images/6e17560f9be664e4f19f4a5fb34d1b08e4d8b6de2d462885286f01e638046990/image.tar",
+    "archive_sha256": "6e17560f9be664e4f19f4a5fb34d1b08e4d8b6de2d462885286f01e638046990",
+    "archive_size": 58531328,
+    "node_version": "22.23.2"
+  },
+  "source_files": [
+    {"path": "toolchain/mermaid-svg/runtime.py", "sha256": "123365d8640ce4aeb3a8258721e7dd9f8cff64a83a220d7e2fd7d63ab6129f8d"},
+    {"path": "toolchain/mermaid-svg/linux_worker.py", "sha256": "ad43b2ad97d539110027df62e3f113d4631fe7d1e86f726cf16070c6972afb03"},
+    {"path": "toolchain/mermaid-svg/linux-worker-entrypoint", "sha256": "6250cc83c1f2073137437b8f95b9220e88ad94c864a744e4d07d359dd2559b1c"},
+    {"path": "toolchain/mermaid-svg/LINUX_PUPPETEER_CONFIG.json", "sha256": "7f115fa0f2cb51c88bf599e0cc1e682888827db98977beed085943d5b7d06234"},
+    {"path": "toolchain/mermaid-svg/MERMAID_CONFIG.json", "sha256": "57e6321b7a3a7168b3c07f5a2e26e4be1bd4b3c29f3126dcbd742ee93b18b6f7"},
+    {"path": "toolchain/mermaid-svg/package.json", "sha256": "2101e2cb29232454c856b8d9abe4df423b01bf7936ee3aa263a1c9092ebec235"},
+    {"path": "toolchain/mermaid-svg/package-lock.json", "sha256": "95105169465de88e690ca0c23deb0feb3f12ab919c64e0af3d142f5428b9ae5c"},
+    {"path": "toolchain/mermaid-svg/materialize-mmdc-mount", "sha256": "32e64b20b97a62419e26ead7df8c00c42a5bca69c6500f0f18a7d745d967fda0"},
+    {"path": "toolchain/mermaid-svg/render-linux-worker", "sha256": "189273896d3a7771e8333f8b0131400dc4664599042a15a434e6c2f4a05adf3a"},
+    {"path": "toolchain/mermaid-svg/chromium-userns-seccomp.json", "sha256": "1dbe30464f81f20ba1671989cb92a6010ca33a649b0ef7ecf073b4970b242828"}
+  ],
+  "package_lock_sha256": "95105169465de88e690ca0c23deb0feb3f12ab919c64e0af3d142f5428b9ae5c",
+  "artifact_bundle_tree_sha256": "3dcbf4ebfcbe0fb08e5b7261dbabf72b56c62517c875bbacd7b9dc75c2971120",
+  "runtime_mount": {
+    "path": "/Volumes/Daten/AgentStores/joh/runtime-store/mermaid-mmdc-mounts/e84af93266c2e067e08e55cb24f0b061529475f5948a2ec916ce19b63423fba4",
+    "inventory_sha256": "e84af93266c2e067e08e55cb24f0b061529475f5948a2ec916ce19b63423fba4",
+    "entry_count": 27119,
+    "size_bytes": 333957416
+  },
+  "policy": {
+    "network": "none",
+    "read_only_root": true,
+    "user": "1000:1000",
+    "cap_drop": ["ALL"],
+    "no_new_privileges": true,
+    "cpus": "1.0",
+    "memory": "768m",
+    "pids_limit": 128,
+    "timeout_seconds": 300,
+    "max_input_bytes": 65536,
+    "shm_size": "256m",
+    "seccomp_profile": {
+      "path": "toolchain/mermaid-svg/chromium-userns-seccomp.json",
+      "sha256": "1dbe30464f81f20ba1671989cb92a6010ca33a649b0ef7ecf073b4970b242828"
+    }
+  }
+}

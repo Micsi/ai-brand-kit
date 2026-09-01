@@ -1,0 +1,34 @@
+{
+  "accepted": true,
+  "provider": "claude",
+  "model": "claude-sonnet-4-5",
+  "mode": "sachlich",
+  "source_sha256": "89a4dd3f5e7bbaa7369d9f1286d90e2a2e35c240a419b108a96d6f02310a5cf3",
+  "skill_sha256": "92e8f4be7ba2d5f634e614a6ad2e6918abbc97d4b1ccb7f5bf330c712f197240",
+  "catalog_sha256": "9664a1c8c5bbb7700447042babba1c1b78cbf999f349643160cfd517bb6b5f2d",
+  "runner_sha256": "c1f62ed72120bc46e32c3a77555933bdac9dc2b6951ff79803809432c204e0d7",
+  "catalog_source_revision": "17059735ba1cd2eea7e66a517f79b91b0797b366",
+  "runner_source_revision": "17059735ba1cd2eea7e66a517f79b91b0797b366",
+  "raw_model_call_sha256": {
+    "audit": "c15d130fe0568b529a4e2c45a6212f7ebcbd43adab38a0d67c66e51d99756119",
+    "rewrite": "d1937b3c391a64606ec63db2a201969499933d9a8bc7f23645b34abb982d378f"
+  },
+  "brandkit_provenance_sha256": "87144597d2ff859f81d5f59f40adfb70d674c08bdaa8713bb406f79c7f8f44c3",
+  "prompt_sha256": {
+    "audit": "31e8bc1f217d8adda5fa513d03a4899f360dd2d58bc3d3171776654e69bffccf",
+    "rewrite": "f51d5cd78b48366a6306a0be97ff4e47ec5f5258afa9fde94b4d91e60753c9a6"
+  },
+  "preflight_sha256": "4639eab9c3216a67ee4f74488be2b62c7bceafb5fd8d967bd16fcf0ef468fc2f",
+  "candidate_count": 1,
+  "confirmed_candidate_count": 1,
+  "discarded_candidate_count": 0,
+  "advisory_count": 0,
+  "advisories": [],
+  "edit_count": 1,
+  "protected_violations": [],
+  "evidence_blockers": [],
+  "model_calls": 2,
+  "model_cost_usd": 0.0,
+  "started_utc": "2026-08-26T12:00:00+00:00",
+  "finished_utc": "2026-08-26T12:00:01+00:00"
+}

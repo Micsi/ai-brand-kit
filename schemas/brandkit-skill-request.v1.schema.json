@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "brandkit-skill-request.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "request_id", "skill", "input_artifacts", "state"],
+  "properties": {
+    "schema_version": {"const": "brandkit-skill-request.v1"},
+    "request_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]+$"},
+    "skill": {"enum": ["brandkit-setup", "brandkit-interview", "brandkit-build", "brandkit-spacing", "brandkit-publish"]},
+    "input_artifacts": {
+      "type": "array", "minItems": 1,
+      "items": {"type": "object", "additionalProperties": false, "required": ["role", "path", "sha256"], "properties": {
+        "role": {"type": "string", "minLength": 1}, "path": {"type": "string", "minLength": 1}, "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }}
+    },
+    "state": {"oneOf": [
+      {"type": "object", "additionalProperties": false, "required": ["write_target", "project_roots", "required_capabilities", "optional_renderer"], "properties": {
+        "write_target": {"enum": ["observed", "missing", "unknown"]}, "project_roots": {"type": "array", "items": {"type": "string"}},
+        "required_capabilities": {"type": "array", "items": {"enum": ["observed", "fallback", "missing", "unknown"]}}, "optional_renderer": {"enum": ["observed", "fallback", "missing", "unknown"]}
+      }},
+      {"type": "object", "additionalProperties": false, "required": ["owner", "axes", "conflicts", "legal_claims"], "properties": {
+        "owner": {"enum": ["confirmed", "missing", "unknown"]}, "axes": {"type": "array", "items": {"enum": ["sourced", "open", "not-applicable", "unknown"]}},
+        "conflicts": {"type": "array", "items": {"enum": ["resolved", "normative", "unknown"]}},
+        "legal_claims": {"type": "array", "items": {"enum": ["official-source", "todo-legal-review", "unsupported", "unknown"]}}
+      }},
+      {"type": "object", "additionalProperties": false, "required": ["provenance", "conflicts", "asset_rights", "brand_pin", "instruction_sources", "claude_bridge", "hermes_context"], "properties": {
+        "provenance": {"type": "array", "items": {"enum": ["complete", "missing", "unknown"]}}, "conflicts": {"type": "array", "items": {"enum": ["resolved", "normative", "unknown"]}},
+        "asset_rights": {"type": "array", "items": {"enum": ["verified", "unresolved", "unknown"]}}, "brand_pin": {"enum": ["verified", "missing", "unknown"]},
+        "instruction_sources": {"type": "array", "items": {"type": "string"}}, "claude_bridge": {"enum": ["CLAUDE.md -> AGENTS.md", "copy", "missing", "unknown"]},
+        "hermes_context": {"enum": ["cwd/AGENTS.md", ".hermes.md", "skill-discovery", "missing", "unknown"]}
+      }},
+      {"type": "object", "additionalProperties": false, "required": ["brand_pin", "target_medium", "target_scope", "inventory_artifact", "proposal_artifact", "normative_sources", "requested_output"], "properties": {
+        "brand_pin": {"enum": ["verified", "missing", "unknown"]},
+        "target_medium": {"enum": ["shared", "ui", "web", "pdf", "ambiguous", "unknown"]},
+        "target_scope": {"type": "string", "minLength": 1},
+        "inventory_artifact": {"type": "object", "additionalProperties": false, "required": ["path", "sha256"], "properties": {
+          "path": {"type": "string", "minLength": 1}, "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+        }},
+        "proposal_artifact": {"oneOf": [
+          {"type": "null"},
+          {"type": "object", "additionalProperties": false, "required": ["path", "sha256"], "properties": {
+            "path": {"type": "string", "minLength": 1}, "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+          }}
+        ]},
+        "normative_sources": {"type": "array", "minItems": 1, "items": {"enum": ["pinned-brand-package", "unconfirmed-proposal", "conflicting", "unknown"]}},
+        "requested_output": {"enum": ["audit-result", "unconfirmed-token-proposal", "ui-patch-handoff", "unknown"]}
+      }},
+      {"type": "object", "additionalProperties": false, "required": ["brand_pin", "facts", "todos", "rights", "legal_claims", "brand_conflicts", "markdown_contract", "humanizer_applicability", "humanizer_evidence", "impeccable_handoff", "renderer", "visual_review"], "properties": {
+        "brand_pin": {"enum": ["verified", "missing", "unknown"]}, "facts": {"type": "array", "items": {"enum": ["verified", "missing", "mutated", "unknown"]}},
+        "todos": {"type": "array", "items": {"type": "string"}}, "rights": {"enum": ["verified", "failed", "unknown"]},
+        "legal_claims": {"type": "array", "items": {"enum": ["official-source", "unsupported", "unknown"]}}, "brand_conflicts": {"type": "array", "items": {"enum": ["resolved", "normative", "unknown"]}},
+        "markdown_contract": {"enum": ["verified", "failed", "unknown"]},
+        "humanizer_applicability": {"const": "required"},
+        "humanizer_evidence": {"type": "string", "minLength": 1},
+        "impeccable_handoff": {"enum": ["not-applicable", "adapter-green", "parallel-ui-instructions", "invalid", "unknown"]},
+        "renderer": {"enum": ["verified", "failed", "unknown"]}, "visual_review": {"enum": ["verified", "failed", "unknown"]}
+      }}
+    ]}
+  }
+}

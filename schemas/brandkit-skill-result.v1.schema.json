@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "brandkit-skill-result.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "request_id", "skill", "decision", "blockers", "verified_artifacts", "raw_request_sha256", "error"],
+  "properties": {
+    "schema_version": {"const": "brandkit-skill-result.v1"},
+    "request_id": {"type": "string"},
+    "skill": {"type": "string", "minLength": 1},
+    "decision": {"enum": ["pass", "pass-with-fallback", "pass-with-todo", "package-draft-only", "package-ready", "publish", "blocked"]},
+    "blockers": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "verified_artifacts": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "raw_request_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "spacing_result": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_version", "inventory_sha256", "proposal_sha256", "assignment_count", "token_count", "exception_count", "findings", "handoff"],
+      "properties": {
+        "schema_version": {"const": "spacing-result.v1"},
+        "inventory_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "proposal_sha256": {"oneOf": [{"type": "null"}, {"type": "string", "pattern": "^[0-9a-f]{64}$"}]},
+        "assignment_count": {"type": "integer", "minimum": 0},
+        "token_count": {"type": "integer", "minimum": 0},
+        "exception_count": {"type": "integer", "minimum": 0},
+        "findings": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "handoff": {"enum": ["none", "brandkit-build", "brandkit-impeccable -> impeccable layout"]}
+      }
+    },
+    "error": {
+      "oneOf": [
+        {"type": "null"},
+        {"type": "object", "additionalProperties": false, "required": ["code", "class", "message"], "properties": {
+          "code": {"enum": ["raw-json-parse", "duplicate-key", "schema-validation", "request-load"]},
+          "class": {"type": "string", "minLength": 1},
+          "message": {"type": "string", "minLength": 1}
+        }}
+      ]
+    }
+  },
+  "allOf": [{
+    "if": {"properties": {"skill": {"const": "brandkit-spacing"}}, "required": ["skill"]},
+    "then": {"required": ["spacing_result"]},
+    "else": {"not": {"required": ["spacing_result"]}}
+  }]
+}

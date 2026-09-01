@@ -1,0 +1,43 @@
+{
+  "$id": "impeccable-design-sidecar.v2.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "generatedAt", "title", "extensions", "components", "narrative"],
+  "properties": {
+    "schemaVersion": {"const": 2},
+    "generatedAt": {"type": "string", "format": "date-time"},
+    "title": {"type": "string", "minLength": 1},
+    "extensions": {
+      "type": "object", "additionalProperties": false, "required": ["brandkitAdapter"],
+      "properties": {
+        "colorMeta": {"type": "object", "additionalProperties": {"type": "object"}},
+        "typographyMeta": {"type": "object", "additionalProperties": {"type": "object"}},
+        "shadows": {"type": "array", "items": {"$ref": "#/$defs/namedValue"}},
+        "motion": {"type": "array", "items": {"$ref": "#/$defs/namedValue"}},
+        "breakpoints": {"type": "array", "items": {"$ref": "#/$defs/namedValue"}},
+        "brandkitAdapter": {
+          "type": "object", "additionalProperties": false, "required": ["schemaVersion", "source", "assets"],
+          "properties": {
+            "schemaVersion": {"const": 1},
+            "source": {"type": "object", "additionalProperties": false, "required": ["brandId", "brandVersion", "contentSha256"], "properties": {"brandId": {"type": "string"}, "brandVersion": {"type": "string"}, "contentSha256": {"$ref": "#/$defs/sha256"}}},
+            "assets": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["id", "kind", "path", "sha256", "rights"], "properties": {"id": {"type": "string"}, "kind": {"enum": ["font", "logo"]}, "path": {"type": "string"}, "sha256": {"$ref": "#/$defs/sha256"}, "rights": {"type": "object"}}}}
+          }
+        }
+      }
+    },
+    "components": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["name", "kind", "refersTo", "description", "html", "css"], "properties": {"name": {"type": "string"}, "kind": {"enum": ["button", "input", "nav", "chip", "card", "custom"]}, "refersTo": {"type": "string"}, "description": {"type": "string"}, "html": {"type": "string"}, "css": {"type": "string"}}}},
+    "narrative": {
+      "type": "object", "additionalProperties": false,
+      "properties": {
+        "northStar": {"type": "string"}, "overview": {"type": "string"},
+        "keyCharacteristics": {"type": "array", "items": {"type": "string"}},
+        "rules": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["name", "body", "section"], "properties": {"name": {"type": "string"}, "body": {"type": "string"}, "section": {"enum": ["colors", "typography", "elevation"]}}}},
+        "dos": {"type": "array", "items": {"type": "string"}}, "donts": {"type": "array", "items": {"type": "string"}}
+      }
+    }
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "namedValue": {"type": "object", "additionalProperties": false, "required": ["name", "value"], "properties": {"name": {"type": "string"}, "value": {"type": "string"}, "purpose": {"type": "string"}}}
+  }
+}

@@ -1,0 +1,246 @@
+{
+  "hmac_sha256": "6700c7b452bd0d3504ffd82ce34cb60f7dd0c16e5337d3543fa5161385859fb7",
+  "issuer": "brandkit-production-renderer-v1",
+  "payload": {
+    "assets": [
+      {
+        "id": "diagram",
+        "media_type": "image/svg+xml",
+        "path": "assets/diagram.svg",
+        "sha256": "02d29918955c53625dd4bcab435ba0ed00d9e441a2280e5548f49ead899ccee8"
+      },
+      {
+        "id": "e2e-raster",
+        "media_type": "image/png",
+        "path": "assets/raster.png",
+        "sha256": "9cd75a808e3b1be94516d46e3a7eab4c52d0d4623da1b779a5aee2528389d1cf"
+      }
+    ],
+    "binding": {
+      "activation_sha256": "79e2c40772121db09fe5bf220d93f5a22e668d5d2fbb6c815d974f4a4d368d68",
+      "brand": {
+        "content_sha256": "0e897b278d46a1b520485eea3716a8113fc4b2f0356c139af0ceee6215b02008",
+        "id": "neutral-fixture",
+        "manifest_sha256": "e93a2580b892e0aee93132232d0aaa61256a4e5ddf3b509413f1d312f86fba49",
+        "version": "1.0.0"
+      },
+      "document_type": {
+        "id": "report",
+        "sha256": "3856f2e86321ef4842813a781f6e6204ded898597a5a83eff9e09f93082c5fe5",
+        "version": "1.0.0"
+      },
+      "humanizer_audit_sha256": "3c17b6834c7b9fa7df2ae6f9d32f27737055dd7c77effb2b395c637c43c834ca",
+      "markdown_contract_sha256": "5e54a95b00e8b778384f5cf1bfbcdbe721136e6142b9b31b9e6ffa1fce868ba4",
+      "owner_approval_sha256": "cbec85420832ae02483824ac5e4e22629a13a250e80b8f2d73cbf94fc6090a62",
+      "project_identity_sha256": "d39f4db8426d25dd53577cc26ff49abedba11b02864688c506efc386dfe714cb"
+    },
+    "brand_assets": [
+      {
+        "id": "neutral-font",
+        "media_type": "font/woff2",
+        "path": "assets/fonts/neutral.woff2",
+        "rights_path": "rights/neutral-font.rights.json",
+        "rights_sha256": "1f7f606406a8c38e9ca870cca72bffdca4a323c48618f38f1f17f90121d18bfd",
+        "sha256": "90e63b7ece5be977129137c0c774b6764adac69399b6c20d9ddc147cbe01819d"
+      },
+      {
+        "id": "neutral-logo",
+        "media_type": "image/svg+xml",
+        "path": "assets/logos/neutral.svg",
+        "rights_path": "rights/neutral-logo.rights.json",
+        "rights_sha256": "5fd7475dbdb7d8eb02e31cdf9c66f7e89c2c2c35e7d40282516a7c7e5a0c0af9",
+        "sha256": "b82446b1cbeb5bb1cf9de3138dbb7e2877c081806ff8006ee7bb565275cb4f57"
+      }
+    ],
+    "created_at": "2026-08-26T00:00:00Z",
+    "engine": {
+      "lock_path": "toolchain/pdf-renderer.production.v1.lock.json",
+      "lock_sha256": "5bb9e3fddf2bf5919ed3fc247d7aa0d439828ce42d510f212edbcf4d21c1f180",
+      "name": "brandkit-pdf-renderer",
+      "version": "1.2.28"
+    },
+    "exit": {
+      "code": 0,
+      "errors": [],
+      "warnings": []
+    },
+    "figures": [
+      {
+        "caption": "Ablauf",
+        "caption_text": "Abbildung 1: Ablauf — Zwei verbundene neutrale Schritte — Quelle: source-one",
+        "description": "Zwei verbundene neutrale Schritte",
+        "id": "fig-flow-rich",
+        "number": 1,
+        "reference_count": 2,
+        "reference_text": "Abbildung 1",
+        "type": "mermaid"
+      },
+      {
+        "caption": "Abhängigkeiten",
+        "caption_text": "Abbildung 2: Abhängigkeiten — Drei gerichtete neutrale Komponenten — Quelle: source-one",
+        "description": "Drei gerichtete neutrale Komponenten",
+        "id": "fig-dependencies-rich",
+        "number": 2,
+        "reference_count": 2,
+        "reference_text": "Abbildung 2",
+        "type": "graphviz"
+      }
+    ],
+    "final_input_sha256": "e52d5a88c5888b9d2fa735fbe01a449ae80d3e67757a2d772941c6de3fa557a1",
+    "graphviz": [
+      {
+        "brand_projection": {
+          "colors": {
+            "accent": "#3AAFA9",
+            "background": "#FFFFFF",
+            "muted": "#5D6873",
+            "primary": "#172A3A",
+            "surface": "#EDF4F4",
+            "text": "#172A3A"
+          },
+          "contrast": {
+            "primary_on_background": 14.699,
+            "text_on_background": 14.699,
+            "text_on_surface": 13.192
+          },
+          "font": {
+            "asset_id": "neutral-font",
+            "asset_sha256": "90e63b7ece5be977129137c0c774b6764adac69399b6c20d9ddc147cbe01819d",
+            "derivative_sha256": "8809dcad25318225052f88333e208c5aad4adcb7b2c934c135735ec19aa410b4",
+            "family": "BrandKit-neutral-font"
+          },
+          "font_embedded": true,
+          "forbidden_fallbacks_absent": true,
+          "line_role": "accent",
+          "svg_sha256": "99b6c101ba4e6c8f7a33faa1effd89e83b812c65b39a695a86de61db93a85cbd"
+        },
+        "id": "fig-dependencies-rich",
+        "source_path": "renderer-work/fig-dependencies-rich.dot",
+        "source_sha256": "d97a42e92ec9f6d719457968ae23ba1a9c9533f6cd7f2dc9231ef14e7f434db5",
+        "svg_path": "renderer-work/fig-dependencies-rich.svg",
+        "svg_sha256": "99b6c101ba4e6c8f7a33faa1effd89e83b812c65b39a695a86de61db93a85cbd",
+        "toolchain_lock_sha256": "7e5fadcbb32a7038b96c1535f0c0e58ed581f08adb959d7bbb341e03191de5ef"
+      }
+    ],
+    "mermaid": [
+      {
+        "brand_projection": {
+          "colors": {
+            "accent": "#3AAFA9",
+            "background": "#FFFFFF",
+            "muted": "#5D6873",
+            "primary": "#172A3A",
+            "surface": "#EDF4F4",
+            "text": "#172A3A"
+          },
+          "contrast": {
+            "primary_on_background": 14.699,
+            "text_on_background": 14.699,
+            "text_on_surface": 13.192
+          },
+          "font": {
+            "asset_id": "neutral-font",
+            "asset_sha256": "90e63b7ece5be977129137c0c774b6764adac69399b6c20d9ddc147cbe01819d",
+            "derivative_sha256": "8809dcad25318225052f88333e208c5aad4adcb7b2c934c135735ec19aa410b4",
+            "family": "BrandKit-neutral-font"
+          },
+          "font_embedded": true,
+          "forbidden_fallbacks_absent": true,
+          "line_role": "accent",
+          "svg_sha256": "7dcbf13a69ab9253b0b1d647162b6781edbd62427fceb1dbe12d62f3b4e1edca"
+        },
+        "config_path": "renderer-work/fig-flow-rich-linux-worker/brand-config.json",
+        "config_sha256": "6b024577454e6ed9921e9a4a71f6a2d7110e9b76982d58e43886de5c64eee807",
+        "id": "fig-flow-rich",
+        "linux_worker": {
+          "base_image_id": "sha256:3fa41c728e866a57795cd61b2c6ec8b886684e43be9f87c6d20b5c2e39a4ed0d",
+          "config_sha256": "6b024577454e6ed9921e9a4a71f6a2d7110e9b76982d58e43886de5c64eee807",
+          "duration_seconds": 15.20125,
+          "network": "none",
+          "node_image_id": "sha256:c610fcdfb1d5b4740dd70c284ed3cb16bb857e0f7166196e36a5501df7a3aa32",
+          "png_sha256": "131435ba13ce972413750787a1e476b1205a5b8b9e50f8c44c25798ef7b8e214",
+          "runtime_mount_inventory_sha256": "e84af93266c2e067e08e55cb24f0b061529475f5948a2ec916ce19b63423fba4",
+          "sandbox_disable_flags": [],
+          "svg_sha256": "785c96c0f9f307b15855d6895757ee9978637e01e931392d0ef74f5ee4226ab4"
+        },
+        "raster_path": "renderer-work/fig-flow-rich-linux-worker/output.png",
+        "raster_sha256": "131435ba13ce972413750787a1e476b1205a5b8b9e50f8c44c25798ef7b8e214",
+        "source_path": "renderer-work/fig-flow-rich-linux-worker/input.mmd",
+        "source_sha256": "00fccde88b9ef19c089677244362d827b4dc6720f667e80bb814c1f54d526e7c",
+        "svg_path": "renderer-work/fig-flow-rich-linux-worker/output.svg",
+        "svg_sha256": "7dcbf13a69ab9253b0b1d647162b6781edbd62427fceb1dbe12d62f3b4e1edca",
+        "toolchain_lock_sha256": "8f428ec9d194f26a862effb5899d9dc30a03598a49a99babdc57dcda962d1da9",
+        "worker_svg_path": "renderer-work/fig-flow-rich-linux-worker/worker-output.svg",
+        "worker_svg_sha256": "785c96c0f9f307b15855d6895757ee9978637e01e931392d0ef74f5ee4226ab4"
+      }
+    ],
+    "nonce": "brandkit-render-0001",
+    "output_pdf": {
+      "path": "rich-report.pdf",
+      "sha256": "068ec1c8053865c4a693a28cf3d1d8f58054b35b95b23097170b8ff7f6b7f628"
+    },
+    "pages": {
+      "content": [
+        {
+          "index": 2,
+          "label": "Seite 1 von 4",
+          "number": 1
+        },
+        {
+          "index": 3,
+          "label": "Seite 2 von 4",
+          "number": 2
+        },
+        {
+          "index": 4,
+          "label": "Seite 3 von 4",
+          "number": 3
+        },
+        {
+          "index": 5,
+          "label": "Seite 4 von 4",
+          "number": 4
+        }
+      ],
+      "count": 5,
+      "title": {
+        "index": 1,
+        "label": null
+      }
+    },
+    "visual_qa": {
+      "dpi": 144,
+      "page_pngs": [
+        {
+          "index": 1,
+          "path": "pages/page-1.png",
+          "sha256": "6052e8f0e66785bc3a821732bd283619221d913bc9a1db9047feed445ef7c190"
+        },
+        {
+          "index": 2,
+          "path": "pages/page-2.png",
+          "sha256": "ac711939d8331aaf19059c0e947f51b0dfa92730590630d62796801196bace5e"
+        },
+        {
+          "index": 3,
+          "path": "pages/page-3.png",
+          "sha256": "8d3a126ff8b936d26fcf3e7cb8cbc2ecac1af6c3b3608d2a9b9062c0b3148d3a"
+        },
+        {
+          "index": 4,
+          "path": "pages/page-4.png",
+          "sha256": "2c846849e6dcbb34f329d1ffbb19b8c3d009e66559bd01def6bce49e31b21563"
+        },
+        {
+          "index": 5,
+          "path": "pages/page-5.png",
+          "sha256": "32b5f3753b84a909899fdbe0e26d64d4e4b749cfbf69e83374b0a9f76bd5e132"
+        }
+      ],
+      "path": "visual-qa.json",
+      "sha256": "be9bfda5739d8ab123e597efd9b0e6bb03a3ee4c9a1a3aa169be7bebe863aea9",
+      "status": "pass"
+    }
+  },
+  "schema_version": "render-result.v1"
+}

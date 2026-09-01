@@ -1,0 +1,4 @@
+{
+  "$id": "brand-registry-index.v1.schema.json", "type": "object", "additionalProperties": false, "required": ["schema_version", "entries"],
+  "properties": {"schema_version": {"const": "brand-registry-index.v1"}, "entries": {"type": "array", "minItems": 1, "items": {"type": "object", "additionalProperties": false, "required": ["brand_id", "version", "content_sha256", "immutable_release_locator"], "properties": {"brand_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]{1,62}$"}, "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"}, "content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "immutable_release_locator": {"type": "string", "pattern": "^releases/[a-z0-9-]+/[0-9]+\\.[0-9]+\\.[0-9]+/[0-9a-f]{64}$"}}}}}
+}

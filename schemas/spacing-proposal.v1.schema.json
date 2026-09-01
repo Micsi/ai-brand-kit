@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "spacing-proposal.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "status", "mode", "source", "primitives", "roles"],
+  "properties": {
+    "schema_version": {"const": "spacing-proposal.v1"},
+    "status": {"const": "unconfirmed"},
+    "mode": {"const": "explicit-nonnormative"},
+    "source": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "reference"],
+      "properties": {
+        "kind": {"enum": ["user-supplied", "external-evidence"]},
+        "reference": {"type": "string", "minLength": 1}
+      }
+    },
+    "primitives": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "roles": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["name", "primitive"],
+        "properties": {"name": {"type": "string", "minLength": 1}, "primitive": {"type": "string", "minLength": 1}}
+      }
+    }
+  }
+}

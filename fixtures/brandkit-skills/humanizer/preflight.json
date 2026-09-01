@@ -1,0 +1,21 @@
+{
+  "preflight": {
+    "risk": "insufficient_text",
+    "score": 0,
+    "drivers": [
+      {
+        "kind": "short_sample",
+        "detail": "sentence_count=2; rhythm preflight needs at least 8",
+        "weight": 0
+      }
+    ],
+    "recommendation": "audit_only",
+    "combing": {
+      "auto": false,
+      "max_iterations": 0,
+      "reason": "too_few_sentences"
+    },
+    "quality_warning": "Combing may improve burstiness or mimicry metrics, but it can degrade text quality, precision, readability, or register."
+  },
+  "findings": []
+}

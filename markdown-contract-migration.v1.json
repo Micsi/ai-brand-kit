@@ -1,0 +1,12 @@
+{
+  "schema_version": "markdown-contract-migration.v1",
+  "from": {"version": "markdown-contract.v1", "path": "markdown-contract.v1.json", "sha256": "615b303be1ed6ee7316316a98570cfa38ff9d3d0cb296ad5a6e13592d3c13cf9", "schema_path": "schemas/markdown-contract.v1.schema.json", "schema_sha256": "edf17d1d5429f98676c3507ebcba86c0bc08fc6968be30ebb9a2dd782572874c"},
+  "to": {"version": "markdown-contract.v2", "path": "markdown-contract.v2.json", "sha256": "5e54a95b00e8b778384f5cf1bfbcdbe721136e6142b9b31b9e6ffa1fce868ba4", "schema_path": "schemas/markdown-contract.v2.schema.json", "schema_sha256": "b9e54fd5dfcc524ff0bae144e7b7e5d8c29563addc78bbf848976e92e254f62c"},
+  "compatibility": {
+    "v1_bytes_preserved": true,
+    "v1_documents_valid_under_v2": true,
+    "v1_ast_semantics_preserved": true,
+    "additions": ["tip callout", "caution callout", "appearance", "icon", "closed Graphviz v1 figures"],
+    "removed": []
+  }
+}

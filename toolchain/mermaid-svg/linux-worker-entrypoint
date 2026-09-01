@@ -1,0 +1,37 @@
+#!/bin/sh
+set -eu
+test "$(id -u)" -ne 0 || { echo "root execution is forbidden" >&2; exit 70; }
+grep -q '^NoNewPrivs:[[:space:]]*1$' /proc/self/status || { echo "no-new-privileges is required" >&2; exit 70; }
+if touch /brandkit-root-write-probe 2>/dev/null; then
+  rm -f /brandkit-root-write-probe
+  echo "read-only root filesystem is required" >&2
+  exit 70
+fi
+test "$#" -eq 0 || { echo "worker takes no arguments" >&2; exit 64; }
+test -f /input/input.mmd && test ! -L /input/input.mmd || { echo "regular input is required" >&2; exit 65; }
+config=/runtime/MERMAID_CONFIG.json
+if test -e /input/brand-config.json || test -L /input/brand-config.json; then
+  test -f /input/brand-config.json && test ! -L /input/brand-config.json || { echo "regular brand config is required" >&2; exit 65; }
+  test "$(wc -c < /input/brand-config.json)" -le 262144 || { echo "brand config exceeds payload limit" >&2; exit 65; }
+  config=/input/brand-config.json
+fi
+test -d /output && test ! -L /output || { echo "physical output directory is required" >&2; exit 65; }
+mode=${BRANDKIT_OUTPUT_MODE:-svg}
+case "$mode" in
+  svg) outputs='output.svg'; scale_args='' ;;
+  png) outputs='output.png'; scale_args='--scale 16' ;;
+  *) echo "unsupported output mode" >&2; exit 64 ;;
+esac
+for output in $outputs; do
+  test ! -e "/output/$output" && test ! -L "/output/$output" || { echo "fresh output is required" >&2; exit 65; }
+done
+case "${CHROMIUM_FLAGS:-}" in *--no-sandbox*|*--disable-setuid-sandbox*) echo "Chromium sandbox-disable flag is forbidden" >&2; exit 70;; esac
+if grep -Eq -- '--no-sandbox|--disable-setuid-sandbox' /runtime/LINUX_PUPPETEER_CONFIG.json; then
+  echo "Chromium sandbox-disable flag is forbidden" >&2
+  exit 70
+fi
+mkdir -p "$HOME"
+exec /runtime/node_modules/.bin/mmdc \
+  -i /input/input.mmd -o "/output/output.$mode" -b transparent -t neutral \
+  -c "$config" -p /runtime/LINUX_PUPPETEER_CONFIG.json \
+  $scale_args --quiet

@@ -1,0 +1,16 @@
+{
+  "schema_version": "markdown-diagnostic-matrix.v1",
+  "policies": [
+    {"policy":"closed-yaml","valid":"valid-report.md","invalid":"invalid-cases.v1.json#yaml-anchor","diagnostic":"YAML anchors, aliases, and explicit tags are forbidden"},
+    {"policy":"global-local-links","valid":"valid-report.md#findings","invalid":"invalid-local-link.md","diagnostic":"local links target unknown global IDs"},
+    {"policy":"exact-table-shape-and-alignment","valid":"valid-report.md","invalid":"invalid-cases.v1.json#table-separator-column-count","diagnostic":"table separator must exactly match header columns"},
+    {"policy":"nonempty-callouts","valid":"valid-report.md#note-main","invalid":"invalid-cases.v1.json#empty-note-callout","diagnostic":"callout must have non-empty content"},
+    {"policy":"protected-scientific-signed-locale-number","valid":"valid-report.md#metric-main","invalid":"invalid-cases.v1.json#scientific-number","diagnostic":"bare numbers are forbidden"},
+    {"policy":"mermaid-v1-safe-subset","valid":"valid-report.md#flow-main","invalid":"invalid-cases.v1.json#mermaid-url","diagnostic":"Mermaid v1 forbids external or active forms"},
+    {"policy":"utf8-byte-partition-and-rewrite","valid":"tests/test_markdown_contract.py#test_partition_is_disjoint_complete_utf8_and_stably_addressed","invalid":"tests/test_markdown_contract.py#test_structural_humanizer_mutations_all_fail","diagnostic":"Humanizer rewrite changed AST or protected bytes"},
+    {"policy":"strict-assets-and-rights","valid":"fixtures/markdown/assets/diagram.svg","invalid":"tests/test_markdown_contract.py#test_assets_bind_extension_mime_decode_hash_rights_and_no_polyglots","diagnostic":"media decode/MIME/rights binding failed"},
+    {"policy":"signed-publication-evidence","valid":"tests/test_markdown_contract.py#test_publication_requires_signed_distinct_baseline_render_and_pagination","invalid":"tests/test_markdown_contract.py#test_publication_placeholder_matrix_all_nested_fields","diagnostic":"issuer/HMAC, exact PDF, pagination, assets, or open work failed"},
+    {"policy":"strict-finite-document-types","valid":"document-types/report.v1.json","invalid":"tests/test_markdown_contract.py#test_document_types_reject_nan_in_direct_path","diagnostic":"numeric values must be finite"},
+    {"policy":"offline-byte-identical-svg","valid":"toolchain/mermaid-svg.v1.lock.json#clean_room_evidence","invalid":"toolchain/mermaid-svg/install-offline#missing_artifact_policy","diagnostic":"missing local artifact or unequal SVG bytes fails"}
+  ]
+}

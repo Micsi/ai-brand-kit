@@ -1,0 +1,5 @@
+#!/bin/sh
+set -eu
+if [ "$#" -ne 2 ]; then echo "usage: render-linux-worker INPUT_DIR/input.mmd OUTPUT_DIR/output.svg" >&2; exit 64; fi
+script_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd -P)
+exec python3 "$script_dir/linux_worker.py" render "$1" "$2"

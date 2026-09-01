@@ -1,0 +1,246 @@
+{
+  "builtin_fonts": {
+    "builtin:Courier": "Courier",
+    "builtin:Helvetica": "Helvetica",
+    "builtin:Helvetica-Bold": "Helvetica-Bold"
+  },
+  "capabilities": {
+    "graphviz": {
+      "policy": "closed DOT subset renders only through the pinned offline Viz.js CAS and network sandbox",
+      "status": "installed"
+    },
+    "qpdf": {
+      "policy": "qpdf-dependent normalization blocks; the current renderer emits classic xref directly",
+      "status": "not-installed"
+    },
+    "svg_converter": {
+      "policy": "only the audited static SVG subset is accepted",
+      "status": "builtin-safe-subset"
+    },
+    "tesseract_deu": {
+      "policy": "OCR release evidence blocks until executable and deu traineddata are pinned",
+      "status": "not-installed"
+    },
+    "verapdf": {
+      "policy": "no PDF standard conformance claim is permitted",
+      "status": "not-installed"
+    }
+  },
+  "engine": {
+    "name": "brandkit-pdf-renderer",
+    "version": "1.2.28"
+  },
+  "files": {
+    "approval_request_schema": {
+      "path": "schemas/approval-request.v1.schema.json",
+      "sha256": "341e4de5f6d0968e294967b3bb3aa0e5ca7dbd214d12612014e79e06cd6fb109"
+    },
+    "brand_resolver": {
+      "path": "scripts/brand_package.py",
+      "sha256": "18cf212059dd9865d04abad5252b7b5778e776e8b3f80d63b43f7934773ee7ec"
+    },
+    "graphviz_bundle_verifier": {
+      "path": "toolchain/graphviz-svg/verify-bundle",
+      "sha256": "61eb6d42a1435b4e9e41ad8171c0a1546e32a5ca5a1cdcaa5114dc116d948e8c"
+    },
+    "graphviz_clean_room_verifier": {
+      "path": "toolchain/graphviz-svg/verify-clean-rooms",
+      "sha256": "bdbf56506d09f0ba3827307bdaa3e90588f4b1d52fe148e7197bf353e3b2a3ff"
+    },
+    "graphviz_installer": {
+      "path": "toolchain/graphviz-svg/install-offline",
+      "sha256": "2a22b909fbce364c2f0538b773cd7514a537b64b5b9389cfe2a37f0e4714e8f7"
+    },
+    "graphviz_lock": {
+      "path": "toolchain/graphviz-svg.v1.lock.json",
+      "sha256": "7e5fadcbb32a7038b96c1535f0c0e58ed581f08adb959d7bbb341e03191de5ef"
+    },
+    "graphviz_lock_schema": {
+      "path": "schemas/graphviz-svg-toolchain.v1.schema.json",
+      "sha256": "011ddce672c0948ebf94ae9d2b45d5694b791ff9c60e10e336d0f9330556d5d9"
+    },
+    "graphviz_renderer": {
+      "path": "toolchain/graphviz-svg/render-offline",
+      "sha256": "dca4fad38981f4adbe2b70cb6bf91ee19a89f527dbafc6cbe4eb4b2b242dea4d"
+    },
+    "graphviz_renderer_source": {
+      "path": "toolchain/graphviz-svg/render.mjs",
+      "sha256": "e4e95916e2964f9c42acbe01f791e16d5acaa9195cb0dd5fd3ede60ae3a60fb5"
+    },
+    "humanizer_audit_schema": {
+      "path": "schemas/humanizer-audit.v1.schema.json",
+      "sha256": "7a952e91438f8fd0b7f60b9e3a7ad3c7c15cf510368ff78406482dcc81bf5dd2"
+    },
+    "installation_verifier": {
+      "path": "toolchain/pdf-renderer/verify-installation",
+      "sha256": "a3ea78d6f71d40a83d69db402ef8ae1a7b00af9ebe95cc470bd2fbf49dbff8a1"
+    },
+    "installer": {
+      "path": "toolchain/pdf-renderer/install-from-lock",
+      "sha256": "af1a6f1a18047761762fcfdd537c1a21e9df37dc806ae6855af80f79d2744e77"
+    },
+    "golden_generator": {
+      "path": "scripts/generate_pdf_e2e_goldens.py",
+      "sha256": "eb37ddacec7b0633c944d88983e94d16cccd4694aef35985d2fa09b67cdeb3d6"
+    },
+    "launcher": {
+      "path": "toolchain/pdf-renderer/render",
+      "sha256": "9d6081624bdb14f41adad353f841feab59920ca6279d2c931381c60bcc7f1b0b"
+    },
+    "markdown_contract": {
+      "path": "scripts/markdown_contract.py",
+      "sha256": "9244ec5d756ce47c0b7f2002e73521257df937db81712e5861c7b67e636aa8ec"
+    },
+    "markdown_contract_migration": {
+      "path": "markdown-contract-migration.v1.json",
+      "sha256": "17380d3525b9561215a279b2c9ebd83db874142ad6cc9df473f9e34debac1075"
+    },
+    "markdown_contract_v1": {
+      "path": "markdown-contract.v1.json",
+      "sha256": "615b303be1ed6ee7316316a98570cfa38ff9d3d0cb296ad5a6e13592d3c13cf9"
+    },
+    "markdown_contract_v1_schema": {
+      "path": "schemas/markdown-contract.v1.schema.json",
+      "sha256": "edf17d1d5429f98676c3507ebcba86c0bc08fc6968be30ebb9a2dd782572874c"
+    },
+    "markdown_contract_v2": {
+      "path": "markdown-contract.v2.json",
+      "sha256": "5e54a95b00e8b778384f5cf1bfbcdbe721136e6142b9b31b9e6ffa1fce868ba4"
+    },
+    "markdown_contract_v2_schema": {
+      "path": "schemas/markdown-contract.v2.schema.json",
+      "sha256": "b9e54fd5dfcc524ff0bae144e7b7e5d8c29563addc78bbf848976e92e254f62c"
+    },
+    "mermaid_bundle_verifier": {
+      "path": "toolchain/mermaid-svg/verify-bundle",
+      "sha256": "fed90826344cd73f3de5e80c0d7a2303678070232976f77c329dc97d23280b42"
+    },
+    "mermaid_clean_room_verifier": {
+      "path": "toolchain/mermaid-svg/verify-clean-rooms",
+      "sha256": "80435620526fc8fe9f81115a447ed42407bf4a296a95df10458893e349d56eef"
+    },
+    "mermaid_installer": {
+      "path": "toolchain/mermaid-svg/install-offline",
+      "sha256": "bbcc845426f901ae7d12fdc42953e759f8e7359c7dfa9601f1e8c42aaf10b6ee"
+    },
+    "mermaid_lock": {
+      "path": "toolchain/mermaid-svg.v1.lock.json",
+      "sha256": "8f428ec9d194f26a862effb5899d9dc30a03598a49a99babdc57dcda962d1da9"
+    },
+    "mermaid_lock_schema": {
+      "path": "schemas/mermaid-svg-toolchain.v1.schema.json",
+      "sha256": "b2d8f58ffdac367fbdb9c7e48370f3426dbab9508fa8e5857219131296792f05"
+    },
+    "mermaid_linux_worker_entrypoint": {
+      "path": "toolchain/mermaid-svg/linux-worker-entrypoint",
+      "sha256": "6250cc83c1f2073137437b8f95b9220e88ad94c864a744e4d07d359dd2559b1c"
+    },
+    "mermaid_linux_worker_launcher": {
+      "path": "toolchain/mermaid-svg/render-linux-worker",
+      "sha256": "189273896d3a7771e8333f8b0131400dc4664599042a15a434e6c2f4a05adf3a"
+    },
+    "mermaid_linux_worker_lock": {
+      "path": "toolchain/mermaid-linux-worker.v2.lock.json",
+      "sha256": "3c300abdfc7f5d1287cedb2059f815c63501ad7c0929b8116821d4d9528bca7a"
+    },
+    "mermaid_linux_worker_lock_schema": {
+      "path": "schemas/mermaid-linux-worker.v2.schema.json",
+      "sha256": "aff810e34957dc4193cc633531aec7bdf76a4d3995469e74d914767631622fa0"
+    },
+    "mermaid_linux_worker_seccomp": {
+      "path": "toolchain/mermaid-svg/chromium-userns-seccomp.json",
+      "sha256": "1dbe30464f81f20ba1671989cb92a6010ca33a649b0ef7ecf073b4970b242828"
+    },
+    "mermaid_linux_worker_source": {
+      "path": "toolchain/mermaid-svg/linux_worker.py",
+      "sha256": "ad43b2ad97d539110027df62e3f113d4631fe7d1e86f726cf16070c6972afb03"
+    },
+    "mermaid_puppeteer_config": {
+      "path": "toolchain/mermaid-svg/PUPPETEER_CONFIG.json",
+      "sha256": "61c85bdb37aa94c1cf23662469a8737af117ee2d5532d13c52d2818752d6cc82"
+    },
+    "mermaid_renderer": {
+      "path": "toolchain/mermaid-svg/render-offline",
+      "sha256": "955817cfe8a30661f01f02a506ecaa5d64db5e3066b09a7e224aac9142fd6dba"
+    },
+    "mermaid_version_log": {
+      "path": "toolchain/mermaid-svg/version-log",
+      "sha256": "a01a4491b9f31a4f84d795a1c5f1e2ac8a7a46e2f726889fcbfe6bc62e38668b"
+    },
+    "neutral_font_ttf": {
+      "path": "toolchain/pdf-renderer/fonts/abel-8809dcad25318225052f88333e208c5aad4adcb7b2c934c135735ec19aa410b4.ttf",
+      "sha256": "8809dcad25318225052f88333e208c5aad4adcb7b2c934c135735ec19aa410b4"
+    },
+    "orchestrator": {
+      "path": "scripts/brand_voice_pdf.py",
+      "sha256": "bca7c5029441d4570365a0fb467143fb65ab28f065845a687eac9c13745e3a19"
+    },
+    "owner_approval_schema": {
+      "path": "schemas/owner-approval.v1.schema.json",
+      "sha256": "8f2dc2a86027da7719eafd09fc2dbafd97b7e38a9fe8b6bcc4ff130a5aecbe5b"
+    },
+    "render_result_schema": {
+      "path": "schemas/render-result.v1.schema.json",
+      "sha256": "bb99d336c6ed97de4ca2599306aa633e2cc8cf8efe14bbaa94117724483a38d1"
+    },
+    "renderer": {
+      "path": "scripts/pdf_renderer.py",
+      "sha256": "56f159bda2e9626aaa600faf46292a38b9f6522dcc1888a8d5cce991b57b9415"
+    },
+    "requirements": {
+      "path": "toolchain/pdf-renderer/requirements.lock.txt",
+      "sha256": "85ec4249f0e23aa4ebafb294ad15a31cdc4ffa3de8cacb92c722152a9c438b22"
+    },
+    "rollback": {
+      "path": "toolchain/pdf-renderer/rollback",
+      "sha256": "6c495af22a5b0050f4d451a988cb9d8f1f31628bc5526c4faba6d436f6e1e8fb"
+    },
+    "skill_launcher": {
+      "path": "skills/brand-voice-pdf/scripts/run",
+      "sha256": "d5d8c9162f7d1ae1f56b9c657ef2d93595267a20317ef262e976f9458b9c37d2"
+    },
+    "token_projection": {
+      "path": "scripts/project_brand_tokens.py",
+      "sha256": "cc9e4f9c1d6f784b74ace161c78f8d5b6c4d16051b5d1ad473f1c1c16cc67aff"
+    },
+    "visual_qa": {
+      "path": "scripts/pdf_visual_qa.py",
+      "sha256": "4f9a73382c64692ff65a3425f27d9bb237c12fd24a1145aff55ba932fc1ba201"
+    },
+    "workflow_lock_schema": {
+      "path": "schemas/brand-voice-workflow-lock.v2.schema.json",
+      "sha256": "483549c9cb7a7b5581278cf3c95238ff6b7a43c25e8335b43820e403c48d4e41"
+    }
+  },
+  "font_derivatives": {
+    "90e63b7ece5be977129137c0c774b6764adac69399b6c20d9ddc147cbe01819d": {
+      "path": "toolchain/pdf-renderer/fonts/abel-8809dcad25318225052f88333e208c5aad4adcb7b2c934c135735ec19aa410b4.ttf",
+      "sha256": "8809dcad25318225052f88333e208c5aad4adcb7b2c934c135735ec19aa410b4",
+      "source_sha256": "90e63b7ece5be977129137c0c774b6764adac69399b6c20d9ddc147cbe01819d"
+    }
+  },
+  "implementation_status": "installed",
+  "network_runtime": "disabled",
+  "output_contract": "render-result.v1",
+  "platform": {
+    "arch": "arm64",
+    "chrome": {
+      "sha256": "e425eea96e2737645086ff0e89008286fed8b3e08d29d3258a875801a53adfc3",
+      "version": "131.0.6778.204"
+    },
+    "os": "darwin",
+    "poppler": {
+      "pdfinfo_sha256": "f1185e664710cb8aec7914a1cff501809604252e2cf559251d4e4d30b8fa90c1",
+      "pdftocairo_sha256": "a136c05e0f983ab2ecf8583adb61c7714d577f322629b8539835fb808a3b11f0",
+      "pdftotext_sha256": "c3eb5a97db48fcaeae84433b98fdf34c70a5502af3709a74475ca4aed29acb03",
+      "version": "26.04.0"
+    },
+    "python": "3.12.12"
+  },
+  "schema_version": "pdf-renderer-lock.v1",
+  "wheelhouse": {
+    "cas_id": "d4e592fb198f21235ba2981cacaee1133a679481fc2623806bf03c63b3bb87f7",
+    "inventory": "files.sha256.json",
+    "inventory_sha256": "bddae8db67a0f82d382187ee255b04b78bdeda49dd467f17e7157795b8770e13"
+  }
+}

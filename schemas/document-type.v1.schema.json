@@ -1,0 +1,18 @@
+{
+  "$id": "document-type.v1.schema.json", "type": "object", "additionalProperties": false,
+  "required": ["schema_version", "id", "version", "extends", "sections", "allowed_elements", "layout", "pagination", "allowed_overrides", "minimum_margin_mm", "rights_required", "forbidden_features", "publication_gates", "hash_policy", "engine_compatibility"],
+  "properties": {
+    "schema_version": {"const": "document-type.v1"}, "id": {"$ref": "#/$defs/id"}, "version": {"$ref": "#/$defs/semver"},
+    "extends": {"type": ["string", "null"], "pattern": "^(report|offer|one-pager|freeform)$"},
+    "sections": {"type": "object", "additionalProperties": false, "required": ["required", "optional", "order"], "properties": {"required": {"$ref": "#/$defs/idList"}, "optional": {"$ref": "#/$defs/idList"}, "order": {"$ref": "#/$defs/idList"}}},
+    "allowed_elements": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"enum": ["heading", "paragraph", "ordered-list", "unordered-list", "link", "footnote", "table", "image", "callout", "mermaid", "graphviz", "page-break"]}},
+    "layout": {"type": "object", "additionalProperties": false, "required": ["toc", "header", "footer", "manual_page_break"], "properties": {"toc": {"type": "boolean"}, "header": {"type": "boolean"}, "footer": {"type": "boolean"}, "manual_page_break": {"type": "boolean"}}},
+    "pagination": {"type": "object", "additionalProperties": false, "required": ["title_page_number", "content_start", "format"], "properties": {"title_page_number": {"const": null}, "content_start": {"type": ["integer", "null"], "enum": [1, null]}, "format": {"enum": ["Seite X von Y", "none"]}}},
+    "allowed_overrides": {"type": "object", "additionalProperties": false, "properties": {"toc": {"$ref": "#/$defs/boolList"}, "section_numbering": {"$ref": "#/$defs/boolList"}}},
+    "minimum_margin_mm": {"type": "number", "minimum": 5}, "rights_required": {"const": true},
+    "forbidden_features": {"type": "array", "minItems": 7, "uniqueItems": true, "items": {"enum": ["active-content", "embedded-credentials", "external-resources", "raw-html", "embedded-css", "unknown-directives", "unknown-code-fences"]}, "allOf": [{"contains": {"const": "active-content"}}, {"contains": {"const": "embedded-credentials"}}, {"contains": {"const": "external-resources"}}, {"contains": {"const": "raw-html"}}, {"contains": {"const": "embedded-css"}}, {"contains": {"const": "unknown-directives"}}, {"contains": {"const": "unknown-code-fences"}}]},
+    "publication_gates": {"type": "array", "minItems": 6, "uniqueItems": true, "items": {"enum": ["contract-valid", "no-open-todos", "assets-resolved", "rights-valid", "protected-hashes-stable", "render-success"]}, "allOf": [{"contains": {"const": "contract-valid"}}, {"contains": {"const": "no-open-todos"}}, {"contains": {"const": "assets-resolved"}}, {"contains": {"const": "rights-valid"}}, {"contains": {"const": "protected-hashes-stable"}}, {"contains": {"const": "render-success"}}]},
+    "hash_policy": {"const": "sha256"}, "engine_compatibility": {"type": "string", "pattern": "^(\\^|~)?[0-9]+\\.[0-9]+\\.[0-9]+$"}
+  },
+  "$defs": {"id": {"type": "string", "pattern": "^[a-z][a-z0-9-]{1,63}$"}, "semver": {"type": "string", "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"}, "idList": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/id"}}, "boolList": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "boolean"}}}
+}

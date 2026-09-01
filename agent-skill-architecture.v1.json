@@ -1,0 +1,250 @@
+{
+  "schema_version": "agent-skill-architecture.v1",
+  "contract_version": "1.0.0",
+  "canonical_roots": {
+    "global": "~/.agents/skills",
+    "project": ".agents/skills"
+  },
+  "providers": {
+    "claude": {
+      "global_discovery": "~/.claude/skills",
+      "global_bridge": "per-skill-symlink",
+      "global_bridge_target": "~/.agents/skills/<skill-name>",
+      "project_discovery": ".claude/skills",
+      "project_bridge": "root-symlink",
+      "project_bridge_target": "../.agents/skills"
+    },
+    "codex": {
+      "global_discovery": "~/.agents/skills",
+      "global_bridge": "native",
+      "global_bridge_target": null,
+      "project_discovery": ".agents/skills",
+      "project_bridge": "native",
+      "project_bridge_target": null
+    },
+    "hermes": {
+      "global_discovery": "skills.external_dirs",
+      "global_bridge": "config-reference",
+      "global_bridge_target": "~/.agents/skills",
+      "project_discovery": ".agents/skills",
+      "project_bridge": "trusted-native",
+      "project_bridge_target": null
+    }
+  },
+  "llmwiki_profile": {
+    "applies_when": "repository declares the LLMWiki project-skill convention",
+    "project_canonical_facade": ".claude/skills",
+    "agents_bridge": {
+      "path": ".agents/skills",
+      "target": "../.claude/skills"
+    },
+    "codex_bridge": {
+      "path": ".codex/skills",
+      "target": "../.claude/skills"
+    },
+    "content_rule": "Each .claude/skills entry is the sole project alias to one canonical skill source; no skill directory is copied."
+  },
+  "collision_policy": {
+    "mode": "fail-closed",
+    "identity": "frontmatter.name",
+    "allow_same_resolved_directory_alias": true,
+    "allow_distinct_sources_with_same_name": false
+  },
+  "trust_policy": {
+    "review_before_enable": true,
+    "human_approval_before_install": true,
+    "hermes_project_trust_key": "skills.trusted_project_dirs",
+    "hermes_project_trust_command": "hermes skills trust <repo>",
+    "trusted_root_must_equal_git_root": true,
+    "symlink_targets_must_be_allowlisted": true
+  },
+  "skill_portfolio": [
+    {
+      "name": "brandkit-setup",
+      "lifecycle": "existing",
+      "scope": "global",
+      "kind": "engine",
+      "source": "skills/brandkit-setup",
+      "activation": "model-invoked",
+      "brand_content_allowed": false
+    },
+    {
+      "name": "brandkit-interview",
+      "lifecycle": "existing",
+      "scope": "global",
+      "kind": "engine",
+      "source": "skills/brandkit-interview",
+      "activation": "model-invoked",
+      "brand_content_allowed": false
+    },
+    {
+      "name": "brandkit-build",
+      "lifecycle": "existing",
+      "scope": "global",
+      "kind": "engine",
+      "source": "skills/brandkit-build",
+      "activation": "model-invoked",
+      "brand_content_allowed": false
+    },
+    {
+      "name": "brandkit-spacing",
+      "lifecycle": "existing",
+      "scope": "global",
+      "kind": "engine",
+      "source": "skills/brandkit-spacing",
+      "activation": "model-invoked",
+      "brand_content_allowed": false
+    },
+    {
+      "name": "brandkit-publish",
+      "lifecycle": "existing",
+      "scope": "global",
+      "kind": "engine",
+      "source": "skills/brandkit-publish",
+      "activation": "model-invoked",
+      "brand_content_allowed": false
+    },
+    {
+      "name": "humanizer-de",
+      "lifecycle": "planned",
+      "scope": "global",
+      "kind": "engine",
+      "source": "planned:canonical-global-release",
+      "activation": "model-invoked",
+      "brand_content_allowed": false
+    },
+    {
+      "name": "brand-voice-pdf",
+      "lifecycle": "existing",
+      "scope": "global",
+      "kind": "engine",
+      "source": "skills/brand-voice-pdf",
+      "activation": "model-invoked",
+      "brand_content_allowed": false
+    },
+    {
+      "name": "brandkit-impeccable",
+      "lifecycle": "existing",
+      "scope": "global",
+      "kind": "engine",
+      "source": "skills/brandkit-impeccable",
+      "activation": "model-invoked",
+      "brand_content_allowed": false
+    },
+    {
+      "name": "impeccable",
+      "lifecycle": "existing-external",
+      "scope": "optional",
+      "kind": "external-engine",
+      "source": "external-sources/impeccable@fcd7622cd2d8e2b09344ba8ede9fcac82cec4e70 -> ~/.agents/skill-store/impeccable/4.1.1+fcd7622",
+      "activation": "explicit-project-opt-in",
+      "brand_content_allowed": false
+    },
+    {
+      "name": "federated-wiki-ops",
+      "lifecycle": "existing-external",
+      "scope": "project-local",
+      "kind": "project-workflow",
+      "source": "external:llmwiki-canonical-source",
+      "activation": "llmwiki-projects-only",
+      "brand_content_allowed": false
+    },
+    {
+      "name": "curated-external-skill-set",
+      "lifecycle": "planned",
+      "scope": "optional",
+      "kind": "catalog-policy",
+      "source": "planned:separate-pinned-catalog",
+      "activation": "per-skill-review-and-opt-in",
+      "brand_content_allowed": false
+    },
+    {
+      "name": "project-web-and-search-helpers",
+      "lifecycle": "planned",
+      "scope": "project-local",
+      "kind": "project-workflow-set",
+      "source": "planned:commercial-project",
+      "activation": "explicit-project-opt-in",
+      "brand_content_allowed": false
+    }
+  ],
+  "content_zones": {
+    "global_engine": {
+      "allowed": [
+        "skill instructions",
+        "provider-neutral scripts",
+        "schemas",
+        "shared runtime",
+        "generic fixtures"
+      ],
+      "forbidden": [
+        "brand assets",
+        "customer inputs",
+        "project outputs",
+        "secrets"
+      ]
+    },
+    "brand_package": {
+      "scope": "private-versioned-data",
+      "allowed": [
+        "voice profile",
+        "design tokens",
+        "fonts",
+        "logos",
+        "document types",
+        "rights metadata",
+        "brand version"
+      ],
+      "forbidden": [
+        "renderer fork",
+        "customer content",
+        "project outputs",
+        "secrets"
+      ]
+    },
+    "commercial_project": {
+      "scope": "project-local",
+      "allowed": [
+        "explicit brand activation",
+        "version lock",
+        "customer inputs",
+        "project overrides",
+        "project outputs"
+      ],
+      "forbidden": [
+        "silent brand fallback",
+        "cross-project output paths"
+      ]
+    }
+  },
+  "isolation": {
+    "activation_file": ".brandkit/project.json",
+    "lock_file": ".brandkit/skill-lock.json",
+    "work_root_template": ".brandkit/work/<brand-id>/<run-id>",
+    "cache_root_template": ".brandkit/cache/<project-root-realpath-hash>/<brand-id>/<brand-version>/<engine-version>",
+    "output_root_template": "output/<brand-id>/<run-id>",
+    "cache_key_fields": [
+      "project-root-realpath-hash",
+      "brand-id",
+      "brand-version",
+      "engine-version"
+    ],
+    "exactly_one_brand_per_run": true,
+    "reject_unresolved_or_ambiguous_brand": true
+  },
+  "versioning": {
+    "required_pin_fields": [
+      "name",
+      "version",
+      "source_locator",
+      "content_sha256"
+    ],
+    "source_locator_format": "snapshot:<normalized-relative-path>@sha256:<64-lowercase-hex>",
+    "immutable_release_store": "~/.agents/skill-store/<skill-name>/<version>",
+    "activation_strategy": "atomic-symlink-swap",
+    "update_gate": "review-diff-validate-smoke-approve",
+    "rollback_strategy": "restore-previous-lock-and-symlink-target",
+    "floating_versions_allowed": false,
+    "retain_previous_release": true
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "brandkit-mermaid-svg-offline",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "@mermaid-js/mermaid-cli": "11.9.0"
+  }
+}

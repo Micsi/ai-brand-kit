@@ -1,0 +1,19 @@
+{
+  "$id": "humanizer-audit.v1.schema.json", "type": "object", "additionalProperties": false,
+  "required": ["schema_version", "issuer", "payload", "hmac_sha256"],
+  "properties": {
+    "schema_version": {"const": "humanizer-audit.v1"}, "issuer": {"type": "string", "minLength": 1}, "hmac_sha256": {"$ref": "#/$defs/hash"},
+    "payload": {"type": "object", "additionalProperties": false,
+      "required": ["baseline_sha256", "final_sha256", "provider", "humanizer", "raw_artifacts", "operations", "protected_stable", "ast_skeleton_stable"],
+      "properties": {
+        "baseline_sha256": {"$ref": "#/$defs/hash"}, "final_sha256": {"$ref": "#/$defs/hash"},
+        "provider": {"enum": ["claude"]},
+        "humanizer": {"type": "object", "additionalProperties": false, "required": ["version", "release_path", "release_sha256"], "properties": {"version": {"const": "5.22.2-brandkit.2"}, "release_path": {"type": "string", "minLength": 1}, "release_sha256": {"$ref": "#/$defs/hash"}}},
+        "raw_artifacts": {"type": "array", "minItems": 8, "items": {"type": "object", "additionalProperties": false, "required": ["path", "sha256"], "properties": {"path": {"type": "string", "pattern": "^[A-Za-z0-9._/-]+$"}, "sha256": {"$ref": "#/$defs/hash"}}}},
+        "operations": {"type": "array", "minItems": 1, "items": {"type": "object", "additionalProperties": false, "required": ["segment_id", "old_hash", "replacement_sha256", "result_path", "report_path", "changed", "provider_state"], "properties": {"segment_id": {"type": "string", "minLength": 1}, "old_hash": {"$ref": "#/$defs/hash"}, "replacement_sha256": {"$ref": "#/$defs/hash"}, "result_path": {"type": "string", "pattern": "^[A-Za-z0-9._/-]+$"}, "report_path": {"type": "string", "pattern": "^[A-Za-z0-9._/-]+$"}, "changed": {"type": "boolean"}, "provider_state": {"enum": ["audit-only/no-change", "audit+rewrite/changed"]}}}},
+        "protected_stable": {"const": true}, "ast_skeleton_stable": {"const": true}
+      }
+    }
+  },
+  "$defs": {"hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}
+}

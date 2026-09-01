@@ -1,139 +1,90 @@
 # Brand Kit Skills
 
-Vier Skills für Claude Code, die von der leeren Installation bis zur fertigen,
-markengerechten Webseite führen. Sie bauen **dein** Brand Kit auf, nicht meines.
+Vier portable Kern-Skills führen von der technischen Bestandsaufnahme bis zu
+markengerechten Webseiten, PDFs und optional bearbeiteten Bildern. Der
+optionale `brandkit-spacing`-Adapter prüft Abstands-Tokens und Rollen.
 
-Entstanden beim Aufbau der Marke „AI mit Arnie". Der Ablauf hat funktioniert,
-also ist er hier so aufgeschrieben, dass er sich nachbauen lässt.
+## Ergebnis
 
-## Was am Ende dasteht
+Das Brand Kit enthält verbindliche Regeln, Farben und Schriften als ausführbare
+CSS-Tokens, eine Wordmark und Referenzflächen. Eine kurze `AGENTS.md` sorgt
+dafür, dass kompatible Coding Agents die Regeln im Projektkontext laden.
 
-Ein Ordner mit deiner Marke darin: verbindliche Regeln, Farben und Schriften als
-ausführbare CSS-Tokens, Wordmark, Referenzflächen. Dazu ein `CLAUDE.md`, das
-dafür sorgt, dass die Regeln greifen, ohne dass du sie jedes Mal erwähnst.
+## Ablauf
 
-Und die Fähigkeit, daraus Webseiten, PDFs und gekennzeichnete KI-Bilder zu bauen,
-die alle gleich aussehen.
-
-## Warum überhaupt
-
-Ohne Marke fällt jede Designentscheidung neu und zufällig aus. Das Ergebnis sieht
-dann aus wie das, was Sprachmodelle am häufigsten gesehen haben: blau-violette
-Verläufe, abgerundete Karten, Inter als Schrift. Nicht falsch, nur
-austauschbar.
-
-Ein Brand Kit dreht das um. Statt jedes Mal zu entscheiden, entscheidest du
-einmal, und danach wird umgesetzt.
-
-## Die vier Schritte
-
-| Skill | Wann | Was er macht |
+| Skill | Wann | Ergebnis |
 |---|---|---|
-| `brandkit-setup` | einmal | Prüft Voraussetzungen, installiert die Skills, verbindet die Higgsfield CLI |
-| `brandkit-interview` | einmal je Marke | Hartnäckiges Interview, am Ende steht eine ausführliche Rohfassung |
+| `brandkit-setup` | einmal | Prüft die lokal verfügbaren Fähigkeiten |
+| `brandkit-interview` | einmal je Marke | Erarbeitet die ausführliche Rohfassung |
 | `brandkit-build` | einmal je Marke | Verdichtet die Rohfassung zum benutzbaren Kit |
-| `brandkit-publish` | immer wieder | Baut damit Webseiten, PDFs und Bilder |
+| `brandkit-publish` | wiederholt | Baut Webseiten, PDFs und optional Bilder |
 
-## Loslegen
+## Verwendung
 
-Wenn du diese Seite gerade einem Coding Agent gegeben hast: Der Rest dieses
-Abschnitts ist an ihn gerichtet. Lehn dich zurück und antworte auf seine Fragen.
+Stelle die benötigten Verzeichnisse unter `skills/` dem verwendeten Agenten gemäß
+dessen lokaler Skill-Konvention bereit. Ist kein Skill-System verfügbar, lies
+die jeweilige `SKILL.md` und folge ihr direkt. Beginne mit
+`brandkit-setup`; jeder Skill verweist am Ende auf den nächsten Schritt.
 
-> **An den Agent:** Jemand hat dir diese URL gegeben, weil er ein Brand Kit
-> aufbauen will. Dein Auftrag:
->
-> 1. Installiere die vier Skills:
->    `npx skills add Arnie936/ai-brand-kit -g -y`
-> 2. Erkläre der Person in zwei, drei Sätzen, was jetzt passiert: vier Schritte,
->    die ersten drei einmalig, der vierte immer wieder. Kein Vortrag.
-> 3. Starte mit dem Skill `brandkit-setup` und arbeite dich durch bis
->    `brandkit-publish`. Jeder Skill sagt am Ende, welcher als nächstes dran ist.
-> 4. Sprich mit der Person in ihrer Sprache und frage nach, statt zu raten. Vor
->    allem beim Interview in Schritt 2: Dort entstehen die Festlegungen, an denen
->    später alles hängt.
->
-> Falls `npx skills add` nicht verfügbar ist: Die vier `SKILL.md` unter
-> `skills/` sind gewöhnliches Markdown. Lies sie der Reihe nach und folge ihnen
-> direkt. Das Skript unter `skills/brandkit-publish/scripts/` brauchst du erst
-> in Schritt 4.
+Die Skills antworten in der Sprache der Anfrage.
 
-Nach der Installation ist eine neue Sitzung nötig, weil die Skill-Liste beim
-Start gelesen wird. Danach genügt der Satz „Ich will ein Brand Kit aufbauen",
-oder der direkte Aufruf von `/brandkit-setup`.
+Für Abstands-Tokens und die Prüfung visueller Gruppierung ergänzt
+`brandkit-spacing` den Kernablauf, ohne dessen Sequenz zu verlängern. Er besitzt
+nur Inventar, Skala, semantische Rollen und Audit. `brandkit-build` bleibt Owner
+normativer Brand-Pakete, `brandkit-impeccable` von `DESIGN.md`, Impeccable der
+allgemeinen UI-Gestaltung und der PDF-Workflow des Dokumentlayouts.
+
+Der optionale Impeccable-Adapter materialisiert ausschließlich den Release aus
+`impeccable-adapter.v1.json#/adapted_release/marker/version`. Der Repository-Check
+liest diese kanonische Version direkt und verhindert abweichende README-Kopien;
+Claude, Codex und Hermes entdecken denselben aktivierten Release-Realpath.
 
 ## Voraussetzungen
 
-`brandkit-setup` prüft das alles selbst und sagt dir, was fehlt.
+`brandkit-setup` prüft nur die Fähigkeiten, die für den gewünschten Auftrag
+benötigt werden:
 
-| Was | Wofür | Ohne das geht nicht |
-|---|---|---|
-| Node ab v18 | Higgsfield CLI, Skill-Installation | fast alles |
-| Python mit Pillow | AI-Kennzeichnung der Bilder | Bilder veröffentlichen |
-| Chrome oder Edge | PDF-Druck aus HTML | PDFs |
-| git | Kit versionieren | nichts Akutes, aber du verlierst es |
-| exiftool | maschinenlesbare Bildmarkierung | nur die sichtbare Kennzeichnung |
+| Fähigkeit | Benötigt für |
+|---|---|
+| Dateizugriff und Textbearbeitung | Brand Kit |
+| Git | optionale Versionsgeschichte |
+| Python mit Pillow | optionale Bildkennzeichnung und Web-Optimierung |
+| HTML-zu-PDF-Werkzeug | PDFs aus HTML |
+| Metadaten-Werkzeug | optionale maschinenlesbare Bildkennzeichnung |
+| verfügbares Bildwerkzeug | optionale Bildgenerierung |
 
-## Diese Skills werden mitinstalliert
+Fehlende optionale Fähigkeiten blockieren die übrigen Ergebnisse nicht. Eine
+externe Einrichtung erfolgt nur auf ausdrücklichen Auftrag der Person.
 
-Nicht von mir geschrieben, nur eingebunden. `brandkit-setup` installiert sie an
-der jeweils passenden Stelle:
+## Bilder
 
-- [unslop](https://github.com/cursor/plugins/tree/main/pstack/skills/unslop) von Cursor, entfernt KI-Sprachmuster aus Texten
-- [grill-with-docs](https://github.com/mattpocock/skills) von Matt Pocock, führt das Interview. Braucht zusätzlich `grilling` und `domain-modeling` aus demselben Repo, sonst greift er ins Leere
-- [web-design-guidelines](https://github.com/vercel-labs/agent-skills) von Vercel Labs, Barrierefreiheit und Webplattform
-- [seo-audit](https://github.com/coreyhaines31/marketingskills) von Corey Haines, technisches und inhaltliches SEO
+Bildgenerierung ist optional. Wenn ein passendes Werkzeug bereits verfügbar
+ist, kann `brandkit-publish` es mit den Vorgaben aus `BRAND.md` verwenden. Ist
+keines verfügbar, arbeitet der Skill mit bereitgestellten oder vorhandenen
+Bildern weiter oder liefert das Ergebnis ohne Bild.
 
-Dank an die Autoren. Dieses Repo enthält keine Kopien davon, nur die Befehle,
-die sie aus den Originalquellen holen. Updates kommen so direkt von dort.
-
-## KI-Bilder und das EU-Recht
-
-Wer erzeugte Bilder veröffentlicht, muss sie kennzeichnen. `brandkit-publish`
-bringt ein Skript mit, das eine kleine Markierung unten rechts einbrennt, in den
-Farben deines Kits, und die Bilder gleich fürs Web verkleinert.
+Das mitgelieferte Skript kann ein vorhandenes Bild sichtbar kennzeichnen,
+zuschneiden und fürs Web verkleinern:
 
 ```bash
-python scripts/ai_label.py roh.png -o hero.jpg --width 1120 --aspect 16:9 --iptc
+python skills/brandkit-publish/scripts/ai_label.py roh.png \
+  -o hero.jpg --width 1120 --aspect 16:9 --iptc
 ```
 
-Wichtig zu verstehen: Artikel 50 der KI-Verordnung trennt zwei Rollen. Absatz 2
-verpflichtet den **Anbieter** des Bildmodells zur maschinenlesbaren Markierung.
-Absatz 4 verpflichtet den **Betreiber**, also dich, zur Offenlegung. Das
-sichtbare Zeichen erfüllt Absatz 4, nicht Absatz 2. Die Pflichten gelten ab dem
-2. August 2026.
+Die Hinweise zur Kennzeichnung sind allgemeine technische Informationen und
+kein Rechtsrat.
 
-Das ist kein Rechtsrat. Wer gewerblich veröffentlicht, lässt es prüfen.
+## Repository-Check
 
-## Bildgenerierung
+Der eng definierte Check durchsucht alle versionierten und noch nicht
+versionierten Textdateien nach den früher verwendeten Werbe-, Vermittlungs- und
+fest verdrahteten Werkzeugbegriffen. Externe URLs sind bis auf den benötigten
+IPTC-Vokabularwert ebenfalls ausgeschlossen:
 
-Die Bilder laufen über [Higgsfield](https://higgsfield.ai). Ein Konto mit
-Guthaben ist nötig, weil jede Generierung Credits kostet. Die ersten drei
-Schritte funktionieren auch ohne.
+```bash
+python scripts/check_commercial_content.py
+```
 
-Wer noch keines hat: https://higgsfield.ai/s/mcp-arnold-oberleiter-WlfTqR
+## Lizenz und Urheberschaft
 
-Das ist mein Affiliate-Link. Schließt du darüber ab, bekomme ich eine Provision,
-für dich ändert sich am Preis nichts. Denselben Link blenden `brandkit-setup` und
-`brandkit-publish` ein, wenn im Ablauf ein Konto oder Guthaben fehlt, jedes Mal
-als Affiliate-Link gekennzeichnet. Wer schon ein Konto hat, bekommt ihn nicht zu
-sehen, und der Ablauf funktioniert mit jedem Higgsfield-Konto gleich.
-
-## Umgebung
-
-Gebaut und getestet in Claude Code. Die Skills selbst sind Markdown und
-grundsätzlich portabel, aber Teile des Ablaufs (Design-Canvas, Artifacts, das
-Skill-System) sind Claude-Code-Funktionen. In anderen Agenten funktioniert das
-Brand Kit und die Bildkennzeichnung, der Rest je nachdem.
-
-Die Skill-Dateien sind auf Deutsch. Die Skills antworten in der Sprache, in der
-du schreibst.
-
-## Lizenz
-
-MIT, siehe [LICENSE](LICENSE). Nimm es, ändere es, teile es.
-
-Die eingebundenen Fremdskills stehen unter den Lizenzen ihrer jeweiligen Repos.
-
----
-
-Gebaut von Arnold Oberleiter · AI mit Arnie
+MIT, siehe [LICENSE](LICENSE). Copyright 2026 Arnold Oberleiter.

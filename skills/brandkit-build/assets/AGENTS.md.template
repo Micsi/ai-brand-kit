@@ -2,9 +2,16 @@
 
 <!--
   Vorlage. Ersetze <MARKE> und die eckigen Klammern durch die Werte aus BRAND.md.
-  Diese Datei greift automatisch, sobald in diesem Ordner gearbeitet wird.
+  Diese Datei wird von kompatiblen Agents im Ordnerkontext geladen.
   Halte sie kurz: Sie regelt nur den Umgang mit den anderen Dateien.
 -->
+
+# Kanonische Agentenregeln
+
+Diese `AGENTS.md` ist die einzige Instruktionsquelle. `CLAUDE.md` ist im
+Projektroot ein relativer Symlink mit exakt dem Ziel `AGENTS.md`. Hermes wird
+mit diesem Projektroot als CWD gestartet und lädt dieselbe `AGENTS.md` als
+Projektkontext. Skill-Discovery ist davon getrennt. Pflege keine zweite Fassung.
 
 Hier liegt das Brand Kit von **<MARKE>**. Für jede Design-, Web- oder
 Grafikarbeit gilt:

@@ -1,0 +1,4558 @@
+{
+  "children": [
+    {
+      "id": "title",
+      "level": 1,
+      "line": 36,
+      "text": "Rich-Block-Nachweis",
+      "type": "heading"
+    },
+    {
+      "line": 37,
+      "type": "blank"
+    },
+    {
+      "id": "executive-summary",
+      "level": 2,
+      "line": 38,
+      "text": "Kurzfassung",
+      "type": "heading"
+    },
+    {
+      "line": 39,
+      "type": "blank"
+    },
+    {
+      "inline": [
+        {
+          "mutable": true,
+          "text": "Die Matrix zeigt alle Präsentationsvarianten. Siehe ",
+          "type": "text"
+        },
+        {
+          "figure_number": 1,
+          "reference_text": "Abbildung 1",
+          "target": "fig-flow-rich",
+          "type": "figure-ref"
+        },
+        {
+          "mutable": true,
+          "text": " und ",
+          "type": "text"
+        },
+        {
+          "figure_number": 2,
+          "reference_text": "Abbildung 2",
+          "target": "fig-dependencies-rich",
+          "type": "figure-ref"
+        },
+        {
+          "mutable": true,
+          "text": ".",
+          "type": "text"
+        }
+      ],
+      "line": 40,
+      "text": "Die Matrix zeigt alle Präsentationsvarianten. Siehe @fig-flow-rich und @fig-dependencies-rich.",
+      "type": "paragraph"
+    },
+    {
+      "line": 41,
+      "type": "blank"
+    },
+    {
+      "attrs": {
+        "appearance": "default",
+        "icon": "true",
+        "id": "note-default",
+        "title": "Notiz Standard"
+      },
+      "children": [
+        {
+          "inline": [
+            {
+              "mutable": true,
+              "text": "Lesbarer Inhalt der Notiz.",
+              "type": "text"
+            }
+          ],
+          "line": 43,
+          "text": "Lesbarer Inhalt der Notiz.",
+          "type": "paragraph"
+        }
+      ],
+      "kind": "note",
+      "line": 45,
+      "type": "callout"
+    },
+    {
+      "line": 45,
+      "type": "blank"
+    },
+    {
+      "attrs": {
+        "appearance": "simple",
+        "icon": "true",
+        "id": "note-simple",
+        "title": "Notiz Einfach"
+      },
+      "children": [
+        {
+          "inline": [
+            {
+              "mutable": true,
+              "text": "Lesbarer Inhalt der Notiz.",
+              "type": "text"
+            }
+          ],
+          "line": 47,
+          "text": "Lesbarer Inhalt der Notiz.",
+          "type": "paragraph"
+        }
+      ],
+      "kind": "note",
+      "line": 49,
+      "type": "callout"
+    },
+    {
+      "line": 49,
+      "type": "blank"
+    },
+    {
+      "attrs": {
+        "appearance": "minimal",
+        "icon": "false",
+        "id": "note-minimal",
+        "title": "Eigener Titel ohne Icon"
+      },
+      "children": [
+        {
+          "inline": [
+            {
+              "mutable": true,
+              "text": "Lesbarer Inhalt der Notiz.",
+              "type": "text"
+            }
+          ],
+          "line": 51,
+          "text": "Lesbarer Inhalt der Notiz.",
+          "type": "paragraph"
+        }
+      ],
+      "kind": "note",
+      "line": 53,
+      "type": "callout"
+    },
+    {
+      "line": 53,
+      "type": "blank"
+    },
+    {
+      "attrs": {
+        "appearance": "default",
+        "icon": "true",
+        "id": "tip-default",
+        "title": "Tipp Standard"
+      },
+      "children": [
+        {
+          "inline": [
+            {
+              "mutable": true,
+              "text": "Lesbarer Inhalt des Tipps.",
+              "type": "text"
+            }
+          ],
+          "line": 55,
+          "text": "Lesbarer Inhalt des Tipps.",
+          "type": "paragraph"
+        }
+      ],
+      "kind": "tip",
+      "line": 57,
+      "type": "callout"
+    },
+    {
+      "line": 57,
+      "type": "blank"
+    },
+    {
+      "attrs": {
+        "appearance": "simple",
+        "icon": "true",
+        "id": "tip-simple",
+        "title": "Tipp Einfach"
+      },
+      "children": [
+        {
+          "inline": [
+            {
+              "mutable": true,
+              "text": "Lesbarer Inhalt des Tipps.",
+              "type": "text"
+            }
+          ],
+          "line": 59,
+          "text": "Lesbarer Inhalt des Tipps.",
+          "type": "paragraph"
+        }
+      ],
+      "kind": "tip",
+      "line": 61,
+      "type": "callout"
+    },
+    {
+      "line": 61,
+      "type": "blank"
+    },
+    {
+      "attrs": {
+        "appearance": "minimal",
+        "icon": "true",
+        "id": "tip-minimal",
+        "title": "Tipp Minimal"
+      },
+      "children": [
+        {
+          "inline": [
+            {
+              "mutable": true,
+              "text": "Lesbarer Inhalt des Tipps.",
+              "type": "text"
+            }
+          ],
+          "line": 63,
+          "text": "Lesbarer Inhalt des Tipps.",
+          "type": "paragraph"
+        }
+      ],
+      "kind": "tip",
+      "line": 65,
+      "type": "callout"
+    },
+    {
+      "line": 65,
+      "type": "blank"
+    },
+    {
+      "attrs": {
+        "appearance": "default",
+        "icon": "true",
+        "id": "warning-default",
+        "title": "Warnung Standard"
+      },
+      "children": [
+        {
+          "inline": [
+            {
+              "mutable": true,
+              "text": "Lesbarer Inhalt der Warnung.",
+              "type": "text"
+            }
+          ],
+          "line": 67,
+          "text": "Lesbarer Inhalt der Warnung.",
+          "type": "paragraph"
+        }
+      ],
+      "kind": "warning",
+      "line": 69,
+      "type": "callout"
+    },
+    {
+      "line": 69,
+      "type": "blank"
+    },
+    {
+      "attrs": {
+        "appearance": "simple",
+        "icon": "true",
+        "id": "warning-simple",
+        "title": "Warnung Einfach"
+      },
+      "children": [
+        {
+          "inline": [
+            {
+              "mutable": true,
+              "text": "Lesbarer Inhalt der Warnung.",
+              "type": "text"
+            }
+          ],
+          "line": 71,
+          "text": "Lesbarer Inhalt der Warnung.",
+          "type": "paragraph"
+        }
+      ],
+      "kind": "warning",
+      "line": 73,
+      "type": "callout"
+    },
+    {
+      "line": 73,
+      "type": "blank"
+    },
+    {
+      "attrs": {
+        "appearance": "minimal",
+        "icon": "true",
+        "id": "warning-minimal",
+        "title": "Warnung Minimal"
+      },
+      "children": [
+        {
+          "inline": [
+            {
+              "mutable": true,
+              "text": "Lesbarer Inhalt der Warnung.",
+              "type": "text"
+            }
+          ],
+          "line": 75,
+          "text": "Lesbarer Inhalt der Warnung.",
+          "type": "paragraph"
+        }
+      ],
+      "kind": "warning",
+      "line": 77,
+      "type": "callout"
+    },
+    {
+      "line": 77,
+      "type": "blank"
+    },
+    {
+      "attrs": {
+        "appearance": "default",
+        "icon": "true",
+        "id": "caution-default",
+        "title": "Vorsicht Standard"
+      },
+      "children": [
+        {
+          "inline": [
+            {
+              "mutable": true,
+              "text": "Lesbarer Inhalt des Vorsichtshinweises.",
+              "type": "text"
+            }
+          ],
+          "line": 79,
+          "text": "Lesbarer Inhalt des Vorsichtshinweises.",
+          "type": "paragraph"
+        }
+      ],
+      "kind": "caution",
+      "line": 81,
+      "type": "callout"
+    },
+    {
+      "line": 81,
+      "type": "blank"
+    },
+    {
+      "attrs": {
+        "appearance": "simple",
+        "icon": "true",
+        "id": "caution-simple",
+        "title": "Vorsicht Einfach"
+      },
+      "children": [
+        {
+          "inline": [
+            {
+              "mutable": true,
+              "text": "Lesbarer Inhalt des Vorsichtshinweises.",
+              "type": "text"
+            }
+          ],
+          "line": 83,
+          "text": "Lesbarer Inhalt des Vorsichtshinweises.",
+          "type": "paragraph"
+        }
+      ],
+      "kind": "caution",
+      "line": 85,
+      "type": "callout"
+    },
+    {
+      "line": 85,
+      "type": "blank"
+    },
+    {
+      "attrs": {
+        "appearance": "minimal",
+        "icon": "true",
+        "id": "caution-minimal",
+        "title": "Vorsicht Minimal"
+      },
+      "children": [
+        {
+          "inline": [
+            {
+              "mutable": true,
+              "text": "Lesbarer Inhalt des Vorsichtshinweises.",
+              "type": "text"
+            }
+          ],
+          "line": 87,
+          "text": "Lesbarer Inhalt des Vorsichtshinweises.",
+          "type": "paragraph"
+        }
+      ],
+      "kind": "caution",
+      "line": 89,
+      "type": "callout"
+    },
+    {
+      "line": 89,
+      "type": "blank"
+    },
+    {
+      "attrs": {
+        "appearance": "default",
+        "icon": "true",
+        "id": "important-default",
+        "title": "Wichtig Standard"
+      },
+      "children": [
+        {
+          "inline": [
+            {
+              "mutable": true,
+              "text": "Lesbarer Inhalt des wichtigen Hinweises.",
+              "type": "text"
+            }
+          ],
+          "line": 91,
+          "text": "Lesbarer Inhalt des wichtigen Hinweises.",
+          "type": "paragraph"
+        }
+      ],
+      "kind": "important",
+      "line": 93,
+      "type": "callout"
+    },
+    {
+      "line": 93,
+      "type": "blank"
+    },
+    {
+      "attrs": {
+        "appearance": "simple",
+        "icon": "true",
+        "id": "important-simple",
+        "title": "Wichtig Einfach"
+      },
+      "children": [
+        {
+          "inline": [
+            {
+              "mutable": true,
+              "text": "Lesbarer Inhalt des wichtigen Hinweises.",
+              "type": "text"
+            }
+          ],
+          "line": 95,
+          "text": "Lesbarer Inhalt des wichtigen Hinweises.",
+          "type": "paragraph"
+        }
+      ],
+      "kind": "important",
+      "line": 97,
+      "type": "callout"
+    },
+    {
+      "line": 97,
+      "type": "blank"
+    },
+    {
+      "attrs": {
+        "appearance": "minimal",
+        "icon": "true",
+        "id": "important-minimal",
+        "title": "Wichtig Minimal"
+      },
+      "children": [
+        {
+          "inline": [
+            {
+              "mutable": true,
+              "text": "Lesbarer Inhalt des wichtigen Hinweises.",
+              "type": "text"
+            }
+          ],
+          "line": 99,
+          "text": "Lesbarer Inhalt des wichtigen Hinweises.",
+          "type": "paragraph"
+        }
+      ],
+      "kind": "important",
+      "line": 101,
+      "type": "callout"
+    },
+    {
+      "line": 101,
+      "type": "blank"
+    },
+    {
+      "line": 102,
+      "type": "page-break"
+    },
+    {
+      "line": 103,
+      "type": "blank"
+    },
+    {
+      "id": "findings",
+      "level": 2,
+      "line": 104,
+      "text": "Befunde",
+      "type": "heading"
+    },
+    {
+      "line": 105,
+      "type": "blank"
+    },
+    {
+      "attrs": {
+        "id": "metric-rich",
+        "label": "Anteil",
+        "source_id": "source-one",
+        "title": "Messwert",
+        "value_fact": "metric-value"
+      },
+      "children": [
+        {
+          "inline": [
+            {
+              "mutable": true,
+              "text": "Der gebundene Wert lautet ",
+              "type": "text"
+            },
+            {
+              "id": "metric-value",
+              "kind": "number",
+              "literal": "42 %",
+              "type": "protected"
+            },
+            {
+              "mutable": true,
+              "text": ".",
+              "type": "text"
+            },
+            {
+              "source_id": "source-one",
+              "type": "footnote-ref"
+            }
+          ],
+          "line": 107,
+          "text": "Der gebundene Wert lautet {{number:metric-value|42 %}}.[^source-one]",
+          "type": "paragraph"
+        }
+      ],
+      "kind": "metric",
+      "line": 109,
+      "type": "callout"
+    },
+    {
+      "line": 109,
+      "type": "blank"
+    },
+    {
+      "attrs": {
+        "id": "quote-rich",
+        "source_id": "source-one",
+        "title": "Zitat"
+      },
+      "children": [
+        {
+          "inline": [
+            {
+              "mutable": true,
+              "text": "Die belegte Aussage bleibt sichtbar mit ihrer Quelle verbunden.",
+              "type": "text"
+            }
+          ],
+          "line": 111,
+          "text": "Die belegte Aussage bleibt sichtbar mit ihrer Quelle verbunden.",
+          "type": "paragraph"
+        }
+      ],
+      "kind": "quote",
+      "line": 113,
+      "type": "callout"
+    },
+    {
+      "line": 113,
+      "type": "blank"
+    },
+    {
+      "attrs": {
+        "id": "legal-rich",
+        "source_id": "source-one",
+        "title": "Rechtlicher Hinweis"
+      },
+      "children": [
+        {
+          "inline": [
+            {
+              "mutable": true,
+              "text": "Der Herkunftshinweis darf in keiner Ausgabe verschwinden.",
+              "type": "text"
+            }
+          ],
+          "line": 115,
+          "text": "Der Herkunftshinweis darf in keiner Ausgabe verschwinden.",
+          "type": "paragraph"
+        }
+      ],
+      "kind": "legal",
+      "line": 117,
+      "type": "callout"
+    },
+    {
+      "line": 117,
+      "type": "blank"
+    },
+    {
+      "alignments": [
+        "default",
+        "default"
+      ],
+      "headers": [
+        "Block",
+        "Status"
+      ],
+      "line": 118,
+      "rows": [
+        [
+          "Callout",
+          "sichtbar"
+        ],
+        [
+          "Tabelle",
+          "sichtbar"
+        ]
+      ],
+      "separator": [
+        "---",
+        "---"
+      ],
+      "type": "table"
+    },
+    {
+      "line": 122,
+      "type": "blank"
+    },
+    {
+      "alt": "Neutrale Vektorgrafik",
+      "asset": "diagram",
+      "description": "Vektorgrafik mit sichtbarer Beschriftung",
+      "id": "image-vector",
+      "line": 123,
+      "rights": "diagram-rights",
+      "type": "image"
+    },
+    {
+      "line": 124,
+      "type": "blank"
+    },
+    {
+      "alt": "Neutrale Rastergrafik",
+      "asset": "e2e-raster",
+      "description": "Rastergrafik mit sichtbarer Beschriftung",
+      "id": "image-raster",
+      "line": 125,
+      "rights": "raster-rights",
+      "type": "image"
+    },
+    {
+      "line": 126,
+      "type": "blank"
+    },
+    {
+      "caption": "Ablauf",
+      "code": "flowchart TD\n  A[Start] --> B[Prüfung]\n",
+      "description": "Zwei verbundene neutrale Schritte",
+      "figure_number": 1,
+      "id": "fig-flow-rich",
+      "line": 127,
+      "source_id": "source-one",
+      "type": "mermaid"
+    },
+    {
+      "line": 131,
+      "type": "blank"
+    },
+    {
+      "caption": "Abhängigkeiten",
+      "code": "digraph G {\n  rankdir=LR;\n  input [label=\"Eingabe\"];\n  check [label=\"Prüfung\"];\n  output [label=\"Ausgabe\"];\n  input -> check;\n  check -> output;\n}\n",
+      "description": "Drei gerichtete neutrale Komponenten",
+      "figure_number": 2,
+      "id": "fig-dependencies-rich",
+      "line": 132,
+      "source_id": "source-one",
+      "type": "graphviz"
+    },
+    {
+      "line": 142,
+      "type": "blank"
+    },
+    {
+      "id": "conclusion",
+      "level": 2,
+      "line": 143,
+      "text": "Fazit",
+      "type": "heading"
+    },
+    {
+      "line": 144,
+      "type": "blank"
+    },
+    {
+      "inline": [
+        {
+          "mutable": true,
+          "text": "PDF und HTML tragen dieselben semantischen Marker und sichtbaren Herkunftsfelder. Die Nachweise ",
+          "type": "text"
+        },
+        {
+          "figure_number": 1,
+          "reference_text": "Abbildung 1",
+          "target": "fig-flow-rich",
+          "type": "figure-ref"
+        },
+        {
+          "mutable": true,
+          "text": " und ",
+          "type": "text"
+        },
+        {
+          "figure_number": 2,
+          "reference_text": "Abbildung 2",
+          "target": "fig-dependencies-rich",
+          "type": "figure-ref"
+        },
+        {
+          "mutable": true,
+          "text": " bleiben dabei nummeriert und direkt erreichbar.",
+          "type": "text"
+        }
+      ],
+      "line": 145,
+      "text": "PDF und HTML tragen dieselben semantischen Marker und sichtbaren Herkunftsfelder. Die Nachweise @fig-flow-rich und @fig-dependencies-rich bleiben dabei nummeriert und direkt erreichbar.",
+      "type": "paragraph"
+    },
+    {
+      "line": 146,
+      "type": "blank"
+    },
+    {
+      "line": 147,
+      "source_id": "source-one",
+      "text": "Unveränderlicher Quellenhinweis zur neutralen Fixture.",
+      "type": "footnote"
+    }
+  ],
+  "contract": "markdown-contract.v2",
+  "figure_registry": [
+    {
+      "caption": "Ablauf",
+      "description": "Zwei verbundene neutrale Schritte",
+      "id": "fig-flow-rich",
+      "number": 1,
+      "type": "mermaid"
+    },
+    {
+      "caption": "Abhängigkeiten",
+      "description": "Drei gerichtete neutrale Komponenten",
+      "id": "fig-dependencies-rich",
+      "number": 2,
+      "type": "graphviz"
+    }
+  ],
+  "frontmatter": {
+    "assets": [
+      {
+        "id": "diagram",
+        "media_type": "image/svg+xml",
+        "path": "assets/diagram.svg",
+        "rights_id": "diagram-rights",
+        "sha256": "02d29918955c53625dd4bcab435ba0ed00d9e441a2280e5548f49ead899ccee8"
+      },
+      {
+        "id": "e2e-raster",
+        "media_type": "image/png",
+        "path": "assets/raster.png",
+        "rights_id": "raster-rights",
+        "sha256": "9cd75a808e3b1be94516d46e3a7eab4c52d0d4623da1b779a5aee2528389d1cf"
+      }
+    ],
+    "document_id": "golden-rich-report",
+    "document_type": "report",
+    "facts": [
+      {
+        "id": "metric-value",
+        "source_ids": [
+          "source-one"
+        ],
+        "value": "42 %"
+      }
+    ],
+    "lang": "de-DE",
+    "rights": [
+      {
+        "evidence_path": "rights/diagram.rights.json",
+        "evidence_sha256": "0aed6a8f0ccaf360c75114251d64889dad4e34160bfed839384b51f9f531e61a",
+        "id": "diagram-rights"
+      },
+      {
+        "evidence_path": "rights/raster.rights.json",
+        "evidence_sha256": "7f3467e784cfa84990ce400e53db9ff028165868274c1cf5e0590c7b296c3a44",
+        "id": "raster-rights"
+      }
+    ],
+    "schema_version": "markdown-document.v1",
+    "sources": [
+      {
+        "id": "source-one",
+        "locator": "urn:brandkit:e2e:source-one",
+        "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+    ],
+    "status": "release",
+    "title": "Rich-Block-Nachweis",
+    "todos": []
+  },
+  "humanizer_segments": {
+    "mutable": [
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 1192,
+        "kind": "natural-prose",
+        "old_hash": "5514b509a594e8398ab1dcf568f92e5a00220690c41a3a53e0e3e4f532b3b6f7",
+        "ordinal": 1,
+        "role": "segment",
+        "segment_id": "mutable-917f5e137903c9316c95e819",
+        "sha256": "5514b509a594e8398ab1dcf568f92e5a00220690c41a3a53e0e3e4f532b3b6f7",
+        "start_byte": 1139,
+        "text": "Die Matrix zeigt alle Präsentationsvarianten. Siehe "
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 1211,
+        "kind": "natural-prose",
+        "old_hash": "23cc156deffba94bf107f191ff88740b7832d2a40a26daa897c5a62663439176",
+        "ordinal": 2,
+        "role": "segment",
+        "segment_id": "mutable-4c7e5d76d27bb36c635e45dd",
+        "sha256": "23cc156deffba94bf107f191ff88740b7832d2a40a26daa897c5a62663439176",
+        "start_byte": 1206,
+        "text": " und "
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 1234,
+        "kind": "natural-prose",
+        "old_hash": "cdb4ee2aea69cc6a83331bbe96dc2caa9a299d21329efb0336fc02a82e1839a8",
+        "ordinal": 3,
+        "role": "segment",
+        "segment_id": "mutable-4f6dd1d64a64ce142d5c8ab4",
+        "sha256": "cdb4ee2aea69cc6a83331bbe96dc2caa9a299d21329efb0336fc02a82e1839a8",
+        "start_byte": 1233,
+        "text": "."
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 1340,
+        "kind": "natural-prose",
+        "old_hash": "27e3c51f89c9b40af343f1a8adabab8d2084fa7a75adb9ab6fe54e7faf02fcb8",
+        "ordinal": 4,
+        "role": "segment",
+        "segment_id": "mutable-ff57bc81e872d97bfebabf9b",
+        "sha256": "27e3c51f89c9b40af343f1a8adabab8d2084fa7a75adb9ab6fe54e7faf02fcb8",
+        "start_byte": 1314,
+        "text": "Lesbarer Inhalt der Notiz."
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 1447,
+        "kind": "natural-prose",
+        "old_hash": "27e3c51f89c9b40af343f1a8adabab8d2084fa7a75adb9ab6fe54e7faf02fcb8",
+        "ordinal": 5,
+        "role": "segment",
+        "segment_id": "mutable-5f79f462a104b839ffe551be",
+        "sha256": "27e3c51f89c9b40af343f1a8adabab8d2084fa7a75adb9ab6fe54e7faf02fcb8",
+        "start_byte": 1421,
+        "text": "Lesbarer Inhalt der Notiz."
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 1567,
+        "kind": "natural-prose",
+        "old_hash": "27e3c51f89c9b40af343f1a8adabab8d2084fa7a75adb9ab6fe54e7faf02fcb8",
+        "ordinal": 6,
+        "role": "segment",
+        "segment_id": "mutable-91675ab02f917687eef52745",
+        "sha256": "27e3c51f89c9b40af343f1a8adabab8d2084fa7a75adb9ab6fe54e7faf02fcb8",
+        "start_byte": 1541,
+        "text": "Lesbarer Inhalt der Notiz."
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 1674,
+        "kind": "natural-prose",
+        "old_hash": "395d13af23e662e1592c158495ec887f798396f56daaa2dc15bfabc4c217c57e",
+        "ordinal": 7,
+        "role": "segment",
+        "segment_id": "mutable-2615d8e29e08cfba5b9e2268",
+        "sha256": "395d13af23e662e1592c158495ec887f798396f56daaa2dc15bfabc4c217c57e",
+        "start_byte": 1648,
+        "text": "Lesbarer Inhalt des Tipps."
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 1778,
+        "kind": "natural-prose",
+        "old_hash": "395d13af23e662e1592c158495ec887f798396f56daaa2dc15bfabc4c217c57e",
+        "ordinal": 8,
+        "role": "segment",
+        "segment_id": "mutable-61e1dc016784990fd6cdd60e",
+        "sha256": "395d13af23e662e1592c158495ec887f798396f56daaa2dc15bfabc4c217c57e",
+        "start_byte": 1752,
+        "text": "Lesbarer Inhalt des Tipps."
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 1884,
+        "kind": "natural-prose",
+        "old_hash": "395d13af23e662e1592c158495ec887f798396f56daaa2dc15bfabc4c217c57e",
+        "ordinal": 9,
+        "role": "segment",
+        "segment_id": "mutable-2e3e0805574ac4e33a271c53",
+        "sha256": "395d13af23e662e1592c158495ec887f798396f56daaa2dc15bfabc4c217c57e",
+        "start_byte": 1858,
+        "text": "Lesbarer Inhalt des Tipps."
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 2004,
+        "kind": "natural-prose",
+        "old_hash": "9d4b736cc8fa62247db0dab42166b255c0b1b639844a722b5da284ac416fa960",
+        "ordinal": 10,
+        "role": "segment",
+        "segment_id": "mutable-e01d5415c8b76c915e57f077",
+        "sha256": "9d4b736cc8fa62247db0dab42166b255c0b1b639844a722b5da284ac416fa960",
+        "start_byte": 1976,
+        "text": "Lesbarer Inhalt der Warnung."
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 2121,
+        "kind": "natural-prose",
+        "old_hash": "9d4b736cc8fa62247db0dab42166b255c0b1b639844a722b5da284ac416fa960",
+        "ordinal": 11,
+        "role": "segment",
+        "segment_id": "mutable-46ae51e05f8aefe64e176585",
+        "sha256": "9d4b736cc8fa62247db0dab42166b255c0b1b639844a722b5da284ac416fa960",
+        "start_byte": 2093,
+        "text": "Lesbarer Inhalt der Warnung."
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 2240,
+        "kind": "natural-prose",
+        "old_hash": "9d4b736cc8fa62247db0dab42166b255c0b1b639844a722b5da284ac416fa960",
+        "ordinal": 12,
+        "role": "segment",
+        "segment_id": "mutable-3066dcd16626c1b8a8335f93",
+        "sha256": "9d4b736cc8fa62247db0dab42166b255c0b1b639844a722b5da284ac416fa960",
+        "start_byte": 2212,
+        "text": "Lesbarer Inhalt der Warnung."
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 2372,
+        "kind": "natural-prose",
+        "old_hash": "caa9dcaf53a3f46d558fe94415edc54e664da52c73763adf2ee5269f5cd788ce",
+        "ordinal": 13,
+        "role": "segment",
+        "segment_id": "mutable-662a41baca28e1db8696e4b6",
+        "sha256": "caa9dcaf53a3f46d558fe94415edc54e664da52c73763adf2ee5269f5cd788ce",
+        "start_byte": 2333,
+        "text": "Lesbarer Inhalt des Vorsichtshinweises."
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 2501,
+        "kind": "natural-prose",
+        "old_hash": "caa9dcaf53a3f46d558fe94415edc54e664da52c73763adf2ee5269f5cd788ce",
+        "ordinal": 14,
+        "role": "segment",
+        "segment_id": "mutable-b9a0d41c48b63b94af485e4e",
+        "sha256": "caa9dcaf53a3f46d558fe94415edc54e664da52c73763adf2ee5269f5cd788ce",
+        "start_byte": 2462,
+        "text": "Lesbarer Inhalt des Vorsichtshinweises."
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 2632,
+        "kind": "natural-prose",
+        "old_hash": "caa9dcaf53a3f46d558fe94415edc54e664da52c73763adf2ee5269f5cd788ce",
+        "ordinal": 15,
+        "role": "segment",
+        "segment_id": "mutable-0a4b5f17fcdaf6765e24d2f8",
+        "sha256": "caa9dcaf53a3f46d558fe94415edc54e664da52c73763adf2ee5269f5cd788ce",
+        "start_byte": 2593,
+        "text": "Lesbarer Inhalt des Vorsichtshinweises."
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 2768,
+        "kind": "natural-prose",
+        "old_hash": "de9c4df186c8a8946eff84f97789bac52f5f3776ae850a7d2a531618bf307dd1",
+        "ordinal": 16,
+        "role": "segment",
+        "segment_id": "mutable-e3dbb8a5a864c466fffa8d55",
+        "sha256": "de9c4df186c8a8946eff84f97789bac52f5f3776ae850a7d2a531618bf307dd1",
+        "start_byte": 2728,
+        "text": "Lesbarer Inhalt des wichtigen Hinweises."
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 2901,
+        "kind": "natural-prose",
+        "old_hash": "de9c4df186c8a8946eff84f97789bac52f5f3776ae850a7d2a531618bf307dd1",
+        "ordinal": 17,
+        "role": "segment",
+        "segment_id": "mutable-76bc6ddc2e5efff803c29abf",
+        "sha256": "de9c4df186c8a8946eff84f97789bac52f5f3776ae850a7d2a531618bf307dd1",
+        "start_byte": 2861,
+        "text": "Lesbarer Inhalt des wichtigen Hinweises."
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 3036,
+        "kind": "natural-prose",
+        "old_hash": "de9c4df186c8a8946eff84f97789bac52f5f3776ae850a7d2a531618bf307dd1",
+        "ordinal": 18,
+        "role": "segment",
+        "segment_id": "mutable-ea67b842ad19749cc4e045b5",
+        "sha256": "de9c4df186c8a8946eff84f97789bac52f5f3776ae850a7d2a531618bf307dd1",
+        "start_byte": 2996,
+        "text": "Lesbarer Inhalt des wichtigen Hinweises."
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 3212,
+        "kind": "natural-prose",
+        "old_hash": "e3fab6764fc557bcb401a0363b1ac5c5e98e9299ede81978b37d762a675cd695",
+        "ordinal": 19,
+        "role": "segment",
+        "segment_id": "mutable-a8e7226a1a6851dcccd5eaf4",
+        "sha256": "e3fab6764fc557bcb401a0363b1ac5c5e98e9299ede81978b37d762a675cd695",
+        "start_byte": 3186,
+        "text": "Der gebundene Wert lautet "
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 3241,
+        "kind": "natural-prose",
+        "old_hash": "cdb4ee2aea69cc6a83331bbe96dc2caa9a299d21329efb0336fc02a82e1839a8",
+        "ordinal": 20,
+        "role": "segment",
+        "segment_id": "mutable-5a92283c4d54b1e7481b5462",
+        "sha256": "cdb4ee2aea69cc6a83331bbe96dc2caa9a299d21329efb0336fc02a82e1839a8",
+        "start_byte": 3240,
+        "text": "."
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 3383,
+        "kind": "natural-prose",
+        "old_hash": "52841d5b9650b9d010c5ce605ad1725723b060ce1fad22870ee7a37076181fd6",
+        "ordinal": 21,
+        "role": "segment",
+        "segment_id": "mutable-f1b78b4978114c016388beba",
+        "sha256": "52841d5b9650b9d010c5ce605ad1725723b060ce1fad22870ee7a37076181fd6",
+        "start_byte": 3320,
+        "text": "Die belegte Aussage bleibt sichtbar mit ihrer Quelle verbunden."
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 3520,
+        "kind": "natural-prose",
+        "old_hash": "1535d10710d31a32cceb98bacc67a4e2010eb427ac48b43d31206c971e496506",
+        "ordinal": 22,
+        "role": "segment",
+        "segment_id": "mutable-ef2f2e656d07c3a8fa224437",
+        "sha256": "1535d10710d31a32cceb98bacc67a4e2010eb427ac48b43d31206c971e496506",
+        "start_byte": 3463,
+        "text": "Der Herkunftshinweis darf in keiner Ausgabe verschwinden."
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 4413,
+        "kind": "natural-prose",
+        "old_hash": "f5976afdc074f3cdc6c23456afe25c8e9d55f43cc44ea517ed5e6caf77bb2bcb",
+        "ordinal": 23,
+        "role": "segment",
+        "segment_id": "mutable-97410bbe00393cc330263fbe",
+        "sha256": "f5976afdc074f3cdc6c23456afe25c8e9d55f43cc44ea517ed5e6caf77bb2bcb",
+        "start_byte": 4317,
+        "text": "PDF und HTML tragen dieselben semantischen Marker und sichtbaren Herkunftsfelder. Die Nachweise "
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 4432,
+        "kind": "natural-prose",
+        "old_hash": "23cc156deffba94bf107f191ff88740b7832d2a40a26daa897c5a62663439176",
+        "ordinal": 24,
+        "role": "segment",
+        "segment_id": "mutable-b91a8c94b71dfc65ad8c55a2",
+        "sha256": "23cc156deffba94bf107f191ff88740b7832d2a40a26daa897c5a62663439176",
+        "start_byte": 4427,
+        "text": " und "
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 4502,
+        "kind": "natural-prose",
+        "old_hash": "7b6f613fdbf42114b8b87ff4b358cf0efe83161ea034f71d95825eedbb18ebee",
+        "ordinal": 25,
+        "role": "segment",
+        "segment_id": "mutable-647a44d567466f9faa510d94",
+        "sha256": "7b6f613fdbf42114b8b87ff4b358cf0efe83161ea034f71d95825eedbb18ebee",
+        "start_byte": 4454,
+        "text": " bleiben dabei nummeriert und direkt erreichbar."
+      }
+    ],
+    "partition": [
+      {
+        "ast_path": "document/frontmatter",
+        "classification": "protected",
+        "end_byte": 1070,
+        "kind": "frontmatter",
+        "old_hash": "ac4fe5e5e045139aad90e9696e2e1a95b3bd916bae75082a12d4fcdfeb9ad80b",
+        "ordinal": 1,
+        "role": "document-metadata",
+        "segment_id": "protected-63274e878959ab9eb92f8a7c",
+        "sha256": "ac4fe5e5e045139aad90e9696e2e1a95b3bd916bae75082a12d4fcdfeb9ad80b",
+        "start_byte": 0,
+        "text": "---\nschema_version: markdown-document.v1\ndocument_id: golden-rich-report\ndocument_type: report\ntitle: Rich-Block-Nachweis\nlang: de-DE\nstatus: release\nfacts:\n  - id: metric-value\n    value: \"42 %\"\n    source_ids: [source-one]\nsources:\n  - id: source-one\n    locator: urn:brandkit:e2e:source-one\n    sha256: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\nassets:\n  - id: diagram\n    path: assets/diagram.svg\n    media_type: image/svg+xml\n    sha256: 02d29918955c53625dd4bcab435ba0ed00d9e441a2280e5548f49ead899ccee8\n    rights_id: diagram-rights\n  - id: e2e-raster\n    path: assets/raster.png\n    media_type: image/png\n    sha256: 9cd75a808e3b1be94516d46e3a7eab4c52d0d4623da1b779a5aee2528389d1cf\n    rights_id: raster-rights\nrights:\n  - id: diagram-rights\n    evidence_path: rights/diagram.rights.json\n    evidence_sha256: 0aed6a8f0ccaf360c75114251d64889dad4e34160bfed839384b51f9f531e61a\n  - id: raster-rights\n    evidence_path: rights/raster.rights.json\n    evidence_sha256: 7f3467e784cfa84990ce400e53db9ff028165868274c1cf5e0590c7b296c3a44\ntodos: []\n---\n"
+      },
+      {
+        "ast_path": "document/directive/title",
+        "classification": "protected",
+        "end_byte": 1101,
+        "kind": "directive",
+        "old_hash": "a8cbc2f795b03cbc9ee6a589eaedf6f49bb6e3c13edbc43f816f3dad5a1edd96",
+        "ordinal": 1,
+        "role": "title",
+        "segment_id": "protected-0975bbfa365c9d92158ef283",
+        "sha256": "a8cbc2f795b03cbc9ee6a589eaedf6f49bb6e3c13edbc43f816f3dad5a1edd96",
+        "start_byte": 1070,
+        "text": "# Rich-Block-Nachweis {#title}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 1102,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 1,
+        "role": "structural-bytes",
+        "segment_id": "protected-9afa7534ec84d0bf2257eef0",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 1101,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/executive-summary",
+        "classification": "protected",
+        "end_byte": 1138,
+        "kind": "directive",
+        "old_hash": "68b29775cd89519b76df38bc3feec019fac0d8c954b729d41cfd58f3e9d3084f",
+        "ordinal": 1,
+        "role": "executive-summary",
+        "segment_id": "protected-007bdbe0204cea209beef856",
+        "sha256": "68b29775cd89519b76df38bc3feec019fac0d8c954b729d41cfd58f3e9d3084f",
+        "start_byte": 1102,
+        "text": "## Kurzfassung {#executive-summary}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 1139,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 2,
+        "role": "structural-bytes",
+        "segment_id": "protected-cbc160d37b05946352292b51",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 1138,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 1192,
+        "kind": "natural-prose",
+        "old_hash": "5514b509a594e8398ab1dcf568f92e5a00220690c41a3a53e0e3e4f532b3b6f7",
+        "ordinal": 1,
+        "role": "segment",
+        "segment_id": "mutable-917f5e137903c9316c95e819",
+        "sha256": "5514b509a594e8398ab1dcf568f92e5a00220690c41a3a53e0e3e4f532b3b6f7",
+        "start_byte": 1139,
+        "text": "Die Matrix zeigt alle Präsentationsvarianten. Siehe "
+      },
+      {
+        "ast_path": "document/figure-ref/fig-flow-rich",
+        "classification": "protected",
+        "end_byte": 1206,
+        "kind": "figure-ref",
+        "old_hash": "0ffe75f24aa89c03930337e8fdebd946ae040b1123d1b5472ec46ac78cd2f678",
+        "ordinal": 1,
+        "role": "fig-flow-rich",
+        "segment_id": "protected-3c1ac9a7ee94c06a5ad098c5",
+        "sha256": "0ffe75f24aa89c03930337e8fdebd946ae040b1123d1b5472ec46ac78cd2f678",
+        "start_byte": 1192,
+        "text": "@fig-flow-rich"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 1211,
+        "kind": "natural-prose",
+        "old_hash": "23cc156deffba94bf107f191ff88740b7832d2a40a26daa897c5a62663439176",
+        "ordinal": 2,
+        "role": "segment",
+        "segment_id": "mutable-4c7e5d76d27bb36c635e45dd",
+        "sha256": "23cc156deffba94bf107f191ff88740b7832d2a40a26daa897c5a62663439176",
+        "start_byte": 1206,
+        "text": " und "
+      },
+      {
+        "ast_path": "document/figure-ref/fig-dependencies-rich",
+        "classification": "protected",
+        "end_byte": 1233,
+        "kind": "figure-ref",
+        "old_hash": "6ddabc96125dee5f6650fdab3e38363b7f85e111a376c28f73a5b9a22e490b0c",
+        "ordinal": 1,
+        "role": "fig-dependencies-rich",
+        "segment_id": "protected-fac5a649037f6a759d930fe7",
+        "sha256": "6ddabc96125dee5f6650fdab3e38363b7f85e111a376c28f73a5b9a22e490b0c",
+        "start_byte": 1211,
+        "text": "@fig-dependencies-rich"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 1234,
+        "kind": "natural-prose",
+        "old_hash": "cdb4ee2aea69cc6a83331bbe96dc2caa9a299d21329efb0336fc02a82e1839a8",
+        "ordinal": 3,
+        "role": "segment",
+        "segment_id": "mutable-4f6dd1d64a64ce142d5c8ab4",
+        "sha256": "cdb4ee2aea69cc6a83331bbe96dc2caa9a299d21329efb0336fc02a82e1839a8",
+        "start_byte": 1233,
+        "text": "."
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 1236,
+        "kind": "syntax",
+        "old_hash": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "ordinal": 3,
+        "role": "structural-bytes",
+        "segment_id": "protected-5339e929b7b0dbfff3091dd5",
+        "sha256": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "start_byte": 1234,
+        "text": "\n\n"
+      },
+      {
+        "ast_path": "document/directive/note-default",
+        "classification": "protected",
+        "end_byte": 1314,
+        "kind": "directive",
+        "old_hash": "2b030cbf25b18b669aa540e47f871522823986bd533f550af51779962837b8ce",
+        "ordinal": 1,
+        "role": "note-default",
+        "segment_id": "protected-74f24e15d4101f5f74ac74f4",
+        "sha256": "2b030cbf25b18b669aa540e47f871522823986bd533f550af51779962837b8ce",
+        "start_byte": 1236,
+        "text": "::: {.note #note-default title=\"Notiz Standard\" appearance=default icon=true}\n"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 1340,
+        "kind": "natural-prose",
+        "old_hash": "27e3c51f89c9b40af343f1a8adabab8d2084fa7a75adb9ab6fe54e7faf02fcb8",
+        "ordinal": 4,
+        "role": "segment",
+        "segment_id": "mutable-ff57bc81e872d97bfebabf9b",
+        "sha256": "27e3c51f89c9b40af343f1a8adabab8d2084fa7a75adb9ab6fe54e7faf02fcb8",
+        "start_byte": 1314,
+        "text": "Lesbarer Inhalt der Notiz."
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 1341,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 4,
+        "role": "structural-bytes",
+        "segment_id": "protected-db9bb4c8d3316ecdfc3bc19a",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 1340,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/note-default",
+        "classification": "protected",
+        "end_byte": 1345,
+        "kind": "directive",
+        "old_hash": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "ordinal": 2,
+        "role": "note-default",
+        "segment_id": "protected-379f8ccf6055625a47081a53",
+        "sha256": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "start_byte": 1341,
+        "text": ":::\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 1346,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 5,
+        "role": "structural-bytes",
+        "segment_id": "protected-7406e07bb89250ac7ea4e9bc",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 1345,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/note-simple",
+        "classification": "protected",
+        "end_byte": 1421,
+        "kind": "directive",
+        "old_hash": "413b0e025ecd1d37bdb5bb1302cfe86d192dff6ae200ac378d963c29d5629884",
+        "ordinal": 1,
+        "role": "note-simple",
+        "segment_id": "protected-bc19db87213707bad50c6762",
+        "sha256": "413b0e025ecd1d37bdb5bb1302cfe86d192dff6ae200ac378d963c29d5629884",
+        "start_byte": 1346,
+        "text": "::: {.note #note-simple title=\"Notiz Einfach\" appearance=simple icon=true}\n"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 1447,
+        "kind": "natural-prose",
+        "old_hash": "27e3c51f89c9b40af343f1a8adabab8d2084fa7a75adb9ab6fe54e7faf02fcb8",
+        "ordinal": 5,
+        "role": "segment",
+        "segment_id": "mutable-5f79f462a104b839ffe551be",
+        "sha256": "27e3c51f89c9b40af343f1a8adabab8d2084fa7a75adb9ab6fe54e7faf02fcb8",
+        "start_byte": 1421,
+        "text": "Lesbarer Inhalt der Notiz."
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 1448,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 6,
+        "role": "structural-bytes",
+        "segment_id": "protected-7e9ea612b2a3f2f6881cedae",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 1447,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/note-simple",
+        "classification": "protected",
+        "end_byte": 1452,
+        "kind": "directive",
+        "old_hash": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "ordinal": 2,
+        "role": "note-simple",
+        "segment_id": "protected-0695c925e74e161263ea2aa0",
+        "sha256": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "start_byte": 1448,
+        "text": ":::\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 1453,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 7,
+        "role": "structural-bytes",
+        "segment_id": "protected-22983067b2bd565d1e0da203",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 1452,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/note-minimal",
+        "classification": "protected",
+        "end_byte": 1541,
+        "kind": "directive",
+        "old_hash": "e6c0dc23557f134709128cbbfb71dadd021338f3f261cc9d389e540fb38f2f69",
+        "ordinal": 1,
+        "role": "note-minimal",
+        "segment_id": "protected-c4804944be098947afca1677",
+        "sha256": "e6c0dc23557f134709128cbbfb71dadd021338f3f261cc9d389e540fb38f2f69",
+        "start_byte": 1453,
+        "text": "::: {.note #note-minimal title=\"Eigener Titel ohne Icon\" appearance=minimal icon=false}\n"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 1567,
+        "kind": "natural-prose",
+        "old_hash": "27e3c51f89c9b40af343f1a8adabab8d2084fa7a75adb9ab6fe54e7faf02fcb8",
+        "ordinal": 6,
+        "role": "segment",
+        "segment_id": "mutable-91675ab02f917687eef52745",
+        "sha256": "27e3c51f89c9b40af343f1a8adabab8d2084fa7a75adb9ab6fe54e7faf02fcb8",
+        "start_byte": 1541,
+        "text": "Lesbarer Inhalt der Notiz."
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 1568,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 8,
+        "role": "structural-bytes",
+        "segment_id": "protected-0d0c85d0e40aed27ff38e2a9",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 1567,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/note-minimal",
+        "classification": "protected",
+        "end_byte": 1572,
+        "kind": "directive",
+        "old_hash": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "ordinal": 2,
+        "role": "note-minimal",
+        "segment_id": "protected-4ef475e0d7468c3316b5ade2",
+        "sha256": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "start_byte": 1568,
+        "text": ":::\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 1573,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 9,
+        "role": "structural-bytes",
+        "segment_id": "protected-e414e4605b991629d2ee1b9e",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 1572,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/tip-default",
+        "classification": "protected",
+        "end_byte": 1648,
+        "kind": "directive",
+        "old_hash": "0dbef321a4db074dad7b940d60d7a542912d066c941a786167744ad9ce45863b",
+        "ordinal": 1,
+        "role": "tip-default",
+        "segment_id": "protected-0b620ad28727755942cfb47a",
+        "sha256": "0dbef321a4db074dad7b940d60d7a542912d066c941a786167744ad9ce45863b",
+        "start_byte": 1573,
+        "text": "::: {.tip #tip-default title=\"Tipp Standard\" appearance=default icon=true}\n"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 1674,
+        "kind": "natural-prose",
+        "old_hash": "395d13af23e662e1592c158495ec887f798396f56daaa2dc15bfabc4c217c57e",
+        "ordinal": 7,
+        "role": "segment",
+        "segment_id": "mutable-2615d8e29e08cfba5b9e2268",
+        "sha256": "395d13af23e662e1592c158495ec887f798396f56daaa2dc15bfabc4c217c57e",
+        "start_byte": 1648,
+        "text": "Lesbarer Inhalt des Tipps."
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 1675,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 10,
+        "role": "structural-bytes",
+        "segment_id": "protected-cfa8a38e8458379a7c1c80de",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 1674,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/tip-default",
+        "classification": "protected",
+        "end_byte": 1679,
+        "kind": "directive",
+        "old_hash": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "ordinal": 2,
+        "role": "tip-default",
+        "segment_id": "protected-d1d6d7e186b0257d2a9fe765",
+        "sha256": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "start_byte": 1675,
+        "text": ":::\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 1680,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 11,
+        "role": "structural-bytes",
+        "segment_id": "protected-fd2aa1643d39d8b6db1f5253",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 1679,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/tip-simple",
+        "classification": "protected",
+        "end_byte": 1752,
+        "kind": "directive",
+        "old_hash": "9ddad31b099f81ce74917671ea592c68c98d0a1432920a44881e2b43aa6f7af7",
+        "ordinal": 1,
+        "role": "tip-simple",
+        "segment_id": "protected-444e76538ca775af9a8f0e00",
+        "sha256": "9ddad31b099f81ce74917671ea592c68c98d0a1432920a44881e2b43aa6f7af7",
+        "start_byte": 1680,
+        "text": "::: {.tip #tip-simple title=\"Tipp Einfach\" appearance=simple icon=true}\n"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 1778,
+        "kind": "natural-prose",
+        "old_hash": "395d13af23e662e1592c158495ec887f798396f56daaa2dc15bfabc4c217c57e",
+        "ordinal": 8,
+        "role": "segment",
+        "segment_id": "mutable-61e1dc016784990fd6cdd60e",
+        "sha256": "395d13af23e662e1592c158495ec887f798396f56daaa2dc15bfabc4c217c57e",
+        "start_byte": 1752,
+        "text": "Lesbarer Inhalt des Tipps."
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 1779,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 12,
+        "role": "structural-bytes",
+        "segment_id": "protected-23fe261c0c833375aabb406d",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 1778,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/tip-simple",
+        "classification": "protected",
+        "end_byte": 1783,
+        "kind": "directive",
+        "old_hash": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "ordinal": 2,
+        "role": "tip-simple",
+        "segment_id": "protected-86f09c299bed9ea5c7722d26",
+        "sha256": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "start_byte": 1779,
+        "text": ":::\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 1784,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 13,
+        "role": "structural-bytes",
+        "segment_id": "protected-c04a77494812a9331387a7e1",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 1783,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/tip-minimal",
+        "classification": "protected",
+        "end_byte": 1858,
+        "kind": "directive",
+        "old_hash": "6e756594a8f149161cad59ac0bb73745e56369a4c729d37f6f82558a4e2a8555",
+        "ordinal": 1,
+        "role": "tip-minimal",
+        "segment_id": "protected-6fb8ff1be9d374516aa9cdc2",
+        "sha256": "6e756594a8f149161cad59ac0bb73745e56369a4c729d37f6f82558a4e2a8555",
+        "start_byte": 1784,
+        "text": "::: {.tip #tip-minimal title=\"Tipp Minimal\" appearance=minimal icon=true}\n"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 1884,
+        "kind": "natural-prose",
+        "old_hash": "395d13af23e662e1592c158495ec887f798396f56daaa2dc15bfabc4c217c57e",
+        "ordinal": 9,
+        "role": "segment",
+        "segment_id": "mutable-2e3e0805574ac4e33a271c53",
+        "sha256": "395d13af23e662e1592c158495ec887f798396f56daaa2dc15bfabc4c217c57e",
+        "start_byte": 1858,
+        "text": "Lesbarer Inhalt des Tipps."
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 1885,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 14,
+        "role": "structural-bytes",
+        "segment_id": "protected-0dc9cfa18c943a6e02cfd6e0",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 1884,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/tip-minimal",
+        "classification": "protected",
+        "end_byte": 1889,
+        "kind": "directive",
+        "old_hash": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "ordinal": 2,
+        "role": "tip-minimal",
+        "segment_id": "protected-2bd5474f7a880b97b7a80448",
+        "sha256": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "start_byte": 1885,
+        "text": ":::\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 1890,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 15,
+        "role": "structural-bytes",
+        "segment_id": "protected-ede957ea20b72f80f06f4fd2",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 1889,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/warning-default",
+        "classification": "protected",
+        "end_byte": 1976,
+        "kind": "directive",
+        "old_hash": "064763ea092dad520ae1ddc95ad1f844c43909b92bed1b485cfe41cf329a2156",
+        "ordinal": 1,
+        "role": "warning-default",
+        "segment_id": "protected-ca30acfae1a8c46346becadd",
+        "sha256": "064763ea092dad520ae1ddc95ad1f844c43909b92bed1b485cfe41cf329a2156",
+        "start_byte": 1890,
+        "text": "::: {.warning #warning-default title=\"Warnung Standard\" appearance=default icon=true}\n"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 2004,
+        "kind": "natural-prose",
+        "old_hash": "9d4b736cc8fa62247db0dab42166b255c0b1b639844a722b5da284ac416fa960",
+        "ordinal": 10,
+        "role": "segment",
+        "segment_id": "mutable-e01d5415c8b76c915e57f077",
+        "sha256": "9d4b736cc8fa62247db0dab42166b255c0b1b639844a722b5da284ac416fa960",
+        "start_byte": 1976,
+        "text": "Lesbarer Inhalt der Warnung."
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 2005,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 16,
+        "role": "structural-bytes",
+        "segment_id": "protected-7bb2adb2732f42642e94ec99",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 2004,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/warning-default",
+        "classification": "protected",
+        "end_byte": 2009,
+        "kind": "directive",
+        "old_hash": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "ordinal": 2,
+        "role": "warning-default",
+        "segment_id": "protected-caaf3363588289c970df374f",
+        "sha256": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "start_byte": 2005,
+        "text": ":::\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 2010,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 17,
+        "role": "structural-bytes",
+        "segment_id": "protected-6b120e9992f2e08f0b22ebac",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 2009,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/warning-simple",
+        "classification": "protected",
+        "end_byte": 2093,
+        "kind": "directive",
+        "old_hash": "2729b0fc78b57d9ffdc164b42041f0a171ced3a2d10b8d3ad5079147a3d1c727",
+        "ordinal": 1,
+        "role": "warning-simple",
+        "segment_id": "protected-ef770b19615a09dc8d0a9396",
+        "sha256": "2729b0fc78b57d9ffdc164b42041f0a171ced3a2d10b8d3ad5079147a3d1c727",
+        "start_byte": 2010,
+        "text": "::: {.warning #warning-simple title=\"Warnung Einfach\" appearance=simple icon=true}\n"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 2121,
+        "kind": "natural-prose",
+        "old_hash": "9d4b736cc8fa62247db0dab42166b255c0b1b639844a722b5da284ac416fa960",
+        "ordinal": 11,
+        "role": "segment",
+        "segment_id": "mutable-46ae51e05f8aefe64e176585",
+        "sha256": "9d4b736cc8fa62247db0dab42166b255c0b1b639844a722b5da284ac416fa960",
+        "start_byte": 2093,
+        "text": "Lesbarer Inhalt der Warnung."
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 2122,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 18,
+        "role": "structural-bytes",
+        "segment_id": "protected-8c218a66c08fd50865670d61",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 2121,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/warning-simple",
+        "classification": "protected",
+        "end_byte": 2126,
+        "kind": "directive",
+        "old_hash": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "ordinal": 2,
+        "role": "warning-simple",
+        "segment_id": "protected-4fdf1ad932577afa81504003",
+        "sha256": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "start_byte": 2122,
+        "text": ":::\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 2127,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 19,
+        "role": "structural-bytes",
+        "segment_id": "protected-b47e00de53cbceae8224ae4a",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 2126,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/warning-minimal",
+        "classification": "protected",
+        "end_byte": 2212,
+        "kind": "directive",
+        "old_hash": "7e580ef7b05cf9a02f263105459a128775ef0a6f6d0eb5cd1589203965a18b62",
+        "ordinal": 1,
+        "role": "warning-minimal",
+        "segment_id": "protected-d5930a3cd6122e68fa61745b",
+        "sha256": "7e580ef7b05cf9a02f263105459a128775ef0a6f6d0eb5cd1589203965a18b62",
+        "start_byte": 2127,
+        "text": "::: {.warning #warning-minimal title=\"Warnung Minimal\" appearance=minimal icon=true}\n"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 2240,
+        "kind": "natural-prose",
+        "old_hash": "9d4b736cc8fa62247db0dab42166b255c0b1b639844a722b5da284ac416fa960",
+        "ordinal": 12,
+        "role": "segment",
+        "segment_id": "mutable-3066dcd16626c1b8a8335f93",
+        "sha256": "9d4b736cc8fa62247db0dab42166b255c0b1b639844a722b5da284ac416fa960",
+        "start_byte": 2212,
+        "text": "Lesbarer Inhalt der Warnung."
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 2241,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 20,
+        "role": "structural-bytes",
+        "segment_id": "protected-5b4c139f4fc601b88323320e",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 2240,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/warning-minimal",
+        "classification": "protected",
+        "end_byte": 2245,
+        "kind": "directive",
+        "old_hash": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "ordinal": 2,
+        "role": "warning-minimal",
+        "segment_id": "protected-5650f7a208f233625675f910",
+        "sha256": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "start_byte": 2241,
+        "text": ":::\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 2246,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 21,
+        "role": "structural-bytes",
+        "segment_id": "protected-aee725e03059c8fdc618d8e2",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 2245,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/caution-default",
+        "classification": "protected",
+        "end_byte": 2333,
+        "kind": "directive",
+        "old_hash": "b9283f9e8aaaca2c400b828da3e81278ee207f469b51566c27ace778a4e9191f",
+        "ordinal": 1,
+        "role": "caution-default",
+        "segment_id": "protected-c0b96d6c778255c55265fd58",
+        "sha256": "b9283f9e8aaaca2c400b828da3e81278ee207f469b51566c27ace778a4e9191f",
+        "start_byte": 2246,
+        "text": "::: {.caution #caution-default title=\"Vorsicht Standard\" appearance=default icon=true}\n"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 2372,
+        "kind": "natural-prose",
+        "old_hash": "caa9dcaf53a3f46d558fe94415edc54e664da52c73763adf2ee5269f5cd788ce",
+        "ordinal": 13,
+        "role": "segment",
+        "segment_id": "mutable-662a41baca28e1db8696e4b6",
+        "sha256": "caa9dcaf53a3f46d558fe94415edc54e664da52c73763adf2ee5269f5cd788ce",
+        "start_byte": 2333,
+        "text": "Lesbarer Inhalt des Vorsichtshinweises."
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 2373,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 22,
+        "role": "structural-bytes",
+        "segment_id": "protected-ab3ab80beebbed3925a5a064",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 2372,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/caution-default",
+        "classification": "protected",
+        "end_byte": 2377,
+        "kind": "directive",
+        "old_hash": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "ordinal": 2,
+        "role": "caution-default",
+        "segment_id": "protected-a1b2badbdb9d087511768dcc",
+        "sha256": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "start_byte": 2373,
+        "text": ":::\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 2378,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 23,
+        "role": "structural-bytes",
+        "segment_id": "protected-0f6fbd68998d71f9f83dd860",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 2377,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/caution-simple",
+        "classification": "protected",
+        "end_byte": 2462,
+        "kind": "directive",
+        "old_hash": "828f509822f99d146fee831fd4df7d9a20b01babc8d4262873ffeb48057d3cf4",
+        "ordinal": 1,
+        "role": "caution-simple",
+        "segment_id": "protected-765b90c56cd2a32cd73b83ea",
+        "sha256": "828f509822f99d146fee831fd4df7d9a20b01babc8d4262873ffeb48057d3cf4",
+        "start_byte": 2378,
+        "text": "::: {.caution #caution-simple title=\"Vorsicht Einfach\" appearance=simple icon=true}\n"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 2501,
+        "kind": "natural-prose",
+        "old_hash": "caa9dcaf53a3f46d558fe94415edc54e664da52c73763adf2ee5269f5cd788ce",
+        "ordinal": 14,
+        "role": "segment",
+        "segment_id": "mutable-b9a0d41c48b63b94af485e4e",
+        "sha256": "caa9dcaf53a3f46d558fe94415edc54e664da52c73763adf2ee5269f5cd788ce",
+        "start_byte": 2462,
+        "text": "Lesbarer Inhalt des Vorsichtshinweises."
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 2502,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 24,
+        "role": "structural-bytes",
+        "segment_id": "protected-69c2790f33a56b2c8b03e94f",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 2501,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/caution-simple",
+        "classification": "protected",
+        "end_byte": 2506,
+        "kind": "directive",
+        "old_hash": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "ordinal": 2,
+        "role": "caution-simple",
+        "segment_id": "protected-dfb9979100b229d829250a0e",
+        "sha256": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "start_byte": 2502,
+        "text": ":::\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 2507,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 25,
+        "role": "structural-bytes",
+        "segment_id": "protected-edf783da737c9d60907684d2",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 2506,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/caution-minimal",
+        "classification": "protected",
+        "end_byte": 2593,
+        "kind": "directive",
+        "old_hash": "84f7810bf8c96d726394b9b4125f68dfc4b5a6a948d2c4755f69da7fa4c3b3a1",
+        "ordinal": 1,
+        "role": "caution-minimal",
+        "segment_id": "protected-61a4cc56b997fc6f5aeb38a1",
+        "sha256": "84f7810bf8c96d726394b9b4125f68dfc4b5a6a948d2c4755f69da7fa4c3b3a1",
+        "start_byte": 2507,
+        "text": "::: {.caution #caution-minimal title=\"Vorsicht Minimal\" appearance=minimal icon=true}\n"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 2632,
+        "kind": "natural-prose",
+        "old_hash": "caa9dcaf53a3f46d558fe94415edc54e664da52c73763adf2ee5269f5cd788ce",
+        "ordinal": 15,
+        "role": "segment",
+        "segment_id": "mutable-0a4b5f17fcdaf6765e24d2f8",
+        "sha256": "caa9dcaf53a3f46d558fe94415edc54e664da52c73763adf2ee5269f5cd788ce",
+        "start_byte": 2593,
+        "text": "Lesbarer Inhalt des Vorsichtshinweises."
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 2633,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 26,
+        "role": "structural-bytes",
+        "segment_id": "protected-621c2f4ff4004884bb0c6e88",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 2632,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/caution-minimal",
+        "classification": "protected",
+        "end_byte": 2637,
+        "kind": "directive",
+        "old_hash": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "ordinal": 2,
+        "role": "caution-minimal",
+        "segment_id": "protected-ff3e2215f3b6fd6e03f110f5",
+        "sha256": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "start_byte": 2633,
+        "text": ":::\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 2638,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 27,
+        "role": "structural-bytes",
+        "segment_id": "protected-7be044e249b95cde8c1136e8",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 2637,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/important-default",
+        "classification": "protected",
+        "end_byte": 2728,
+        "kind": "directive",
+        "old_hash": "5418f0bbf55427826a33f902a5e35dab4216cd29a5a022186409ea70f566e17b",
+        "ordinal": 1,
+        "role": "important-default",
+        "segment_id": "protected-2615bc18cb785ed69c8a1b80",
+        "sha256": "5418f0bbf55427826a33f902a5e35dab4216cd29a5a022186409ea70f566e17b",
+        "start_byte": 2638,
+        "text": "::: {.important #important-default title=\"Wichtig Standard\" appearance=default icon=true}\n"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 2768,
+        "kind": "natural-prose",
+        "old_hash": "de9c4df186c8a8946eff84f97789bac52f5f3776ae850a7d2a531618bf307dd1",
+        "ordinal": 16,
+        "role": "segment",
+        "segment_id": "mutable-e3dbb8a5a864c466fffa8d55",
+        "sha256": "de9c4df186c8a8946eff84f97789bac52f5f3776ae850a7d2a531618bf307dd1",
+        "start_byte": 2728,
+        "text": "Lesbarer Inhalt des wichtigen Hinweises."
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 2769,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 28,
+        "role": "structural-bytes",
+        "segment_id": "protected-82cf37157137e10e202d148c",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 2768,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/important-default",
+        "classification": "protected",
+        "end_byte": 2773,
+        "kind": "directive",
+        "old_hash": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "ordinal": 2,
+        "role": "important-default",
+        "segment_id": "protected-67661e64640a28cec2dbc0be",
+        "sha256": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "start_byte": 2769,
+        "text": ":::\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 2774,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 29,
+        "role": "structural-bytes",
+        "segment_id": "protected-376a055c98e83d186f4ed615",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 2773,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/important-simple",
+        "classification": "protected",
+        "end_byte": 2861,
+        "kind": "directive",
+        "old_hash": "2ec4b2d85f21d6ad324c9574fc14b27064121be84e2e7321aa4c34a99178b594",
+        "ordinal": 1,
+        "role": "important-simple",
+        "segment_id": "protected-ade21d5a70dff328429b6104",
+        "sha256": "2ec4b2d85f21d6ad324c9574fc14b27064121be84e2e7321aa4c34a99178b594",
+        "start_byte": 2774,
+        "text": "::: {.important #important-simple title=\"Wichtig Einfach\" appearance=simple icon=true}\n"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 2901,
+        "kind": "natural-prose",
+        "old_hash": "de9c4df186c8a8946eff84f97789bac52f5f3776ae850a7d2a531618bf307dd1",
+        "ordinal": 17,
+        "role": "segment",
+        "segment_id": "mutable-76bc6ddc2e5efff803c29abf",
+        "sha256": "de9c4df186c8a8946eff84f97789bac52f5f3776ae850a7d2a531618bf307dd1",
+        "start_byte": 2861,
+        "text": "Lesbarer Inhalt des wichtigen Hinweises."
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 2902,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 30,
+        "role": "structural-bytes",
+        "segment_id": "protected-b4bb921ed29aa0bb0a4dbbae",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 2901,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/important-simple",
+        "classification": "protected",
+        "end_byte": 2906,
+        "kind": "directive",
+        "old_hash": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "ordinal": 2,
+        "role": "important-simple",
+        "segment_id": "protected-879ea8f9bb5708eda91aab1e",
+        "sha256": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "start_byte": 2902,
+        "text": ":::\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 2907,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 31,
+        "role": "structural-bytes",
+        "segment_id": "protected-70ce4c6967c353b10d5012b9",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 2906,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/important-minimal",
+        "classification": "protected",
+        "end_byte": 2996,
+        "kind": "directive",
+        "old_hash": "439497fde92c923bbe96bc0b453397c7baf5cdcdaae943582a1cdf5b358e7a8e",
+        "ordinal": 1,
+        "role": "important-minimal",
+        "segment_id": "protected-d26e83f25bb51eb60ba6dacf",
+        "sha256": "439497fde92c923bbe96bc0b453397c7baf5cdcdaae943582a1cdf5b358e7a8e",
+        "start_byte": 2907,
+        "text": "::: {.important #important-minimal title=\"Wichtig Minimal\" appearance=minimal icon=true}\n"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 3036,
+        "kind": "natural-prose",
+        "old_hash": "de9c4df186c8a8946eff84f97789bac52f5f3776ae850a7d2a531618bf307dd1",
+        "ordinal": 18,
+        "role": "segment",
+        "segment_id": "mutable-ea67b842ad19749cc4e045b5",
+        "sha256": "de9c4df186c8a8946eff84f97789bac52f5f3776ae850a7d2a531618bf307dd1",
+        "start_byte": 2996,
+        "text": "Lesbarer Inhalt des wichtigen Hinweises."
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3037,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 32,
+        "role": "structural-bytes",
+        "segment_id": "protected-7110121827b9e8f0d202b45c",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 3036,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/important-minimal",
+        "classification": "protected",
+        "end_byte": 3041,
+        "kind": "directive",
+        "old_hash": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "ordinal": 2,
+        "role": "important-minimal",
+        "segment_id": "protected-538439f6f5afc200f90b6c27",
+        "sha256": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "start_byte": 3037,
+        "text": ":::\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3042,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 33,
+        "role": "structural-bytes",
+        "segment_id": "protected-cc6c9f52a45d1e84333c3874",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 3041,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/page-break",
+        "classification": "protected",
+        "end_byte": 3057,
+        "kind": "directive",
+        "old_hash": "f19571734dc4c69e6e5f8afd5d3a208e8f8ac44817d2aa64175c88bab7b004d0",
+        "ordinal": 1,
+        "role": "page-break",
+        "segment_id": "protected-651deb05eecfbf6e82e81546",
+        "sha256": "f19571734dc4c69e6e5f8afd5d3a208e8f8ac44817d2aa64175c88bab7b004d0",
+        "start_byte": 3042,
+        "text": "::: page-break\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3058,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 34,
+        "role": "structural-bytes",
+        "segment_id": "protected-cce6acdab625787201143854",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 3057,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/findings",
+        "classification": "protected",
+        "end_byte": 3081,
+        "kind": "directive",
+        "old_hash": "59052c2770c114ffa5ce603435abdc3e6590086fa3763ef258793a23e8af9a6f",
+        "ordinal": 1,
+        "role": "findings",
+        "segment_id": "protected-85d36c88d386203a1ae5617f",
+        "sha256": "59052c2770c114ffa5ce603435abdc3e6590086fa3763ef258793a23e8af9a6f",
+        "start_byte": 3058,
+        "text": "## Befunde {#findings}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3082,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 35,
+        "role": "structural-bytes",
+        "segment_id": "protected-c4336c0c117cb1837734c15d",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 3081,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/metric-rich",
+        "classification": "protected",
+        "end_byte": 3186,
+        "kind": "directive",
+        "old_hash": "8410c2f8a395da0ea9664faaaaa2241f125ae39c7969e232c3b8d64a143b2c7b",
+        "ordinal": 1,
+        "role": "metric-rich",
+        "segment_id": "protected-69e7e5d5530bfed68f8a7c60",
+        "sha256": "8410c2f8a395da0ea9664faaaaa2241f125ae39c7969e232c3b8d64a143b2c7b",
+        "start_byte": 3082,
+        "text": "::: {.metric #metric-rich title=\"Messwert\" label=\"Anteil\" value_fact=metric-value source_id=source-one}\n"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 3212,
+        "kind": "natural-prose",
+        "old_hash": "e3fab6764fc557bcb401a0363b1ac5c5e98e9299ede81978b37d762a675cd695",
+        "ordinal": 19,
+        "role": "segment",
+        "segment_id": "mutable-a8e7226a1a6851dcccd5eaf4",
+        "sha256": "e3fab6764fc557bcb401a0363b1ac5c5e98e9299ede81978b37d762a675cd695",
+        "start_byte": 3186,
+        "text": "Der gebundene Wert lautet "
+      },
+      {
+        "ast_path": "document/number/metric-value",
+        "classification": "protected",
+        "end_byte": 3240,
+        "kind": "number",
+        "old_hash": "85d6d004e0102f165ad0b1652d7a0c66656e760992dcdf7226df43eace09c9f5",
+        "ordinal": 1,
+        "role": "metric-value",
+        "segment_id": "protected-0f8005845e599d3b65f156d2",
+        "sha256": "85d6d004e0102f165ad0b1652d7a0c66656e760992dcdf7226df43eace09c9f5",
+        "start_byte": 3212,
+        "text": "{{number:metric-value|42 %}}"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 3241,
+        "kind": "natural-prose",
+        "old_hash": "cdb4ee2aea69cc6a83331bbe96dc2caa9a299d21329efb0336fc02a82e1839a8",
+        "ordinal": 20,
+        "role": "segment",
+        "segment_id": "mutable-5a92283c4d54b1e7481b5462",
+        "sha256": "cdb4ee2aea69cc6a83331bbe96dc2caa9a299d21329efb0336fc02a82e1839a8",
+        "start_byte": 3240,
+        "text": "."
+      },
+      {
+        "ast_path": "document/source/source-one",
+        "classification": "protected",
+        "end_byte": 3254,
+        "kind": "source",
+        "old_hash": "71ba57e90987c62709929f8f8712754719ce3d4769a7d2d67fe3863ed85bfbca",
+        "ordinal": 1,
+        "role": "source-one",
+        "segment_id": "protected-9705356a16d0e3110c825f37",
+        "sha256": "71ba57e90987c62709929f8f8712754719ce3d4769a7d2d67fe3863ed85bfbca",
+        "start_byte": 3241,
+        "text": "[^source-one]"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3255,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 36,
+        "role": "structural-bytes",
+        "segment_id": "protected-c688d07b3d07ed565af4be06",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 3254,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/metric-rich",
+        "classification": "protected",
+        "end_byte": 3259,
+        "kind": "directive",
+        "old_hash": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "ordinal": 2,
+        "role": "metric-rich",
+        "segment_id": "protected-a570e38e223cdc77e575b39b",
+        "sha256": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "start_byte": 3255,
+        "text": ":::\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3260,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 37,
+        "role": "structural-bytes",
+        "segment_id": "protected-0546c4dfd14de5d44656cc68",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 3259,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/quote-rich",
+        "classification": "protected",
+        "end_byte": 3320,
+        "kind": "directive",
+        "old_hash": "6bf1f318e625a67638438abff35e48da7865e2817d24b3d5b6e5ffa78def4f49",
+        "ordinal": 1,
+        "role": "quote-rich",
+        "segment_id": "protected-5d743c2869209dfad766bd35",
+        "sha256": "6bf1f318e625a67638438abff35e48da7865e2817d24b3d5b6e5ffa78def4f49",
+        "start_byte": 3260,
+        "text": "::: {.quote #quote-rich title=\"Zitat\" source_id=source-one}\n"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 3383,
+        "kind": "natural-prose",
+        "old_hash": "52841d5b9650b9d010c5ce605ad1725723b060ce1fad22870ee7a37076181fd6",
+        "ordinal": 21,
+        "role": "segment",
+        "segment_id": "mutable-f1b78b4978114c016388beba",
+        "sha256": "52841d5b9650b9d010c5ce605ad1725723b060ce1fad22870ee7a37076181fd6",
+        "start_byte": 3320,
+        "text": "Die belegte Aussage bleibt sichtbar mit ihrer Quelle verbunden."
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3384,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 38,
+        "role": "structural-bytes",
+        "segment_id": "protected-6a7962058343babf97a177b8",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 3383,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/quote-rich",
+        "classification": "protected",
+        "end_byte": 3388,
+        "kind": "directive",
+        "old_hash": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "ordinal": 2,
+        "role": "quote-rich",
+        "segment_id": "protected-92fbd18a40ddff1498dd2517",
+        "sha256": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "start_byte": 3384,
+        "text": ":::\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3389,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 39,
+        "role": "structural-bytes",
+        "segment_id": "protected-c25cd1f60f4ae84e414de722",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 3388,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/legal-rich",
+        "classification": "protected",
+        "end_byte": 3463,
+        "kind": "directive",
+        "old_hash": "276f98446b7722e5a5236573fb6ce9c524bd54b92f285a4a1699fd35d032cd3f",
+        "ordinal": 1,
+        "role": "legal-rich",
+        "segment_id": "protected-11ae401114ee2e9e811a8cdf",
+        "sha256": "276f98446b7722e5a5236573fb6ce9c524bd54b92f285a4a1699fd35d032cd3f",
+        "start_byte": 3389,
+        "text": "::: {.legal #legal-rich title=\"Rechtlicher Hinweis\" source_id=source-one}\n"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 3520,
+        "kind": "natural-prose",
+        "old_hash": "1535d10710d31a32cceb98bacc67a4e2010eb427ac48b43d31206c971e496506",
+        "ordinal": 22,
+        "role": "segment",
+        "segment_id": "mutable-ef2f2e656d07c3a8fa224437",
+        "sha256": "1535d10710d31a32cceb98bacc67a4e2010eb427ac48b43d31206c971e496506",
+        "start_byte": 3463,
+        "text": "Der Herkunftshinweis darf in keiner Ausgabe verschwinden."
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3521,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 40,
+        "role": "structural-bytes",
+        "segment_id": "protected-8ed4e09c6905f782489c0979",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 3520,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/legal-rich",
+        "classification": "protected",
+        "end_byte": 3525,
+        "kind": "directive",
+        "old_hash": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "ordinal": 2,
+        "role": "legal-rich",
+        "segment_id": "protected-d9c3ea8712c73096c65239b5",
+        "sha256": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "start_byte": 3521,
+        "text": ":::\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3528,
+        "kind": "syntax",
+        "old_hash": "71c01c10f4afd63b190d173eeaec5b10abe8fc4f470384fd47b7ad3f244d481f",
+        "ordinal": 41,
+        "role": "structural-bytes",
+        "segment_id": "protected-de340da3a19449a4c72efd18",
+        "sha256": "71c01c10f4afd63b190d173eeaec5b10abe8fc4f470384fd47b7ad3f244d481f",
+        "start_byte": 3525,
+        "text": "\n| "
+      },
+      {
+        "ast_path": "document/table-value/r118-c1",
+        "classification": "protected",
+        "end_byte": 3533,
+        "kind": "table-value",
+        "old_hash": "211d0bb8cf4f5b5202c2a9b7996e483898644aa24714b1e10edd80a54ba4b560",
+        "ordinal": 1,
+        "role": "r118-c1",
+        "segment_id": "protected-34ad880ad0db0bbda737d108",
+        "sha256": "211d0bb8cf4f5b5202c2a9b7996e483898644aa24714b1e10edd80a54ba4b560",
+        "start_byte": 3528,
+        "text": "Block"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3536,
+        "kind": "syntax",
+        "old_hash": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "ordinal": 42,
+        "role": "structural-bytes",
+        "segment_id": "protected-5d050647faeca8b04966d39e",
+        "sha256": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "start_byte": 3533,
+        "text": " | "
+      },
+      {
+        "ast_path": "document/table-value/r118-c2",
+        "classification": "protected",
+        "end_byte": 3542,
+        "kind": "table-value",
+        "old_hash": "920e413c7d411b61ef3e8c63b1cb6ad058d5f95f8b481dbafe60248387d8c355",
+        "ordinal": 1,
+        "role": "r118-c2",
+        "segment_id": "protected-178af977764bbc8ec9476a05",
+        "sha256": "920e413c7d411b61ef3e8c63b1cb6ad058d5f95f8b481dbafe60248387d8c355",
+        "start_byte": 3536,
+        "text": "Status"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3561,
+        "kind": "syntax",
+        "old_hash": "d228065af100f8d1c3303b808088032ba36deaa5143f1367348fc2427f4e8115",
+        "ordinal": 43,
+        "role": "structural-bytes",
+        "segment_id": "protected-50ccc6276aff7faa2ea9c0ea",
+        "sha256": "d228065af100f8d1c3303b808088032ba36deaa5143f1367348fc2427f4e8115",
+        "start_byte": 3542,
+        "text": " |\n| --- | --- |\n| "
+      },
+      {
+        "ast_path": "document/table-value/r120-c1",
+        "classification": "protected",
+        "end_byte": 3568,
+        "kind": "table-value",
+        "old_hash": "14bfdc0e32aa60d305e6f46424c64d1fbf3a16fad1b41e0d38da221b20736098",
+        "ordinal": 1,
+        "role": "r120-c1",
+        "segment_id": "protected-febc34fb714ffab6656b7e6c",
+        "sha256": "14bfdc0e32aa60d305e6f46424c64d1fbf3a16fad1b41e0d38da221b20736098",
+        "start_byte": 3561,
+        "text": "Callout"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3571,
+        "kind": "syntax",
+        "old_hash": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "ordinal": 44,
+        "role": "structural-bytes",
+        "segment_id": "protected-5952fb749e43261b03bae6fb",
+        "sha256": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "start_byte": 3568,
+        "text": " | "
+      },
+      {
+        "ast_path": "document/table-value/r120-c2",
+        "classification": "protected",
+        "end_byte": 3579,
+        "kind": "table-value",
+        "old_hash": "32c1a81e8f8ead8bd85b91a878fc49d3c08a9fe400c787916287f87ce42a536e",
+        "ordinal": 1,
+        "role": "r120-c2",
+        "segment_id": "protected-bbf264f7f7633c1040867d70",
+        "sha256": "32c1a81e8f8ead8bd85b91a878fc49d3c08a9fe400c787916287f87ce42a536e",
+        "start_byte": 3571,
+        "text": "sichtbar"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3584,
+        "kind": "syntax",
+        "old_hash": "b234f248f1c636555db5e8733d921beb023e21f392237122a0d2abe6b3ec3325",
+        "ordinal": 45,
+        "role": "structural-bytes",
+        "segment_id": "protected-88ea33115e506dff4ffc8b56",
+        "sha256": "b234f248f1c636555db5e8733d921beb023e21f392237122a0d2abe6b3ec3325",
+        "start_byte": 3579,
+        "text": " |\n| "
+      },
+      {
+        "ast_path": "document/table-value/r121-c1",
+        "classification": "protected",
+        "end_byte": 3591,
+        "kind": "table-value",
+        "old_hash": "c2b21ddfbab9ad0072790c52d594862d37bd938642b07833323cba3656df37d3",
+        "ordinal": 1,
+        "role": "r121-c1",
+        "segment_id": "protected-295a0f7019603614ad03afd6",
+        "sha256": "c2b21ddfbab9ad0072790c52d594862d37bd938642b07833323cba3656df37d3",
+        "start_byte": 3584,
+        "text": "Tabelle"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3594,
+        "kind": "syntax",
+        "old_hash": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "ordinal": 46,
+        "role": "structural-bytes",
+        "segment_id": "protected-38a7af3e6d249bd7dab563c9",
+        "sha256": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "start_byte": 3591,
+        "text": " | "
+      },
+      {
+        "ast_path": "document/table-value/r121-c2",
+        "classification": "protected",
+        "end_byte": 3602,
+        "kind": "table-value",
+        "old_hash": "32c1a81e8f8ead8bd85b91a878fc49d3c08a9fe400c787916287f87ce42a536e",
+        "ordinal": 1,
+        "role": "r121-c2",
+        "segment_id": "protected-963153d2b2a2308401129e98",
+        "sha256": "32c1a81e8f8ead8bd85b91a878fc49d3c08a9fe400c787916287f87ce42a536e",
+        "start_byte": 3594,
+        "text": "sichtbar"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3606,
+        "kind": "syntax",
+        "old_hash": "82347804ce67c39a503bc24df8db49d9c7df52cb9d2d4f4fe9768cb8ac9700fb",
+        "ordinal": 47,
+        "role": "structural-bytes",
+        "segment_id": "protected-dc9b9805d651b77838bf3942",
+        "sha256": "82347804ce67c39a503bc24df8db49d9c7df52cb9d2d4f4fe9768cb8ac9700fb",
+        "start_byte": 3602,
+        "text": " |\n\n"
+      },
+      {
+        "ast_path": "document/directive/image-vector",
+        "classification": "protected",
+        "end_byte": 3726,
+        "kind": "directive",
+        "old_hash": "ab68a94f07abed45bc0c28d00da5e1c25a1c05fc7c1a984ee333ec2edf3082a7",
+        "ordinal": 1,
+        "role": "image-vector",
+        "segment_id": "protected-0173f067fe1091fc4facfe8b",
+        "sha256": "ab68a94f07abed45bc0c28d00da5e1c25a1c05fc7c1a984ee333ec2edf3082a7",
+        "start_byte": 3606,
+        "text": "![Neutrale Vektorgrafik](asset:diagram \"Vektorgrafik mit sichtbarer Beschriftung\"){#image-vector rights=diagram-rights}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3727,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 48,
+        "role": "structural-bytes",
+        "segment_id": "protected-e7d619d366cbcc2f31fa2be1",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 3726,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/image-raster",
+        "classification": "protected",
+        "end_byte": 3849,
+        "kind": "directive",
+        "old_hash": "051396e6c141e5b2b3de94f789a97c11cd270894455da22706eb61a3394d0285",
+        "ordinal": 1,
+        "role": "image-raster",
+        "segment_id": "protected-dfd0d4e41677f4808e680ac4",
+        "sha256": "051396e6c141e5b2b3de94f789a97c11cd270894455da22706eb61a3394d0285",
+        "start_byte": 3727,
+        "text": "![Neutrale Rastergrafik](asset:e2e-raster \"Rastergrafik mit sichtbarer Beschriftung\"){#image-raster rights=raster-rights}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3850,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 49,
+        "role": "structural-bytes",
+        "segment_id": "protected-88b4f20e04816ce05773d772",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 3849,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/fig-flow-rich",
+        "classification": "protected",
+        "end_byte": 3962,
+        "kind": "directive",
+        "old_hash": "7b2fe48a342a0c0cdd885c40868937ac3ec5539a88df7ef5ed5ebb2b2fe8dd0a",
+        "ordinal": 1,
+        "role": "fig-flow-rich",
+        "segment_id": "protected-cebab260e934ad7475ce11be",
+        "sha256": "7b2fe48a342a0c0cdd885c40868937ac3ec5539a88df7ef5ed5ebb2b2fe8dd0a",
+        "start_byte": 3850,
+        "text": "```{mermaid #fig-flow-rich title=\"Ablauf\" description=\"Zwei verbundene neutrale Schritte\" source_id=source-one}\n"
+      },
+      {
+        "ast_path": "document/diagram-code/fig-flow-rich",
+        "classification": "protected",
+        "end_byte": 4002,
+        "kind": "diagram-code",
+        "old_hash": "00fccde88b9ef19c089677244362d827b4dc6720f667e80bb814c1f54d526e7c",
+        "ordinal": 1,
+        "role": "fig-flow-rich",
+        "segment_id": "protected-66fa630f8f43d25a2e6f6972",
+        "sha256": "00fccde88b9ef19c089677244362d827b4dc6720f667e80bb814c1f54d526e7c",
+        "start_byte": 3962,
+        "text": "flowchart TD\n  A[Start] --> B[Prüfung]\n"
+      },
+      {
+        "ast_path": "document/directive/fig-flow-rich",
+        "classification": "protected",
+        "end_byte": 4006,
+        "kind": "directive",
+        "old_hash": "47c06c561d5c327343685268a46b3391f3998eee890d2be51f0d21cc4a53ae6d",
+        "ordinal": 2,
+        "role": "fig-flow-rich",
+        "segment_id": "protected-27d63843886d4ff42cd3c197",
+        "sha256": "47c06c561d5c327343685268a46b3391f3998eee890d2be51f0d21cc4a53ae6d",
+        "start_byte": 4002,
+        "text": "```\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 4007,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 50,
+        "role": "structural-bytes",
+        "segment_id": "protected-a7db16708897a4c1c825f0e9",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 4006,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/fig-dependencies-rich",
+        "classification": "protected",
+        "end_byte": 4140,
+        "kind": "directive",
+        "old_hash": "529b21989ff16c51d9af947b58c22de42d6d84ba759bbafeec06337127deb4de",
+        "ordinal": 1,
+        "role": "fig-dependencies-rich",
+        "segment_id": "protected-87cedddf12e55228a2c04219",
+        "sha256": "529b21989ff16c51d9af947b58c22de42d6d84ba759bbafeec06337127deb4de",
+        "start_byte": 4007,
+        "text": "```{graphviz #fig-dependencies-rich title=\"Abhängigkeiten\" description=\"Drei gerichtete neutrale Komponenten\" source_id=source-one}\n"
+      },
+      {
+        "ast_path": "document/diagram-code/fig-dependencies-rich",
+        "classification": "protected",
+        "end_byte": 4288,
+        "kind": "diagram-code",
+        "old_hash": "d97a42e92ec9f6d719457968ae23ba1a9c9533f6cd7f2dc9231ef14e7f434db5",
+        "ordinal": 1,
+        "role": "fig-dependencies-rich",
+        "segment_id": "protected-3c30d9db9decc44361a8d36a",
+        "sha256": "d97a42e92ec9f6d719457968ae23ba1a9c9533f6cd7f2dc9231ef14e7f434db5",
+        "start_byte": 4140,
+        "text": "digraph G {\n  rankdir=LR;\n  input [label=\"Eingabe\"];\n  check [label=\"Prüfung\"];\n  output [label=\"Ausgabe\"];\n  input -> check;\n  check -> output;\n}\n"
+      },
+      {
+        "ast_path": "document/directive/fig-dependencies-rich",
+        "classification": "protected",
+        "end_byte": 4292,
+        "kind": "directive",
+        "old_hash": "47c06c561d5c327343685268a46b3391f3998eee890d2be51f0d21cc4a53ae6d",
+        "ordinal": 2,
+        "role": "fig-dependencies-rich",
+        "segment_id": "protected-cf4059b62ed5e052476ee611",
+        "sha256": "47c06c561d5c327343685268a46b3391f3998eee890d2be51f0d21cc4a53ae6d",
+        "start_byte": 4288,
+        "text": "```\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 4293,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 51,
+        "role": "structural-bytes",
+        "segment_id": "protected-deb3b873530956d8e32173bf",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 4292,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/conclusion",
+        "classification": "protected",
+        "end_byte": 4316,
+        "kind": "directive",
+        "old_hash": "bba2dd23f0887de9b21649ad00217b15ff13097fa73880c487fcfff1d8fe2e5e",
+        "ordinal": 1,
+        "role": "conclusion",
+        "segment_id": "protected-f860081fc7626daf433fe392",
+        "sha256": "bba2dd23f0887de9b21649ad00217b15ff13097fa73880c487fcfff1d8fe2e5e",
+        "start_byte": 4293,
+        "text": "## Fazit {#conclusion}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 4317,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 52,
+        "role": "structural-bytes",
+        "segment_id": "protected-30dc38b90e85cf20c511ee90",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 4316,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 4413,
+        "kind": "natural-prose",
+        "old_hash": "f5976afdc074f3cdc6c23456afe25c8e9d55f43cc44ea517ed5e6caf77bb2bcb",
+        "ordinal": 23,
+        "role": "segment",
+        "segment_id": "mutable-97410bbe00393cc330263fbe",
+        "sha256": "f5976afdc074f3cdc6c23456afe25c8e9d55f43cc44ea517ed5e6caf77bb2bcb",
+        "start_byte": 4317,
+        "text": "PDF und HTML tragen dieselben semantischen Marker und sichtbaren Herkunftsfelder. Die Nachweise "
+      },
+      {
+        "ast_path": "document/figure-ref/fig-flow-rich",
+        "classification": "protected",
+        "end_byte": 4427,
+        "kind": "figure-ref",
+        "old_hash": "0ffe75f24aa89c03930337e8fdebd946ae040b1123d1b5472ec46ac78cd2f678",
+        "ordinal": 2,
+        "role": "fig-flow-rich",
+        "segment_id": "protected-1f6247a173ebdb439c43d7f3",
+        "sha256": "0ffe75f24aa89c03930337e8fdebd946ae040b1123d1b5472ec46ac78cd2f678",
+        "start_byte": 4413,
+        "text": "@fig-flow-rich"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 4432,
+        "kind": "natural-prose",
+        "old_hash": "23cc156deffba94bf107f191ff88740b7832d2a40a26daa897c5a62663439176",
+        "ordinal": 24,
+        "role": "segment",
+        "segment_id": "mutable-b91a8c94b71dfc65ad8c55a2",
+        "sha256": "23cc156deffba94bf107f191ff88740b7832d2a40a26daa897c5a62663439176",
+        "start_byte": 4427,
+        "text": " und "
+      },
+      {
+        "ast_path": "document/figure-ref/fig-dependencies-rich",
+        "classification": "protected",
+        "end_byte": 4454,
+        "kind": "figure-ref",
+        "old_hash": "6ddabc96125dee5f6650fdab3e38363b7f85e111a376c28f73a5b9a22e490b0c",
+        "ordinal": 2,
+        "role": "fig-dependencies-rich",
+        "segment_id": "protected-35e4a3ade66a86d0ddff4ea1",
+        "sha256": "6ddabc96125dee5f6650fdab3e38363b7f85e111a376c28f73a5b9a22e490b0c",
+        "start_byte": 4432,
+        "text": "@fig-dependencies-rich"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 4502,
+        "kind": "natural-prose",
+        "old_hash": "7b6f613fdbf42114b8b87ff4b358cf0efe83161ea034f71d95825eedbb18ebee",
+        "ordinal": 25,
+        "role": "segment",
+        "segment_id": "mutable-647a44d567466f9faa510d94",
+        "sha256": "7b6f613fdbf42114b8b87ff4b358cf0efe83161ea034f71d95825eedbb18ebee",
+        "start_byte": 4454,
+        "text": " bleiben dabei nummeriert und direkt erreichbar."
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 4504,
+        "kind": "syntax",
+        "old_hash": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "ordinal": 53,
+        "role": "structural-bytes",
+        "segment_id": "protected-4e8a74b7ac7d8ef9e2a0fe24",
+        "sha256": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "start_byte": 4502,
+        "text": "\n\n"
+      },
+      {
+        "ast_path": "document/footnote/source-one",
+        "classification": "protected",
+        "end_byte": 4574,
+        "kind": "footnote",
+        "old_hash": "b32691677c02bc3d936563c810e5eb4b9f1b090927298fa25bd4cbf1cf91fe1d",
+        "ordinal": 1,
+        "role": "source-one",
+        "segment_id": "protected-4c20cfc55b58a1ba5c88d731",
+        "sha256": "b32691677c02bc3d936563c810e5eb4b9f1b090927298fa25bd4cbf1cf91fe1d",
+        "start_byte": 4504,
+        "text": "[^source-one]: Unveränderlicher Quellenhinweis zur neutralen Fixture."
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 4575,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 54,
+        "role": "structural-bytes",
+        "segment_id": "protected-cccd396ef043f428345fefcc",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 4574,
+        "text": "\n"
+      }
+    ],
+    "protected": [
+      {
+        "ast_path": "document/frontmatter",
+        "classification": "protected",
+        "end_byte": 1070,
+        "kind": "frontmatter",
+        "old_hash": "ac4fe5e5e045139aad90e9696e2e1a95b3bd916bae75082a12d4fcdfeb9ad80b",
+        "ordinal": 1,
+        "role": "document-metadata",
+        "segment_id": "protected-63274e878959ab9eb92f8a7c",
+        "sha256": "ac4fe5e5e045139aad90e9696e2e1a95b3bd916bae75082a12d4fcdfeb9ad80b",
+        "start_byte": 0,
+        "text": "---\nschema_version: markdown-document.v1\ndocument_id: golden-rich-report\ndocument_type: report\ntitle: Rich-Block-Nachweis\nlang: de-DE\nstatus: release\nfacts:\n  - id: metric-value\n    value: \"42 %\"\n    source_ids: [source-one]\nsources:\n  - id: source-one\n    locator: urn:brandkit:e2e:source-one\n    sha256: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\nassets:\n  - id: diagram\n    path: assets/diagram.svg\n    media_type: image/svg+xml\n    sha256: 02d29918955c53625dd4bcab435ba0ed00d9e441a2280e5548f49ead899ccee8\n    rights_id: diagram-rights\n  - id: e2e-raster\n    path: assets/raster.png\n    media_type: image/png\n    sha256: 9cd75a808e3b1be94516d46e3a7eab4c52d0d4623da1b779a5aee2528389d1cf\n    rights_id: raster-rights\nrights:\n  - id: diagram-rights\n    evidence_path: rights/diagram.rights.json\n    evidence_sha256: 0aed6a8f0ccaf360c75114251d64889dad4e34160bfed839384b51f9f531e61a\n  - id: raster-rights\n    evidence_path: rights/raster.rights.json\n    evidence_sha256: 7f3467e784cfa84990ce400e53db9ff028165868274c1cf5e0590c7b296c3a44\ntodos: []\n---\n"
+      },
+      {
+        "ast_path": "document/directive/title",
+        "classification": "protected",
+        "end_byte": 1101,
+        "kind": "directive",
+        "old_hash": "a8cbc2f795b03cbc9ee6a589eaedf6f49bb6e3c13edbc43f816f3dad5a1edd96",
+        "ordinal": 1,
+        "role": "title",
+        "segment_id": "protected-0975bbfa365c9d92158ef283",
+        "sha256": "a8cbc2f795b03cbc9ee6a589eaedf6f49bb6e3c13edbc43f816f3dad5a1edd96",
+        "start_byte": 1070,
+        "text": "# Rich-Block-Nachweis {#title}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 1102,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 1,
+        "role": "structural-bytes",
+        "segment_id": "protected-9afa7534ec84d0bf2257eef0",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 1101,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/executive-summary",
+        "classification": "protected",
+        "end_byte": 1138,
+        "kind": "directive",
+        "old_hash": "68b29775cd89519b76df38bc3feec019fac0d8c954b729d41cfd58f3e9d3084f",
+        "ordinal": 1,
+        "role": "executive-summary",
+        "segment_id": "protected-007bdbe0204cea209beef856",
+        "sha256": "68b29775cd89519b76df38bc3feec019fac0d8c954b729d41cfd58f3e9d3084f",
+        "start_byte": 1102,
+        "text": "## Kurzfassung {#executive-summary}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 1139,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 2,
+        "role": "structural-bytes",
+        "segment_id": "protected-cbc160d37b05946352292b51",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 1138,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/figure-ref/fig-flow-rich",
+        "classification": "protected",
+        "end_byte": 1206,
+        "kind": "figure-ref",
+        "old_hash": "0ffe75f24aa89c03930337e8fdebd946ae040b1123d1b5472ec46ac78cd2f678",
+        "ordinal": 1,
+        "role": "fig-flow-rich",
+        "segment_id": "protected-3c1ac9a7ee94c06a5ad098c5",
+        "sha256": "0ffe75f24aa89c03930337e8fdebd946ae040b1123d1b5472ec46ac78cd2f678",
+        "start_byte": 1192,
+        "text": "@fig-flow-rich"
+      },
+      {
+        "ast_path": "document/figure-ref/fig-dependencies-rich",
+        "classification": "protected",
+        "end_byte": 1233,
+        "kind": "figure-ref",
+        "old_hash": "6ddabc96125dee5f6650fdab3e38363b7f85e111a376c28f73a5b9a22e490b0c",
+        "ordinal": 1,
+        "role": "fig-dependencies-rich",
+        "segment_id": "protected-fac5a649037f6a759d930fe7",
+        "sha256": "6ddabc96125dee5f6650fdab3e38363b7f85e111a376c28f73a5b9a22e490b0c",
+        "start_byte": 1211,
+        "text": "@fig-dependencies-rich"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 1236,
+        "kind": "syntax",
+        "old_hash": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "ordinal": 3,
+        "role": "structural-bytes",
+        "segment_id": "protected-5339e929b7b0dbfff3091dd5",
+        "sha256": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "start_byte": 1234,
+        "text": "\n\n"
+      },
+      {
+        "ast_path": "document/directive/note-default",
+        "classification": "protected",
+        "end_byte": 1314,
+        "kind": "directive",
+        "old_hash": "2b030cbf25b18b669aa540e47f871522823986bd533f550af51779962837b8ce",
+        "ordinal": 1,
+        "role": "note-default",
+        "segment_id": "protected-74f24e15d4101f5f74ac74f4",
+        "sha256": "2b030cbf25b18b669aa540e47f871522823986bd533f550af51779962837b8ce",
+        "start_byte": 1236,
+        "text": "::: {.note #note-default title=\"Notiz Standard\" appearance=default icon=true}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 1341,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 4,
+        "role": "structural-bytes",
+        "segment_id": "protected-db9bb4c8d3316ecdfc3bc19a",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 1340,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/note-default",
+        "classification": "protected",
+        "end_byte": 1345,
+        "kind": "directive",
+        "old_hash": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "ordinal": 2,
+        "role": "note-default",
+        "segment_id": "protected-379f8ccf6055625a47081a53",
+        "sha256": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "start_byte": 1341,
+        "text": ":::\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 1346,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 5,
+        "role": "structural-bytes",
+        "segment_id": "protected-7406e07bb89250ac7ea4e9bc",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 1345,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/note-simple",
+        "classification": "protected",
+        "end_byte": 1421,
+        "kind": "directive",
+        "old_hash": "413b0e025ecd1d37bdb5bb1302cfe86d192dff6ae200ac378d963c29d5629884",
+        "ordinal": 1,
+        "role": "note-simple",
+        "segment_id": "protected-bc19db87213707bad50c6762",
+        "sha256": "413b0e025ecd1d37bdb5bb1302cfe86d192dff6ae200ac378d963c29d5629884",
+        "start_byte": 1346,
+        "text": "::: {.note #note-simple title=\"Notiz Einfach\" appearance=simple icon=true}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 1448,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 6,
+        "role": "structural-bytes",
+        "segment_id": "protected-7e9ea612b2a3f2f6881cedae",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 1447,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/note-simple",
+        "classification": "protected",
+        "end_byte": 1452,
+        "kind": "directive",
+        "old_hash": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "ordinal": 2,
+        "role": "note-simple",
+        "segment_id": "protected-0695c925e74e161263ea2aa0",
+        "sha256": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "start_byte": 1448,
+        "text": ":::\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 1453,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 7,
+        "role": "structural-bytes",
+        "segment_id": "protected-22983067b2bd565d1e0da203",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 1452,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/note-minimal",
+        "classification": "protected",
+        "end_byte": 1541,
+        "kind": "directive",
+        "old_hash": "e6c0dc23557f134709128cbbfb71dadd021338f3f261cc9d389e540fb38f2f69",
+        "ordinal": 1,
+        "role": "note-minimal",
+        "segment_id": "protected-c4804944be098947afca1677",
+        "sha256": "e6c0dc23557f134709128cbbfb71dadd021338f3f261cc9d389e540fb38f2f69",
+        "start_byte": 1453,
+        "text": "::: {.note #note-minimal title=\"Eigener Titel ohne Icon\" appearance=minimal icon=false}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 1568,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 8,
+        "role": "structural-bytes",
+        "segment_id": "protected-0d0c85d0e40aed27ff38e2a9",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 1567,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/note-minimal",
+        "classification": "protected",
+        "end_byte": 1572,
+        "kind": "directive",
+        "old_hash": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "ordinal": 2,
+        "role": "note-minimal",
+        "segment_id": "protected-4ef475e0d7468c3316b5ade2",
+        "sha256": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "start_byte": 1568,
+        "text": ":::\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 1573,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 9,
+        "role": "structural-bytes",
+        "segment_id": "protected-e414e4605b991629d2ee1b9e",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 1572,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/tip-default",
+        "classification": "protected",
+        "end_byte": 1648,
+        "kind": "directive",
+        "old_hash": "0dbef321a4db074dad7b940d60d7a542912d066c941a786167744ad9ce45863b",
+        "ordinal": 1,
+        "role": "tip-default",
+        "segment_id": "protected-0b620ad28727755942cfb47a",
+        "sha256": "0dbef321a4db074dad7b940d60d7a542912d066c941a786167744ad9ce45863b",
+        "start_byte": 1573,
+        "text": "::: {.tip #tip-default title=\"Tipp Standard\" appearance=default icon=true}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 1675,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 10,
+        "role": "structural-bytes",
+        "segment_id": "protected-cfa8a38e8458379a7c1c80de",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 1674,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/tip-default",
+        "classification": "protected",
+        "end_byte": 1679,
+        "kind": "directive",
+        "old_hash": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "ordinal": 2,
+        "role": "tip-default",
+        "segment_id": "protected-d1d6d7e186b0257d2a9fe765",
+        "sha256": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "start_byte": 1675,
+        "text": ":::\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 1680,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 11,
+        "role": "structural-bytes",
+        "segment_id": "protected-fd2aa1643d39d8b6db1f5253",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 1679,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/tip-simple",
+        "classification": "protected",
+        "end_byte": 1752,
+        "kind": "directive",
+        "old_hash": "9ddad31b099f81ce74917671ea592c68c98d0a1432920a44881e2b43aa6f7af7",
+        "ordinal": 1,
+        "role": "tip-simple",
+        "segment_id": "protected-444e76538ca775af9a8f0e00",
+        "sha256": "9ddad31b099f81ce74917671ea592c68c98d0a1432920a44881e2b43aa6f7af7",
+        "start_byte": 1680,
+        "text": "::: {.tip #tip-simple title=\"Tipp Einfach\" appearance=simple icon=true}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 1779,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 12,
+        "role": "structural-bytes",
+        "segment_id": "protected-23fe261c0c833375aabb406d",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 1778,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/tip-simple",
+        "classification": "protected",
+        "end_byte": 1783,
+        "kind": "directive",
+        "old_hash": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "ordinal": 2,
+        "role": "tip-simple",
+        "segment_id": "protected-86f09c299bed9ea5c7722d26",
+        "sha256": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "start_byte": 1779,
+        "text": ":::\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 1784,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 13,
+        "role": "structural-bytes",
+        "segment_id": "protected-c04a77494812a9331387a7e1",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 1783,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/tip-minimal",
+        "classification": "protected",
+        "end_byte": 1858,
+        "kind": "directive",
+        "old_hash": "6e756594a8f149161cad59ac0bb73745e56369a4c729d37f6f82558a4e2a8555",
+        "ordinal": 1,
+        "role": "tip-minimal",
+        "segment_id": "protected-6fb8ff1be9d374516aa9cdc2",
+        "sha256": "6e756594a8f149161cad59ac0bb73745e56369a4c729d37f6f82558a4e2a8555",
+        "start_byte": 1784,
+        "text": "::: {.tip #tip-minimal title=\"Tipp Minimal\" appearance=minimal icon=true}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 1885,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 14,
+        "role": "structural-bytes",
+        "segment_id": "protected-0dc9cfa18c943a6e02cfd6e0",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 1884,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/tip-minimal",
+        "classification": "protected",
+        "end_byte": 1889,
+        "kind": "directive",
+        "old_hash": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "ordinal": 2,
+        "role": "tip-minimal",
+        "segment_id": "protected-2bd5474f7a880b97b7a80448",
+        "sha256": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "start_byte": 1885,
+        "text": ":::\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 1890,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 15,
+        "role": "structural-bytes",
+        "segment_id": "protected-ede957ea20b72f80f06f4fd2",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 1889,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/warning-default",
+        "classification": "protected",
+        "end_byte": 1976,
+        "kind": "directive",
+        "old_hash": "064763ea092dad520ae1ddc95ad1f844c43909b92bed1b485cfe41cf329a2156",
+        "ordinal": 1,
+        "role": "warning-default",
+        "segment_id": "protected-ca30acfae1a8c46346becadd",
+        "sha256": "064763ea092dad520ae1ddc95ad1f844c43909b92bed1b485cfe41cf329a2156",
+        "start_byte": 1890,
+        "text": "::: {.warning #warning-default title=\"Warnung Standard\" appearance=default icon=true}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 2005,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 16,
+        "role": "structural-bytes",
+        "segment_id": "protected-7bb2adb2732f42642e94ec99",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 2004,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/warning-default",
+        "classification": "protected",
+        "end_byte": 2009,
+        "kind": "directive",
+        "old_hash": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "ordinal": 2,
+        "role": "warning-default",
+        "segment_id": "protected-caaf3363588289c970df374f",
+        "sha256": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "start_byte": 2005,
+        "text": ":::\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 2010,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 17,
+        "role": "structural-bytes",
+        "segment_id": "protected-6b120e9992f2e08f0b22ebac",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 2009,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/warning-simple",
+        "classification": "protected",
+        "end_byte": 2093,
+        "kind": "directive",
+        "old_hash": "2729b0fc78b57d9ffdc164b42041f0a171ced3a2d10b8d3ad5079147a3d1c727",
+        "ordinal": 1,
+        "role": "warning-simple",
+        "segment_id": "protected-ef770b19615a09dc8d0a9396",
+        "sha256": "2729b0fc78b57d9ffdc164b42041f0a171ced3a2d10b8d3ad5079147a3d1c727",
+        "start_byte": 2010,
+        "text": "::: {.warning #warning-simple title=\"Warnung Einfach\" appearance=simple icon=true}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 2122,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 18,
+        "role": "structural-bytes",
+        "segment_id": "protected-8c218a66c08fd50865670d61",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 2121,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/warning-simple",
+        "classification": "protected",
+        "end_byte": 2126,
+        "kind": "directive",
+        "old_hash": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "ordinal": 2,
+        "role": "warning-simple",
+        "segment_id": "protected-4fdf1ad932577afa81504003",
+        "sha256": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "start_byte": 2122,
+        "text": ":::\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 2127,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 19,
+        "role": "structural-bytes",
+        "segment_id": "protected-b47e00de53cbceae8224ae4a",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 2126,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/warning-minimal",
+        "classification": "protected",
+        "end_byte": 2212,
+        "kind": "directive",
+        "old_hash": "7e580ef7b05cf9a02f263105459a128775ef0a6f6d0eb5cd1589203965a18b62",
+        "ordinal": 1,
+        "role": "warning-minimal",
+        "segment_id": "protected-d5930a3cd6122e68fa61745b",
+        "sha256": "7e580ef7b05cf9a02f263105459a128775ef0a6f6d0eb5cd1589203965a18b62",
+        "start_byte": 2127,
+        "text": "::: {.warning #warning-minimal title=\"Warnung Minimal\" appearance=minimal icon=true}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 2241,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 20,
+        "role": "structural-bytes",
+        "segment_id": "protected-5b4c139f4fc601b88323320e",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 2240,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/warning-minimal",
+        "classification": "protected",
+        "end_byte": 2245,
+        "kind": "directive",
+        "old_hash": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "ordinal": 2,
+        "role": "warning-minimal",
+        "segment_id": "protected-5650f7a208f233625675f910",
+        "sha256": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "start_byte": 2241,
+        "text": ":::\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 2246,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 21,
+        "role": "structural-bytes",
+        "segment_id": "protected-aee725e03059c8fdc618d8e2",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 2245,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/caution-default",
+        "classification": "protected",
+        "end_byte": 2333,
+        "kind": "directive",
+        "old_hash": "b9283f9e8aaaca2c400b828da3e81278ee207f469b51566c27ace778a4e9191f",
+        "ordinal": 1,
+        "role": "caution-default",
+        "segment_id": "protected-c0b96d6c778255c55265fd58",
+        "sha256": "b9283f9e8aaaca2c400b828da3e81278ee207f469b51566c27ace778a4e9191f",
+        "start_byte": 2246,
+        "text": "::: {.caution #caution-default title=\"Vorsicht Standard\" appearance=default icon=true}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 2373,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 22,
+        "role": "structural-bytes",
+        "segment_id": "protected-ab3ab80beebbed3925a5a064",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 2372,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/caution-default",
+        "classification": "protected",
+        "end_byte": 2377,
+        "kind": "directive",
+        "old_hash": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "ordinal": 2,
+        "role": "caution-default",
+        "segment_id": "protected-a1b2badbdb9d087511768dcc",
+        "sha256": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "start_byte": 2373,
+        "text": ":::\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 2378,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 23,
+        "role": "structural-bytes",
+        "segment_id": "protected-0f6fbd68998d71f9f83dd860",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 2377,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/caution-simple",
+        "classification": "protected",
+        "end_byte": 2462,
+        "kind": "directive",
+        "old_hash": "828f509822f99d146fee831fd4df7d9a20b01babc8d4262873ffeb48057d3cf4",
+        "ordinal": 1,
+        "role": "caution-simple",
+        "segment_id": "protected-765b90c56cd2a32cd73b83ea",
+        "sha256": "828f509822f99d146fee831fd4df7d9a20b01babc8d4262873ffeb48057d3cf4",
+        "start_byte": 2378,
+        "text": "::: {.caution #caution-simple title=\"Vorsicht Einfach\" appearance=simple icon=true}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 2502,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 24,
+        "role": "structural-bytes",
+        "segment_id": "protected-69c2790f33a56b2c8b03e94f",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 2501,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/caution-simple",
+        "classification": "protected",
+        "end_byte": 2506,
+        "kind": "directive",
+        "old_hash": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "ordinal": 2,
+        "role": "caution-simple",
+        "segment_id": "protected-dfb9979100b229d829250a0e",
+        "sha256": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "start_byte": 2502,
+        "text": ":::\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 2507,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 25,
+        "role": "structural-bytes",
+        "segment_id": "protected-edf783da737c9d60907684d2",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 2506,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/caution-minimal",
+        "classification": "protected",
+        "end_byte": 2593,
+        "kind": "directive",
+        "old_hash": "84f7810bf8c96d726394b9b4125f68dfc4b5a6a948d2c4755f69da7fa4c3b3a1",
+        "ordinal": 1,
+        "role": "caution-minimal",
+        "segment_id": "protected-61a4cc56b997fc6f5aeb38a1",
+        "sha256": "84f7810bf8c96d726394b9b4125f68dfc4b5a6a948d2c4755f69da7fa4c3b3a1",
+        "start_byte": 2507,
+        "text": "::: {.caution #caution-minimal title=\"Vorsicht Minimal\" appearance=minimal icon=true}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 2633,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 26,
+        "role": "structural-bytes",
+        "segment_id": "protected-621c2f4ff4004884bb0c6e88",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 2632,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/caution-minimal",
+        "classification": "protected",
+        "end_byte": 2637,
+        "kind": "directive",
+        "old_hash": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "ordinal": 2,
+        "role": "caution-minimal",
+        "segment_id": "protected-ff3e2215f3b6fd6e03f110f5",
+        "sha256": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "start_byte": 2633,
+        "text": ":::\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 2638,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 27,
+        "role": "structural-bytes",
+        "segment_id": "protected-7be044e249b95cde8c1136e8",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 2637,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/important-default",
+        "classification": "protected",
+        "end_byte": 2728,
+        "kind": "directive",
+        "old_hash": "5418f0bbf55427826a33f902a5e35dab4216cd29a5a022186409ea70f566e17b",
+        "ordinal": 1,
+        "role": "important-default",
+        "segment_id": "protected-2615bc18cb785ed69c8a1b80",
+        "sha256": "5418f0bbf55427826a33f902a5e35dab4216cd29a5a022186409ea70f566e17b",
+        "start_byte": 2638,
+        "text": "::: {.important #important-default title=\"Wichtig Standard\" appearance=default icon=true}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 2769,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 28,
+        "role": "structural-bytes",
+        "segment_id": "protected-82cf37157137e10e202d148c",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 2768,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/important-default",
+        "classification": "protected",
+        "end_byte": 2773,
+        "kind": "directive",
+        "old_hash": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "ordinal": 2,
+        "role": "important-default",
+        "segment_id": "protected-67661e64640a28cec2dbc0be",
+        "sha256": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "start_byte": 2769,
+        "text": ":::\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 2774,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 29,
+        "role": "structural-bytes",
+        "segment_id": "protected-376a055c98e83d186f4ed615",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 2773,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/important-simple",
+        "classification": "protected",
+        "end_byte": 2861,
+        "kind": "directive",
+        "old_hash": "2ec4b2d85f21d6ad324c9574fc14b27064121be84e2e7321aa4c34a99178b594",
+        "ordinal": 1,
+        "role": "important-simple",
+        "segment_id": "protected-ade21d5a70dff328429b6104",
+        "sha256": "2ec4b2d85f21d6ad324c9574fc14b27064121be84e2e7321aa4c34a99178b594",
+        "start_byte": 2774,
+        "text": "::: {.important #important-simple title=\"Wichtig Einfach\" appearance=simple icon=true}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 2902,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 30,
+        "role": "structural-bytes",
+        "segment_id": "protected-b4bb921ed29aa0bb0a4dbbae",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 2901,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/important-simple",
+        "classification": "protected",
+        "end_byte": 2906,
+        "kind": "directive",
+        "old_hash": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "ordinal": 2,
+        "role": "important-simple",
+        "segment_id": "protected-879ea8f9bb5708eda91aab1e",
+        "sha256": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "start_byte": 2902,
+        "text": ":::\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 2907,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 31,
+        "role": "structural-bytes",
+        "segment_id": "protected-70ce4c6967c353b10d5012b9",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 2906,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/important-minimal",
+        "classification": "protected",
+        "end_byte": 2996,
+        "kind": "directive",
+        "old_hash": "439497fde92c923bbe96bc0b453397c7baf5cdcdaae943582a1cdf5b358e7a8e",
+        "ordinal": 1,
+        "role": "important-minimal",
+        "segment_id": "protected-d26e83f25bb51eb60ba6dacf",
+        "sha256": "439497fde92c923bbe96bc0b453397c7baf5cdcdaae943582a1cdf5b358e7a8e",
+        "start_byte": 2907,
+        "text": "::: {.important #important-minimal title=\"Wichtig Minimal\" appearance=minimal icon=true}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3037,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 32,
+        "role": "structural-bytes",
+        "segment_id": "protected-7110121827b9e8f0d202b45c",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 3036,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/important-minimal",
+        "classification": "protected",
+        "end_byte": 3041,
+        "kind": "directive",
+        "old_hash": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "ordinal": 2,
+        "role": "important-minimal",
+        "segment_id": "protected-538439f6f5afc200f90b6c27",
+        "sha256": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "start_byte": 3037,
+        "text": ":::\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3042,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 33,
+        "role": "structural-bytes",
+        "segment_id": "protected-cc6c9f52a45d1e84333c3874",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 3041,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/page-break",
+        "classification": "protected",
+        "end_byte": 3057,
+        "kind": "directive",
+        "old_hash": "f19571734dc4c69e6e5f8afd5d3a208e8f8ac44817d2aa64175c88bab7b004d0",
+        "ordinal": 1,
+        "role": "page-break",
+        "segment_id": "protected-651deb05eecfbf6e82e81546",
+        "sha256": "f19571734dc4c69e6e5f8afd5d3a208e8f8ac44817d2aa64175c88bab7b004d0",
+        "start_byte": 3042,
+        "text": "::: page-break\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3058,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 34,
+        "role": "structural-bytes",
+        "segment_id": "protected-cce6acdab625787201143854",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 3057,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/findings",
+        "classification": "protected",
+        "end_byte": 3081,
+        "kind": "directive",
+        "old_hash": "59052c2770c114ffa5ce603435abdc3e6590086fa3763ef258793a23e8af9a6f",
+        "ordinal": 1,
+        "role": "findings",
+        "segment_id": "protected-85d36c88d386203a1ae5617f",
+        "sha256": "59052c2770c114ffa5ce603435abdc3e6590086fa3763ef258793a23e8af9a6f",
+        "start_byte": 3058,
+        "text": "## Befunde {#findings}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3082,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 35,
+        "role": "structural-bytes",
+        "segment_id": "protected-c4336c0c117cb1837734c15d",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 3081,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/metric-rich",
+        "classification": "protected",
+        "end_byte": 3186,
+        "kind": "directive",
+        "old_hash": "8410c2f8a395da0ea9664faaaaa2241f125ae39c7969e232c3b8d64a143b2c7b",
+        "ordinal": 1,
+        "role": "metric-rich",
+        "segment_id": "protected-69e7e5d5530bfed68f8a7c60",
+        "sha256": "8410c2f8a395da0ea9664faaaaa2241f125ae39c7969e232c3b8d64a143b2c7b",
+        "start_byte": 3082,
+        "text": "::: {.metric #metric-rich title=\"Messwert\" label=\"Anteil\" value_fact=metric-value source_id=source-one}\n"
+      },
+      {
+        "ast_path": "document/number/metric-value",
+        "classification": "protected",
+        "end_byte": 3240,
+        "kind": "number",
+        "old_hash": "85d6d004e0102f165ad0b1652d7a0c66656e760992dcdf7226df43eace09c9f5",
+        "ordinal": 1,
+        "role": "metric-value",
+        "segment_id": "protected-0f8005845e599d3b65f156d2",
+        "sha256": "85d6d004e0102f165ad0b1652d7a0c66656e760992dcdf7226df43eace09c9f5",
+        "start_byte": 3212,
+        "text": "{{number:metric-value|42 %}}"
+      },
+      {
+        "ast_path": "document/source/source-one",
+        "classification": "protected",
+        "end_byte": 3254,
+        "kind": "source",
+        "old_hash": "71ba57e90987c62709929f8f8712754719ce3d4769a7d2d67fe3863ed85bfbca",
+        "ordinal": 1,
+        "role": "source-one",
+        "segment_id": "protected-9705356a16d0e3110c825f37",
+        "sha256": "71ba57e90987c62709929f8f8712754719ce3d4769a7d2d67fe3863ed85bfbca",
+        "start_byte": 3241,
+        "text": "[^source-one]"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3255,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 36,
+        "role": "structural-bytes",
+        "segment_id": "protected-c688d07b3d07ed565af4be06",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 3254,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/metric-rich",
+        "classification": "protected",
+        "end_byte": 3259,
+        "kind": "directive",
+        "old_hash": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "ordinal": 2,
+        "role": "metric-rich",
+        "segment_id": "protected-a570e38e223cdc77e575b39b",
+        "sha256": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "start_byte": 3255,
+        "text": ":::\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3260,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 37,
+        "role": "structural-bytes",
+        "segment_id": "protected-0546c4dfd14de5d44656cc68",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 3259,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/quote-rich",
+        "classification": "protected",
+        "end_byte": 3320,
+        "kind": "directive",
+        "old_hash": "6bf1f318e625a67638438abff35e48da7865e2817d24b3d5b6e5ffa78def4f49",
+        "ordinal": 1,
+        "role": "quote-rich",
+        "segment_id": "protected-5d743c2869209dfad766bd35",
+        "sha256": "6bf1f318e625a67638438abff35e48da7865e2817d24b3d5b6e5ffa78def4f49",
+        "start_byte": 3260,
+        "text": "::: {.quote #quote-rich title=\"Zitat\" source_id=source-one}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3384,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 38,
+        "role": "structural-bytes",
+        "segment_id": "protected-6a7962058343babf97a177b8",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 3383,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/quote-rich",
+        "classification": "protected",
+        "end_byte": 3388,
+        "kind": "directive",
+        "old_hash": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "ordinal": 2,
+        "role": "quote-rich",
+        "segment_id": "protected-92fbd18a40ddff1498dd2517",
+        "sha256": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "start_byte": 3384,
+        "text": ":::\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3389,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 39,
+        "role": "structural-bytes",
+        "segment_id": "protected-c25cd1f60f4ae84e414de722",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 3388,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/legal-rich",
+        "classification": "protected",
+        "end_byte": 3463,
+        "kind": "directive",
+        "old_hash": "276f98446b7722e5a5236573fb6ce9c524bd54b92f285a4a1699fd35d032cd3f",
+        "ordinal": 1,
+        "role": "legal-rich",
+        "segment_id": "protected-11ae401114ee2e9e811a8cdf",
+        "sha256": "276f98446b7722e5a5236573fb6ce9c524bd54b92f285a4a1699fd35d032cd3f",
+        "start_byte": 3389,
+        "text": "::: {.legal #legal-rich title=\"Rechtlicher Hinweis\" source_id=source-one}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3521,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 40,
+        "role": "structural-bytes",
+        "segment_id": "protected-8ed4e09c6905f782489c0979",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 3520,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/legal-rich",
+        "classification": "protected",
+        "end_byte": 3525,
+        "kind": "directive",
+        "old_hash": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "ordinal": 2,
+        "role": "legal-rich",
+        "segment_id": "protected-d9c3ea8712c73096c65239b5",
+        "sha256": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "start_byte": 3521,
+        "text": ":::\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3528,
+        "kind": "syntax",
+        "old_hash": "71c01c10f4afd63b190d173eeaec5b10abe8fc4f470384fd47b7ad3f244d481f",
+        "ordinal": 41,
+        "role": "structural-bytes",
+        "segment_id": "protected-de340da3a19449a4c72efd18",
+        "sha256": "71c01c10f4afd63b190d173eeaec5b10abe8fc4f470384fd47b7ad3f244d481f",
+        "start_byte": 3525,
+        "text": "\n| "
+      },
+      {
+        "ast_path": "document/table-value/r118-c1",
+        "classification": "protected",
+        "end_byte": 3533,
+        "kind": "table-value",
+        "old_hash": "211d0bb8cf4f5b5202c2a9b7996e483898644aa24714b1e10edd80a54ba4b560",
+        "ordinal": 1,
+        "role": "r118-c1",
+        "segment_id": "protected-34ad880ad0db0bbda737d108",
+        "sha256": "211d0bb8cf4f5b5202c2a9b7996e483898644aa24714b1e10edd80a54ba4b560",
+        "start_byte": 3528,
+        "text": "Block"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3536,
+        "kind": "syntax",
+        "old_hash": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "ordinal": 42,
+        "role": "structural-bytes",
+        "segment_id": "protected-5d050647faeca8b04966d39e",
+        "sha256": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "start_byte": 3533,
+        "text": " | "
+      },
+      {
+        "ast_path": "document/table-value/r118-c2",
+        "classification": "protected",
+        "end_byte": 3542,
+        "kind": "table-value",
+        "old_hash": "920e413c7d411b61ef3e8c63b1cb6ad058d5f95f8b481dbafe60248387d8c355",
+        "ordinal": 1,
+        "role": "r118-c2",
+        "segment_id": "protected-178af977764bbc8ec9476a05",
+        "sha256": "920e413c7d411b61ef3e8c63b1cb6ad058d5f95f8b481dbafe60248387d8c355",
+        "start_byte": 3536,
+        "text": "Status"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3561,
+        "kind": "syntax",
+        "old_hash": "d228065af100f8d1c3303b808088032ba36deaa5143f1367348fc2427f4e8115",
+        "ordinal": 43,
+        "role": "structural-bytes",
+        "segment_id": "protected-50ccc6276aff7faa2ea9c0ea",
+        "sha256": "d228065af100f8d1c3303b808088032ba36deaa5143f1367348fc2427f4e8115",
+        "start_byte": 3542,
+        "text": " |\n| --- | --- |\n| "
+      },
+      {
+        "ast_path": "document/table-value/r120-c1",
+        "classification": "protected",
+        "end_byte": 3568,
+        "kind": "table-value",
+        "old_hash": "14bfdc0e32aa60d305e6f46424c64d1fbf3a16fad1b41e0d38da221b20736098",
+        "ordinal": 1,
+        "role": "r120-c1",
+        "segment_id": "protected-febc34fb714ffab6656b7e6c",
+        "sha256": "14bfdc0e32aa60d305e6f46424c64d1fbf3a16fad1b41e0d38da221b20736098",
+        "start_byte": 3561,
+        "text": "Callout"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3571,
+        "kind": "syntax",
+        "old_hash": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "ordinal": 44,
+        "role": "structural-bytes",
+        "segment_id": "protected-5952fb749e43261b03bae6fb",
+        "sha256": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "start_byte": 3568,
+        "text": " | "
+      },
+      {
+        "ast_path": "document/table-value/r120-c2",
+        "classification": "protected",
+        "end_byte": 3579,
+        "kind": "table-value",
+        "old_hash": "32c1a81e8f8ead8bd85b91a878fc49d3c08a9fe400c787916287f87ce42a536e",
+        "ordinal": 1,
+        "role": "r120-c2",
+        "segment_id": "protected-bbf264f7f7633c1040867d70",
+        "sha256": "32c1a81e8f8ead8bd85b91a878fc49d3c08a9fe400c787916287f87ce42a536e",
+        "start_byte": 3571,
+        "text": "sichtbar"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3584,
+        "kind": "syntax",
+        "old_hash": "b234f248f1c636555db5e8733d921beb023e21f392237122a0d2abe6b3ec3325",
+        "ordinal": 45,
+        "role": "structural-bytes",
+        "segment_id": "protected-88ea33115e506dff4ffc8b56",
+        "sha256": "b234f248f1c636555db5e8733d921beb023e21f392237122a0d2abe6b3ec3325",
+        "start_byte": 3579,
+        "text": " |\n| "
+      },
+      {
+        "ast_path": "document/table-value/r121-c1",
+        "classification": "protected",
+        "end_byte": 3591,
+        "kind": "table-value",
+        "old_hash": "c2b21ddfbab9ad0072790c52d594862d37bd938642b07833323cba3656df37d3",
+        "ordinal": 1,
+        "role": "r121-c1",
+        "segment_id": "protected-295a0f7019603614ad03afd6",
+        "sha256": "c2b21ddfbab9ad0072790c52d594862d37bd938642b07833323cba3656df37d3",
+        "start_byte": 3584,
+        "text": "Tabelle"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3594,
+        "kind": "syntax",
+        "old_hash": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "ordinal": 46,
+        "role": "structural-bytes",
+        "segment_id": "protected-38a7af3e6d249bd7dab563c9",
+        "sha256": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "start_byte": 3591,
+        "text": " | "
+      },
+      {
+        "ast_path": "document/table-value/r121-c2",
+        "classification": "protected",
+        "end_byte": 3602,
+        "kind": "table-value",
+        "old_hash": "32c1a81e8f8ead8bd85b91a878fc49d3c08a9fe400c787916287f87ce42a536e",
+        "ordinal": 1,
+        "role": "r121-c2",
+        "segment_id": "protected-963153d2b2a2308401129e98",
+        "sha256": "32c1a81e8f8ead8bd85b91a878fc49d3c08a9fe400c787916287f87ce42a536e",
+        "start_byte": 3594,
+        "text": "sichtbar"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3606,
+        "kind": "syntax",
+        "old_hash": "82347804ce67c39a503bc24df8db49d9c7df52cb9d2d4f4fe9768cb8ac9700fb",
+        "ordinal": 47,
+        "role": "structural-bytes",
+        "segment_id": "protected-dc9b9805d651b77838bf3942",
+        "sha256": "82347804ce67c39a503bc24df8db49d9c7df52cb9d2d4f4fe9768cb8ac9700fb",
+        "start_byte": 3602,
+        "text": " |\n\n"
+      },
+      {
+        "ast_path": "document/directive/image-vector",
+        "classification": "protected",
+        "end_byte": 3726,
+        "kind": "directive",
+        "old_hash": "ab68a94f07abed45bc0c28d00da5e1c25a1c05fc7c1a984ee333ec2edf3082a7",
+        "ordinal": 1,
+        "role": "image-vector",
+        "segment_id": "protected-0173f067fe1091fc4facfe8b",
+        "sha256": "ab68a94f07abed45bc0c28d00da5e1c25a1c05fc7c1a984ee333ec2edf3082a7",
+        "start_byte": 3606,
+        "text": "![Neutrale Vektorgrafik](asset:diagram \"Vektorgrafik mit sichtbarer Beschriftung\"){#image-vector rights=diagram-rights}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3727,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 48,
+        "role": "structural-bytes",
+        "segment_id": "protected-e7d619d366cbcc2f31fa2be1",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 3726,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/image-raster",
+        "classification": "protected",
+        "end_byte": 3849,
+        "kind": "directive",
+        "old_hash": "051396e6c141e5b2b3de94f789a97c11cd270894455da22706eb61a3394d0285",
+        "ordinal": 1,
+        "role": "image-raster",
+        "segment_id": "protected-dfd0d4e41677f4808e680ac4",
+        "sha256": "051396e6c141e5b2b3de94f789a97c11cd270894455da22706eb61a3394d0285",
+        "start_byte": 3727,
+        "text": "![Neutrale Rastergrafik](asset:e2e-raster \"Rastergrafik mit sichtbarer Beschriftung\"){#image-raster rights=raster-rights}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3850,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 49,
+        "role": "structural-bytes",
+        "segment_id": "protected-88b4f20e04816ce05773d772",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 3849,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/fig-flow-rich",
+        "classification": "protected",
+        "end_byte": 3962,
+        "kind": "directive",
+        "old_hash": "7b2fe48a342a0c0cdd885c40868937ac3ec5539a88df7ef5ed5ebb2b2fe8dd0a",
+        "ordinal": 1,
+        "role": "fig-flow-rich",
+        "segment_id": "protected-cebab260e934ad7475ce11be",
+        "sha256": "7b2fe48a342a0c0cdd885c40868937ac3ec5539a88df7ef5ed5ebb2b2fe8dd0a",
+        "start_byte": 3850,
+        "text": "```{mermaid #fig-flow-rich title=\"Ablauf\" description=\"Zwei verbundene neutrale Schritte\" source_id=source-one}\n"
+      },
+      {
+        "ast_path": "document/diagram-code/fig-flow-rich",
+        "classification": "protected",
+        "end_byte": 4002,
+        "kind": "diagram-code",
+        "old_hash": "00fccde88b9ef19c089677244362d827b4dc6720f667e80bb814c1f54d526e7c",
+        "ordinal": 1,
+        "role": "fig-flow-rich",
+        "segment_id": "protected-66fa630f8f43d25a2e6f6972",
+        "sha256": "00fccde88b9ef19c089677244362d827b4dc6720f667e80bb814c1f54d526e7c",
+        "start_byte": 3962,
+        "text": "flowchart TD\n  A[Start] --> B[Prüfung]\n"
+      },
+      {
+        "ast_path": "document/directive/fig-flow-rich",
+        "classification": "protected",
+        "end_byte": 4006,
+        "kind": "directive",
+        "old_hash": "47c06c561d5c327343685268a46b3391f3998eee890d2be51f0d21cc4a53ae6d",
+        "ordinal": 2,
+        "role": "fig-flow-rich",
+        "segment_id": "protected-27d63843886d4ff42cd3c197",
+        "sha256": "47c06c561d5c327343685268a46b3391f3998eee890d2be51f0d21cc4a53ae6d",
+        "start_byte": 4002,
+        "text": "```\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 4007,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 50,
+        "role": "structural-bytes",
+        "segment_id": "protected-a7db16708897a4c1c825f0e9",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 4006,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/fig-dependencies-rich",
+        "classification": "protected",
+        "end_byte": 4140,
+        "kind": "directive",
+        "old_hash": "529b21989ff16c51d9af947b58c22de42d6d84ba759bbafeec06337127deb4de",
+        "ordinal": 1,
+        "role": "fig-dependencies-rich",
+        "segment_id": "protected-87cedddf12e55228a2c04219",
+        "sha256": "529b21989ff16c51d9af947b58c22de42d6d84ba759bbafeec06337127deb4de",
+        "start_byte": 4007,
+        "text": "```{graphviz #fig-dependencies-rich title=\"Abhängigkeiten\" description=\"Drei gerichtete neutrale Komponenten\" source_id=source-one}\n"
+      },
+      {
+        "ast_path": "document/diagram-code/fig-dependencies-rich",
+        "classification": "protected",
+        "end_byte": 4288,
+        "kind": "diagram-code",
+        "old_hash": "d97a42e92ec9f6d719457968ae23ba1a9c9533f6cd7f2dc9231ef14e7f434db5",
+        "ordinal": 1,
+        "role": "fig-dependencies-rich",
+        "segment_id": "protected-3c30d9db9decc44361a8d36a",
+        "sha256": "d97a42e92ec9f6d719457968ae23ba1a9c9533f6cd7f2dc9231ef14e7f434db5",
+        "start_byte": 4140,
+        "text": "digraph G {\n  rankdir=LR;\n  input [label=\"Eingabe\"];\n  check [label=\"Prüfung\"];\n  output [label=\"Ausgabe\"];\n  input -> check;\n  check -> output;\n}\n"
+      },
+      {
+        "ast_path": "document/directive/fig-dependencies-rich",
+        "classification": "protected",
+        "end_byte": 4292,
+        "kind": "directive",
+        "old_hash": "47c06c561d5c327343685268a46b3391f3998eee890d2be51f0d21cc4a53ae6d",
+        "ordinal": 2,
+        "role": "fig-dependencies-rich",
+        "segment_id": "protected-cf4059b62ed5e052476ee611",
+        "sha256": "47c06c561d5c327343685268a46b3391f3998eee890d2be51f0d21cc4a53ae6d",
+        "start_byte": 4288,
+        "text": "```\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 4293,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 51,
+        "role": "structural-bytes",
+        "segment_id": "protected-deb3b873530956d8e32173bf",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 4292,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/conclusion",
+        "classification": "protected",
+        "end_byte": 4316,
+        "kind": "directive",
+        "old_hash": "bba2dd23f0887de9b21649ad00217b15ff13097fa73880c487fcfff1d8fe2e5e",
+        "ordinal": 1,
+        "role": "conclusion",
+        "segment_id": "protected-f860081fc7626daf433fe392",
+        "sha256": "bba2dd23f0887de9b21649ad00217b15ff13097fa73880c487fcfff1d8fe2e5e",
+        "start_byte": 4293,
+        "text": "## Fazit {#conclusion}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 4317,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 52,
+        "role": "structural-bytes",
+        "segment_id": "protected-30dc38b90e85cf20c511ee90",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 4316,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/figure-ref/fig-flow-rich",
+        "classification": "protected",
+        "end_byte": 4427,
+        "kind": "figure-ref",
+        "old_hash": "0ffe75f24aa89c03930337e8fdebd946ae040b1123d1b5472ec46ac78cd2f678",
+        "ordinal": 2,
+        "role": "fig-flow-rich",
+        "segment_id": "protected-1f6247a173ebdb439c43d7f3",
+        "sha256": "0ffe75f24aa89c03930337e8fdebd946ae040b1123d1b5472ec46ac78cd2f678",
+        "start_byte": 4413,
+        "text": "@fig-flow-rich"
+      },
+      {
+        "ast_path": "document/figure-ref/fig-dependencies-rich",
+        "classification": "protected",
+        "end_byte": 4454,
+        "kind": "figure-ref",
+        "old_hash": "6ddabc96125dee5f6650fdab3e38363b7f85e111a376c28f73a5b9a22e490b0c",
+        "ordinal": 2,
+        "role": "fig-dependencies-rich",
+        "segment_id": "protected-35e4a3ade66a86d0ddff4ea1",
+        "sha256": "6ddabc96125dee5f6650fdab3e38363b7f85e111a376c28f73a5b9a22e490b0c",
+        "start_byte": 4432,
+        "text": "@fig-dependencies-rich"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 4504,
+        "kind": "syntax",
+        "old_hash": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "ordinal": 53,
+        "role": "structural-bytes",
+        "segment_id": "protected-4e8a74b7ac7d8ef9e2a0fe24",
+        "sha256": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "start_byte": 4502,
+        "text": "\n\n"
+      },
+      {
+        "ast_path": "document/footnote/source-one",
+        "classification": "protected",
+        "end_byte": 4574,
+        "kind": "footnote",
+        "old_hash": "b32691677c02bc3d936563c810e5eb4b9f1b090927298fa25bd4cbf1cf91fe1d",
+        "ordinal": 1,
+        "role": "source-one",
+        "segment_id": "protected-4c20cfc55b58a1ba5c88d731",
+        "sha256": "b32691677c02bc3d936563c810e5eb4b9f1b090927298fa25bd4cbf1cf91fe1d",
+        "start_byte": 4504,
+        "text": "[^source-one]: Unveränderlicher Quellenhinweis zur neutralen Fixture."
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 4575,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 54,
+        "role": "structural-bytes",
+        "segment_id": "protected-cccd396ef043f428345fefcc",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 4574,
+        "text": "\n"
+      }
+    ]
+  },
+  "rights_evidence": {
+    "diagram-rights": {
+      "asset_id": "diagram",
+      "date": "2026-08-26",
+      "issuer": "BrandKit test fixture",
+      "license_id": "BrandKit-fixture-owned",
+      "schema_version": "rights-evidence.v1",
+      "scope": "single-asset",
+      "source": "repository-authored neutral test asset",
+      "status": "owned",
+      "todo": null,
+      "version": "1.0"
+    },
+    "raster-rights": {
+      "asset_id": "e2e-raster",
+      "date": "2026-08-27",
+      "issuer": "BrandKit test fixture",
+      "license_id": "BrandKit-fixture-owned",
+      "schema_version": "rights-evidence.v1",
+      "scope": "single-asset",
+      "source": "repository-authored neutral test asset",
+      "status": "owned",
+      "todo": null,
+      "version": "1.0"
+    }
+  },
+  "roundtrip_sha256": "e52d5a88c5888b9d2fa735fbe01a449ae80d3e67757a2d772941c6de3fa557a1",
+  "source": "---\nschema_version: markdown-document.v1\ndocument_id: golden-rich-report\ndocument_type: report\ntitle: Rich-Block-Nachweis\nlang: de-DE\nstatus: release\nfacts:\n  - id: metric-value\n    value: \"42 %\"\n    source_ids: [source-one]\nsources:\n  - id: source-one\n    locator: urn:brandkit:e2e:source-one\n    sha256: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\nassets:\n  - id: diagram\n    path: assets/diagram.svg\n    media_type: image/svg+xml\n    sha256: 02d29918955c53625dd4bcab435ba0ed00d9e441a2280e5548f49ead899ccee8\n    rights_id: diagram-rights\n  - id: e2e-raster\n    path: assets/raster.png\n    media_type: image/png\n    sha256: 9cd75a808e3b1be94516d46e3a7eab4c52d0d4623da1b779a5aee2528389d1cf\n    rights_id: raster-rights\nrights:\n  - id: diagram-rights\n    evidence_path: rights/diagram.rights.json\n    evidence_sha256: 0aed6a8f0ccaf360c75114251d64889dad4e34160bfed839384b51f9f531e61a\n  - id: raster-rights\n    evidence_path: rights/raster.rights.json\n    evidence_sha256: 7f3467e784cfa84990ce400e53db9ff028165868274c1cf5e0590c7b296c3a44\ntodos: []\n---\n# Rich-Block-Nachweis {#title}\n\n## Kurzfassung {#executive-summary}\n\nDie Matrix zeigt alle Präsentationsvarianten. Siehe @fig-flow-rich und @fig-dependencies-rich.\n\n::: {.note #note-default title=\"Notiz Standard\" appearance=default icon=true}\nLesbarer Inhalt der Notiz.\n:::\n\n::: {.note #note-simple title=\"Notiz Einfach\" appearance=simple icon=true}\nLesbarer Inhalt der Notiz.\n:::\n\n::: {.note #note-minimal title=\"Eigener Titel ohne Icon\" appearance=minimal icon=false}\nLesbarer Inhalt der Notiz.\n:::\n\n::: {.tip #tip-default title=\"Tipp Standard\" appearance=default icon=true}\nLesbarer Inhalt des Tipps.\n:::\n\n::: {.tip #tip-simple title=\"Tipp Einfach\" appearance=simple icon=true}\nLesbarer Inhalt des Tipps.\n:::\n\n::: {.tip #tip-minimal title=\"Tipp Minimal\" appearance=minimal icon=true}\nLesbarer Inhalt des Tipps.\n:::\n\n::: {.warning #warning-default title=\"Warnung Standard\" appearance=default icon=true}\nLesbarer Inhalt der Warnung.\n:::\n\n::: {.warning #warning-simple title=\"Warnung Einfach\" appearance=simple icon=true}\nLesbarer Inhalt der Warnung.\n:::\n\n::: {.warning #warning-minimal title=\"Warnung Minimal\" appearance=minimal icon=true}\nLesbarer Inhalt der Warnung.\n:::\n\n::: {.caution #caution-default title=\"Vorsicht Standard\" appearance=default icon=true}\nLesbarer Inhalt des Vorsichtshinweises.\n:::\n\n::: {.caution #caution-simple title=\"Vorsicht Einfach\" appearance=simple icon=true}\nLesbarer Inhalt des Vorsichtshinweises.\n:::\n\n::: {.caution #caution-minimal title=\"Vorsicht Minimal\" appearance=minimal icon=true}\nLesbarer Inhalt des Vorsichtshinweises.\n:::\n\n::: {.important #important-default title=\"Wichtig Standard\" appearance=default icon=true}\nLesbarer Inhalt des wichtigen Hinweises.\n:::\n\n::: {.important #important-simple title=\"Wichtig Einfach\" appearance=simple icon=true}\nLesbarer Inhalt des wichtigen Hinweises.\n:::\n\n::: {.important #important-minimal title=\"Wichtig Minimal\" appearance=minimal icon=true}\nLesbarer Inhalt des wichtigen Hinweises.\n:::\n\n::: page-break\n\n## Befunde {#findings}\n\n::: {.metric #metric-rich title=\"Messwert\" label=\"Anteil\" value_fact=metric-value source_id=source-one}\nDer gebundene Wert lautet {{number:metric-value|42 %}}.[^source-one]\n:::\n\n::: {.quote #quote-rich title=\"Zitat\" source_id=source-one}\nDie belegte Aussage bleibt sichtbar mit ihrer Quelle verbunden.\n:::\n\n::: {.legal #legal-rich title=\"Rechtlicher Hinweis\" source_id=source-one}\nDer Herkunftshinweis darf in keiner Ausgabe verschwinden.\n:::\n\n| Block | Status |\n| --- | --- |\n| Callout | sichtbar |\n| Tabelle | sichtbar |\n\n![Neutrale Vektorgrafik](asset:diagram \"Vektorgrafik mit sichtbarer Beschriftung\"){#image-vector rights=diagram-rights}\n\n![Neutrale Rastergrafik](asset:e2e-raster \"Rastergrafik mit sichtbarer Beschriftung\"){#image-raster rights=raster-rights}\n\n```{mermaid #fig-flow-rich title=\"Ablauf\" description=\"Zwei verbundene neutrale Schritte\" source_id=source-one}\nflowchart TD\n  A[Start] --> B[Prüfung]\n```\n\n```{graphviz #fig-dependencies-rich title=\"Abhängigkeiten\" description=\"Drei gerichtete neutrale Komponenten\" source_id=source-one}\ndigraph G {\n  rankdir=LR;\n  input [label=\"Eingabe\"];\n  check [label=\"Prüfung\"];\n  output [label=\"Ausgabe\"];\n  input -> check;\n  check -> output;\n}\n```\n\n## Fazit {#conclusion}\n\nPDF und HTML tragen dieselben semantischen Marker und sichtbaren Herkunftsfelder. Die Nachweise @fig-flow-rich und @fig-dependencies-rich bleiben dabei nummeriert und direkt erreichbar.\n\n[^source-one]: Unveränderlicher Quellenhinweis zur neutralen Fixture.\n",
+  "source_sha256": "e52d5a88c5888b9d2fa735fbe01a449ae80d3e67757a2d772941c6de3fa557a1",
+  "type": "document"
+}

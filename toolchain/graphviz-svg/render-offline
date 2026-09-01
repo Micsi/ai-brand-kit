@@ -1,0 +1,15 @@
+#!/bin/sh
+set -eu
+script_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd -P)
+install=${1:?install required}; input=${2:?input required}; output=${3:?output required}
+python3 - "$script_dir/../graphviz-svg.v1.lock.json" "$install" "$script_dir/render.mjs" <<'PY'
+import hashlib,json,pathlib,sys
+lock=json.loads(pathlib.Path(sys.argv[1]).read_text()); root=pathlib.Path(sys.argv[2]); runner=pathlib.Path(sys.argv[3])
+for key,path in (("node","node/bin/node"),("package","viz/lib/backend.js")):
+ p=root/path
+ if p.is_symlink() or hashlib.sha256(p.read_bytes()).hexdigest()!=lock[key]["executable_sha256"]:raise SystemExit(f"Graphviz {key} hash mismatch")
+if hashlib.sha256(runner.read_bytes()).hexdigest()!=lock["scripts"]["render_mjs_sha256"]:raise SystemExit("Graphviz runner hash mismatch")
+PY
+dead=http://127.0.0.1:9
+export LANG=C LC_ALL=C TZ=UTC SOURCE_DATE_EPOCH=0 HTTP_PROXY=$dead HTTPS_PROXY=$dead ALL_PROXY=$dead NO_PROXY=
+exec /usr/bin/sandbox-exec -p '(version 1)(deny network*)(allow default)' "$install/node/bin/node" "$script_dir/render.mjs" "$install/viz/dist/viz.js" "$input" "$output"

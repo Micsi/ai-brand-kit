@@ -1,0 +1,11 @@
+{
+  "$id": "ui-token-inventory.v1.schema.json", "type": "object", "additionalProperties": false,
+  "required": ["schema_version", "project_root", "project_commit", "brand_content_sha256", "files", "tokens", "review", "inventory_sha256"],
+  "properties": {
+    "schema_version": {"const": "brandkit-ui-token-inventory.v1"}, "project_root": {"type": "string", "minLength": 1},
+    "project_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"}, "brand_content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "inventory_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "files": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "object", "additionalProperties": false, "required": ["path", "sha256", "surface", "tokens_complete"], "properties": {"path": {"type": "string", "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"}, "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "surface": {"enum": ["css", "web", "server-template", "javascript-theme", "tailwind", "swift", "kotlin-compose", "flutter", "android-xml", "apple-interface", "xaml"]}, "tokens_complete": {"const": true}}}},
+    "tokens": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["path", "kind", "name", "value", "location"], "properties": {"path": {"type": "string", "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"}, "kind": {"enum": ["color", "font", "spacing", "radius", "shadow", "motion", "custom-property", "theme-value", "utility"]}, "name": {"type": "string"}, "value": {"type": "string"}, "location": {"type": "object", "additionalProperties": false, "required": ["line", "column"], "properties": {"line": {"type": "integer", "minimum": 1}, "column": {"type": "integer", "minimum": 1}}}}}},
+    "review": {"type": "object", "additionalProperties": false, "required": ["complete", "reverse_sync"], "properties": {"complete": {"const": true}, "reverse_sync": {"const": false}}}
+  }
+}

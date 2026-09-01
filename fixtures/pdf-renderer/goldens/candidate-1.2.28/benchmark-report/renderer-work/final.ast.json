@@ -1,0 +1,4011 @@
+{
+  "children": [
+    {
+      "id": "title",
+      "level": 1,
+      "line": 23,
+      "text": "Steuerungsbericht für belastbare Entscheidungen",
+      "type": "heading"
+    },
+    {
+      "line": 24,
+      "type": "blank"
+    },
+    {
+      "id": "executive-summary",
+      "level": 2,
+      "line": 25,
+      "text": "Kurzfassung",
+      "type": "heading"
+    },
+    {
+      "line": 26,
+      "type": "blank"
+    },
+    {
+      "id": "positioning",
+      "level": 3,
+      "line": 27,
+      "text": "Positionierung",
+      "type": "heading"
+    },
+    {
+      "line": 28,
+      "type": "blank"
+    },
+    {
+      "inline": [
+        {
+          "mutable": true,
+          "text": "Dieser Bericht positioniert den Arbeitsstand als prüfbare Entscheidungsgrundlage. Er trennt Nutzenversprechen, Betriebsweg und Kontrollnachweis, damit Führung und Umsetzung denselben Gegenstand beurteilen können.",
+          "type": "text"
+        }
+      ],
+      "line": 29,
+      "text": "Dieser Bericht positioniert den Arbeitsstand als prüfbare Entscheidungsgrundlage. Er trennt Nutzenversprechen, Betriebsweg und Kontrollnachweis, damit Führung und Umsetzung denselben Gegenstand beurteilen können.",
+      "type": "paragraph"
+    },
+    {
+      "line": 30,
+      "type": "blank"
+    },
+    {
+      "inline": [
+        {
+          "mutable": true,
+          "text": "Die Leitfrage lautet: Welche Entscheidung ist heute tragfähig, welche Nachweise tragen sie, und welcher nächste Schritt bleibt bewusst offen?",
+          "type": "text"
+        }
+      ],
+      "line": 31,
+      "text": "Die Leitfrage lautet: Welche Entscheidung ist heute tragfähig, welche Nachweise tragen sie, und welcher nächste Schritt bleibt bewusst offen?",
+      "type": "paragraph"
+    },
+    {
+      "line": 32,
+      "type": "blank"
+    },
+    {
+      "line": 33,
+      "type": "page-break"
+    },
+    {
+      "line": 34,
+      "type": "blank"
+    },
+    {
+      "id": "methodology",
+      "level": 2,
+      "line": 35,
+      "text": "Methodik",
+      "type": "heading"
+    },
+    {
+      "line": 36,
+      "type": "blank"
+    },
+    {
+      "id": "orientation",
+      "level": 3,
+      "line": 37,
+      "text": "Orientierung",
+      "type": "heading"
+    },
+    {
+      "line": 38,
+      "type": "blank"
+    },
+    {
+      "inline": [
+        {
+          "mutable": true,
+          "text": "Die Orientierung beginnt mit drei klaren Wegen. Jeder Weg besitzt einen eigenen Zweck, einen überprüfbaren Ausgang und eine benannte Grenze. Damit ist vor den Details sichtbar, welche Lesespur für die jeweilige Rolle relevant ist.",
+          "type": "text"
+        }
+      ],
+      "line": 39,
+      "text": "Die Orientierung beginnt mit drei klaren Wegen. Jeder Weg besitzt einen eigenen Zweck, einen überprüfbaren Ausgang und eine benannte Grenze. Damit ist vor den Details sichtbar, welche Lesespur für die jeweilige Rolle relevant ist.",
+      "type": "paragraph"
+    },
+    {
+      "line": 40,
+      "type": "blank"
+    },
+    {
+      "attrs": {
+        "appearance": "default",
+        "icon": "true",
+        "id": "orientation-decision",
+        "title": "Entscheiden"
+      },
+      "children": [
+        {
+          "inline": [
+            {
+              "mutable": true,
+              "text": "Die Leitung liest Positionierung, Verdichtung und Ausblick. Sie erhält eine kurze Entscheidungslogik, ohne operative Einzelheiten mit einer Freigabe zu verwechseln.",
+              "type": "text"
+            }
+          ],
+          "line": 42,
+          "text": "Die Leitung liest Positionierung, Verdichtung und Ausblick. Sie erhält eine kurze Entscheidungslogik, ohne operative Einzelheiten mit einer Freigabe zu verwechseln.",
+          "type": "paragraph"
+        }
+      ],
+      "kind": "note",
+      "line": 44,
+      "type": "callout"
+    },
+    {
+      "line": 44,
+      "type": "blank"
+    },
+    {
+      "attrs": {
+        "appearance": "simple",
+        "icon": "true",
+        "id": "orientation-operate",
+        "title": "Umsetzen"
+      },
+      "children": [
+        {
+          "inline": [
+            {
+              "mutable": true,
+              "text": "Die Umsetzung folgt der nummerierten Beweisstrecke. Jeder Abschnitt benennt Gegenstand, Nachweis und Grenze, bevor daraus eine Folgerung abgeleitet wird.",
+              "type": "text"
+            }
+          ],
+          "line": 46,
+          "text": "Die Umsetzung folgt der nummerierten Beweisstrecke. Jeder Abschnitt benennt Gegenstand, Nachweis und Grenze, bevor daraus eine Folgerung abgeleitet wird.",
+          "type": "paragraph"
+        }
+      ],
+      "kind": "tip",
+      "line": 48,
+      "type": "callout"
+    },
+    {
+      "line": 48,
+      "type": "blank"
+    },
+    {
+      "attrs": {
+        "appearance": "minimal",
+        "icon": "false",
+        "id": "orientation-verify",
+        "title": "Prüfen"
+      },
+      "children": [
+        {
+          "inline": [
+            {
+              "mutable": true,
+              "text": "Die Prüfung verbindet jede Aussage mit ihrer Quelle. Fehlende Evidenz bleibt sichtbar und wird nicht durch Gestaltung oder sprachliche Sicherheit ersetzt.",
+              "type": "text"
+            }
+          ],
+          "line": 50,
+          "text": "Die Prüfung verbindet jede Aussage mit ihrer Quelle. Fehlende Evidenz bleibt sichtbar und wird nicht durch Gestaltung oder sprachliche Sicherheit ersetzt.",
+          "type": "paragraph"
+        }
+      ],
+      "kind": "important",
+      "line": 52,
+      "type": "callout"
+    },
+    {
+      "line": 52,
+      "type": "blank"
+    },
+    {
+      "inline": [
+        {
+          "mutable": true,
+          "text": "Die Wege ergänzen einander: Entscheidung setzt Nachweis voraus, Umsetzung erzeugt überprüfbare Ergebnisse, und Prüfung hält den Übergang zwischen beiden belastbar.",
+          "type": "text"
+        }
+      ],
+      "line": 53,
+      "text": "Die Wege ergänzen einander: Entscheidung setzt Nachweis voraus, Umsetzung erzeugt überprüfbare Ergebnisse, und Prüfung hält den Übergang zwischen beiden belastbar.",
+      "type": "paragraph"
+    },
+    {
+      "line": 54,
+      "type": "blank"
+    },
+    {
+      "line": 55,
+      "type": "page-break"
+    },
+    {
+      "line": 56,
+      "type": "blank"
+    },
+    {
+      "id": "findings",
+      "level": 2,
+      "line": 57,
+      "text": "Befunde",
+      "type": "heading"
+    },
+    {
+      "line": 58,
+      "type": "blank"
+    },
+    {
+      "id": "proof",
+      "level": 3,
+      "line": 59,
+      "text": "Nummerierte Beweisstrecke",
+      "type": "heading"
+    },
+    {
+      "line": 60,
+      "type": "blank"
+    },
+    {
+      "inline": [
+        {
+          "mutable": true,
+          "text": "Die Strecke führt vom Zweck über den Betrieb zur Kontrolle. Die Reihenfolge ist fest, weil eine spätere Aussage keine frühere Evidenz ersetzen darf.",
+          "type": "text"
+        }
+      ],
+      "line": 61,
+      "text": "Die Strecke führt vom Zweck über den Betrieb zur Kontrolle. Die Reihenfolge ist fest, weil eine spätere Aussage keine frühere Evidenz ersetzen darf.",
+      "type": "paragraph"
+    },
+    {
+      "line": 62,
+      "type": "blank"
+    },
+    {
+      "items": [
+        {
+          "inline": [
+            {
+              "mutable": true,
+              "text": "Zweck klären: Der Bericht bindet die Entscheidung an eine explizite Ausgangslage und benennt, welche Wirkung überhaupt beurteilt wird. Der Nachweis bleibt auf die dokumentierte Positionierung begrenzt.",
+              "type": "text"
+            },
+            {
+              "source_id": "source-position",
+              "type": "footnote-ref"
+            }
+          ],
+          "text": "Zweck klären: Der Bericht bindet die Entscheidung an eine explizite Ausgangslage und benennt, welche Wirkung überhaupt beurteilt wird. Der Nachweis bleibt auf die dokumentierte Positionierung begrenzt.[^source-position]"
+        },
+        {
+          "inline": [
+            {
+              "mutable": true,
+              "text": "Betriebsweg prüfen: Die Umsetzung wird als nachvollziehbare Folge von Übergaben, Ergebnissen und Grenzen beschrieben. Dadurch lässt sich erkennen, ob ein Ergebnis tatsächlich aus dem vorgesehenen Weg stammt.",
+              "type": "text"
+            },
+            {
+              "source_id": "source-operation",
+              "type": "footnote-ref"
+            }
+          ],
+          "text": "Betriebsweg prüfen: Die Umsetzung wird als nachvollziehbare Folge von Übergaben, Ergebnissen und Grenzen beschrieben. Dadurch lässt sich erkennen, ob ein Ergebnis tatsächlich aus dem vorgesehenen Weg stammt.[^source-operation]"
+        },
+        {
+          "inline": [
+            {
+              "mutable": true,
+              "text": "Kontrolle schließen: Freigabe, Inventar und Prüfung beziehen sich auf dieselben Bytes. Abweichungen bleiben Fehler; eine bloß ähnliche Ausgabe gilt nicht als Nachweis.",
+              "type": "text"
+            },
+            {
+              "source_id": "source-control",
+              "type": "footnote-ref"
+            }
+          ],
+          "text": "Kontrolle schließen: Freigabe, Inventar und Prüfung beziehen sich auf dieselben Bytes. Abweichungen bleiben Fehler; eine bloß ähnliche Ausgabe gilt nicht als Nachweis.[^source-control]"
+        }
+      ],
+      "line": 63,
+      "type": "ordered-list"
+    },
+    {
+      "line": 66,
+      "type": "blank"
+    },
+    {
+      "alignments": [
+        "default",
+        "default",
+        "default"
+      ],
+      "headers": [
+        "Prüfschritt",
+        "Sichtbarer Nachweis",
+        "Belastbare Grenze"
+      ],
+      "line": 67,
+      "rows": [
+        [
+          "Zweck",
+          "explizite Ausgangslage",
+          "keine erfundene Wirkung"
+        ],
+        [
+          "Betrieb",
+          "geordnete Übergaben",
+          "kein stiller Nebenweg"
+        ],
+        [
+          "Kontrolle",
+          "gebundene Artefakte",
+          "keine ähnliche Ersatzdatei"
+        ]
+      ],
+      "separator": [
+        "---",
+        "---",
+        "---"
+      ],
+      "type": "table"
+    },
+    {
+      "line": 72,
+      "type": "blank"
+    },
+    {
+      "inline": [
+        {
+          "mutable": true,
+          "text": "Die Beweisstrecke ist damit nicht nur eine Aufzählung. Sie macht sichtbar, an welcher Stelle eine Entscheidung trägt und an welcher Stelle zusätzliche Evidenz nötig wäre.",
+          "type": "text"
+        }
+      ],
+      "line": 73,
+      "text": "Die Beweisstrecke ist damit nicht nur eine Aufzählung. Sie macht sichtbar, an welcher Stelle eine Entscheidung trägt und an welcher Stelle zusätzliche Evidenz nötig wäre.",
+      "type": "paragraph"
+    },
+    {
+      "line": 74,
+      "type": "blank"
+    },
+    {
+      "line": 75,
+      "source_id": "source-position",
+      "text": "Unveränderlicher Nachweis zur Positionierungsrolle der neutralen Benchmark-Fixture.",
+      "type": "footnote"
+    },
+    {
+      "line": 76,
+      "source_id": "source-operation",
+      "text": "Unveränderlicher Nachweis zum Betriebsweg der neutralen Benchmark-Fixture.",
+      "type": "footnote"
+    },
+    {
+      "line": 77,
+      "source_id": "source-control",
+      "text": "Unveränderlicher Nachweis zur Kontrollrolle der neutralen Benchmark-Fixture.",
+      "type": "footnote"
+    },
+    {
+      "line": 78,
+      "type": "blank"
+    },
+    {
+      "line": 79,
+      "type": "page-break"
+    },
+    {
+      "line": 80,
+      "type": "blank"
+    },
+    {
+      "id": "conclusion",
+      "level": 2,
+      "line": 81,
+      "text": "Fazit",
+      "type": "heading"
+    },
+    {
+      "line": 82,
+      "type": "blank"
+    },
+    {
+      "id": "synthesis",
+      "level": 3,
+      "line": 83,
+      "text": "Verdichtung",
+      "type": "heading"
+    },
+    {
+      "line": 84,
+      "type": "blank"
+    },
+    {
+      "attrs": {
+        "appearance": "default",
+        "icon": "true",
+        "id": "synthesis-result",
+        "title": "Ergebnisverdichtung"
+      },
+      "children": [
+        {
+          "inline": [
+            {
+              "mutable": true,
+              "text": "Die belastbare Entscheidung entsteht aus drei gemeinsam geprüften Eigenschaften: Der Zweck ist eindeutig, der Betriebsweg ist nachvollziehbar, und die Kontrolle bindet Ergebnis und Freigabe an denselben Stand. Fehlt eine dieser Eigenschaften, bleibt der Vorgang offen. Sind alle drei nachgewiesen, kann die Entscheidung ohne verdeckte Annahmen weitergegeben werden.",
+              "type": "text"
+            }
+          ],
+          "line": 86,
+          "text": "Die belastbare Entscheidung entsteht aus drei gemeinsam geprüften Eigenschaften: Der Zweck ist eindeutig, der Betriebsweg ist nachvollziehbar, und die Kontrolle bindet Ergebnis und Freigabe an denselben Stand. Fehlt eine dieser Eigenschaften, bleibt der Vorgang offen. Sind alle drei nachgewiesen, kann die Entscheidung ohne verdeckte Annahmen weitergegeben werden.",
+          "type": "paragraph"
+        }
+      ],
+      "kind": "important",
+      "line": 88,
+      "type": "callout"
+    },
+    {
+      "line": 88,
+      "type": "blank"
+    },
+    {
+      "inline": [
+        {
+          "mutable": true,
+          "text": "Die Verdichtung reduziert nicht die Evidenz, sondern ordnet sie. Für die Leitung steht die Tragfähigkeit im Vordergrund. Für die Umsetzung zählt der geschlossene Weg vom Eingang bis zum Ergebnis. Für die Prüfung zählt, dass Quelle, Ausgabe und Freigabe nicht auseinanderfallen. Diese drei Perspektiven ergeben eine gemeinsame Aussage: Der aktuelle Stand ist dann entscheidbar, wenn seine Herkunft, seine Verarbeitung und seine Kontrolle zusammenpassen.",
+          "type": "text"
+        }
+      ],
+      "line": 89,
+      "text": "Die Verdichtung reduziert nicht die Evidenz, sondern ordnet sie. Für die Leitung steht die Tragfähigkeit im Vordergrund. Für die Umsetzung zählt der geschlossene Weg vom Eingang bis zum Ergebnis. Für die Prüfung zählt, dass Quelle, Ausgabe und Freigabe nicht auseinanderfallen. Diese drei Perspektiven ergeben eine gemeinsame Aussage: Der aktuelle Stand ist dann entscheidbar, wenn seine Herkunft, seine Verarbeitung und seine Kontrolle zusammenpassen.",
+      "type": "paragraph"
+    },
+    {
+      "line": 90,
+      "type": "blank"
+    },
+    {
+      "alignments": [
+        "default",
+        "default",
+        "default"
+      ],
+      "headers": [
+        "Perspektive",
+        "Verdichtete Aussage",
+        "Konsequenz"
+      ],
+      "line": 91,
+      "rows": [
+        [
+          "Leitung",
+          "Zweck und Grenze sind explizit",
+          "Entscheidung bleibt nachvollziehbar"
+        ],
+        [
+          "Umsetzung",
+          "der Betriebsweg ist geschlossen",
+          "Übergaben bleiben prüfbar"
+        ],
+        [
+          "Prüfung",
+          "Nachweis und Ergebnis sind gebunden",
+          "Abweichungen stoppen die Freigabe"
+        ]
+      ],
+      "separator": [
+        "---",
+        "---",
+        "---"
+      ],
+      "type": "table"
+    },
+    {
+      "line": 96,
+      "type": "blank"
+    },
+    {
+      "id": "outlook",
+      "level": 3,
+      "line": 97,
+      "text": "Ausblick",
+      "type": "heading"
+    },
+    {
+      "line": 98,
+      "type": "blank"
+    },
+    {
+      "attrs": {
+        "appearance": "simple",
+        "icon": "true",
+        "id": "outlook-next",
+        "title": "Nächster belastbarer Schritt"
+      },
+      "children": [
+        {
+          "inline": [
+            {
+              "mutable": true,
+              "text": "Der nächste Schritt erweitert nicht vorschnell den Anspruch. Zuerst wird die bestehende Beweisstrecke in einem realen Projekt wiederholt. Danach werden nur solche Dokumenttypen ergänzt, deren Zweck, Inhaltsvertrag und Prüfweg ausdrücklich freigegeben sind. Jede Erweiterung bringt ihre eigene Evidenz mit und verändert die bereits geschlossene Grundlage nicht stillschweigend.",
+              "type": "text"
+            }
+          ],
+          "line": 100,
+          "text": "Der nächste Schritt erweitert nicht vorschnell den Anspruch. Zuerst wird die bestehende Beweisstrecke in einem realen Projekt wiederholt. Danach werden nur solche Dokumenttypen ergänzt, deren Zweck, Inhaltsvertrag und Prüfweg ausdrücklich freigegeben sind. Jede Erweiterung bringt ihre eigene Evidenz mit und verändert die bereits geschlossene Grundlage nicht stillschweigend.",
+          "type": "paragraph"
+        }
+      ],
+      "kind": "tip",
+      "line": 102,
+      "type": "callout"
+    },
+    {
+      "line": 102,
+      "type": "blank"
+    },
+    {
+      "inline": [
+        {
+          "mutable": true,
+          "text": "Der Ausblick trennt Gegenwart und Möglichkeit. Heute steht ein überprüfbarer Entscheidungsweg bereit. Künftig können weitere Rollen, Dokumenttypen oder Belege hinzukommen, sofern sie dieselben Grenzen respektieren. Offen bleibt nicht, wie geprüft wird, sondern nur, welche fachliche Erweiterung als Nächstes autorisiert wird. So endet der Bericht mit einer konkreten Richtung, ohne eine ungeprüfte Zukunft als bereits erreichten Zustand darzustellen.",
+          "type": "text"
+        }
+      ],
+      "line": 103,
+      "text": "Der Ausblick trennt Gegenwart und Möglichkeit. Heute steht ein überprüfbarer Entscheidungsweg bereit. Künftig können weitere Rollen, Dokumenttypen oder Belege hinzukommen, sofern sie dieselben Grenzen respektieren. Offen bleibt nicht, wie geprüft wird, sondern nur, welche fachliche Erweiterung als Nächstes autorisiert wird. So endet der Bericht mit einer konkreten Richtung, ohne eine ungeprüfte Zukunft als bereits erreichten Zustand darzustellen.",
+      "type": "paragraph"
+    }
+  ],
+  "contract": "markdown-contract.v2",
+  "figure_registry": [],
+  "frontmatter": {
+    "assets": [],
+    "document_id": "golden-benchmark-report",
+    "document_type": "report",
+    "facts": [],
+    "lang": "de-DE",
+    "rights": [],
+    "schema_version": "markdown-document.v1",
+    "sources": [
+      {
+        "id": "source-position",
+        "locator": "urn:brandkit:e2e:position",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      },
+      {
+        "id": "source-operation",
+        "locator": "urn:brandkit:e2e:operation",
+        "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+      },
+      {
+        "id": "source-control",
+        "locator": "urn:brandkit:e2e:control",
+        "sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+      }
+    ],
+    "status": "release",
+    "title": "Steuerungsbericht für belastbare Entscheidungen",
+    "todos": []
+  },
+  "humanizer_segments": {
+    "mutable": [
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 1007,
+        "kind": "natural-prose",
+        "old_hash": "d8c98fb23fd1e6a8682e00486f683e90ace9231cf02f52647228f8fc47004876",
+        "ordinal": 1,
+        "role": "segment",
+        "segment_id": "mutable-917f5e137903c9316c95e819",
+        "sha256": "d8c98fb23fd1e6a8682e00486f683e90ace9231cf02f52647228f8fc47004876",
+        "start_byte": 792,
+        "text": "Dieser Bericht positioniert den Arbeitsstand als prüfbare Entscheidungsgrundlage. Er trennt Nutzenversprechen, Betriebsweg und Kontrollnachweis, damit Führung und Umsetzung denselben Gegenstand beurteilen können."
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 1152,
+        "kind": "natural-prose",
+        "old_hash": "026947c4e231cccbf860a34afaee96d39c2b8ba5c6d6257e4b1a5fb85aeb65fe",
+        "ordinal": 2,
+        "role": "segment",
+        "segment_id": "mutable-4c7e5d76d27bb36c635e45dd",
+        "sha256": "026947c4e231cccbf860a34afaee96d39c2b8ba5c6d6257e4b1a5fb85aeb65fe",
+        "start_byte": 1009,
+        "text": "Die Leitfrage lautet: Welche Entscheidung ist heute tragfähig, welche Nachweise tragen sie, und welcher nächste Schritt bleibt bewusst offen?"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 1464,
+        "kind": "natural-prose",
+        "old_hash": "2119f157835a319c31c6cd4d311fba9a196ce8fffc7cc22da2b5e49289430646",
+        "ordinal": 3,
+        "role": "segment",
+        "segment_id": "mutable-4f6dd1d64a64ce142d5c8ab4",
+        "sha256": "2119f157835a319c31c6cd4d311fba9a196ce8fffc7cc22da2b5e49289430646",
+        "start_byte": 1231,
+        "text": "Die Orientierung beginnt mit drei klaren Wegen. Jeder Weg besitzt einen eigenen Zweck, einen überprüfbaren Ausgang und eine benannte Grenze. Damit ist vor den Details sichtbar, welche Lesespur für die jeweilige Rolle relevant ist."
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 1714,
+        "kind": "natural-prose",
+        "old_hash": "8dfb1967fbd40cc4458106949f5827c9be82d4b0138e79211a90b8779ba6035f",
+        "ordinal": 4,
+        "role": "segment",
+        "segment_id": "mutable-ff57bc81e872d97bfebabf9b",
+        "sha256": "8dfb1967fbd40cc4458106949f5827c9be82d4b0138e79211a90b8779ba6035f",
+        "start_byte": 1549,
+        "text": "Die Leitung liest Positionierung, Verdichtung und Ausblick. Sie erhält eine kurze Entscheidungslogik, ohne operative Einzelheiten mit einer Freigabe zu verwechseln."
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 1950,
+        "kind": "natural-prose",
+        "old_hash": "4b568a4a557efc380d1468cd1ec9c5f5aa1c6c5fdf43e67e48bd97a9e6978bac",
+        "ordinal": 5,
+        "role": "segment",
+        "segment_id": "mutable-5f79f462a104b839ffe551be",
+        "sha256": "4b568a4a557efc380d1468cd1ec9c5f5aa1c6c5fdf43e67e48bd97a9e6978bac",
+        "start_byte": 1797,
+        "text": "Die Umsetzung folgt der nummerierten Beweisstrecke. Jeder Abschnitt benennt Gegenstand, Nachweis und Grenze, bevor daraus eine Folgerung abgeleitet wird."
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 2194,
+        "kind": "natural-prose",
+        "old_hash": "c4c13e37729cad288469599f999aace9dc3e4572bd7dea53e274c7c30117e57c",
+        "ordinal": 6,
+        "role": "segment",
+        "segment_id": "mutable-91675ab02f917687eef52745",
+        "sha256": "c4c13e37729cad288469599f999aace9dc3e4572bd7dea53e274c7c30117e57c",
+        "start_byte": 2039,
+        "text": "Die Prüfung verbindet jede Aussage mit ihrer Quelle. Fehlende Evidenz bleibt sichtbar und wird nicht durch Gestaltung oder sprachliche Sicherheit ersetzt."
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 2369,
+        "kind": "natural-prose",
+        "old_hash": "174bbfa8dc559fdb11709120691d61ff80eaf09bf6248aa7ffcbeacbf616412b",
+        "ordinal": 7,
+        "role": "segment",
+        "segment_id": "mutable-2615d8e29e08cfba5b9e2268",
+        "sha256": "174bbfa8dc559fdb11709120691d61ff80eaf09bf6248aa7ffcbeacbf616412b",
+        "start_byte": 2200,
+        "text": "Die Wege ergänzen einander: Entscheidung setzt Nachweis voraus, Umsetzung erzeugt überprüfbare Ergebnisse, und Prüfung hält den Übergang zwischen beiden belastbar."
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 2603,
+        "kind": "natural-prose",
+        "old_hash": "a2876af082472b061dd222312af236434134072911afce48d4ae69c7e58a2dfb",
+        "ordinal": 8,
+        "role": "segment",
+        "segment_id": "mutable-61e1dc016784990fd6cdd60e",
+        "sha256": "a2876af082472b061dd222312af236434134072911afce48d4ae69c7e58a2dfb",
+        "start_byte": 2451,
+        "text": "Die Strecke führt vom Zweck über den Betrieb zur Kontrolle. Die Reihenfolge ist fest, weil eine spätere Aussage keine frühere Evidenz ersetzen darf."
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 2811,
+        "kind": "natural-prose",
+        "old_hash": "1b03f31b6c2fb90e5f3d8eeab25f167cb238bbd7d7cf6ef99bc5ebbf15689728",
+        "ordinal": 9,
+        "role": "segment",
+        "segment_id": "mutable-2e3e0805574ac4e33a271c53",
+        "sha256": "1b03f31b6c2fb90e5f3d8eeab25f167cb238bbd7d7cf6ef99bc5ebbf15689728",
+        "start_byte": 2608,
+        "text": "Zweck klären: Der Bericht bindet die Entscheidung an eine explizite Ausgangslage und benennt, welche Wirkung überhaupt beurteilt wird. Der Nachweis bleibt auf die dokumentierte Positionierung begrenzt."
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 3044,
+        "kind": "natural-prose",
+        "old_hash": "659f7653e144d049544751b02c35a452a7062353a89ae97795aa268f277c61ab",
+        "ordinal": 10,
+        "role": "segment",
+        "segment_id": "mutable-e01d5415c8b76c915e57f077",
+        "sha256": "659f7653e144d049544751b02c35a452a7062353a89ae97795aa268f277c61ab",
+        "start_byte": 2833,
+        "text": "Betriebsweg prüfen: Die Umsetzung wird als nachvollziehbare Folge von Übergaben, Ergebnissen und Grenzen beschrieben. Dadurch lässt sich erkennen, ob ein Ergebnis tatsächlich aus dem vorgesehenen Weg stammt."
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 3238,
+        "kind": "natural-prose",
+        "old_hash": "91e03e6dc4cbcf5b7fd218962fb2c8222a73cef411a444d8ddfcf30951b286da",
+        "ordinal": 11,
+        "role": "segment",
+        "segment_id": "mutable-46ae51e05f8aefe64e176585",
+        "sha256": "91e03e6dc4cbcf5b7fd218962fb2c8222a73cef411a444d8ddfcf30951b286da",
+        "start_byte": 3067,
+        "text": "Kontrolle schließen: Freigabe, Inventar und Prüfung beziehen sich auf dieselben Bytes. Abweichungen bleiben Fehler; eine bloß ähnliche Ausgabe gilt nicht als Nachweis."
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 3698,
+        "kind": "natural-prose",
+        "old_hash": "b8d388f57eecce570084a4abfc4c687d266389a173cfed93d000b9d6235482af",
+        "ordinal": 12,
+        "role": "segment",
+        "segment_id": "mutable-3066dcd16626c1b8a8335f93",
+        "sha256": "b8d388f57eecce570084a4abfc4c687d266389a173cfed93d000b9d6235482af",
+        "start_byte": 3523,
+        "text": "Die Beweisstrecke ist damit nicht nur eine Aufzählung. Sie macht sichtbar, an welcher Stelle eine Entscheidung trägt und an welcher Stelle zusätzliche Evidenz nötig wäre."
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 4528,
+        "kind": "natural-prose",
+        "old_hash": "95a6c12ad4fd763617d61c6f9fb2bb99507f0c598becfd135f064f6fad1244ad",
+        "ordinal": 13,
+        "role": "segment",
+        "segment_id": "mutable-662a41baca28e1db8696e4b6",
+        "sha256": "95a6c12ad4fd763617d61c6f9fb2bb99507f0c598becfd135f064f6fad1244ad",
+        "start_byte": 4162,
+        "text": "Die belastbare Entscheidung entsteht aus drei gemeinsam geprüften Eigenschaften: Der Zweck ist eindeutig, der Betriebsweg ist nachvollziehbar, und die Kontrolle bindet Ergebnis und Freigabe an denselben Stand. Fehlt eine dieser Eigenschaften, bleibt der Vorgang offen. Sind alle drei nachgewiesen, kann die Entscheidung ohne verdeckte Annahmen weitergegeben werden."
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 4993,
+        "kind": "natural-prose",
+        "old_hash": "32db3abd8c301ee5f588c03e315407c0e68332b4b3a4dea94cea55518afb7ea8",
+        "ordinal": 14,
+        "role": "segment",
+        "segment_id": "mutable-b9a0d41c48b63b94af485e4e",
+        "sha256": "32db3abd8c301ee5f588c03e315407c0e68332b4b3a4dea94cea55518afb7ea8",
+        "start_byte": 4534,
+        "text": "Die Verdichtung reduziert nicht die Evidenz, sondern ordnet sie. Für die Leitung steht die Tragfähigkeit im Vordergrund. Für die Umsetzung zählt der geschlossene Weg vom Eingang bis zum Ergebnis. Für die Prüfung zählt, dass Quelle, Ausgabe und Freigabe nicht auseinanderfallen. Diese drei Perspektiven ergeben eine gemeinsame Aussage: Der aktuelle Stand ist dann entscheidbar, wenn seine Herkunft, seine Verarbeitung und seine Kontrolle zusammenpassen."
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 5812,
+        "kind": "natural-prose",
+        "old_hash": "226b7cfdaa74fa32dd258cb8d2c9da03d7f0ee4e5ad8705a2c40bdb7d9faf5b0",
+        "ordinal": 15,
+        "role": "segment",
+        "segment_id": "mutable-0a4b5f17fcdaf6765e24d2f8",
+        "sha256": "226b7cfdaa74fa32dd258cb8d2c9da03d7f0ee4e5ad8705a2c40bdb7d9faf5b0",
+        "start_byte": 5431,
+        "text": "Der nächste Schritt erweitert nicht vorschnell den Anspruch. Zuerst wird die bestehende Beweisstrecke in einem realen Projekt wiederholt. Danach werden nur solche Dokumenttypen ergänzt, deren Zweck, Inhaltsvertrag und Prüfweg ausdrücklich freigegeben sind. Jede Erweiterung bringt ihre eigene Evidenz mit und verändert die bereits geschlossene Grundlage nicht stillschweigend."
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 6276,
+        "kind": "natural-prose",
+        "old_hash": "d1a9e9ecd3032ce61e0e1247a5a40524e5724c53f099d872b2aa0ee3d3b44538",
+        "ordinal": 16,
+        "role": "segment",
+        "segment_id": "mutable-e3dbb8a5a864c466fffa8d55",
+        "sha256": "d1a9e9ecd3032ce61e0e1247a5a40524e5724c53f099d872b2aa0ee3d3b44538",
+        "start_byte": 5818,
+        "text": "Der Ausblick trennt Gegenwart und Möglichkeit. Heute steht ein überprüfbarer Entscheidungsweg bereit. Künftig können weitere Rollen, Dokumenttypen oder Belege hinzukommen, sofern sie dieselben Grenzen respektieren. Offen bleibt nicht, wie geprüft wird, sondern nur, welche fachliche Erweiterung als Nächstes autorisiert wird. So endet der Bericht mit einer konkreten Richtung, ohne eine ungeprüfte Zukunft als bereits erreichten Zustand darzustellen."
+      }
+    ],
+    "partition": [
+      {
+        "ast_path": "document/frontmatter",
+        "classification": "protected",
+        "end_byte": 659,
+        "kind": "frontmatter",
+        "old_hash": "ceccd3819979ba8612dbeb82c66a22b14b6829ddad5abf1340926abcddade27d",
+        "ordinal": 1,
+        "role": "document-metadata",
+        "segment_id": "protected-63274e878959ab9eb92f8a7c",
+        "sha256": "ceccd3819979ba8612dbeb82c66a22b14b6829ddad5abf1340926abcddade27d",
+        "start_byte": 0,
+        "text": "---\nschema_version: markdown-document.v1\ndocument_id: golden-benchmark-report\ndocument_type: report\ntitle: Steuerungsbericht für belastbare Entscheidungen\nlang: de-DE\nstatus: release\nfacts: []\nsources:\n  - id: source-position\n    locator: urn:brandkit:e2e:position\n    sha256: bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\n  - id: source-operation\n    locator: urn:brandkit:e2e:operation\n    sha256: cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc\n  - id: source-control\n    locator: urn:brandkit:e2e:control\n    sha256: dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd\nassets: []\nrights: []\ntodos: []\n---\n"
+      },
+      {
+        "ast_path": "document/directive/title",
+        "classification": "protected",
+        "end_byte": 719,
+        "kind": "directive",
+        "old_hash": "7a74cfc9f0965d9091624ec8d81bcb87bcb23c4b2389ed5a9ae5b4a069005506",
+        "ordinal": 1,
+        "role": "title",
+        "segment_id": "protected-0975bbfa365c9d92158ef283",
+        "sha256": "7a74cfc9f0965d9091624ec8d81bcb87bcb23c4b2389ed5a9ae5b4a069005506",
+        "start_byte": 659,
+        "text": "# Steuerungsbericht für belastbare Entscheidungen {#title}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 720,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 1,
+        "role": "structural-bytes",
+        "segment_id": "protected-9afa7534ec84d0bf2257eef0",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 719,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/executive-summary",
+        "classification": "protected",
+        "end_byte": 756,
+        "kind": "directive",
+        "old_hash": "68b29775cd89519b76df38bc3feec019fac0d8c954b729d41cfd58f3e9d3084f",
+        "ordinal": 1,
+        "role": "executive-summary",
+        "segment_id": "protected-007bdbe0204cea209beef856",
+        "sha256": "68b29775cd89519b76df38bc3feec019fac0d8c954b729d41cfd58f3e9d3084f",
+        "start_byte": 720,
+        "text": "## Kurzfassung {#executive-summary}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 757,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 2,
+        "role": "structural-bytes",
+        "segment_id": "protected-cbc160d37b05946352292b51",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 756,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/positioning",
+        "classification": "protected",
+        "end_byte": 791,
+        "kind": "directive",
+        "old_hash": "b72288d0d0f7930fdb624bd7a5152774512b770e2615285520db7dd88f4e2888",
+        "ordinal": 1,
+        "role": "positioning",
+        "segment_id": "protected-e683378377bfa2e1694b6833",
+        "sha256": "b72288d0d0f7930fdb624bd7a5152774512b770e2615285520db7dd88f4e2888",
+        "start_byte": 757,
+        "text": "### Positionierung {#positioning}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 792,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 3,
+        "role": "structural-bytes",
+        "segment_id": "protected-5339e929b7b0dbfff3091dd5",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 791,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 1007,
+        "kind": "natural-prose",
+        "old_hash": "d8c98fb23fd1e6a8682e00486f683e90ace9231cf02f52647228f8fc47004876",
+        "ordinal": 1,
+        "role": "segment",
+        "segment_id": "mutable-917f5e137903c9316c95e819",
+        "sha256": "d8c98fb23fd1e6a8682e00486f683e90ace9231cf02f52647228f8fc47004876",
+        "start_byte": 792,
+        "text": "Dieser Bericht positioniert den Arbeitsstand als prüfbare Entscheidungsgrundlage. Er trennt Nutzenversprechen, Betriebsweg und Kontrollnachweis, damit Führung und Umsetzung denselben Gegenstand beurteilen können."
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 1009,
+        "kind": "syntax",
+        "old_hash": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "ordinal": 4,
+        "role": "structural-bytes",
+        "segment_id": "protected-db9bb4c8d3316ecdfc3bc19a",
+        "sha256": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "start_byte": 1007,
+        "text": "\n\n"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 1152,
+        "kind": "natural-prose",
+        "old_hash": "026947c4e231cccbf860a34afaee96d39c2b8ba5c6d6257e4b1a5fb85aeb65fe",
+        "ordinal": 2,
+        "role": "segment",
+        "segment_id": "mutable-4c7e5d76d27bb36c635e45dd",
+        "sha256": "026947c4e231cccbf860a34afaee96d39c2b8ba5c6d6257e4b1a5fb85aeb65fe",
+        "start_byte": 1009,
+        "text": "Die Leitfrage lautet: Welche Entscheidung ist heute tragfähig, welche Nachweise tragen sie, und welcher nächste Schritt bleibt bewusst offen?"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 1154,
+        "kind": "syntax",
+        "old_hash": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "ordinal": 5,
+        "role": "structural-bytes",
+        "segment_id": "protected-7406e07bb89250ac7ea4e9bc",
+        "sha256": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "start_byte": 1152,
+        "text": "\n\n"
+      },
+      {
+        "ast_path": "document/directive/page-break",
+        "classification": "protected",
+        "end_byte": 1169,
+        "kind": "directive",
+        "old_hash": "f19571734dc4c69e6e5f8afd5d3a208e8f8ac44817d2aa64175c88bab7b004d0",
+        "ordinal": 1,
+        "role": "page-break",
+        "segment_id": "protected-651deb05eecfbf6e82e81546",
+        "sha256": "f19571734dc4c69e6e5f8afd5d3a208e8f8ac44817d2aa64175c88bab7b004d0",
+        "start_byte": 1154,
+        "text": "::: page-break\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 1170,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 6,
+        "role": "structural-bytes",
+        "segment_id": "protected-7e9ea612b2a3f2f6881cedae",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 1169,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/methodology",
+        "classification": "protected",
+        "end_byte": 1197,
+        "kind": "directive",
+        "old_hash": "26bd98d0944b2b51475f4e6a9703947c7f0386dfecee18da0ac7f9e9862a7798",
+        "ordinal": 1,
+        "role": "methodology",
+        "segment_id": "protected-f08cbdb55602b35722f0a94d",
+        "sha256": "26bd98d0944b2b51475f4e6a9703947c7f0386dfecee18da0ac7f9e9862a7798",
+        "start_byte": 1170,
+        "text": "## Methodik {#methodology}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 1198,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 7,
+        "role": "structural-bytes",
+        "segment_id": "protected-22983067b2bd565d1e0da203",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 1197,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/orientation",
+        "classification": "protected",
+        "end_byte": 1230,
+        "kind": "directive",
+        "old_hash": "ec15dbd2506e7c96f020ba5d5aebba14a8106064d0f31b81be21eeca74f4242f",
+        "ordinal": 1,
+        "role": "orientation",
+        "segment_id": "protected-02fc041635e7f180fc0a0cf2",
+        "sha256": "ec15dbd2506e7c96f020ba5d5aebba14a8106064d0f31b81be21eeca74f4242f",
+        "start_byte": 1198,
+        "text": "### Orientierung {#orientation}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 1231,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 8,
+        "role": "structural-bytes",
+        "segment_id": "protected-0d0c85d0e40aed27ff38e2a9",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 1230,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 1464,
+        "kind": "natural-prose",
+        "old_hash": "2119f157835a319c31c6cd4d311fba9a196ce8fffc7cc22da2b5e49289430646",
+        "ordinal": 3,
+        "role": "segment",
+        "segment_id": "mutable-4f6dd1d64a64ce142d5c8ab4",
+        "sha256": "2119f157835a319c31c6cd4d311fba9a196ce8fffc7cc22da2b5e49289430646",
+        "start_byte": 1231,
+        "text": "Die Orientierung beginnt mit drei klaren Wegen. Jeder Weg besitzt einen eigenen Zweck, einen überprüfbaren Ausgang und eine benannte Grenze. Damit ist vor den Details sichtbar, welche Lesespur für die jeweilige Rolle relevant ist."
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 1466,
+        "kind": "syntax",
+        "old_hash": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "ordinal": 9,
+        "role": "structural-bytes",
+        "segment_id": "protected-e414e4605b991629d2ee1b9e",
+        "sha256": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "start_byte": 1464,
+        "text": "\n\n"
+      },
+      {
+        "ast_path": "document/directive/orientation-decision",
+        "classification": "protected",
+        "end_byte": 1549,
+        "kind": "directive",
+        "old_hash": "3fe8f4a358230486ff8c12a59f645966205444d1f4a65910b67e253d45bc9ff3",
+        "ordinal": 1,
+        "role": "orientation-decision",
+        "segment_id": "protected-b6c1838ec8305825fbe65bf5",
+        "sha256": "3fe8f4a358230486ff8c12a59f645966205444d1f4a65910b67e253d45bc9ff3",
+        "start_byte": 1466,
+        "text": "::: {.note #orientation-decision title=\"Entscheiden\" appearance=default icon=true}\n"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 1714,
+        "kind": "natural-prose",
+        "old_hash": "8dfb1967fbd40cc4458106949f5827c9be82d4b0138e79211a90b8779ba6035f",
+        "ordinal": 4,
+        "role": "segment",
+        "segment_id": "mutable-ff57bc81e872d97bfebabf9b",
+        "sha256": "8dfb1967fbd40cc4458106949f5827c9be82d4b0138e79211a90b8779ba6035f",
+        "start_byte": 1549,
+        "text": "Die Leitung liest Positionierung, Verdichtung und Ausblick. Sie erhält eine kurze Entscheidungslogik, ohne operative Einzelheiten mit einer Freigabe zu verwechseln."
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 1715,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 10,
+        "role": "structural-bytes",
+        "segment_id": "protected-cfa8a38e8458379a7c1c80de",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 1714,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/orientation-decision",
+        "classification": "protected",
+        "end_byte": 1719,
+        "kind": "directive",
+        "old_hash": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "ordinal": 2,
+        "role": "orientation-decision",
+        "segment_id": "protected-3755a7b05c8dac25e4acd10b",
+        "sha256": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "start_byte": 1715,
+        "text": ":::\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 1720,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 11,
+        "role": "structural-bytes",
+        "segment_id": "protected-fd2aa1643d39d8b6db1f5253",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 1719,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/orientation-operate",
+        "classification": "protected",
+        "end_byte": 1797,
+        "kind": "directive",
+        "old_hash": "853a9921f196b78ae29e81ecc92277e20c3fcc0c282eafd4ac62431a0f510624",
+        "ordinal": 1,
+        "role": "orientation-operate",
+        "segment_id": "protected-dfa4e1de51dcbfae0927e741",
+        "sha256": "853a9921f196b78ae29e81ecc92277e20c3fcc0c282eafd4ac62431a0f510624",
+        "start_byte": 1720,
+        "text": "::: {.tip #orientation-operate title=\"Umsetzen\" appearance=simple icon=true}\n"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 1950,
+        "kind": "natural-prose",
+        "old_hash": "4b568a4a557efc380d1468cd1ec9c5f5aa1c6c5fdf43e67e48bd97a9e6978bac",
+        "ordinal": 5,
+        "role": "segment",
+        "segment_id": "mutable-5f79f462a104b839ffe551be",
+        "sha256": "4b568a4a557efc380d1468cd1ec9c5f5aa1c6c5fdf43e67e48bd97a9e6978bac",
+        "start_byte": 1797,
+        "text": "Die Umsetzung folgt der nummerierten Beweisstrecke. Jeder Abschnitt benennt Gegenstand, Nachweis und Grenze, bevor daraus eine Folgerung abgeleitet wird."
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 1951,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 12,
+        "role": "structural-bytes",
+        "segment_id": "protected-23fe261c0c833375aabb406d",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 1950,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/orientation-operate",
+        "classification": "protected",
+        "end_byte": 1955,
+        "kind": "directive",
+        "old_hash": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "ordinal": 2,
+        "role": "orientation-operate",
+        "segment_id": "protected-88ae8fe3311e6bcf526977d2",
+        "sha256": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "start_byte": 1951,
+        "text": ":::\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 1956,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 13,
+        "role": "structural-bytes",
+        "segment_id": "protected-c04a77494812a9331387a7e1",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 1955,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/orientation-verify",
+        "classification": "protected",
+        "end_byte": 2039,
+        "kind": "directive",
+        "old_hash": "e468afbe3141b3a8cc7b85a05076d1916732923052718c4e2a4d0c4ed71b7dd0",
+        "ordinal": 1,
+        "role": "orientation-verify",
+        "segment_id": "protected-ebbea148ffce39788a0776ee",
+        "sha256": "e468afbe3141b3a8cc7b85a05076d1916732923052718c4e2a4d0c4ed71b7dd0",
+        "start_byte": 1956,
+        "text": "::: {.important #orientation-verify title=\"Prüfen\" appearance=minimal icon=false}\n"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 2194,
+        "kind": "natural-prose",
+        "old_hash": "c4c13e37729cad288469599f999aace9dc3e4572bd7dea53e274c7c30117e57c",
+        "ordinal": 6,
+        "role": "segment",
+        "segment_id": "mutable-91675ab02f917687eef52745",
+        "sha256": "c4c13e37729cad288469599f999aace9dc3e4572bd7dea53e274c7c30117e57c",
+        "start_byte": 2039,
+        "text": "Die Prüfung verbindet jede Aussage mit ihrer Quelle. Fehlende Evidenz bleibt sichtbar und wird nicht durch Gestaltung oder sprachliche Sicherheit ersetzt."
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 2195,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 14,
+        "role": "structural-bytes",
+        "segment_id": "protected-0dc9cfa18c943a6e02cfd6e0",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 2194,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/orientation-verify",
+        "classification": "protected",
+        "end_byte": 2199,
+        "kind": "directive",
+        "old_hash": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "ordinal": 2,
+        "role": "orientation-verify",
+        "segment_id": "protected-b7e722b030f0693d27ee0c9c",
+        "sha256": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "start_byte": 2195,
+        "text": ":::\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 2200,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 15,
+        "role": "structural-bytes",
+        "segment_id": "protected-ede957ea20b72f80f06f4fd2",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 2199,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 2369,
+        "kind": "natural-prose",
+        "old_hash": "174bbfa8dc559fdb11709120691d61ff80eaf09bf6248aa7ffcbeacbf616412b",
+        "ordinal": 7,
+        "role": "segment",
+        "segment_id": "mutable-2615d8e29e08cfba5b9e2268",
+        "sha256": "174bbfa8dc559fdb11709120691d61ff80eaf09bf6248aa7ffcbeacbf616412b",
+        "start_byte": 2200,
+        "text": "Die Wege ergänzen einander: Entscheidung setzt Nachweis voraus, Umsetzung erzeugt überprüfbare Ergebnisse, und Prüfung hält den Übergang zwischen beiden belastbar."
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 2371,
+        "kind": "syntax",
+        "old_hash": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "ordinal": 16,
+        "role": "structural-bytes",
+        "segment_id": "protected-7bb2adb2732f42642e94ec99",
+        "sha256": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "start_byte": 2369,
+        "text": "\n\n"
+      },
+      {
+        "ast_path": "document/directive/page-break",
+        "classification": "protected",
+        "end_byte": 2386,
+        "kind": "directive",
+        "old_hash": "f19571734dc4c69e6e5f8afd5d3a208e8f8ac44817d2aa64175c88bab7b004d0",
+        "ordinal": 2,
+        "role": "page-break",
+        "segment_id": "protected-fb8706eea32a686760a00b44",
+        "sha256": "f19571734dc4c69e6e5f8afd5d3a208e8f8ac44817d2aa64175c88bab7b004d0",
+        "start_byte": 2371,
+        "text": "::: page-break\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 2387,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 17,
+        "role": "structural-bytes",
+        "segment_id": "protected-6b120e9992f2e08f0b22ebac",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 2386,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/findings",
+        "classification": "protected",
+        "end_byte": 2410,
+        "kind": "directive",
+        "old_hash": "59052c2770c114ffa5ce603435abdc3e6590086fa3763ef258793a23e8af9a6f",
+        "ordinal": 1,
+        "role": "findings",
+        "segment_id": "protected-85d36c88d386203a1ae5617f",
+        "sha256": "59052c2770c114ffa5ce603435abdc3e6590086fa3763ef258793a23e8af9a6f",
+        "start_byte": 2387,
+        "text": "## Befunde {#findings}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 2411,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 18,
+        "role": "structural-bytes",
+        "segment_id": "protected-8c218a66c08fd50865670d61",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 2410,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/proof",
+        "classification": "protected",
+        "end_byte": 2450,
+        "kind": "directive",
+        "old_hash": "eeb4a174533976d44783d910ecec7c56d4fbd4a083bd0e88deecd7bd59cac8d1",
+        "ordinal": 1,
+        "role": "proof",
+        "segment_id": "protected-8a3038a3f200265c48fb1063",
+        "sha256": "eeb4a174533976d44783d910ecec7c56d4fbd4a083bd0e88deecd7bd59cac8d1",
+        "start_byte": 2411,
+        "text": "### Nummerierte Beweisstrecke {#proof}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 2451,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 19,
+        "role": "structural-bytes",
+        "segment_id": "protected-b47e00de53cbceae8224ae4a",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 2450,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 2603,
+        "kind": "natural-prose",
+        "old_hash": "a2876af082472b061dd222312af236434134072911afce48d4ae69c7e58a2dfb",
+        "ordinal": 8,
+        "role": "segment",
+        "segment_id": "mutable-61e1dc016784990fd6cdd60e",
+        "sha256": "a2876af082472b061dd222312af236434134072911afce48d4ae69c7e58a2dfb",
+        "start_byte": 2451,
+        "text": "Die Strecke führt vom Zweck über den Betrieb zur Kontrolle. Die Reihenfolge ist fest, weil eine spätere Aussage keine frühere Evidenz ersetzen darf."
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 2608,
+        "kind": "syntax",
+        "old_hash": "d3510e6ce606da11c4236e89b148d315426455f33edbc81f7f0dbb5e42fdccb0",
+        "ordinal": 20,
+        "role": "structural-bytes",
+        "segment_id": "protected-5b4c139f4fc601b88323320e",
+        "sha256": "d3510e6ce606da11c4236e89b148d315426455f33edbc81f7f0dbb5e42fdccb0",
+        "start_byte": 2603,
+        "text": "\n\n1. "
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 2811,
+        "kind": "natural-prose",
+        "old_hash": "1b03f31b6c2fb90e5f3d8eeab25f167cb238bbd7d7cf6ef99bc5ebbf15689728",
+        "ordinal": 9,
+        "role": "segment",
+        "segment_id": "mutable-2e3e0805574ac4e33a271c53",
+        "sha256": "1b03f31b6c2fb90e5f3d8eeab25f167cb238bbd7d7cf6ef99bc5ebbf15689728",
+        "start_byte": 2608,
+        "text": "Zweck klären: Der Bericht bindet die Entscheidung an eine explizite Ausgangslage und benennt, welche Wirkung überhaupt beurteilt wird. Der Nachweis bleibt auf die dokumentierte Positionierung begrenzt."
+      },
+      {
+        "ast_path": "document/source/source-position",
+        "classification": "protected",
+        "end_byte": 2829,
+        "kind": "source",
+        "old_hash": "fa5d7153595fe3ae88f851e58a1020808418e4eca126ae323ebdd6be16937c0c",
+        "ordinal": 1,
+        "role": "source-position",
+        "segment_id": "protected-a0c59a0cfb72cf99be0ffb94",
+        "sha256": "fa5d7153595fe3ae88f851e58a1020808418e4eca126ae323ebdd6be16937c0c",
+        "start_byte": 2811,
+        "text": "[^source-position]"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 2833,
+        "kind": "syntax",
+        "old_hash": "ac0e68b94878c7cbe35e55ce52f7001aaafeaa79be93e66baf0119bc3df00e13",
+        "ordinal": 21,
+        "role": "structural-bytes",
+        "segment_id": "protected-aee725e03059c8fdc618d8e2",
+        "sha256": "ac0e68b94878c7cbe35e55ce52f7001aaafeaa79be93e66baf0119bc3df00e13",
+        "start_byte": 2829,
+        "text": "\n2. "
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 3044,
+        "kind": "natural-prose",
+        "old_hash": "659f7653e144d049544751b02c35a452a7062353a89ae97795aa268f277c61ab",
+        "ordinal": 10,
+        "role": "segment",
+        "segment_id": "mutable-e01d5415c8b76c915e57f077",
+        "sha256": "659f7653e144d049544751b02c35a452a7062353a89ae97795aa268f277c61ab",
+        "start_byte": 2833,
+        "text": "Betriebsweg prüfen: Die Umsetzung wird als nachvollziehbare Folge von Übergaben, Ergebnissen und Grenzen beschrieben. Dadurch lässt sich erkennen, ob ein Ergebnis tatsächlich aus dem vorgesehenen Weg stammt."
+      },
+      {
+        "ast_path": "document/source/source-operation",
+        "classification": "protected",
+        "end_byte": 3063,
+        "kind": "source",
+        "old_hash": "3e5843160d534c4d9ef129019b210ba43cb131a95262903d4082a184e6c31706",
+        "ordinal": 1,
+        "role": "source-operation",
+        "segment_id": "protected-b79737b88c9cc63649e97d8a",
+        "sha256": "3e5843160d534c4d9ef129019b210ba43cb131a95262903d4082a184e6c31706",
+        "start_byte": 3044,
+        "text": "[^source-operation]"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3067,
+        "kind": "syntax",
+        "old_hash": "19d32b8481d2858bc34887ec85a4387664b66fab293e489426027572a0505ebd",
+        "ordinal": 22,
+        "role": "structural-bytes",
+        "segment_id": "protected-ab3ab80beebbed3925a5a064",
+        "sha256": "19d32b8481d2858bc34887ec85a4387664b66fab293e489426027572a0505ebd",
+        "start_byte": 3063,
+        "text": "\n3. "
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 3238,
+        "kind": "natural-prose",
+        "old_hash": "91e03e6dc4cbcf5b7fd218962fb2c8222a73cef411a444d8ddfcf30951b286da",
+        "ordinal": 11,
+        "role": "segment",
+        "segment_id": "mutable-46ae51e05f8aefe64e176585",
+        "sha256": "91e03e6dc4cbcf5b7fd218962fb2c8222a73cef411a444d8ddfcf30951b286da",
+        "start_byte": 3067,
+        "text": "Kontrolle schließen: Freigabe, Inventar und Prüfung beziehen sich auf dieselben Bytes. Abweichungen bleiben Fehler; eine bloß ähnliche Ausgabe gilt nicht als Nachweis."
+      },
+      {
+        "ast_path": "document/source/source-control",
+        "classification": "protected",
+        "end_byte": 3255,
+        "kind": "source",
+        "old_hash": "c193b414b7c94b5a8c821f00ef581c909578bb826481dbf59c275fcf97da85c8",
+        "ordinal": 1,
+        "role": "source-control",
+        "segment_id": "protected-24df0c669b7edc692d691cc4",
+        "sha256": "c193b414b7c94b5a8c821f00ef581c909578bb826481dbf59c275fcf97da85c8",
+        "start_byte": 3238,
+        "text": "[^source-control]"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3259,
+        "kind": "syntax",
+        "old_hash": "3adaef0d243c0de793a2253dd3eaf183e4cd5827d8524570ae246feca2c3f22d",
+        "ordinal": 23,
+        "role": "structural-bytes",
+        "segment_id": "protected-0f6fbd68998d71f9f83dd860",
+        "sha256": "3adaef0d243c0de793a2253dd3eaf183e4cd5827d8524570ae246feca2c3f22d",
+        "start_byte": 3255,
+        "text": "\n\n| "
+      },
+      {
+        "ast_path": "document/table-value/r67-c1",
+        "classification": "protected",
+        "end_byte": 3271,
+        "kind": "table-value",
+        "old_hash": "580dc9dc80992c7d39dbdd3144e3053b717232714d249769699339935de62df6",
+        "ordinal": 1,
+        "role": "r67-c1",
+        "segment_id": "protected-61e0c95bbc39202a1a8ed8b5",
+        "sha256": "580dc9dc80992c7d39dbdd3144e3053b717232714d249769699339935de62df6",
+        "start_byte": 3259,
+        "text": "Prüfschritt"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3274,
+        "kind": "syntax",
+        "old_hash": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "ordinal": 24,
+        "role": "structural-bytes",
+        "segment_id": "protected-69c2790f33a56b2c8b03e94f",
+        "sha256": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "start_byte": 3271,
+        "text": " | "
+      },
+      {
+        "ast_path": "document/table-value/r67-c2",
+        "classification": "protected",
+        "end_byte": 3293,
+        "kind": "table-value",
+        "old_hash": "947e3d514bfa3dfaf81d8f7d5a8d4fdb9c7b127b2d481e288e2f19b96dfabf21",
+        "ordinal": 1,
+        "role": "r67-c2",
+        "segment_id": "protected-110f0a29f190dc8d31e84482",
+        "sha256": "947e3d514bfa3dfaf81d8f7d5a8d4fdb9c7b127b2d481e288e2f19b96dfabf21",
+        "start_byte": 3274,
+        "text": "Sichtbarer Nachweis"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3296,
+        "kind": "syntax",
+        "old_hash": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "ordinal": 25,
+        "role": "structural-bytes",
+        "segment_id": "protected-edf783da737c9d60907684d2",
+        "sha256": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "start_byte": 3293,
+        "text": " | "
+      },
+      {
+        "ast_path": "document/table-value/r67-c3",
+        "classification": "protected",
+        "end_byte": 3313,
+        "kind": "table-value",
+        "old_hash": "105ff58b25610da5b8cdc306081eb9a6d81614a4ee49f4cb43bff93cc9377fce",
+        "ordinal": 1,
+        "role": "r67-c3",
+        "segment_id": "protected-48f5a4fcb15749aa7067b434",
+        "sha256": "105ff58b25610da5b8cdc306081eb9a6d81614a4ee49f4cb43bff93cc9377fce",
+        "start_byte": 3296,
+        "text": "Belastbare Grenze"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3338,
+        "kind": "syntax",
+        "old_hash": "9a5be0f01cb84ade9ce93c08fa1fea2fa96f9fe02f6d6b50ff804be05951feb2",
+        "ordinal": 26,
+        "role": "structural-bytes",
+        "segment_id": "protected-621c2f4ff4004884bb0c6e88",
+        "sha256": "9a5be0f01cb84ade9ce93c08fa1fea2fa96f9fe02f6d6b50ff804be05951feb2",
+        "start_byte": 3313,
+        "text": " |\n| --- | --- | --- |\n| "
+      },
+      {
+        "ast_path": "document/table-value/r69-c1",
+        "classification": "protected",
+        "end_byte": 3343,
+        "kind": "table-value",
+        "old_hash": "5c123d4febae3709a2286d1c11cc218274eeeed7120d7b5cfe44fa22dcc1d4ab",
+        "ordinal": 1,
+        "role": "r69-c1",
+        "segment_id": "protected-464b2a42c1043aa1b020d27e",
+        "sha256": "5c123d4febae3709a2286d1c11cc218274eeeed7120d7b5cfe44fa22dcc1d4ab",
+        "start_byte": 3338,
+        "text": "Zweck"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3346,
+        "kind": "syntax",
+        "old_hash": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "ordinal": 27,
+        "role": "structural-bytes",
+        "segment_id": "protected-7be044e249b95cde8c1136e8",
+        "sha256": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "start_byte": 3343,
+        "text": " | "
+      },
+      {
+        "ast_path": "document/table-value/r69-c2",
+        "classification": "protected",
+        "end_byte": 3368,
+        "kind": "table-value",
+        "old_hash": "9765ebfb2c37543c1f02a11a38f09198d229b6e5baea5685d7e81a695ffad9cd",
+        "ordinal": 1,
+        "role": "r69-c2",
+        "segment_id": "protected-c44909a3de949c2b40288195",
+        "sha256": "9765ebfb2c37543c1f02a11a38f09198d229b6e5baea5685d7e81a695ffad9cd",
+        "start_byte": 3346,
+        "text": "explizite Ausgangslage"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3371,
+        "kind": "syntax",
+        "old_hash": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "ordinal": 28,
+        "role": "structural-bytes",
+        "segment_id": "protected-82cf37157137e10e202d148c",
+        "sha256": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "start_byte": 3368,
+        "text": " | "
+      },
+      {
+        "ast_path": "document/table-value/r69-c3",
+        "classification": "protected",
+        "end_byte": 3394,
+        "kind": "table-value",
+        "old_hash": "68468d0a008502ba8d9576a71661df2f75bcc1c9f6cec783e405ad92de476fbe",
+        "ordinal": 1,
+        "role": "r69-c3",
+        "segment_id": "protected-4cd7bfc060ff8354e75661ca",
+        "sha256": "68468d0a008502ba8d9576a71661df2f75bcc1c9f6cec783e405ad92de476fbe",
+        "start_byte": 3371,
+        "text": "keine erfundene Wirkung"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3399,
+        "kind": "syntax",
+        "old_hash": "b234f248f1c636555db5e8733d921beb023e21f392237122a0d2abe6b3ec3325",
+        "ordinal": 29,
+        "role": "structural-bytes",
+        "segment_id": "protected-376a055c98e83d186f4ed615",
+        "sha256": "b234f248f1c636555db5e8733d921beb023e21f392237122a0d2abe6b3ec3325",
+        "start_byte": 3394,
+        "text": " |\n| "
+      },
+      {
+        "ast_path": "document/table-value/r70-c1",
+        "classification": "protected",
+        "end_byte": 3406,
+        "kind": "table-value",
+        "old_hash": "2145893cd732fbd6841456f4cebe55895b207b04aa1175e81169e904454be6ec",
+        "ordinal": 1,
+        "role": "r70-c1",
+        "segment_id": "protected-285790eded72b469f54bc658",
+        "sha256": "2145893cd732fbd6841456f4cebe55895b207b04aa1175e81169e904454be6ec",
+        "start_byte": 3399,
+        "text": "Betrieb"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3409,
+        "kind": "syntax",
+        "old_hash": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "ordinal": 30,
+        "role": "structural-bytes",
+        "segment_id": "protected-b4bb921ed29aa0bb0a4dbbae",
+        "sha256": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "start_byte": 3406,
+        "text": " | "
+      },
+      {
+        "ast_path": "document/table-value/r70-c2",
+        "classification": "protected",
+        "end_byte": 3429,
+        "kind": "table-value",
+        "old_hash": "1b182735204907d7b305de55d471cca2a7a1d15961ac750183a1dcfda3373f50",
+        "ordinal": 1,
+        "role": "r70-c2",
+        "segment_id": "protected-5f3f118f226bd8f94326356a",
+        "sha256": "1b182735204907d7b305de55d471cca2a7a1d15961ac750183a1dcfda3373f50",
+        "start_byte": 3409,
+        "text": "geordnete Übergaben"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3432,
+        "kind": "syntax",
+        "old_hash": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "ordinal": 31,
+        "role": "structural-bytes",
+        "segment_id": "protected-70ce4c6967c353b10d5012b9",
+        "sha256": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "start_byte": 3429,
+        "text": " | "
+      },
+      {
+        "ast_path": "document/table-value/r70-c3",
+        "classification": "protected",
+        "end_byte": 3453,
+        "kind": "table-value",
+        "old_hash": "6107bbcfa273dd4bdd8c2cde84a9c467b1cc94c80799d5afdeb9c11779e8687a",
+        "ordinal": 1,
+        "role": "r70-c3",
+        "segment_id": "protected-e1dfa3ee0b22b1cc788e7a6a",
+        "sha256": "6107bbcfa273dd4bdd8c2cde84a9c467b1cc94c80799d5afdeb9c11779e8687a",
+        "start_byte": 3432,
+        "text": "kein stiller Nebenweg"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3458,
+        "kind": "syntax",
+        "old_hash": "b234f248f1c636555db5e8733d921beb023e21f392237122a0d2abe6b3ec3325",
+        "ordinal": 32,
+        "role": "structural-bytes",
+        "segment_id": "protected-7110121827b9e8f0d202b45c",
+        "sha256": "b234f248f1c636555db5e8733d921beb023e21f392237122a0d2abe6b3ec3325",
+        "start_byte": 3453,
+        "text": " |\n| "
+      },
+      {
+        "ast_path": "document/table-value/r71-c1",
+        "classification": "protected",
+        "end_byte": 3467,
+        "kind": "table-value",
+        "old_hash": "7da7212b6beefd235cb0730a9bb78109e74146aba041c5069f90081dd01350c0",
+        "ordinal": 1,
+        "role": "r71-c1",
+        "segment_id": "protected-68ff7c9c3a2b45aa6b2bfc9b",
+        "sha256": "7da7212b6beefd235cb0730a9bb78109e74146aba041c5069f90081dd01350c0",
+        "start_byte": 3458,
+        "text": "Kontrolle"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3470,
+        "kind": "syntax",
+        "old_hash": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "ordinal": 33,
+        "role": "structural-bytes",
+        "segment_id": "protected-cc6c9f52a45d1e84333c3874",
+        "sha256": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "start_byte": 3467,
+        "text": " | "
+      },
+      {
+        "ast_path": "document/table-value/r71-c2",
+        "classification": "protected",
+        "end_byte": 3489,
+        "kind": "table-value",
+        "old_hash": "7ecebd8b9033ea6876f9ac0a07d219158aa4c2dbdbbf5ded7f02d0319184a4a2",
+        "ordinal": 1,
+        "role": "r71-c2",
+        "segment_id": "protected-16b4b5cc1d16c7e80c41b648",
+        "sha256": "7ecebd8b9033ea6876f9ac0a07d219158aa4c2dbdbbf5ded7f02d0319184a4a2",
+        "start_byte": 3470,
+        "text": "gebundene Artefakte"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3492,
+        "kind": "syntax",
+        "old_hash": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "ordinal": 34,
+        "role": "structural-bytes",
+        "segment_id": "protected-cce6acdab625787201143854",
+        "sha256": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "start_byte": 3489,
+        "text": " | "
+      },
+      {
+        "ast_path": "document/table-value/r71-c3",
+        "classification": "protected",
+        "end_byte": 3519,
+        "kind": "table-value",
+        "old_hash": "4bbe39ec9047e5da0a61777cc6761c7c2c05aee69e661ee10e1abb93c786f1c8",
+        "ordinal": 1,
+        "role": "r71-c3",
+        "segment_id": "protected-8a5849da570c809c1a2c59a1",
+        "sha256": "4bbe39ec9047e5da0a61777cc6761c7c2c05aee69e661ee10e1abb93c786f1c8",
+        "start_byte": 3492,
+        "text": "keine ähnliche Ersatzdatei"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3523,
+        "kind": "syntax",
+        "old_hash": "82347804ce67c39a503bc24df8db49d9c7df52cb9d2d4f4fe9768cb8ac9700fb",
+        "ordinal": 35,
+        "role": "structural-bytes",
+        "segment_id": "protected-c4336c0c117cb1837734c15d",
+        "sha256": "82347804ce67c39a503bc24df8db49d9c7df52cb9d2d4f4fe9768cb8ac9700fb",
+        "start_byte": 3519,
+        "text": " |\n\n"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 3698,
+        "kind": "natural-prose",
+        "old_hash": "b8d388f57eecce570084a4abfc4c687d266389a173cfed93d000b9d6235482af",
+        "ordinal": 12,
+        "role": "segment",
+        "segment_id": "mutable-3066dcd16626c1b8a8335f93",
+        "sha256": "b8d388f57eecce570084a4abfc4c687d266389a173cfed93d000b9d6235482af",
+        "start_byte": 3523,
+        "text": "Die Beweisstrecke ist damit nicht nur eine Aufzählung. Sie macht sichtbar, an welcher Stelle eine Entscheidung trägt und an welcher Stelle zusätzliche Evidenz nötig wäre."
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3700,
+        "kind": "syntax",
+        "old_hash": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "ordinal": 36,
+        "role": "structural-bytes",
+        "segment_id": "protected-c688d07b3d07ed565af4be06",
+        "sha256": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "start_byte": 3698,
+        "text": "\n\n"
+      },
+      {
+        "ast_path": "document/footnote/source-position",
+        "classification": "protected",
+        "end_byte": 3804,
+        "kind": "footnote",
+        "old_hash": "8fde3377cb1a05fbe992c0e374457f1645a5da7ca568beadd0034b1a72f8da74",
+        "ordinal": 1,
+        "role": "source-position",
+        "segment_id": "protected-5f5efe448eaf0cb78deba584",
+        "sha256": "8fde3377cb1a05fbe992c0e374457f1645a5da7ca568beadd0034b1a72f8da74",
+        "start_byte": 3700,
+        "text": "[^source-position]: Unveränderlicher Nachweis zur Positionierungsrolle der neutralen Benchmark-Fixture."
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3805,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 37,
+        "role": "structural-bytes",
+        "segment_id": "protected-0546c4dfd14de5d44656cc68",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 3804,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/footnote/source-operation",
+        "classification": "protected",
+        "end_byte": 3901,
+        "kind": "footnote",
+        "old_hash": "f284e25e193177f1f7e5f56d8a430f2e84471761da966901a1ef4eba914ed035",
+        "ordinal": 1,
+        "role": "source-operation",
+        "segment_id": "protected-e6085cd237a00c89d3cce945",
+        "sha256": "f284e25e193177f1f7e5f56d8a430f2e84471761da966901a1ef4eba914ed035",
+        "start_byte": 3805,
+        "text": "[^source-operation]: Unveränderlicher Nachweis zum Betriebsweg der neutralen Benchmark-Fixture."
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3902,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 38,
+        "role": "structural-bytes",
+        "segment_id": "protected-6a7962058343babf97a177b8",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 3901,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/footnote/source-control",
+        "classification": "protected",
+        "end_byte": 3998,
+        "kind": "footnote",
+        "old_hash": "c267a7d82b00cd50f716a6a94468af404df4a868c1efdedf99338c93e0a47aeb",
+        "ordinal": 1,
+        "role": "source-control",
+        "segment_id": "protected-ed17cbc92855a66d1b816fb2",
+        "sha256": "c267a7d82b00cd50f716a6a94468af404df4a868c1efdedf99338c93e0a47aeb",
+        "start_byte": 3902,
+        "text": "[^source-control]: Unveränderlicher Nachweis zur Kontrollrolle der neutralen Benchmark-Fixture."
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 4000,
+        "kind": "syntax",
+        "old_hash": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "ordinal": 39,
+        "role": "structural-bytes",
+        "segment_id": "protected-c25cd1f60f4ae84e414de722",
+        "sha256": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "start_byte": 3998,
+        "text": "\n\n"
+      },
+      {
+        "ast_path": "document/directive/page-break",
+        "classification": "protected",
+        "end_byte": 4015,
+        "kind": "directive",
+        "old_hash": "f19571734dc4c69e6e5f8afd5d3a208e8f8ac44817d2aa64175c88bab7b004d0",
+        "ordinal": 3,
+        "role": "page-break",
+        "segment_id": "protected-199e94a1205875605bf972f6",
+        "sha256": "f19571734dc4c69e6e5f8afd5d3a208e8f8ac44817d2aa64175c88bab7b004d0",
+        "start_byte": 4000,
+        "text": "::: page-break\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 4016,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 40,
+        "role": "structural-bytes",
+        "segment_id": "protected-8ed4e09c6905f782489c0979",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 4015,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/conclusion",
+        "classification": "protected",
+        "end_byte": 4039,
+        "kind": "directive",
+        "old_hash": "bba2dd23f0887de9b21649ad00217b15ff13097fa73880c487fcfff1d8fe2e5e",
+        "ordinal": 1,
+        "role": "conclusion",
+        "segment_id": "protected-f860081fc7626daf433fe392",
+        "sha256": "bba2dd23f0887de9b21649ad00217b15ff13097fa73880c487fcfff1d8fe2e5e",
+        "start_byte": 4016,
+        "text": "## Fazit {#conclusion}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 4040,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 41,
+        "role": "structural-bytes",
+        "segment_id": "protected-de340da3a19449a4c72efd18",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 4039,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/synthesis",
+        "classification": "protected",
+        "end_byte": 4069,
+        "kind": "directive",
+        "old_hash": "ad9f2cf74d83d7ed237970af27b4b3f84daf8ce9bdd2b938295d642bf582d7b0",
+        "ordinal": 1,
+        "role": "synthesis",
+        "segment_id": "protected-415a169c0afa99d56a67e638",
+        "sha256": "ad9f2cf74d83d7ed237970af27b4b3f84daf8ce9bdd2b938295d642bf582d7b0",
+        "start_byte": 4040,
+        "text": "### Verdichtung {#synthesis}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 4070,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 42,
+        "role": "structural-bytes",
+        "segment_id": "protected-5d050647faeca8b04966d39e",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 4069,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/synthesis-result",
+        "classification": "protected",
+        "end_byte": 4162,
+        "kind": "directive",
+        "old_hash": "d0aa958243d6612e6a841ab9bf1e99dad49bb0cfc95e5f07d2869c2adef5ea1a",
+        "ordinal": 1,
+        "role": "synthesis-result",
+        "segment_id": "protected-b297c0b2974b55c2b9ad253b",
+        "sha256": "d0aa958243d6612e6a841ab9bf1e99dad49bb0cfc95e5f07d2869c2adef5ea1a",
+        "start_byte": 4070,
+        "text": "::: {.important #synthesis-result title=\"Ergebnisverdichtung\" appearance=default icon=true}\n"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 4528,
+        "kind": "natural-prose",
+        "old_hash": "95a6c12ad4fd763617d61c6f9fb2bb99507f0c598becfd135f064f6fad1244ad",
+        "ordinal": 13,
+        "role": "segment",
+        "segment_id": "mutable-662a41baca28e1db8696e4b6",
+        "sha256": "95a6c12ad4fd763617d61c6f9fb2bb99507f0c598becfd135f064f6fad1244ad",
+        "start_byte": 4162,
+        "text": "Die belastbare Entscheidung entsteht aus drei gemeinsam geprüften Eigenschaften: Der Zweck ist eindeutig, der Betriebsweg ist nachvollziehbar, und die Kontrolle bindet Ergebnis und Freigabe an denselben Stand. Fehlt eine dieser Eigenschaften, bleibt der Vorgang offen. Sind alle drei nachgewiesen, kann die Entscheidung ohne verdeckte Annahmen weitergegeben werden."
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 4529,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 43,
+        "role": "structural-bytes",
+        "segment_id": "protected-50ccc6276aff7faa2ea9c0ea",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 4528,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/synthesis-result",
+        "classification": "protected",
+        "end_byte": 4533,
+        "kind": "directive",
+        "old_hash": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "ordinal": 2,
+        "role": "synthesis-result",
+        "segment_id": "protected-c01e107e2eace1aca15ce9b6",
+        "sha256": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "start_byte": 4529,
+        "text": ":::\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 4534,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 44,
+        "role": "structural-bytes",
+        "segment_id": "protected-5952fb749e43261b03bae6fb",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 4533,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 4993,
+        "kind": "natural-prose",
+        "old_hash": "32db3abd8c301ee5f588c03e315407c0e68332b4b3a4dea94cea55518afb7ea8",
+        "ordinal": 14,
+        "role": "segment",
+        "segment_id": "mutable-b9a0d41c48b63b94af485e4e",
+        "sha256": "32db3abd8c301ee5f588c03e315407c0e68332b4b3a4dea94cea55518afb7ea8",
+        "start_byte": 4534,
+        "text": "Die Verdichtung reduziert nicht die Evidenz, sondern ordnet sie. Für die Leitung steht die Tragfähigkeit im Vordergrund. Für die Umsetzung zählt der geschlossene Weg vom Eingang bis zum Ergebnis. Für die Prüfung zählt, dass Quelle, Ausgabe und Freigabe nicht auseinanderfallen. Diese drei Perspektiven ergeben eine gemeinsame Aussage: Der aktuelle Stand ist dann entscheidbar, wenn seine Herkunft, seine Verarbeitung und seine Kontrolle zusammenpassen."
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 4997,
+        "kind": "syntax",
+        "old_hash": "3adaef0d243c0de793a2253dd3eaf183e4cd5827d8524570ae246feca2c3f22d",
+        "ordinal": 45,
+        "role": "structural-bytes",
+        "segment_id": "protected-88ea33115e506dff4ffc8b56",
+        "sha256": "3adaef0d243c0de793a2253dd3eaf183e4cd5827d8524570ae246feca2c3f22d",
+        "start_byte": 4993,
+        "text": "\n\n| "
+      },
+      {
+        "ast_path": "document/table-value/r91-c1",
+        "classification": "protected",
+        "end_byte": 5008,
+        "kind": "table-value",
+        "old_hash": "5bdb6f2bc83af0dc6c6bd4bd83f4211e90c1a711476fc5fe78dc46c77773768c",
+        "ordinal": 1,
+        "role": "r91-c1",
+        "segment_id": "protected-0c2287dd1fe3d299c4dc8be1",
+        "sha256": "5bdb6f2bc83af0dc6c6bd4bd83f4211e90c1a711476fc5fe78dc46c77773768c",
+        "start_byte": 4997,
+        "text": "Perspektive"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 5011,
+        "kind": "syntax",
+        "old_hash": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "ordinal": 46,
+        "role": "structural-bytes",
+        "segment_id": "protected-38a7af3e6d249bd7dab563c9",
+        "sha256": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "start_byte": 5008,
+        "text": " | "
+      },
+      {
+        "ast_path": "document/table-value/r91-c2",
+        "classification": "protected",
+        "end_byte": 5030,
+        "kind": "table-value",
+        "old_hash": "6685415d2150b8d13a9b19fb194930f1cce5246134b29a5045e9bf9fe0cddae9",
+        "ordinal": 1,
+        "role": "r91-c2",
+        "segment_id": "protected-e5e7d23e77e3affef11a0c40",
+        "sha256": "6685415d2150b8d13a9b19fb194930f1cce5246134b29a5045e9bf9fe0cddae9",
+        "start_byte": 5011,
+        "text": "Verdichtete Aussage"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 5033,
+        "kind": "syntax",
+        "old_hash": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "ordinal": 47,
+        "role": "structural-bytes",
+        "segment_id": "protected-dc9b9805d651b77838bf3942",
+        "sha256": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "start_byte": 5030,
+        "text": " | "
+      },
+      {
+        "ast_path": "document/table-value/r91-c3",
+        "classification": "protected",
+        "end_byte": 5043,
+        "kind": "table-value",
+        "old_hash": "27ab8a04593f6f6d40a00d625720babad7b277806e0772688286c12a408a8382",
+        "ordinal": 1,
+        "role": "r91-c3",
+        "segment_id": "protected-012ecab73b162565d85c4c96",
+        "sha256": "27ab8a04593f6f6d40a00d625720babad7b277806e0772688286c12a408a8382",
+        "start_byte": 5033,
+        "text": "Konsequenz"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 5068,
+        "kind": "syntax",
+        "old_hash": "9a5be0f01cb84ade9ce93c08fa1fea2fa96f9fe02f6d6b50ff804be05951feb2",
+        "ordinal": 48,
+        "role": "structural-bytes",
+        "segment_id": "protected-e7d619d366cbcc2f31fa2be1",
+        "sha256": "9a5be0f01cb84ade9ce93c08fa1fea2fa96f9fe02f6d6b50ff804be05951feb2",
+        "start_byte": 5043,
+        "text": " |\n| --- | --- | --- |\n| "
+      },
+      {
+        "ast_path": "document/table-value/r93-c1",
+        "classification": "protected",
+        "end_byte": 5075,
+        "kind": "table-value",
+        "old_hash": "88bcd24d3565197542a3c9dce9a2aa3732f1641cfd9efd21edfc82bcb9609681",
+        "ordinal": 1,
+        "role": "r93-c1",
+        "segment_id": "protected-0e01a730ad80b6dee799f65e",
+        "sha256": "88bcd24d3565197542a3c9dce9a2aa3732f1641cfd9efd21edfc82bcb9609681",
+        "start_byte": 5068,
+        "text": "Leitung"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 5078,
+        "kind": "syntax",
+        "old_hash": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "ordinal": 49,
+        "role": "structural-bytes",
+        "segment_id": "protected-88b4f20e04816ce05773d772",
+        "sha256": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "start_byte": 5075,
+        "text": " | "
+      },
+      {
+        "ast_path": "document/table-value/r93-c2",
+        "classification": "protected",
+        "end_byte": 5108,
+        "kind": "table-value",
+        "old_hash": "e8268ad9fdbae487048bb38498cc94e68efc48adfd5d7146f80e7e891bf17e35",
+        "ordinal": 1,
+        "role": "r93-c2",
+        "segment_id": "protected-ff10a694950a572d2abd3eb7",
+        "sha256": "e8268ad9fdbae487048bb38498cc94e68efc48adfd5d7146f80e7e891bf17e35",
+        "start_byte": 5078,
+        "text": "Zweck und Grenze sind explizit"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 5111,
+        "kind": "syntax",
+        "old_hash": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "ordinal": 50,
+        "role": "structural-bytes",
+        "segment_id": "protected-a7db16708897a4c1c825f0e9",
+        "sha256": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "start_byte": 5108,
+        "text": " | "
+      },
+      {
+        "ast_path": "document/table-value/r93-c3",
+        "classification": "protected",
+        "end_byte": 5146,
+        "kind": "table-value",
+        "old_hash": "85c8e7f10b60d80ee564741292e34066bfdd291cc8a0e554d0899cd529388d3a",
+        "ordinal": 1,
+        "role": "r93-c3",
+        "segment_id": "protected-74ab82f7b9abb12c01d93d64",
+        "sha256": "85c8e7f10b60d80ee564741292e34066bfdd291cc8a0e554d0899cd529388d3a",
+        "start_byte": 5111,
+        "text": "Entscheidung bleibt nachvollziehbar"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 5151,
+        "kind": "syntax",
+        "old_hash": "b234f248f1c636555db5e8733d921beb023e21f392237122a0d2abe6b3ec3325",
+        "ordinal": 51,
+        "role": "structural-bytes",
+        "segment_id": "protected-deb3b873530956d8e32173bf",
+        "sha256": "b234f248f1c636555db5e8733d921beb023e21f392237122a0d2abe6b3ec3325",
+        "start_byte": 5146,
+        "text": " |\n| "
+      },
+      {
+        "ast_path": "document/table-value/r94-c1",
+        "classification": "protected",
+        "end_byte": 5160,
+        "kind": "table-value",
+        "old_hash": "cb623f549f7518abee920e762e5b48eb157a9c738265551cca5ce4ba01e341b2",
+        "ordinal": 1,
+        "role": "r94-c1",
+        "segment_id": "protected-05d2ec29fb2b4aafd8eff0a5",
+        "sha256": "cb623f549f7518abee920e762e5b48eb157a9c738265551cca5ce4ba01e341b2",
+        "start_byte": 5151,
+        "text": "Umsetzung"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 5163,
+        "kind": "syntax",
+        "old_hash": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "ordinal": 52,
+        "role": "structural-bytes",
+        "segment_id": "protected-30dc38b90e85cf20c511ee90",
+        "sha256": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "start_byte": 5160,
+        "text": " | "
+      },
+      {
+        "ast_path": "document/table-value/r94-c2",
+        "classification": "protected",
+        "end_byte": 5194,
+        "kind": "table-value",
+        "old_hash": "ef5eaa65f907a14a856f532455da1429c0ca6fde826b35e7def6bf27dda22de9",
+        "ordinal": 1,
+        "role": "r94-c2",
+        "segment_id": "protected-adb6d581d9690221ce8f1b7d",
+        "sha256": "ef5eaa65f907a14a856f532455da1429c0ca6fde826b35e7def6bf27dda22de9",
+        "start_byte": 5163,
+        "text": "der Betriebsweg ist geschlossen"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 5197,
+        "kind": "syntax",
+        "old_hash": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "ordinal": 53,
+        "role": "structural-bytes",
+        "segment_id": "protected-4e8a74b7ac7d8ef9e2a0fe24",
+        "sha256": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "start_byte": 5194,
+        "text": " | "
+      },
+      {
+        "ast_path": "document/table-value/r94-c3",
+        "classification": "protected",
+        "end_byte": 5224,
+        "kind": "table-value",
+        "old_hash": "4d6d97609f3616c6316277687448bc826b4540cb6cef07f515beef777ebfc959",
+        "ordinal": 1,
+        "role": "r94-c3",
+        "segment_id": "protected-cbb4158050ba7da978a8767f",
+        "sha256": "4d6d97609f3616c6316277687448bc826b4540cb6cef07f515beef777ebfc959",
+        "start_byte": 5197,
+        "text": "Übergaben bleiben prüfbar"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 5229,
+        "kind": "syntax",
+        "old_hash": "b234f248f1c636555db5e8733d921beb023e21f392237122a0d2abe6b3ec3325",
+        "ordinal": 54,
+        "role": "structural-bytes",
+        "segment_id": "protected-cccd396ef043f428345fefcc",
+        "sha256": "b234f248f1c636555db5e8733d921beb023e21f392237122a0d2abe6b3ec3325",
+        "start_byte": 5224,
+        "text": " |\n| "
+      },
+      {
+        "ast_path": "document/table-value/r95-c1",
+        "classification": "protected",
+        "end_byte": 5237,
+        "kind": "table-value",
+        "old_hash": "ffdca298a34e8654699dc35360377138786c85921b717e038480c8a9f41f3cb5",
+        "ordinal": 1,
+        "role": "r95-c1",
+        "segment_id": "protected-6890351380de4583b06c996f",
+        "sha256": "ffdca298a34e8654699dc35360377138786c85921b717e038480c8a9f41f3cb5",
+        "start_byte": 5229,
+        "text": "Prüfung"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 5240,
+        "kind": "syntax",
+        "old_hash": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "ordinal": 55,
+        "role": "structural-bytes",
+        "segment_id": "protected-549000f50c755d5534be1497",
+        "sha256": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "start_byte": 5237,
+        "text": " | "
+      },
+      {
+        "ast_path": "document/table-value/r95-c2",
+        "classification": "protected",
+        "end_byte": 5275,
+        "kind": "table-value",
+        "old_hash": "550dc897143e3b1bbcceefd6cecf4cb8e1835a5562c0ea0d8d67f97817ea5280",
+        "ordinal": 1,
+        "role": "r95-c2",
+        "segment_id": "protected-57f380948862b1061019e224",
+        "sha256": "550dc897143e3b1bbcceefd6cecf4cb8e1835a5562c0ea0d8d67f97817ea5280",
+        "start_byte": 5240,
+        "text": "Nachweis und Ergebnis sind gebunden"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 5278,
+        "kind": "syntax",
+        "old_hash": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "ordinal": 56,
+        "role": "structural-bytes",
+        "segment_id": "protected-6625bbb27538788ab39747c9",
+        "sha256": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "start_byte": 5275,
+        "text": " | "
+      },
+      {
+        "ast_path": "document/table-value/r95-c3",
+        "classification": "protected",
+        "end_byte": 5311,
+        "kind": "table-value",
+        "old_hash": "cce5966da3b20f8b5ace2989cbff20f65f9653a64a5436bcd9ec32fcf8027e60",
+        "ordinal": 1,
+        "role": "r95-c3",
+        "segment_id": "protected-55b620c80d12ec15e4c80e35",
+        "sha256": "cce5966da3b20f8b5ace2989cbff20f65f9653a64a5436bcd9ec32fcf8027e60",
+        "start_byte": 5278,
+        "text": "Abweichungen stoppen die Freigabe"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 5315,
+        "kind": "syntax",
+        "old_hash": "82347804ce67c39a503bc24df8db49d9c7df52cb9d2d4f4fe9768cb8ac9700fb",
+        "ordinal": 57,
+        "role": "structural-bytes",
+        "segment_id": "protected-f04c04c4afe6137310be5681",
+        "sha256": "82347804ce67c39a503bc24df8db49d9c7df52cb9d2d4f4fe9768cb8ac9700fb",
+        "start_byte": 5311,
+        "text": " |\n\n"
+      },
+      {
+        "ast_path": "document/directive/outlook",
+        "classification": "protected",
+        "end_byte": 5339,
+        "kind": "directive",
+        "old_hash": "1b0fb94b9a34107d26ceb62bd0ce34a41f8397430ff6042da97758a73af03473",
+        "ordinal": 1,
+        "role": "outlook",
+        "segment_id": "protected-ef4a5d20402ff54a74fc76cb",
+        "sha256": "1b0fb94b9a34107d26ceb62bd0ce34a41f8397430ff6042da97758a73af03473",
+        "start_byte": 5315,
+        "text": "### Ausblick {#outlook}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 5340,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 58,
+        "role": "structural-bytes",
+        "segment_id": "protected-27f72d03d27e597fc5750ecd",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 5339,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/outlook-next",
+        "classification": "protected",
+        "end_byte": 5431,
+        "kind": "directive",
+        "old_hash": "4688aaf353997bdf81eb80ba14aa25d639bddb5a9bcdf72358a4ec845e826e40",
+        "ordinal": 1,
+        "role": "outlook-next",
+        "segment_id": "protected-52a4251246ef9f7867ca12b8",
+        "sha256": "4688aaf353997bdf81eb80ba14aa25d639bddb5a9bcdf72358a4ec845e826e40",
+        "start_byte": 5340,
+        "text": "::: {.tip #outlook-next title=\"Nächster belastbarer Schritt\" appearance=simple icon=true}\n"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 5812,
+        "kind": "natural-prose",
+        "old_hash": "226b7cfdaa74fa32dd258cb8d2c9da03d7f0ee4e5ad8705a2c40bdb7d9faf5b0",
+        "ordinal": 15,
+        "role": "segment",
+        "segment_id": "mutable-0a4b5f17fcdaf6765e24d2f8",
+        "sha256": "226b7cfdaa74fa32dd258cb8d2c9da03d7f0ee4e5ad8705a2c40bdb7d9faf5b0",
+        "start_byte": 5431,
+        "text": "Der nächste Schritt erweitert nicht vorschnell den Anspruch. Zuerst wird die bestehende Beweisstrecke in einem realen Projekt wiederholt. Danach werden nur solche Dokumenttypen ergänzt, deren Zweck, Inhaltsvertrag und Prüfweg ausdrücklich freigegeben sind. Jede Erweiterung bringt ihre eigene Evidenz mit und verändert die bereits geschlossene Grundlage nicht stillschweigend."
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 5813,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 59,
+        "role": "structural-bytes",
+        "segment_id": "protected-1eab12c2bce7fde4d993953a",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 5812,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/outlook-next",
+        "classification": "protected",
+        "end_byte": 5817,
+        "kind": "directive",
+        "old_hash": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "ordinal": 2,
+        "role": "outlook-next",
+        "segment_id": "protected-016969e36c51d756ed47e008",
+        "sha256": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "start_byte": 5813,
+        "text": ":::\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 5818,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 60,
+        "role": "structural-bytes",
+        "segment_id": "protected-ce90113ed2b671c970fdfe3d",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 5817,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 6276,
+        "kind": "natural-prose",
+        "old_hash": "d1a9e9ecd3032ce61e0e1247a5a40524e5724c53f099d872b2aa0ee3d3b44538",
+        "ordinal": 16,
+        "role": "segment",
+        "segment_id": "mutable-e3dbb8a5a864c466fffa8d55",
+        "sha256": "d1a9e9ecd3032ce61e0e1247a5a40524e5724c53f099d872b2aa0ee3d3b44538",
+        "start_byte": 5818,
+        "text": "Der Ausblick trennt Gegenwart und Möglichkeit. Heute steht ein überprüfbarer Entscheidungsweg bereit. Künftig können weitere Rollen, Dokumenttypen oder Belege hinzukommen, sofern sie dieselben Grenzen respektieren. Offen bleibt nicht, wie geprüft wird, sondern nur, welche fachliche Erweiterung als Nächstes autorisiert wird. So endet der Bericht mit einer konkreten Richtung, ohne eine ungeprüfte Zukunft als bereits erreichten Zustand darzustellen."
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 6277,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 61,
+        "role": "structural-bytes",
+        "segment_id": "protected-a621dc194cc1180a726358fd",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 6276,
+        "text": "\n"
+      }
+    ],
+    "protected": [
+      {
+        "ast_path": "document/frontmatter",
+        "classification": "protected",
+        "end_byte": 659,
+        "kind": "frontmatter",
+        "old_hash": "ceccd3819979ba8612dbeb82c66a22b14b6829ddad5abf1340926abcddade27d",
+        "ordinal": 1,
+        "role": "document-metadata",
+        "segment_id": "protected-63274e878959ab9eb92f8a7c",
+        "sha256": "ceccd3819979ba8612dbeb82c66a22b14b6829ddad5abf1340926abcddade27d",
+        "start_byte": 0,
+        "text": "---\nschema_version: markdown-document.v1\ndocument_id: golden-benchmark-report\ndocument_type: report\ntitle: Steuerungsbericht für belastbare Entscheidungen\nlang: de-DE\nstatus: release\nfacts: []\nsources:\n  - id: source-position\n    locator: urn:brandkit:e2e:position\n    sha256: bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\n  - id: source-operation\n    locator: urn:brandkit:e2e:operation\n    sha256: cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc\n  - id: source-control\n    locator: urn:brandkit:e2e:control\n    sha256: dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd\nassets: []\nrights: []\ntodos: []\n---\n"
+      },
+      {
+        "ast_path": "document/directive/title",
+        "classification": "protected",
+        "end_byte": 719,
+        "kind": "directive",
+        "old_hash": "7a74cfc9f0965d9091624ec8d81bcb87bcb23c4b2389ed5a9ae5b4a069005506",
+        "ordinal": 1,
+        "role": "title",
+        "segment_id": "protected-0975bbfa365c9d92158ef283",
+        "sha256": "7a74cfc9f0965d9091624ec8d81bcb87bcb23c4b2389ed5a9ae5b4a069005506",
+        "start_byte": 659,
+        "text": "# Steuerungsbericht für belastbare Entscheidungen {#title}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 720,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 1,
+        "role": "structural-bytes",
+        "segment_id": "protected-9afa7534ec84d0bf2257eef0",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 719,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/executive-summary",
+        "classification": "protected",
+        "end_byte": 756,
+        "kind": "directive",
+        "old_hash": "68b29775cd89519b76df38bc3feec019fac0d8c954b729d41cfd58f3e9d3084f",
+        "ordinal": 1,
+        "role": "executive-summary",
+        "segment_id": "protected-007bdbe0204cea209beef856",
+        "sha256": "68b29775cd89519b76df38bc3feec019fac0d8c954b729d41cfd58f3e9d3084f",
+        "start_byte": 720,
+        "text": "## Kurzfassung {#executive-summary}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 757,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 2,
+        "role": "structural-bytes",
+        "segment_id": "protected-cbc160d37b05946352292b51",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 756,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/positioning",
+        "classification": "protected",
+        "end_byte": 791,
+        "kind": "directive",
+        "old_hash": "b72288d0d0f7930fdb624bd7a5152774512b770e2615285520db7dd88f4e2888",
+        "ordinal": 1,
+        "role": "positioning",
+        "segment_id": "protected-e683378377bfa2e1694b6833",
+        "sha256": "b72288d0d0f7930fdb624bd7a5152774512b770e2615285520db7dd88f4e2888",
+        "start_byte": 757,
+        "text": "### Positionierung {#positioning}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 792,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 3,
+        "role": "structural-bytes",
+        "segment_id": "protected-5339e929b7b0dbfff3091dd5",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 791,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 1009,
+        "kind": "syntax",
+        "old_hash": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "ordinal": 4,
+        "role": "structural-bytes",
+        "segment_id": "protected-db9bb4c8d3316ecdfc3bc19a",
+        "sha256": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "start_byte": 1007,
+        "text": "\n\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 1154,
+        "kind": "syntax",
+        "old_hash": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "ordinal": 5,
+        "role": "structural-bytes",
+        "segment_id": "protected-7406e07bb89250ac7ea4e9bc",
+        "sha256": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "start_byte": 1152,
+        "text": "\n\n"
+      },
+      {
+        "ast_path": "document/directive/page-break",
+        "classification": "protected",
+        "end_byte": 1169,
+        "kind": "directive",
+        "old_hash": "f19571734dc4c69e6e5f8afd5d3a208e8f8ac44817d2aa64175c88bab7b004d0",
+        "ordinal": 1,
+        "role": "page-break",
+        "segment_id": "protected-651deb05eecfbf6e82e81546",
+        "sha256": "f19571734dc4c69e6e5f8afd5d3a208e8f8ac44817d2aa64175c88bab7b004d0",
+        "start_byte": 1154,
+        "text": "::: page-break\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 1170,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 6,
+        "role": "structural-bytes",
+        "segment_id": "protected-7e9ea612b2a3f2f6881cedae",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 1169,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/methodology",
+        "classification": "protected",
+        "end_byte": 1197,
+        "kind": "directive",
+        "old_hash": "26bd98d0944b2b51475f4e6a9703947c7f0386dfecee18da0ac7f9e9862a7798",
+        "ordinal": 1,
+        "role": "methodology",
+        "segment_id": "protected-f08cbdb55602b35722f0a94d",
+        "sha256": "26bd98d0944b2b51475f4e6a9703947c7f0386dfecee18da0ac7f9e9862a7798",
+        "start_byte": 1170,
+        "text": "## Methodik {#methodology}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 1198,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 7,
+        "role": "structural-bytes",
+        "segment_id": "protected-22983067b2bd565d1e0da203",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 1197,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/orientation",
+        "classification": "protected",
+        "end_byte": 1230,
+        "kind": "directive",
+        "old_hash": "ec15dbd2506e7c96f020ba5d5aebba14a8106064d0f31b81be21eeca74f4242f",
+        "ordinal": 1,
+        "role": "orientation",
+        "segment_id": "protected-02fc041635e7f180fc0a0cf2",
+        "sha256": "ec15dbd2506e7c96f020ba5d5aebba14a8106064d0f31b81be21eeca74f4242f",
+        "start_byte": 1198,
+        "text": "### Orientierung {#orientation}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 1231,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 8,
+        "role": "structural-bytes",
+        "segment_id": "protected-0d0c85d0e40aed27ff38e2a9",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 1230,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 1466,
+        "kind": "syntax",
+        "old_hash": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "ordinal": 9,
+        "role": "structural-bytes",
+        "segment_id": "protected-e414e4605b991629d2ee1b9e",
+        "sha256": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "start_byte": 1464,
+        "text": "\n\n"
+      },
+      {
+        "ast_path": "document/directive/orientation-decision",
+        "classification": "protected",
+        "end_byte": 1549,
+        "kind": "directive",
+        "old_hash": "3fe8f4a358230486ff8c12a59f645966205444d1f4a65910b67e253d45bc9ff3",
+        "ordinal": 1,
+        "role": "orientation-decision",
+        "segment_id": "protected-b6c1838ec8305825fbe65bf5",
+        "sha256": "3fe8f4a358230486ff8c12a59f645966205444d1f4a65910b67e253d45bc9ff3",
+        "start_byte": 1466,
+        "text": "::: {.note #orientation-decision title=\"Entscheiden\" appearance=default icon=true}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 1715,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 10,
+        "role": "structural-bytes",
+        "segment_id": "protected-cfa8a38e8458379a7c1c80de",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 1714,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/orientation-decision",
+        "classification": "protected",
+        "end_byte": 1719,
+        "kind": "directive",
+        "old_hash": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "ordinal": 2,
+        "role": "orientation-decision",
+        "segment_id": "protected-3755a7b05c8dac25e4acd10b",
+        "sha256": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "start_byte": 1715,
+        "text": ":::\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 1720,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 11,
+        "role": "structural-bytes",
+        "segment_id": "protected-fd2aa1643d39d8b6db1f5253",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 1719,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/orientation-operate",
+        "classification": "protected",
+        "end_byte": 1797,
+        "kind": "directive",
+        "old_hash": "853a9921f196b78ae29e81ecc92277e20c3fcc0c282eafd4ac62431a0f510624",
+        "ordinal": 1,
+        "role": "orientation-operate",
+        "segment_id": "protected-dfa4e1de51dcbfae0927e741",
+        "sha256": "853a9921f196b78ae29e81ecc92277e20c3fcc0c282eafd4ac62431a0f510624",
+        "start_byte": 1720,
+        "text": "::: {.tip #orientation-operate title=\"Umsetzen\" appearance=simple icon=true}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 1951,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 12,
+        "role": "structural-bytes",
+        "segment_id": "protected-23fe261c0c833375aabb406d",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 1950,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/orientation-operate",
+        "classification": "protected",
+        "end_byte": 1955,
+        "kind": "directive",
+        "old_hash": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "ordinal": 2,
+        "role": "orientation-operate",
+        "segment_id": "protected-88ae8fe3311e6bcf526977d2",
+        "sha256": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "start_byte": 1951,
+        "text": ":::\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 1956,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 13,
+        "role": "structural-bytes",
+        "segment_id": "protected-c04a77494812a9331387a7e1",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 1955,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/orientation-verify",
+        "classification": "protected",
+        "end_byte": 2039,
+        "kind": "directive",
+        "old_hash": "e468afbe3141b3a8cc7b85a05076d1916732923052718c4e2a4d0c4ed71b7dd0",
+        "ordinal": 1,
+        "role": "orientation-verify",
+        "segment_id": "protected-ebbea148ffce39788a0776ee",
+        "sha256": "e468afbe3141b3a8cc7b85a05076d1916732923052718c4e2a4d0c4ed71b7dd0",
+        "start_byte": 1956,
+        "text": "::: {.important #orientation-verify title=\"Prüfen\" appearance=minimal icon=false}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 2195,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 14,
+        "role": "structural-bytes",
+        "segment_id": "protected-0dc9cfa18c943a6e02cfd6e0",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 2194,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/orientation-verify",
+        "classification": "protected",
+        "end_byte": 2199,
+        "kind": "directive",
+        "old_hash": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "ordinal": 2,
+        "role": "orientation-verify",
+        "segment_id": "protected-b7e722b030f0693d27ee0c9c",
+        "sha256": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "start_byte": 2195,
+        "text": ":::\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 2200,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 15,
+        "role": "structural-bytes",
+        "segment_id": "protected-ede957ea20b72f80f06f4fd2",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 2199,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 2371,
+        "kind": "syntax",
+        "old_hash": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "ordinal": 16,
+        "role": "structural-bytes",
+        "segment_id": "protected-7bb2adb2732f42642e94ec99",
+        "sha256": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "start_byte": 2369,
+        "text": "\n\n"
+      },
+      {
+        "ast_path": "document/directive/page-break",
+        "classification": "protected",
+        "end_byte": 2386,
+        "kind": "directive",
+        "old_hash": "f19571734dc4c69e6e5f8afd5d3a208e8f8ac44817d2aa64175c88bab7b004d0",
+        "ordinal": 2,
+        "role": "page-break",
+        "segment_id": "protected-fb8706eea32a686760a00b44",
+        "sha256": "f19571734dc4c69e6e5f8afd5d3a208e8f8ac44817d2aa64175c88bab7b004d0",
+        "start_byte": 2371,
+        "text": "::: page-break\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 2387,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 17,
+        "role": "structural-bytes",
+        "segment_id": "protected-6b120e9992f2e08f0b22ebac",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 2386,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/findings",
+        "classification": "protected",
+        "end_byte": 2410,
+        "kind": "directive",
+        "old_hash": "59052c2770c114ffa5ce603435abdc3e6590086fa3763ef258793a23e8af9a6f",
+        "ordinal": 1,
+        "role": "findings",
+        "segment_id": "protected-85d36c88d386203a1ae5617f",
+        "sha256": "59052c2770c114ffa5ce603435abdc3e6590086fa3763ef258793a23e8af9a6f",
+        "start_byte": 2387,
+        "text": "## Befunde {#findings}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 2411,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 18,
+        "role": "structural-bytes",
+        "segment_id": "protected-8c218a66c08fd50865670d61",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 2410,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/proof",
+        "classification": "protected",
+        "end_byte": 2450,
+        "kind": "directive",
+        "old_hash": "eeb4a174533976d44783d910ecec7c56d4fbd4a083bd0e88deecd7bd59cac8d1",
+        "ordinal": 1,
+        "role": "proof",
+        "segment_id": "protected-8a3038a3f200265c48fb1063",
+        "sha256": "eeb4a174533976d44783d910ecec7c56d4fbd4a083bd0e88deecd7bd59cac8d1",
+        "start_byte": 2411,
+        "text": "### Nummerierte Beweisstrecke {#proof}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 2451,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 19,
+        "role": "structural-bytes",
+        "segment_id": "protected-b47e00de53cbceae8224ae4a",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 2450,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 2608,
+        "kind": "syntax",
+        "old_hash": "d3510e6ce606da11c4236e89b148d315426455f33edbc81f7f0dbb5e42fdccb0",
+        "ordinal": 20,
+        "role": "structural-bytes",
+        "segment_id": "protected-5b4c139f4fc601b88323320e",
+        "sha256": "d3510e6ce606da11c4236e89b148d315426455f33edbc81f7f0dbb5e42fdccb0",
+        "start_byte": 2603,
+        "text": "\n\n1. "
+      },
+      {
+        "ast_path": "document/source/source-position",
+        "classification": "protected",
+        "end_byte": 2829,
+        "kind": "source",
+        "old_hash": "fa5d7153595fe3ae88f851e58a1020808418e4eca126ae323ebdd6be16937c0c",
+        "ordinal": 1,
+        "role": "source-position",
+        "segment_id": "protected-a0c59a0cfb72cf99be0ffb94",
+        "sha256": "fa5d7153595fe3ae88f851e58a1020808418e4eca126ae323ebdd6be16937c0c",
+        "start_byte": 2811,
+        "text": "[^source-position]"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 2833,
+        "kind": "syntax",
+        "old_hash": "ac0e68b94878c7cbe35e55ce52f7001aaafeaa79be93e66baf0119bc3df00e13",
+        "ordinal": 21,
+        "role": "structural-bytes",
+        "segment_id": "protected-aee725e03059c8fdc618d8e2",
+        "sha256": "ac0e68b94878c7cbe35e55ce52f7001aaafeaa79be93e66baf0119bc3df00e13",
+        "start_byte": 2829,
+        "text": "\n2. "
+      },
+      {
+        "ast_path": "document/source/source-operation",
+        "classification": "protected",
+        "end_byte": 3063,
+        "kind": "source",
+        "old_hash": "3e5843160d534c4d9ef129019b210ba43cb131a95262903d4082a184e6c31706",
+        "ordinal": 1,
+        "role": "source-operation",
+        "segment_id": "protected-b79737b88c9cc63649e97d8a",
+        "sha256": "3e5843160d534c4d9ef129019b210ba43cb131a95262903d4082a184e6c31706",
+        "start_byte": 3044,
+        "text": "[^source-operation]"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3067,
+        "kind": "syntax",
+        "old_hash": "19d32b8481d2858bc34887ec85a4387664b66fab293e489426027572a0505ebd",
+        "ordinal": 22,
+        "role": "structural-bytes",
+        "segment_id": "protected-ab3ab80beebbed3925a5a064",
+        "sha256": "19d32b8481d2858bc34887ec85a4387664b66fab293e489426027572a0505ebd",
+        "start_byte": 3063,
+        "text": "\n3. "
+      },
+      {
+        "ast_path": "document/source/source-control",
+        "classification": "protected",
+        "end_byte": 3255,
+        "kind": "source",
+        "old_hash": "c193b414b7c94b5a8c821f00ef581c909578bb826481dbf59c275fcf97da85c8",
+        "ordinal": 1,
+        "role": "source-control",
+        "segment_id": "protected-24df0c669b7edc692d691cc4",
+        "sha256": "c193b414b7c94b5a8c821f00ef581c909578bb826481dbf59c275fcf97da85c8",
+        "start_byte": 3238,
+        "text": "[^source-control]"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3259,
+        "kind": "syntax",
+        "old_hash": "3adaef0d243c0de793a2253dd3eaf183e4cd5827d8524570ae246feca2c3f22d",
+        "ordinal": 23,
+        "role": "structural-bytes",
+        "segment_id": "protected-0f6fbd68998d71f9f83dd860",
+        "sha256": "3adaef0d243c0de793a2253dd3eaf183e4cd5827d8524570ae246feca2c3f22d",
+        "start_byte": 3255,
+        "text": "\n\n| "
+      },
+      {
+        "ast_path": "document/table-value/r67-c1",
+        "classification": "protected",
+        "end_byte": 3271,
+        "kind": "table-value",
+        "old_hash": "580dc9dc80992c7d39dbdd3144e3053b717232714d249769699339935de62df6",
+        "ordinal": 1,
+        "role": "r67-c1",
+        "segment_id": "protected-61e0c95bbc39202a1a8ed8b5",
+        "sha256": "580dc9dc80992c7d39dbdd3144e3053b717232714d249769699339935de62df6",
+        "start_byte": 3259,
+        "text": "Prüfschritt"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3274,
+        "kind": "syntax",
+        "old_hash": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "ordinal": 24,
+        "role": "structural-bytes",
+        "segment_id": "protected-69c2790f33a56b2c8b03e94f",
+        "sha256": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "start_byte": 3271,
+        "text": " | "
+      },
+      {
+        "ast_path": "document/table-value/r67-c2",
+        "classification": "protected",
+        "end_byte": 3293,
+        "kind": "table-value",
+        "old_hash": "947e3d514bfa3dfaf81d8f7d5a8d4fdb9c7b127b2d481e288e2f19b96dfabf21",
+        "ordinal": 1,
+        "role": "r67-c2",
+        "segment_id": "protected-110f0a29f190dc8d31e84482",
+        "sha256": "947e3d514bfa3dfaf81d8f7d5a8d4fdb9c7b127b2d481e288e2f19b96dfabf21",
+        "start_byte": 3274,
+        "text": "Sichtbarer Nachweis"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3296,
+        "kind": "syntax",
+        "old_hash": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "ordinal": 25,
+        "role": "structural-bytes",
+        "segment_id": "protected-edf783da737c9d60907684d2",
+        "sha256": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "start_byte": 3293,
+        "text": " | "
+      },
+      {
+        "ast_path": "document/table-value/r67-c3",
+        "classification": "protected",
+        "end_byte": 3313,
+        "kind": "table-value",
+        "old_hash": "105ff58b25610da5b8cdc306081eb9a6d81614a4ee49f4cb43bff93cc9377fce",
+        "ordinal": 1,
+        "role": "r67-c3",
+        "segment_id": "protected-48f5a4fcb15749aa7067b434",
+        "sha256": "105ff58b25610da5b8cdc306081eb9a6d81614a4ee49f4cb43bff93cc9377fce",
+        "start_byte": 3296,
+        "text": "Belastbare Grenze"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3338,
+        "kind": "syntax",
+        "old_hash": "9a5be0f01cb84ade9ce93c08fa1fea2fa96f9fe02f6d6b50ff804be05951feb2",
+        "ordinal": 26,
+        "role": "structural-bytes",
+        "segment_id": "protected-621c2f4ff4004884bb0c6e88",
+        "sha256": "9a5be0f01cb84ade9ce93c08fa1fea2fa96f9fe02f6d6b50ff804be05951feb2",
+        "start_byte": 3313,
+        "text": " |\n| --- | --- | --- |\n| "
+      },
+      {
+        "ast_path": "document/table-value/r69-c1",
+        "classification": "protected",
+        "end_byte": 3343,
+        "kind": "table-value",
+        "old_hash": "5c123d4febae3709a2286d1c11cc218274eeeed7120d7b5cfe44fa22dcc1d4ab",
+        "ordinal": 1,
+        "role": "r69-c1",
+        "segment_id": "protected-464b2a42c1043aa1b020d27e",
+        "sha256": "5c123d4febae3709a2286d1c11cc218274eeeed7120d7b5cfe44fa22dcc1d4ab",
+        "start_byte": 3338,
+        "text": "Zweck"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3346,
+        "kind": "syntax",
+        "old_hash": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "ordinal": 27,
+        "role": "structural-bytes",
+        "segment_id": "protected-7be044e249b95cde8c1136e8",
+        "sha256": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "start_byte": 3343,
+        "text": " | "
+      },
+      {
+        "ast_path": "document/table-value/r69-c2",
+        "classification": "protected",
+        "end_byte": 3368,
+        "kind": "table-value",
+        "old_hash": "9765ebfb2c37543c1f02a11a38f09198d229b6e5baea5685d7e81a695ffad9cd",
+        "ordinal": 1,
+        "role": "r69-c2",
+        "segment_id": "protected-c44909a3de949c2b40288195",
+        "sha256": "9765ebfb2c37543c1f02a11a38f09198d229b6e5baea5685d7e81a695ffad9cd",
+        "start_byte": 3346,
+        "text": "explizite Ausgangslage"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3371,
+        "kind": "syntax",
+        "old_hash": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "ordinal": 28,
+        "role": "structural-bytes",
+        "segment_id": "protected-82cf37157137e10e202d148c",
+        "sha256": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "start_byte": 3368,
+        "text": " | "
+      },
+      {
+        "ast_path": "document/table-value/r69-c3",
+        "classification": "protected",
+        "end_byte": 3394,
+        "kind": "table-value",
+        "old_hash": "68468d0a008502ba8d9576a71661df2f75bcc1c9f6cec783e405ad92de476fbe",
+        "ordinal": 1,
+        "role": "r69-c3",
+        "segment_id": "protected-4cd7bfc060ff8354e75661ca",
+        "sha256": "68468d0a008502ba8d9576a71661df2f75bcc1c9f6cec783e405ad92de476fbe",
+        "start_byte": 3371,
+        "text": "keine erfundene Wirkung"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3399,
+        "kind": "syntax",
+        "old_hash": "b234f248f1c636555db5e8733d921beb023e21f392237122a0d2abe6b3ec3325",
+        "ordinal": 29,
+        "role": "structural-bytes",
+        "segment_id": "protected-376a055c98e83d186f4ed615",
+        "sha256": "b234f248f1c636555db5e8733d921beb023e21f392237122a0d2abe6b3ec3325",
+        "start_byte": 3394,
+        "text": " |\n| "
+      },
+      {
+        "ast_path": "document/table-value/r70-c1",
+        "classification": "protected",
+        "end_byte": 3406,
+        "kind": "table-value",
+        "old_hash": "2145893cd732fbd6841456f4cebe55895b207b04aa1175e81169e904454be6ec",
+        "ordinal": 1,
+        "role": "r70-c1",
+        "segment_id": "protected-285790eded72b469f54bc658",
+        "sha256": "2145893cd732fbd6841456f4cebe55895b207b04aa1175e81169e904454be6ec",
+        "start_byte": 3399,
+        "text": "Betrieb"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3409,
+        "kind": "syntax",
+        "old_hash": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "ordinal": 30,
+        "role": "structural-bytes",
+        "segment_id": "protected-b4bb921ed29aa0bb0a4dbbae",
+        "sha256": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "start_byte": 3406,
+        "text": " | "
+      },
+      {
+        "ast_path": "document/table-value/r70-c2",
+        "classification": "protected",
+        "end_byte": 3429,
+        "kind": "table-value",
+        "old_hash": "1b182735204907d7b305de55d471cca2a7a1d15961ac750183a1dcfda3373f50",
+        "ordinal": 1,
+        "role": "r70-c2",
+        "segment_id": "protected-5f3f118f226bd8f94326356a",
+        "sha256": "1b182735204907d7b305de55d471cca2a7a1d15961ac750183a1dcfda3373f50",
+        "start_byte": 3409,
+        "text": "geordnete Übergaben"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3432,
+        "kind": "syntax",
+        "old_hash": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "ordinal": 31,
+        "role": "structural-bytes",
+        "segment_id": "protected-70ce4c6967c353b10d5012b9",
+        "sha256": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "start_byte": 3429,
+        "text": " | "
+      },
+      {
+        "ast_path": "document/table-value/r70-c3",
+        "classification": "protected",
+        "end_byte": 3453,
+        "kind": "table-value",
+        "old_hash": "6107bbcfa273dd4bdd8c2cde84a9c467b1cc94c80799d5afdeb9c11779e8687a",
+        "ordinal": 1,
+        "role": "r70-c3",
+        "segment_id": "protected-e1dfa3ee0b22b1cc788e7a6a",
+        "sha256": "6107bbcfa273dd4bdd8c2cde84a9c467b1cc94c80799d5afdeb9c11779e8687a",
+        "start_byte": 3432,
+        "text": "kein stiller Nebenweg"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3458,
+        "kind": "syntax",
+        "old_hash": "b234f248f1c636555db5e8733d921beb023e21f392237122a0d2abe6b3ec3325",
+        "ordinal": 32,
+        "role": "structural-bytes",
+        "segment_id": "protected-7110121827b9e8f0d202b45c",
+        "sha256": "b234f248f1c636555db5e8733d921beb023e21f392237122a0d2abe6b3ec3325",
+        "start_byte": 3453,
+        "text": " |\n| "
+      },
+      {
+        "ast_path": "document/table-value/r71-c1",
+        "classification": "protected",
+        "end_byte": 3467,
+        "kind": "table-value",
+        "old_hash": "7da7212b6beefd235cb0730a9bb78109e74146aba041c5069f90081dd01350c0",
+        "ordinal": 1,
+        "role": "r71-c1",
+        "segment_id": "protected-68ff7c9c3a2b45aa6b2bfc9b",
+        "sha256": "7da7212b6beefd235cb0730a9bb78109e74146aba041c5069f90081dd01350c0",
+        "start_byte": 3458,
+        "text": "Kontrolle"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3470,
+        "kind": "syntax",
+        "old_hash": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "ordinal": 33,
+        "role": "structural-bytes",
+        "segment_id": "protected-cc6c9f52a45d1e84333c3874",
+        "sha256": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "start_byte": 3467,
+        "text": " | "
+      },
+      {
+        "ast_path": "document/table-value/r71-c2",
+        "classification": "protected",
+        "end_byte": 3489,
+        "kind": "table-value",
+        "old_hash": "7ecebd8b9033ea6876f9ac0a07d219158aa4c2dbdbbf5ded7f02d0319184a4a2",
+        "ordinal": 1,
+        "role": "r71-c2",
+        "segment_id": "protected-16b4b5cc1d16c7e80c41b648",
+        "sha256": "7ecebd8b9033ea6876f9ac0a07d219158aa4c2dbdbbf5ded7f02d0319184a4a2",
+        "start_byte": 3470,
+        "text": "gebundene Artefakte"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3492,
+        "kind": "syntax",
+        "old_hash": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "ordinal": 34,
+        "role": "structural-bytes",
+        "segment_id": "protected-cce6acdab625787201143854",
+        "sha256": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "start_byte": 3489,
+        "text": " | "
+      },
+      {
+        "ast_path": "document/table-value/r71-c3",
+        "classification": "protected",
+        "end_byte": 3519,
+        "kind": "table-value",
+        "old_hash": "4bbe39ec9047e5da0a61777cc6761c7c2c05aee69e661ee10e1abb93c786f1c8",
+        "ordinal": 1,
+        "role": "r71-c3",
+        "segment_id": "protected-8a5849da570c809c1a2c59a1",
+        "sha256": "4bbe39ec9047e5da0a61777cc6761c7c2c05aee69e661ee10e1abb93c786f1c8",
+        "start_byte": 3492,
+        "text": "keine ähnliche Ersatzdatei"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3523,
+        "kind": "syntax",
+        "old_hash": "82347804ce67c39a503bc24df8db49d9c7df52cb9d2d4f4fe9768cb8ac9700fb",
+        "ordinal": 35,
+        "role": "structural-bytes",
+        "segment_id": "protected-c4336c0c117cb1837734c15d",
+        "sha256": "82347804ce67c39a503bc24df8db49d9c7df52cb9d2d4f4fe9768cb8ac9700fb",
+        "start_byte": 3519,
+        "text": " |\n\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3700,
+        "kind": "syntax",
+        "old_hash": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "ordinal": 36,
+        "role": "structural-bytes",
+        "segment_id": "protected-c688d07b3d07ed565af4be06",
+        "sha256": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "start_byte": 3698,
+        "text": "\n\n"
+      },
+      {
+        "ast_path": "document/footnote/source-position",
+        "classification": "protected",
+        "end_byte": 3804,
+        "kind": "footnote",
+        "old_hash": "8fde3377cb1a05fbe992c0e374457f1645a5da7ca568beadd0034b1a72f8da74",
+        "ordinal": 1,
+        "role": "source-position",
+        "segment_id": "protected-5f5efe448eaf0cb78deba584",
+        "sha256": "8fde3377cb1a05fbe992c0e374457f1645a5da7ca568beadd0034b1a72f8da74",
+        "start_byte": 3700,
+        "text": "[^source-position]: Unveränderlicher Nachweis zur Positionierungsrolle der neutralen Benchmark-Fixture."
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3805,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 37,
+        "role": "structural-bytes",
+        "segment_id": "protected-0546c4dfd14de5d44656cc68",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 3804,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/footnote/source-operation",
+        "classification": "protected",
+        "end_byte": 3901,
+        "kind": "footnote",
+        "old_hash": "f284e25e193177f1f7e5f56d8a430f2e84471761da966901a1ef4eba914ed035",
+        "ordinal": 1,
+        "role": "source-operation",
+        "segment_id": "protected-e6085cd237a00c89d3cce945",
+        "sha256": "f284e25e193177f1f7e5f56d8a430f2e84471761da966901a1ef4eba914ed035",
+        "start_byte": 3805,
+        "text": "[^source-operation]: Unveränderlicher Nachweis zum Betriebsweg der neutralen Benchmark-Fixture."
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 3902,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 38,
+        "role": "structural-bytes",
+        "segment_id": "protected-6a7962058343babf97a177b8",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 3901,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/footnote/source-control",
+        "classification": "protected",
+        "end_byte": 3998,
+        "kind": "footnote",
+        "old_hash": "c267a7d82b00cd50f716a6a94468af404df4a868c1efdedf99338c93e0a47aeb",
+        "ordinal": 1,
+        "role": "source-control",
+        "segment_id": "protected-ed17cbc92855a66d1b816fb2",
+        "sha256": "c267a7d82b00cd50f716a6a94468af404df4a868c1efdedf99338c93e0a47aeb",
+        "start_byte": 3902,
+        "text": "[^source-control]: Unveränderlicher Nachweis zur Kontrollrolle der neutralen Benchmark-Fixture."
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 4000,
+        "kind": "syntax",
+        "old_hash": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "ordinal": 39,
+        "role": "structural-bytes",
+        "segment_id": "protected-c25cd1f60f4ae84e414de722",
+        "sha256": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "start_byte": 3998,
+        "text": "\n\n"
+      },
+      {
+        "ast_path": "document/directive/page-break",
+        "classification": "protected",
+        "end_byte": 4015,
+        "kind": "directive",
+        "old_hash": "f19571734dc4c69e6e5f8afd5d3a208e8f8ac44817d2aa64175c88bab7b004d0",
+        "ordinal": 3,
+        "role": "page-break",
+        "segment_id": "protected-199e94a1205875605bf972f6",
+        "sha256": "f19571734dc4c69e6e5f8afd5d3a208e8f8ac44817d2aa64175c88bab7b004d0",
+        "start_byte": 4000,
+        "text": "::: page-break\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 4016,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 40,
+        "role": "structural-bytes",
+        "segment_id": "protected-8ed4e09c6905f782489c0979",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 4015,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/conclusion",
+        "classification": "protected",
+        "end_byte": 4039,
+        "kind": "directive",
+        "old_hash": "bba2dd23f0887de9b21649ad00217b15ff13097fa73880c487fcfff1d8fe2e5e",
+        "ordinal": 1,
+        "role": "conclusion",
+        "segment_id": "protected-f860081fc7626daf433fe392",
+        "sha256": "bba2dd23f0887de9b21649ad00217b15ff13097fa73880c487fcfff1d8fe2e5e",
+        "start_byte": 4016,
+        "text": "## Fazit {#conclusion}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 4040,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 41,
+        "role": "structural-bytes",
+        "segment_id": "protected-de340da3a19449a4c72efd18",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 4039,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/synthesis",
+        "classification": "protected",
+        "end_byte": 4069,
+        "kind": "directive",
+        "old_hash": "ad9f2cf74d83d7ed237970af27b4b3f84daf8ce9bdd2b938295d642bf582d7b0",
+        "ordinal": 1,
+        "role": "synthesis",
+        "segment_id": "protected-415a169c0afa99d56a67e638",
+        "sha256": "ad9f2cf74d83d7ed237970af27b4b3f84daf8ce9bdd2b938295d642bf582d7b0",
+        "start_byte": 4040,
+        "text": "### Verdichtung {#synthesis}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 4070,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 42,
+        "role": "structural-bytes",
+        "segment_id": "protected-5d050647faeca8b04966d39e",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 4069,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/synthesis-result",
+        "classification": "protected",
+        "end_byte": 4162,
+        "kind": "directive",
+        "old_hash": "d0aa958243d6612e6a841ab9bf1e99dad49bb0cfc95e5f07d2869c2adef5ea1a",
+        "ordinal": 1,
+        "role": "synthesis-result",
+        "segment_id": "protected-b297c0b2974b55c2b9ad253b",
+        "sha256": "d0aa958243d6612e6a841ab9bf1e99dad49bb0cfc95e5f07d2869c2adef5ea1a",
+        "start_byte": 4070,
+        "text": "::: {.important #synthesis-result title=\"Ergebnisverdichtung\" appearance=default icon=true}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 4529,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 43,
+        "role": "structural-bytes",
+        "segment_id": "protected-50ccc6276aff7faa2ea9c0ea",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 4528,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/synthesis-result",
+        "classification": "protected",
+        "end_byte": 4533,
+        "kind": "directive",
+        "old_hash": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "ordinal": 2,
+        "role": "synthesis-result",
+        "segment_id": "protected-c01e107e2eace1aca15ce9b6",
+        "sha256": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "start_byte": 4529,
+        "text": ":::\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 4534,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 44,
+        "role": "structural-bytes",
+        "segment_id": "protected-5952fb749e43261b03bae6fb",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 4533,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 4997,
+        "kind": "syntax",
+        "old_hash": "3adaef0d243c0de793a2253dd3eaf183e4cd5827d8524570ae246feca2c3f22d",
+        "ordinal": 45,
+        "role": "structural-bytes",
+        "segment_id": "protected-88ea33115e506dff4ffc8b56",
+        "sha256": "3adaef0d243c0de793a2253dd3eaf183e4cd5827d8524570ae246feca2c3f22d",
+        "start_byte": 4993,
+        "text": "\n\n| "
+      },
+      {
+        "ast_path": "document/table-value/r91-c1",
+        "classification": "protected",
+        "end_byte": 5008,
+        "kind": "table-value",
+        "old_hash": "5bdb6f2bc83af0dc6c6bd4bd83f4211e90c1a711476fc5fe78dc46c77773768c",
+        "ordinal": 1,
+        "role": "r91-c1",
+        "segment_id": "protected-0c2287dd1fe3d299c4dc8be1",
+        "sha256": "5bdb6f2bc83af0dc6c6bd4bd83f4211e90c1a711476fc5fe78dc46c77773768c",
+        "start_byte": 4997,
+        "text": "Perspektive"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 5011,
+        "kind": "syntax",
+        "old_hash": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "ordinal": 46,
+        "role": "structural-bytes",
+        "segment_id": "protected-38a7af3e6d249bd7dab563c9",
+        "sha256": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "start_byte": 5008,
+        "text": " | "
+      },
+      {
+        "ast_path": "document/table-value/r91-c2",
+        "classification": "protected",
+        "end_byte": 5030,
+        "kind": "table-value",
+        "old_hash": "6685415d2150b8d13a9b19fb194930f1cce5246134b29a5045e9bf9fe0cddae9",
+        "ordinal": 1,
+        "role": "r91-c2",
+        "segment_id": "protected-e5e7d23e77e3affef11a0c40",
+        "sha256": "6685415d2150b8d13a9b19fb194930f1cce5246134b29a5045e9bf9fe0cddae9",
+        "start_byte": 5011,
+        "text": "Verdichtete Aussage"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 5033,
+        "kind": "syntax",
+        "old_hash": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "ordinal": 47,
+        "role": "structural-bytes",
+        "segment_id": "protected-dc9b9805d651b77838bf3942",
+        "sha256": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "start_byte": 5030,
+        "text": " | "
+      },
+      {
+        "ast_path": "document/table-value/r91-c3",
+        "classification": "protected",
+        "end_byte": 5043,
+        "kind": "table-value",
+        "old_hash": "27ab8a04593f6f6d40a00d625720babad7b277806e0772688286c12a408a8382",
+        "ordinal": 1,
+        "role": "r91-c3",
+        "segment_id": "protected-012ecab73b162565d85c4c96",
+        "sha256": "27ab8a04593f6f6d40a00d625720babad7b277806e0772688286c12a408a8382",
+        "start_byte": 5033,
+        "text": "Konsequenz"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 5068,
+        "kind": "syntax",
+        "old_hash": "9a5be0f01cb84ade9ce93c08fa1fea2fa96f9fe02f6d6b50ff804be05951feb2",
+        "ordinal": 48,
+        "role": "structural-bytes",
+        "segment_id": "protected-e7d619d366cbcc2f31fa2be1",
+        "sha256": "9a5be0f01cb84ade9ce93c08fa1fea2fa96f9fe02f6d6b50ff804be05951feb2",
+        "start_byte": 5043,
+        "text": " |\n| --- | --- | --- |\n| "
+      },
+      {
+        "ast_path": "document/table-value/r93-c1",
+        "classification": "protected",
+        "end_byte": 5075,
+        "kind": "table-value",
+        "old_hash": "88bcd24d3565197542a3c9dce9a2aa3732f1641cfd9efd21edfc82bcb9609681",
+        "ordinal": 1,
+        "role": "r93-c1",
+        "segment_id": "protected-0e01a730ad80b6dee799f65e",
+        "sha256": "88bcd24d3565197542a3c9dce9a2aa3732f1641cfd9efd21edfc82bcb9609681",
+        "start_byte": 5068,
+        "text": "Leitung"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 5078,
+        "kind": "syntax",
+        "old_hash": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "ordinal": 49,
+        "role": "structural-bytes",
+        "segment_id": "protected-88b4f20e04816ce05773d772",
+        "sha256": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "start_byte": 5075,
+        "text": " | "
+      },
+      {
+        "ast_path": "document/table-value/r93-c2",
+        "classification": "protected",
+        "end_byte": 5108,
+        "kind": "table-value",
+        "old_hash": "e8268ad9fdbae487048bb38498cc94e68efc48adfd5d7146f80e7e891bf17e35",
+        "ordinal": 1,
+        "role": "r93-c2",
+        "segment_id": "protected-ff10a694950a572d2abd3eb7",
+        "sha256": "e8268ad9fdbae487048bb38498cc94e68efc48adfd5d7146f80e7e891bf17e35",
+        "start_byte": 5078,
+        "text": "Zweck und Grenze sind explizit"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 5111,
+        "kind": "syntax",
+        "old_hash": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "ordinal": 50,
+        "role": "structural-bytes",
+        "segment_id": "protected-a7db16708897a4c1c825f0e9",
+        "sha256": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "start_byte": 5108,
+        "text": " | "
+      },
+      {
+        "ast_path": "document/table-value/r93-c3",
+        "classification": "protected",
+        "end_byte": 5146,
+        "kind": "table-value",
+        "old_hash": "85c8e7f10b60d80ee564741292e34066bfdd291cc8a0e554d0899cd529388d3a",
+        "ordinal": 1,
+        "role": "r93-c3",
+        "segment_id": "protected-74ab82f7b9abb12c01d93d64",
+        "sha256": "85c8e7f10b60d80ee564741292e34066bfdd291cc8a0e554d0899cd529388d3a",
+        "start_byte": 5111,
+        "text": "Entscheidung bleibt nachvollziehbar"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 5151,
+        "kind": "syntax",
+        "old_hash": "b234f248f1c636555db5e8733d921beb023e21f392237122a0d2abe6b3ec3325",
+        "ordinal": 51,
+        "role": "structural-bytes",
+        "segment_id": "protected-deb3b873530956d8e32173bf",
+        "sha256": "b234f248f1c636555db5e8733d921beb023e21f392237122a0d2abe6b3ec3325",
+        "start_byte": 5146,
+        "text": " |\n| "
+      },
+      {
+        "ast_path": "document/table-value/r94-c1",
+        "classification": "protected",
+        "end_byte": 5160,
+        "kind": "table-value",
+        "old_hash": "cb623f549f7518abee920e762e5b48eb157a9c738265551cca5ce4ba01e341b2",
+        "ordinal": 1,
+        "role": "r94-c1",
+        "segment_id": "protected-05d2ec29fb2b4aafd8eff0a5",
+        "sha256": "cb623f549f7518abee920e762e5b48eb157a9c738265551cca5ce4ba01e341b2",
+        "start_byte": 5151,
+        "text": "Umsetzung"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 5163,
+        "kind": "syntax",
+        "old_hash": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "ordinal": 52,
+        "role": "structural-bytes",
+        "segment_id": "protected-30dc38b90e85cf20c511ee90",
+        "sha256": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "start_byte": 5160,
+        "text": " | "
+      },
+      {
+        "ast_path": "document/table-value/r94-c2",
+        "classification": "protected",
+        "end_byte": 5194,
+        "kind": "table-value",
+        "old_hash": "ef5eaa65f907a14a856f532455da1429c0ca6fde826b35e7def6bf27dda22de9",
+        "ordinal": 1,
+        "role": "r94-c2",
+        "segment_id": "protected-adb6d581d9690221ce8f1b7d",
+        "sha256": "ef5eaa65f907a14a856f532455da1429c0ca6fde826b35e7def6bf27dda22de9",
+        "start_byte": 5163,
+        "text": "der Betriebsweg ist geschlossen"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 5197,
+        "kind": "syntax",
+        "old_hash": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "ordinal": 53,
+        "role": "structural-bytes",
+        "segment_id": "protected-4e8a74b7ac7d8ef9e2a0fe24",
+        "sha256": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "start_byte": 5194,
+        "text": " | "
+      },
+      {
+        "ast_path": "document/table-value/r94-c3",
+        "classification": "protected",
+        "end_byte": 5224,
+        "kind": "table-value",
+        "old_hash": "4d6d97609f3616c6316277687448bc826b4540cb6cef07f515beef777ebfc959",
+        "ordinal": 1,
+        "role": "r94-c3",
+        "segment_id": "protected-cbb4158050ba7da978a8767f",
+        "sha256": "4d6d97609f3616c6316277687448bc826b4540cb6cef07f515beef777ebfc959",
+        "start_byte": 5197,
+        "text": "Übergaben bleiben prüfbar"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 5229,
+        "kind": "syntax",
+        "old_hash": "b234f248f1c636555db5e8733d921beb023e21f392237122a0d2abe6b3ec3325",
+        "ordinal": 54,
+        "role": "structural-bytes",
+        "segment_id": "protected-cccd396ef043f428345fefcc",
+        "sha256": "b234f248f1c636555db5e8733d921beb023e21f392237122a0d2abe6b3ec3325",
+        "start_byte": 5224,
+        "text": " |\n| "
+      },
+      {
+        "ast_path": "document/table-value/r95-c1",
+        "classification": "protected",
+        "end_byte": 5237,
+        "kind": "table-value",
+        "old_hash": "ffdca298a34e8654699dc35360377138786c85921b717e038480c8a9f41f3cb5",
+        "ordinal": 1,
+        "role": "r95-c1",
+        "segment_id": "protected-6890351380de4583b06c996f",
+        "sha256": "ffdca298a34e8654699dc35360377138786c85921b717e038480c8a9f41f3cb5",
+        "start_byte": 5229,
+        "text": "Prüfung"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 5240,
+        "kind": "syntax",
+        "old_hash": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "ordinal": 55,
+        "role": "structural-bytes",
+        "segment_id": "protected-549000f50c755d5534be1497",
+        "sha256": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "start_byte": 5237,
+        "text": " | "
+      },
+      {
+        "ast_path": "document/table-value/r95-c2",
+        "classification": "protected",
+        "end_byte": 5275,
+        "kind": "table-value",
+        "old_hash": "550dc897143e3b1bbcceefd6cecf4cb8e1835a5562c0ea0d8d67f97817ea5280",
+        "ordinal": 1,
+        "role": "r95-c2",
+        "segment_id": "protected-57f380948862b1061019e224",
+        "sha256": "550dc897143e3b1bbcceefd6cecf4cb8e1835a5562c0ea0d8d67f97817ea5280",
+        "start_byte": 5240,
+        "text": "Nachweis und Ergebnis sind gebunden"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 5278,
+        "kind": "syntax",
+        "old_hash": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "ordinal": 56,
+        "role": "structural-bytes",
+        "segment_id": "protected-6625bbb27538788ab39747c9",
+        "sha256": "ffa9044b934017b2aed8239dd6874ad7d7c797ee69fb2410dfbab6100a0241c0",
+        "start_byte": 5275,
+        "text": " | "
+      },
+      {
+        "ast_path": "document/table-value/r95-c3",
+        "classification": "protected",
+        "end_byte": 5311,
+        "kind": "table-value",
+        "old_hash": "cce5966da3b20f8b5ace2989cbff20f65f9653a64a5436bcd9ec32fcf8027e60",
+        "ordinal": 1,
+        "role": "r95-c3",
+        "segment_id": "protected-55b620c80d12ec15e4c80e35",
+        "sha256": "cce5966da3b20f8b5ace2989cbff20f65f9653a64a5436bcd9ec32fcf8027e60",
+        "start_byte": 5278,
+        "text": "Abweichungen stoppen die Freigabe"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 5315,
+        "kind": "syntax",
+        "old_hash": "82347804ce67c39a503bc24df8db49d9c7df52cb9d2d4f4fe9768cb8ac9700fb",
+        "ordinal": 57,
+        "role": "structural-bytes",
+        "segment_id": "protected-f04c04c4afe6137310be5681",
+        "sha256": "82347804ce67c39a503bc24df8db49d9c7df52cb9d2d4f4fe9768cb8ac9700fb",
+        "start_byte": 5311,
+        "text": " |\n\n"
+      },
+      {
+        "ast_path": "document/directive/outlook",
+        "classification": "protected",
+        "end_byte": 5339,
+        "kind": "directive",
+        "old_hash": "1b0fb94b9a34107d26ceb62bd0ce34a41f8397430ff6042da97758a73af03473",
+        "ordinal": 1,
+        "role": "outlook",
+        "segment_id": "protected-ef4a5d20402ff54a74fc76cb",
+        "sha256": "1b0fb94b9a34107d26ceb62bd0ce34a41f8397430ff6042da97758a73af03473",
+        "start_byte": 5315,
+        "text": "### Ausblick {#outlook}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 5340,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 58,
+        "role": "structural-bytes",
+        "segment_id": "protected-27f72d03d27e597fc5750ecd",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 5339,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/outlook-next",
+        "classification": "protected",
+        "end_byte": 5431,
+        "kind": "directive",
+        "old_hash": "4688aaf353997bdf81eb80ba14aa25d639bddb5a9bcdf72358a4ec845e826e40",
+        "ordinal": 1,
+        "role": "outlook-next",
+        "segment_id": "protected-52a4251246ef9f7867ca12b8",
+        "sha256": "4688aaf353997bdf81eb80ba14aa25d639bddb5a9bcdf72358a4ec845e826e40",
+        "start_byte": 5340,
+        "text": "::: {.tip #outlook-next title=\"Nächster belastbarer Schritt\" appearance=simple icon=true}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 5813,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 59,
+        "role": "structural-bytes",
+        "segment_id": "protected-1eab12c2bce7fde4d993953a",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 5812,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/outlook-next",
+        "classification": "protected",
+        "end_byte": 5817,
+        "kind": "directive",
+        "old_hash": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "ordinal": 2,
+        "role": "outlook-next",
+        "segment_id": "protected-016969e36c51d756ed47e008",
+        "sha256": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "start_byte": 5813,
+        "text": ":::\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 5818,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 60,
+        "role": "structural-bytes",
+        "segment_id": "protected-ce90113ed2b671c970fdfe3d",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 5817,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 6277,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 61,
+        "role": "structural-bytes",
+        "segment_id": "protected-a621dc194cc1180a726358fd",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 6276,
+        "text": "\n"
+      }
+    ]
+  },
+  "rights_evidence": {},
+  "roundtrip_sha256": "0aa4cdec2f24ce2dee976ffefb69c59d0b51222d9dc3ddcb4aab1e709d0cc05e",
+  "source": "---\nschema_version: markdown-document.v1\ndocument_id: golden-benchmark-report\ndocument_type: report\ntitle: Steuerungsbericht für belastbare Entscheidungen\nlang: de-DE\nstatus: release\nfacts: []\nsources:\n  - id: source-position\n    locator: urn:brandkit:e2e:position\n    sha256: bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\n  - id: source-operation\n    locator: urn:brandkit:e2e:operation\n    sha256: cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc\n  - id: source-control\n    locator: urn:brandkit:e2e:control\n    sha256: dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd\nassets: []\nrights: []\ntodos: []\n---\n# Steuerungsbericht für belastbare Entscheidungen {#title}\n\n## Kurzfassung {#executive-summary}\n\n### Positionierung {#positioning}\n\nDieser Bericht positioniert den Arbeitsstand als prüfbare Entscheidungsgrundlage. Er trennt Nutzenversprechen, Betriebsweg und Kontrollnachweis, damit Führung und Umsetzung denselben Gegenstand beurteilen können.\n\nDie Leitfrage lautet: Welche Entscheidung ist heute tragfähig, welche Nachweise tragen sie, und welcher nächste Schritt bleibt bewusst offen?\n\n::: page-break\n\n## Methodik {#methodology}\n\n### Orientierung {#orientation}\n\nDie Orientierung beginnt mit drei klaren Wegen. Jeder Weg besitzt einen eigenen Zweck, einen überprüfbaren Ausgang und eine benannte Grenze. Damit ist vor den Details sichtbar, welche Lesespur für die jeweilige Rolle relevant ist.\n\n::: {.note #orientation-decision title=\"Entscheiden\" appearance=default icon=true}\nDie Leitung liest Positionierung, Verdichtung und Ausblick. Sie erhält eine kurze Entscheidungslogik, ohne operative Einzelheiten mit einer Freigabe zu verwechseln.\n:::\n\n::: {.tip #orientation-operate title=\"Umsetzen\" appearance=simple icon=true}\nDie Umsetzung folgt der nummerierten Beweisstrecke. Jeder Abschnitt benennt Gegenstand, Nachweis und Grenze, bevor daraus eine Folgerung abgeleitet wird.\n:::\n\n::: {.important #orientation-verify title=\"Prüfen\" appearance=minimal icon=false}\nDie Prüfung verbindet jede Aussage mit ihrer Quelle. Fehlende Evidenz bleibt sichtbar und wird nicht durch Gestaltung oder sprachliche Sicherheit ersetzt.\n:::\n\nDie Wege ergänzen einander: Entscheidung setzt Nachweis voraus, Umsetzung erzeugt überprüfbare Ergebnisse, und Prüfung hält den Übergang zwischen beiden belastbar.\n\n::: page-break\n\n## Befunde {#findings}\n\n### Nummerierte Beweisstrecke {#proof}\n\nDie Strecke führt vom Zweck über den Betrieb zur Kontrolle. Die Reihenfolge ist fest, weil eine spätere Aussage keine frühere Evidenz ersetzen darf.\n\n1. Zweck klären: Der Bericht bindet die Entscheidung an eine explizite Ausgangslage und benennt, welche Wirkung überhaupt beurteilt wird. Der Nachweis bleibt auf die dokumentierte Positionierung begrenzt.[^source-position]\n2. Betriebsweg prüfen: Die Umsetzung wird als nachvollziehbare Folge von Übergaben, Ergebnissen und Grenzen beschrieben. Dadurch lässt sich erkennen, ob ein Ergebnis tatsächlich aus dem vorgesehenen Weg stammt.[^source-operation]\n3. Kontrolle schließen: Freigabe, Inventar und Prüfung beziehen sich auf dieselben Bytes. Abweichungen bleiben Fehler; eine bloß ähnliche Ausgabe gilt nicht als Nachweis.[^source-control]\n\n| Prüfschritt | Sichtbarer Nachweis | Belastbare Grenze |\n| --- | --- | --- |\n| Zweck | explizite Ausgangslage | keine erfundene Wirkung |\n| Betrieb | geordnete Übergaben | kein stiller Nebenweg |\n| Kontrolle | gebundene Artefakte | keine ähnliche Ersatzdatei |\n\nDie Beweisstrecke ist damit nicht nur eine Aufzählung. Sie macht sichtbar, an welcher Stelle eine Entscheidung trägt und an welcher Stelle zusätzliche Evidenz nötig wäre.\n\n[^source-position]: Unveränderlicher Nachweis zur Positionierungsrolle der neutralen Benchmark-Fixture.\n[^source-operation]: Unveränderlicher Nachweis zum Betriebsweg der neutralen Benchmark-Fixture.\n[^source-control]: Unveränderlicher Nachweis zur Kontrollrolle der neutralen Benchmark-Fixture.\n\n::: page-break\n\n## Fazit {#conclusion}\n\n### Verdichtung {#synthesis}\n\n::: {.important #synthesis-result title=\"Ergebnisverdichtung\" appearance=default icon=true}\nDie belastbare Entscheidung entsteht aus drei gemeinsam geprüften Eigenschaften: Der Zweck ist eindeutig, der Betriebsweg ist nachvollziehbar, und die Kontrolle bindet Ergebnis und Freigabe an denselben Stand. Fehlt eine dieser Eigenschaften, bleibt der Vorgang offen. Sind alle drei nachgewiesen, kann die Entscheidung ohne verdeckte Annahmen weitergegeben werden.\n:::\n\nDie Verdichtung reduziert nicht die Evidenz, sondern ordnet sie. Für die Leitung steht die Tragfähigkeit im Vordergrund. Für die Umsetzung zählt der geschlossene Weg vom Eingang bis zum Ergebnis. Für die Prüfung zählt, dass Quelle, Ausgabe und Freigabe nicht auseinanderfallen. Diese drei Perspektiven ergeben eine gemeinsame Aussage: Der aktuelle Stand ist dann entscheidbar, wenn seine Herkunft, seine Verarbeitung und seine Kontrolle zusammenpassen.\n\n| Perspektive | Verdichtete Aussage | Konsequenz |\n| --- | --- | --- |\n| Leitung | Zweck und Grenze sind explizit | Entscheidung bleibt nachvollziehbar |\n| Umsetzung | der Betriebsweg ist geschlossen | Übergaben bleiben prüfbar |\n| Prüfung | Nachweis und Ergebnis sind gebunden | Abweichungen stoppen die Freigabe |\n\n### Ausblick {#outlook}\n\n::: {.tip #outlook-next title=\"Nächster belastbarer Schritt\" appearance=simple icon=true}\nDer nächste Schritt erweitert nicht vorschnell den Anspruch. Zuerst wird die bestehende Beweisstrecke in einem realen Projekt wiederholt. Danach werden nur solche Dokumenttypen ergänzt, deren Zweck, Inhaltsvertrag und Prüfweg ausdrücklich freigegeben sind. Jede Erweiterung bringt ihre eigene Evidenz mit und verändert die bereits geschlossene Grundlage nicht stillschweigend.\n:::\n\nDer Ausblick trennt Gegenwart und Möglichkeit. Heute steht ein überprüfbarer Entscheidungsweg bereit. Künftig können weitere Rollen, Dokumenttypen oder Belege hinzukommen, sofern sie dieselben Grenzen respektieren. Offen bleibt nicht, wie geprüft wird, sondern nur, welche fachliche Erweiterung als Nächstes autorisiert wird. So endet der Bericht mit einer konkreten Richtung, ohne eine ungeprüfte Zukunft als bereits erreichten Zustand darzustellen.\n",
+  "source_sha256": "0aa4cdec2f24ce2dee976ffefb69c59d0b51222d9dc3ddcb4aab1e709d0cc05e",
+  "type": "document"
+}

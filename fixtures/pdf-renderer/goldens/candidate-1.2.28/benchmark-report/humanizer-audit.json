@@ -1,0 +1,62 @@
+{
+  "hmac_sha256": "66f653b247e0cd861114349fb1d8e6cd15620e4e3f9654cdb67306f34b12f6f5",
+  "issuer": "brandkit-production-renderer-v1",
+  "payload": {
+    "ast_skeleton_stable": true,
+    "baseline_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "final_sha256": "0aa4cdec2f24ce2dee976ffefb69c59d0b51222d9dc3ddcb4aab1e709d0cc05e",
+    "humanizer": {
+      "release_path": "deterministic-e2e-fixture-not-provider-evidence",
+      "release_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "version": "5.22.2-brandkit.2"
+    },
+    "operations": [
+      {
+        "changed": false,
+        "old_hash": "d8c98fb23fd1e6a8682e00486f683e90ace9231cf02f52647228f8fc47004876",
+        "provider_state": "audit-only/no-change",
+        "replacement_sha256": "d8c98fb23fd1e6a8682e00486f683e90ace9231cf02f52647228f8fc47004876",
+        "report_path": "fixture-evidence/report.json",
+        "result_path": "fixture-evidence/result.md",
+        "segment_id": "mutable-917f5e137903c9316c95e819"
+      }
+    ],
+    "protected_stable": true,
+    "provider": "claude",
+    "raw_artifacts": [
+      {
+        "path": "fixture-evidence/artifact-0.json",
+        "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      {
+        "path": "fixture-evidence/artifact-1.json",
+        "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      {
+        "path": "fixture-evidence/artifact-2.json",
+        "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      {
+        "path": "fixture-evidence/artifact-3.json",
+        "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      {
+        "path": "fixture-evidence/artifact-4.json",
+        "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      {
+        "path": "fixture-evidence/artifact-5.json",
+        "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      {
+        "path": "fixture-evidence/artifact-6.json",
+        "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      {
+        "path": "fixture-evidence/artifact-7.json",
+        "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      }
+    ]
+  },
+  "schema_version": "humanizer-audit.v1"
+}

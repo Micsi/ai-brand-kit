@@ -1,0 +1,14 @@
+{
+  "executablePath": "./browser/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing",
+  "headless": true,
+  "pipe": true,
+  "args": [
+    "--disable-background-networking",
+    "--disable-component-update",
+    "--disable-default-apps",
+    "--disable-extensions",
+    "--disable-sync",
+    "--host-resolver-rules=MAP * 0.0.0.0, EXCLUDE localhost",
+    "--no-first-run"
+  ]
+}

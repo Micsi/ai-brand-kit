@@ -1,0 +1,11 @@
+{
+  "entries": [
+    {
+      "brand_id": "neutral-fixture",
+      "content_sha256": "2dba1c69c033cbde171ba3d7c5cd2b1ae188b32c4299054b445518faf1c16b2f",
+      "immutable_release_locator": "releases/neutral-fixture/1.0.0/be2dd3d29bf15ba437eb5dc070ac6e6735cf57630e5f583a85777e6ffedf6360",
+      "version": "1.0.0"
+    }
+  ],
+  "schema_version": "brand-registry-index.v1"
+}

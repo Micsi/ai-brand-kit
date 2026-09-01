@@ -1,0 +1,14 @@
+{
+  "$id": "impeccable-capabilities.v1.schema.json", "type": "object", "additionalProperties": false,
+  "required": ["schema_version", "grant_id", "nonce", "issued_at", "expires_at", "approval_receipt_id", "project_root", "project_commit", "brand_content_sha256", "upstream_commit", "adapted_release_sha256", "capabilities", "key_id", "hmac_sha256"],
+  "properties": {
+    "schema_version": {"const": "brandkit-impeccable-capabilities.v1"},
+    "grant_id": {"type": "string", "pattern": "^[0-9a-f]{32}$"}, "nonce": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "issued_at": {"type": "integer", "minimum": 1}, "expires_at": {"type": "integer", "minimum": 1}, "approval_receipt_id": {"type": "string", "pattern": "^[0-9a-f]{32}$"},
+    "project_root": {"type": "string", "minLength": 1}, "project_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"}, "brand_content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "upstream_commit": {"const": "fcd7622cd2d8e2b09344ba8ede9fcac82cec4e70"},
+    "adapted_release_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "capabilities": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"enum": ["hooks", "update", "browser", "live", "image_generation", "network"]}},
+    "key_id": {"type": "string", "pattern": "^[0-9a-f]{16}$"}, "hmac_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}

@@ -1,0 +1,705 @@
+{
+  "children": [
+    {
+      "id": "title",
+      "level": 1,
+      "line": 14,
+      "text": "Evidenzbericht",
+      "type": "heading"
+    },
+    {
+      "line": 15,
+      "type": "blank"
+    },
+    {
+      "id": "executive-summary",
+      "level": 2,
+      "line": 16,
+      "text": "Kurzfassung",
+      "type": "heading"
+    },
+    {
+      "line": 17,
+      "type": "blank"
+    },
+    {
+      "inline": [
+        {
+          "mutable": true,
+          "text": "Der Bericht ordnet den Ausgangspunkt ein und trennt Beobachtung, Bewertung und nächste Schritte.",
+          "type": "text"
+        }
+      ],
+      "line": 18,
+      "text": "Der Bericht ordnet den Ausgangspunkt ein und trennt Beobachtung, Bewertung und nächste Schritte.",
+      "type": "paragraph"
+    },
+    {
+      "line": 19,
+      "type": "blank"
+    },
+    {
+      "id": "findings",
+      "level": 2,
+      "line": 20,
+      "text": "Befunde",
+      "type": "heading"
+    },
+    {
+      "line": 21,
+      "type": "blank"
+    },
+    {
+      "inline": [
+        {
+          "mutable": true,
+          "text": "Die Befunde sind nummeriert, scanbar und in einer stabilen Reihenfolge angeordnet.",
+          "type": "text"
+        }
+      ],
+      "line": 22,
+      "text": "Die Befunde sind nummeriert, scanbar und in einer stabilen Reihenfolge angeordnet.",
+      "type": "paragraph"
+    },
+    {
+      "line": 23,
+      "type": "blank"
+    },
+    {
+      "items": [
+        {
+          "inline": [
+            {
+              "mutable": true,
+              "text": "Klare Verantwortungsgrenzen",
+              "type": "text"
+            }
+          ],
+          "text": "Klare Verantwortungsgrenzen"
+        },
+        {
+          "inline": [
+            {
+              "mutable": true,
+              "text": "Nachvollziehbare Entscheidungen",
+              "type": "text"
+            }
+          ],
+          "text": "Nachvollziehbare Entscheidungen"
+        },
+        {
+          "inline": [
+            {
+              "mutable": true,
+              "text": "Prüffähige Ergebnisse",
+              "type": "text"
+            }
+          ],
+          "text": "Prüffähige Ergebnisse"
+        }
+      ],
+      "line": 24,
+      "type": "unordered-list"
+    },
+    {
+      "line": 27,
+      "type": "blank"
+    },
+    {
+      "id": "conclusion",
+      "level": 2,
+      "line": 28,
+      "text": "Fazit",
+      "type": "heading"
+    },
+    {
+      "line": 29,
+      "type": "blank"
+    },
+    {
+      "inline": [
+        {
+          "mutable": true,
+          "text": "Die Schlussfolgerung verdichtet die belegten Punkte ohne neue Behauptungen.",
+          "type": "text"
+        }
+      ],
+      "line": 30,
+      "text": "Die Schlussfolgerung verdichtet die belegten Punkte ohne neue Behauptungen.",
+      "type": "paragraph"
+    }
+  ],
+  "contract": "markdown-contract.v2",
+  "frontmatter": {
+    "assets": [],
+    "document_id": "golden-report",
+    "document_type": "report",
+    "facts": [],
+    "lang": "de-DE",
+    "rights": [],
+    "schema_version": "markdown-document.v1",
+    "sources": [],
+    "status": "release",
+    "title": "Evidenzbericht",
+    "todos": []
+  },
+  "humanizer_segments": {
+    "mutable": [
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 359,
+        "kind": "natural-prose",
+        "old_hash": "4c3ea2a7a5dc0a33311d9a37158d7a642abf6821e96e3aec12219bd976ffd7d7",
+        "ordinal": 1,
+        "role": "segment",
+        "segment_id": "mutable-917f5e137903c9316c95e819",
+        "sha256": "4c3ea2a7a5dc0a33311d9a37158d7a642abf6821e96e3aec12219bd976ffd7d7",
+        "start_byte": 262,
+        "text": "Der Bericht ordnet den Ausgangspunkt ein und trennt Beobachtung, Bewertung und nächste Schritte."
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 467,
+        "kind": "natural-prose",
+        "old_hash": "081e11640badbc4bca191678ec8568692c1f9b36b9ba722a3c577ab29da2927e",
+        "ordinal": 2,
+        "role": "segment",
+        "segment_id": "mutable-4c7e5d76d27bb36c635e45dd",
+        "sha256": "081e11640badbc4bca191678ec8568692c1f9b36b9ba722a3c577ab29da2927e",
+        "start_byte": 385,
+        "text": "Die Befunde sind nummeriert, scanbar und in einer stabilen Reihenfolge angeordnet."
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 498,
+        "kind": "natural-prose",
+        "old_hash": "3fe6de63934095de593b77f943b2dbb29008c2c71f85fd36389c524d46ee831a",
+        "ordinal": 3,
+        "role": "segment",
+        "segment_id": "mutable-4f6dd1d64a64ce142d5c8ab4",
+        "sha256": "3fe6de63934095de593b77f943b2dbb29008c2c71f85fd36389c524d46ee831a",
+        "start_byte": 471,
+        "text": "Klare Verantwortungsgrenzen"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 532,
+        "kind": "natural-prose",
+        "old_hash": "76b3b1dea6edf21646288208ff83d9acbe07bbc413fc1e3b8aeb0f3c8e52bd12",
+        "ordinal": 4,
+        "role": "segment",
+        "segment_id": "mutable-ff57bc81e872d97bfebabf9b",
+        "sha256": "76b3b1dea6edf21646288208ff83d9acbe07bbc413fc1e3b8aeb0f3c8e52bd12",
+        "start_byte": 501,
+        "text": "Nachvollziehbare Entscheidungen"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 558,
+        "kind": "natural-prose",
+        "old_hash": "3fb74765854dd6bcfc2664110cb8c08b5de27b68f35ed02af506a782b4c2cc48",
+        "ordinal": 5,
+        "role": "segment",
+        "segment_id": "mutable-5f79f462a104b839ffe551be",
+        "sha256": "3fb74765854dd6bcfc2664110cb8c08b5de27b68f35ed02af506a782b4c2cc48",
+        "start_byte": 535,
+        "text": "Prüffähige Ergebnisse"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 659,
+        "kind": "natural-prose",
+        "old_hash": "8c69db51e791e23d65ccd5c6fb2b6a928e0ce8b8d738d20a04658db4154292ba",
+        "ordinal": 6,
+        "role": "segment",
+        "segment_id": "mutable-91675ab02f917687eef52745",
+        "sha256": "8c69db51e791e23d65ccd5c6fb2b6a928e0ce8b8d738d20a04658db4154292ba",
+        "start_byte": 584,
+        "text": "Die Schlussfolgerung verdichtet die belegten Punkte ohne neue Behauptungen."
+      }
+    ],
+    "partition": [
+      {
+        "ast_path": "document/frontmatter",
+        "classification": "protected",
+        "end_byte": 198,
+        "kind": "frontmatter",
+        "old_hash": "ebc3bab15be4851f361b62f942498b3841c7bea54ddce3621510d551c2d85286",
+        "ordinal": 1,
+        "role": "document-metadata",
+        "segment_id": "protected-63274e878959ab9eb92f8a7c",
+        "sha256": "ebc3bab15be4851f361b62f942498b3841c7bea54ddce3621510d551c2d85286",
+        "start_byte": 0,
+        "text": "---\nschema_version: markdown-document.v1\ndocument_id: golden-report\ndocument_type: report\ntitle: Evidenzbericht\nlang: de-DE\nstatus: release\nfacts: []\nsources: []\nassets: []\nrights: []\ntodos: []\n---\n"
+      },
+      {
+        "ast_path": "document/directive/title",
+        "classification": "protected",
+        "end_byte": 224,
+        "kind": "directive",
+        "old_hash": "853548c3c512663c289d4cbfd18e7fe0f33bb49d27c89b86ab222c7a0019f60b",
+        "ordinal": 1,
+        "role": "title",
+        "segment_id": "protected-0975bbfa365c9d92158ef283",
+        "sha256": "853548c3c512663c289d4cbfd18e7fe0f33bb49d27c89b86ab222c7a0019f60b",
+        "start_byte": 198,
+        "text": "# Evidenzbericht {#title}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 225,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 1,
+        "role": "structural-bytes",
+        "segment_id": "protected-9afa7534ec84d0bf2257eef0",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 224,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/executive-summary",
+        "classification": "protected",
+        "end_byte": 261,
+        "kind": "directive",
+        "old_hash": "68b29775cd89519b76df38bc3feec019fac0d8c954b729d41cfd58f3e9d3084f",
+        "ordinal": 1,
+        "role": "executive-summary",
+        "segment_id": "protected-007bdbe0204cea209beef856",
+        "sha256": "68b29775cd89519b76df38bc3feec019fac0d8c954b729d41cfd58f3e9d3084f",
+        "start_byte": 225,
+        "text": "## Kurzfassung {#executive-summary}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 262,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 2,
+        "role": "structural-bytes",
+        "segment_id": "protected-cbc160d37b05946352292b51",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 261,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 359,
+        "kind": "natural-prose",
+        "old_hash": "4c3ea2a7a5dc0a33311d9a37158d7a642abf6821e96e3aec12219bd976ffd7d7",
+        "ordinal": 1,
+        "role": "segment",
+        "segment_id": "mutable-917f5e137903c9316c95e819",
+        "sha256": "4c3ea2a7a5dc0a33311d9a37158d7a642abf6821e96e3aec12219bd976ffd7d7",
+        "start_byte": 262,
+        "text": "Der Bericht ordnet den Ausgangspunkt ein und trennt Beobachtung, Bewertung und nächste Schritte."
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 361,
+        "kind": "syntax",
+        "old_hash": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "ordinal": 3,
+        "role": "structural-bytes",
+        "segment_id": "protected-5339e929b7b0dbfff3091dd5",
+        "sha256": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "start_byte": 359,
+        "text": "\n\n"
+      },
+      {
+        "ast_path": "document/directive/findings",
+        "classification": "protected",
+        "end_byte": 384,
+        "kind": "directive",
+        "old_hash": "59052c2770c114ffa5ce603435abdc3e6590086fa3763ef258793a23e8af9a6f",
+        "ordinal": 1,
+        "role": "findings",
+        "segment_id": "protected-85d36c88d386203a1ae5617f",
+        "sha256": "59052c2770c114ffa5ce603435abdc3e6590086fa3763ef258793a23e8af9a6f",
+        "start_byte": 361,
+        "text": "## Befunde {#findings}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 385,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 4,
+        "role": "structural-bytes",
+        "segment_id": "protected-db9bb4c8d3316ecdfc3bc19a",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 384,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 467,
+        "kind": "natural-prose",
+        "old_hash": "081e11640badbc4bca191678ec8568692c1f9b36b9ba722a3c577ab29da2927e",
+        "ordinal": 2,
+        "role": "segment",
+        "segment_id": "mutable-4c7e5d76d27bb36c635e45dd",
+        "sha256": "081e11640badbc4bca191678ec8568692c1f9b36b9ba722a3c577ab29da2927e",
+        "start_byte": 385,
+        "text": "Die Befunde sind nummeriert, scanbar und in einer stabilen Reihenfolge angeordnet."
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 471,
+        "kind": "syntax",
+        "old_hash": "edc9330199ddd0d393e5356a8bce88741d15bc09ba04136763aedfa4ab07dea9",
+        "ordinal": 5,
+        "role": "structural-bytes",
+        "segment_id": "protected-7406e07bb89250ac7ea4e9bc",
+        "sha256": "edc9330199ddd0d393e5356a8bce88741d15bc09ba04136763aedfa4ab07dea9",
+        "start_byte": 467,
+        "text": "\n\n- "
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 498,
+        "kind": "natural-prose",
+        "old_hash": "3fe6de63934095de593b77f943b2dbb29008c2c71f85fd36389c524d46ee831a",
+        "ordinal": 3,
+        "role": "segment",
+        "segment_id": "mutable-4f6dd1d64a64ce142d5c8ab4",
+        "sha256": "3fe6de63934095de593b77f943b2dbb29008c2c71f85fd36389c524d46ee831a",
+        "start_byte": 471,
+        "text": "Klare Verantwortungsgrenzen"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 501,
+        "kind": "syntax",
+        "old_hash": "4a0b0fbdbf6ee3656f62dec525e8a2b1cbf11073bb250e465bcfdced0b953c44",
+        "ordinal": 6,
+        "role": "structural-bytes",
+        "segment_id": "protected-7e9ea612b2a3f2f6881cedae",
+        "sha256": "4a0b0fbdbf6ee3656f62dec525e8a2b1cbf11073bb250e465bcfdced0b953c44",
+        "start_byte": 498,
+        "text": "\n- "
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 532,
+        "kind": "natural-prose",
+        "old_hash": "76b3b1dea6edf21646288208ff83d9acbe07bbc413fc1e3b8aeb0f3c8e52bd12",
+        "ordinal": 4,
+        "role": "segment",
+        "segment_id": "mutable-ff57bc81e872d97bfebabf9b",
+        "sha256": "76b3b1dea6edf21646288208ff83d9acbe07bbc413fc1e3b8aeb0f3c8e52bd12",
+        "start_byte": 501,
+        "text": "Nachvollziehbare Entscheidungen"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 535,
+        "kind": "syntax",
+        "old_hash": "4a0b0fbdbf6ee3656f62dec525e8a2b1cbf11073bb250e465bcfdced0b953c44",
+        "ordinal": 7,
+        "role": "structural-bytes",
+        "segment_id": "protected-22983067b2bd565d1e0da203",
+        "sha256": "4a0b0fbdbf6ee3656f62dec525e8a2b1cbf11073bb250e465bcfdced0b953c44",
+        "start_byte": 532,
+        "text": "\n- "
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 558,
+        "kind": "natural-prose",
+        "old_hash": "3fb74765854dd6bcfc2664110cb8c08b5de27b68f35ed02af506a782b4c2cc48",
+        "ordinal": 5,
+        "role": "segment",
+        "segment_id": "mutable-5f79f462a104b839ffe551be",
+        "sha256": "3fb74765854dd6bcfc2664110cb8c08b5de27b68f35ed02af506a782b4c2cc48",
+        "start_byte": 535,
+        "text": "Prüffähige Ergebnisse"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 560,
+        "kind": "syntax",
+        "old_hash": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "ordinal": 8,
+        "role": "structural-bytes",
+        "segment_id": "protected-0d0c85d0e40aed27ff38e2a9",
+        "sha256": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "start_byte": 558,
+        "text": "\n\n"
+      },
+      {
+        "ast_path": "document/directive/conclusion",
+        "classification": "protected",
+        "end_byte": 583,
+        "kind": "directive",
+        "old_hash": "bba2dd23f0887de9b21649ad00217b15ff13097fa73880c487fcfff1d8fe2e5e",
+        "ordinal": 1,
+        "role": "conclusion",
+        "segment_id": "protected-f860081fc7626daf433fe392",
+        "sha256": "bba2dd23f0887de9b21649ad00217b15ff13097fa73880c487fcfff1d8fe2e5e",
+        "start_byte": 560,
+        "text": "## Fazit {#conclusion}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 584,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 9,
+        "role": "structural-bytes",
+        "segment_id": "protected-e414e4605b991629d2ee1b9e",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 583,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 659,
+        "kind": "natural-prose",
+        "old_hash": "8c69db51e791e23d65ccd5c6fb2b6a928e0ce8b8d738d20a04658db4154292ba",
+        "ordinal": 6,
+        "role": "segment",
+        "segment_id": "mutable-91675ab02f917687eef52745",
+        "sha256": "8c69db51e791e23d65ccd5c6fb2b6a928e0ce8b8d738d20a04658db4154292ba",
+        "start_byte": 584,
+        "text": "Die Schlussfolgerung verdichtet die belegten Punkte ohne neue Behauptungen."
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 660,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 10,
+        "role": "structural-bytes",
+        "segment_id": "protected-cfa8a38e8458379a7c1c80de",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 659,
+        "text": "\n"
+      }
+    ],
+    "protected": [
+      {
+        "ast_path": "document/frontmatter",
+        "classification": "protected",
+        "end_byte": 198,
+        "kind": "frontmatter",
+        "old_hash": "ebc3bab15be4851f361b62f942498b3841c7bea54ddce3621510d551c2d85286",
+        "ordinal": 1,
+        "role": "document-metadata",
+        "segment_id": "protected-63274e878959ab9eb92f8a7c",
+        "sha256": "ebc3bab15be4851f361b62f942498b3841c7bea54ddce3621510d551c2d85286",
+        "start_byte": 0,
+        "text": "---\nschema_version: markdown-document.v1\ndocument_id: golden-report\ndocument_type: report\ntitle: Evidenzbericht\nlang: de-DE\nstatus: release\nfacts: []\nsources: []\nassets: []\nrights: []\ntodos: []\n---\n"
+      },
+      {
+        "ast_path": "document/directive/title",
+        "classification": "protected",
+        "end_byte": 224,
+        "kind": "directive",
+        "old_hash": "853548c3c512663c289d4cbfd18e7fe0f33bb49d27c89b86ab222c7a0019f60b",
+        "ordinal": 1,
+        "role": "title",
+        "segment_id": "protected-0975bbfa365c9d92158ef283",
+        "sha256": "853548c3c512663c289d4cbfd18e7fe0f33bb49d27c89b86ab222c7a0019f60b",
+        "start_byte": 198,
+        "text": "# Evidenzbericht {#title}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 225,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 1,
+        "role": "structural-bytes",
+        "segment_id": "protected-9afa7534ec84d0bf2257eef0",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 224,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/executive-summary",
+        "classification": "protected",
+        "end_byte": 261,
+        "kind": "directive",
+        "old_hash": "68b29775cd89519b76df38bc3feec019fac0d8c954b729d41cfd58f3e9d3084f",
+        "ordinal": 1,
+        "role": "executive-summary",
+        "segment_id": "protected-007bdbe0204cea209beef856",
+        "sha256": "68b29775cd89519b76df38bc3feec019fac0d8c954b729d41cfd58f3e9d3084f",
+        "start_byte": 225,
+        "text": "## Kurzfassung {#executive-summary}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 262,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 2,
+        "role": "structural-bytes",
+        "segment_id": "protected-cbc160d37b05946352292b51",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 261,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 361,
+        "kind": "syntax",
+        "old_hash": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "ordinal": 3,
+        "role": "structural-bytes",
+        "segment_id": "protected-5339e929b7b0dbfff3091dd5",
+        "sha256": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "start_byte": 359,
+        "text": "\n\n"
+      },
+      {
+        "ast_path": "document/directive/findings",
+        "classification": "protected",
+        "end_byte": 384,
+        "kind": "directive",
+        "old_hash": "59052c2770c114ffa5ce603435abdc3e6590086fa3763ef258793a23e8af9a6f",
+        "ordinal": 1,
+        "role": "findings",
+        "segment_id": "protected-85d36c88d386203a1ae5617f",
+        "sha256": "59052c2770c114ffa5ce603435abdc3e6590086fa3763ef258793a23e8af9a6f",
+        "start_byte": 361,
+        "text": "## Befunde {#findings}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 385,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 4,
+        "role": "structural-bytes",
+        "segment_id": "protected-db9bb4c8d3316ecdfc3bc19a",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 384,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 471,
+        "kind": "syntax",
+        "old_hash": "edc9330199ddd0d393e5356a8bce88741d15bc09ba04136763aedfa4ab07dea9",
+        "ordinal": 5,
+        "role": "structural-bytes",
+        "segment_id": "protected-7406e07bb89250ac7ea4e9bc",
+        "sha256": "edc9330199ddd0d393e5356a8bce88741d15bc09ba04136763aedfa4ab07dea9",
+        "start_byte": 467,
+        "text": "\n\n- "
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 501,
+        "kind": "syntax",
+        "old_hash": "4a0b0fbdbf6ee3656f62dec525e8a2b1cbf11073bb250e465bcfdced0b953c44",
+        "ordinal": 6,
+        "role": "structural-bytes",
+        "segment_id": "protected-7e9ea612b2a3f2f6881cedae",
+        "sha256": "4a0b0fbdbf6ee3656f62dec525e8a2b1cbf11073bb250e465bcfdced0b953c44",
+        "start_byte": 498,
+        "text": "\n- "
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 535,
+        "kind": "syntax",
+        "old_hash": "4a0b0fbdbf6ee3656f62dec525e8a2b1cbf11073bb250e465bcfdced0b953c44",
+        "ordinal": 7,
+        "role": "structural-bytes",
+        "segment_id": "protected-22983067b2bd565d1e0da203",
+        "sha256": "4a0b0fbdbf6ee3656f62dec525e8a2b1cbf11073bb250e465bcfdced0b953c44",
+        "start_byte": 532,
+        "text": "\n- "
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 560,
+        "kind": "syntax",
+        "old_hash": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "ordinal": 8,
+        "role": "structural-bytes",
+        "segment_id": "protected-0d0c85d0e40aed27ff38e2a9",
+        "sha256": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "start_byte": 558,
+        "text": "\n\n"
+      },
+      {
+        "ast_path": "document/directive/conclusion",
+        "classification": "protected",
+        "end_byte": 583,
+        "kind": "directive",
+        "old_hash": "bba2dd23f0887de9b21649ad00217b15ff13097fa73880c487fcfff1d8fe2e5e",
+        "ordinal": 1,
+        "role": "conclusion",
+        "segment_id": "protected-f860081fc7626daf433fe392",
+        "sha256": "bba2dd23f0887de9b21649ad00217b15ff13097fa73880c487fcfff1d8fe2e5e",
+        "start_byte": 560,
+        "text": "## Fazit {#conclusion}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 584,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 9,
+        "role": "structural-bytes",
+        "segment_id": "protected-e414e4605b991629d2ee1b9e",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 583,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 660,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 10,
+        "role": "structural-bytes",
+        "segment_id": "protected-cfa8a38e8458379a7c1c80de",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 659,
+        "text": "\n"
+      }
+    ]
+  },
+  "rights_evidence": {},
+  "roundtrip_sha256": "79ab20c672aa36c73b8609fb1b47c8be12d630f69155b10535b4c95c698e0be9",
+  "source": "---\nschema_version: markdown-document.v1\ndocument_id: golden-report\ndocument_type: report\ntitle: Evidenzbericht\nlang: de-DE\nstatus: release\nfacts: []\nsources: []\nassets: []\nrights: []\ntodos: []\n---\n# Evidenzbericht {#title}\n\n## Kurzfassung {#executive-summary}\n\nDer Bericht ordnet den Ausgangspunkt ein und trennt Beobachtung, Bewertung und nächste Schritte.\n\n## Befunde {#findings}\n\nDie Befunde sind nummeriert, scanbar und in einer stabilen Reihenfolge angeordnet.\n\n- Klare Verantwortungsgrenzen\n- Nachvollziehbare Entscheidungen\n- Prüffähige Ergebnisse\n\n## Fazit {#conclusion}\n\nDie Schlussfolgerung verdichtet die belegten Punkte ohne neue Behauptungen.\n",
+  "source_sha256": "79ab20c672aa36c73b8609fb1b47c8be12d630f69155b10535b4c95c698e0be9",
+  "type": "document"
+}

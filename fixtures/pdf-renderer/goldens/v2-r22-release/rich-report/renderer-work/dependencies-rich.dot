@@ -1,0 +1,8 @@
+digraph G {
+  rankdir=LR;
+  input [label="Eingabe"];
+  check [label="Prüfung"];
+  output [label="Ausgabe"];
+  input -> check;
+  check -> output;
+}

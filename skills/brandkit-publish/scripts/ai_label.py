@@ -10,7 +10,7 @@ Beispiel:
 
 Mit eigenen Markenfarben:
     python ai_label.py roh.png -o hero.jpg \\
-        --bg "#0B0E11" --fg "#F3F4EF" --line "#2A3037" --accent "#B7FF3C"
+        --bg "#111111" --fg "#FFFFFF" --line "#737373" --accent "#FFFFFF"
 
 Wichtig: Das sichtbare Zeichen erfuellt die Offenlegung gegenueber Menschen.
 Die maschinenlesbare Markierung ist etwas anderes und geht beim Neucodieren
@@ -170,10 +170,10 @@ def main():
                    help="Wo beim vertikalen Anschnitt verankert wird. "
                         "Standard bottom, damit die Markierung erhalten bleibt.")
     p.add_argument("--text", default="AI", help="Text der Markierung (Standard: AI)")
-    p.add_argument("--bg", type=hex_to_rgb, default="#0B0E11", help="Kastenfarbe")
-    p.add_argument("--fg", type=hex_to_rgb, default="#F3F4EF", help="Textfarbe")
-    p.add_argument("--line", type=hex_to_rgb, default="#2A3037", help="Rahmenfarbe")
-    p.add_argument("--accent", type=hex_to_rgb, default="#B7FF3C", help="Akzentbalken")
+    p.add_argument("--bg", type=hex_to_rgb, default="#111111", help="Kastenfarbe")
+    p.add_argument("--fg", type=hex_to_rgb, default="#FFFFFF", help="Textfarbe")
+    p.add_argument("--line", type=hex_to_rgb, default="#737373", help="Rahmenfarbe")
+    p.add_argument("--accent", type=hex_to_rgb, default="#FFFFFF", help="Akzentbalken")
     p.add_argument("--font", help="Pfad zu einer TTF-Datei fuer die Markierung")
     p.add_argument("--scale", type=float, default=1.0,
                    help="Groesse der Markierung, bezogen auf 1120 px Bildbreite")

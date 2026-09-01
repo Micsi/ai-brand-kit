@@ -1,0 +1,3108 @@
+{
+  "expected_internal_links": [],
+  "figure_references": [],
+  "figure_registry": [],
+  "objects": [
+    {
+      "bbox_pt": [
+        439.37,
+        56.693,
+        538.583,
+        81.496
+      ],
+      "evidence_kind": "vector",
+      "evidence_sha256": "b82446b1cbeb5bb1cf9de3138dbb7e2877c081806ff8006ee7bb565275cb4f57",
+      "page": 1,
+      "source_id": "furniture-logo-1",
+      "type": "logo",
+      "visible": true
+    },
+    {
+      "bbox_pt": [
+        56.693,
+        175.437,
+        84.084,
+        186.906
+      ],
+      "evidence_kind": "text",
+      "evidence_text": "REPORT",
+      "page": 1,
+      "source_id": "furniture-cover-kicker-1",
+      "type": "cover-kicker",
+      "visible": true
+    },
+    {
+      "bbox_pt": [
+        56.693,
+        230.291,
+        538.583,
+        269.291
+      ],
+      "evidence_kind": "text",
+      "evidence_text": "Evidenzbericht",
+      "page": 1,
+      "source_id": "title",
+      "type": "title",
+      "visible": true
+    },
+    {
+      "bbox_pt": [
+        56.693,
+        336.504,
+        453.543,
+        368.504
+      ],
+      "evidence_kind": "text",
+      "evidence_text": "Der Bericht ordnet den Ausgangspunkt ein und trennt Beobachtung, Bewertung und nächste Schritte.",
+      "page": 1,
+      "source_id": "furniture-cover-deck-1",
+      "type": "cover-deck",
+      "visible": true
+    },
+    {
+      "bbox_pt": [
+        56.693,
+        47.939,
+        538.583,
+        48.439
+      ],
+      "evidence_kind": "vector",
+      "evidence_sha256": "7f0a93f2374d11d4a734ff6436665be4c0c2fa3853c9d8c4f1eccdce3c2bde98",
+      "page": 2,
+      "source_id": "furniture-divider-2",
+      "type": "divider",
+      "visible": true
+    },
+    {
+      "bbox_pt": [
+        56.693,
+        31.849,
+        101.377,
+        42.044
+      ],
+      "evidence_kind": "text",
+      "evidence_text": "Evidenzbericht",
+      "page": 2,
+      "source_id": "furniture-header-2",
+      "type": "header",
+      "visible": true
+    },
+    {
+      "bbox_pt": [
+        56.693,
+        56.693,
+        538.583,
+        78.693
+      ],
+      "evidence_kind": "text",
+      "evidence_text": "Abschnitt: Kurzfassung",
+      "page": 2,
+      "source_id": "executive-summary",
+      "type": "heading",
+      "visible": true
+    },
+    {
+      "bbox_pt": [
+        56.693,
+        90.031,
+        538.583,
+        105.031
+      ],
+      "evidence_kind": "text",
+      "evidence_text": "Der Bericht ordnet den Ausgangspunkt ein und trennt Beobachtung, Bewertung und nächste Schritte.",
+      "page": 2,
+      "source_id": "node-3",
+      "type": "paragraph",
+      "visible": true
+    },
+    {
+      "bbox_pt": [
+        56.693,
+        122.039,
+        538.583,
+        144.039
+      ],
+      "evidence_kind": "text",
+      "evidence_text": "Abschnitt: Befunde",
+      "page": 2,
+      "source_id": "findings",
+      "type": "heading",
+      "visible": true
+    },
+    {
+      "bbox_pt": [
+        56.693,
+        155.378,
+        538.583,
+        170.378
+      ],
+      "evidence_kind": "text",
+      "evidence_text": "Die Befunde sind nummeriert, scanbar und in einer stabilen Reihenfolge angeordnet.",
+      "page": 2,
+      "source_id": "node-5",
+      "type": "paragraph",
+      "visible": true
+    },
+    {
+      "bbox_pt": [
+        56.693,
+        181.717,
+        538.583,
+        249.394
+      ],
+      "evidence_kind": "text",
+      "evidence_text": "Klare Verantwortungsgrenzen",
+      "page": 2,
+      "source_id": "node-6",
+      "type": "unordered-list",
+      "visible": true
+    },
+    {
+      "bbox_pt": [
+        56.693,
+        266.402,
+        538.583,
+        288.402
+      ],
+      "evidence_kind": "text",
+      "evidence_text": "Abschnitt: Fazit",
+      "page": 2,
+      "source_id": "conclusion",
+      "type": "heading",
+      "visible": true
+    },
+    {
+      "bbox_pt": [
+        56.693,
+        299.74,
+        538.583,
+        314.74
+      ],
+      "evidence_kind": "text",
+      "evidence_text": "Die Schlussfolgerung verdichtet die belegten Punkte ohne neue Behauptungen.",
+      "page": 2,
+      "source_id": "node-8",
+      "type": "paragraph",
+      "visible": true
+    },
+    {
+      "bbox_pt": [
+        498.337,
+        794.369,
+        538.583,
+        804.564
+      ],
+      "evidence_kind": "text",
+      "evidence_text": "Seite 1 von 1",
+      "page": 2,
+      "source_id": "furniture-footer-2",
+      "type": "footer",
+      "visible": true
+    }
+  ],
+  "page_coordinate_system": "pdf-points-top-left",
+  "page_count": 2,
+  "required_furniture": [
+    "furniture-header-2",
+    "furniture-footer-2"
+  ],
+  "schema_version": "renderer-source-map.v1",
+  "visible_inventory": [
+    {
+      "bbox_pt": [
+        56.69,
+        175.44,
+        84.08,
+        186.91
+      ],
+      "kind": "text",
+      "object_id": "p1-text-0001",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 9.0,
+        "render_mode": 0,
+        "rgb": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "REPORT"
+      },
+      "pdf_object_sha256": "1534d08814a42b67acdc968523dc0625d1dbaf4d8239586398aaf672a0322936",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        56.69,
+        175.44
+      ]
+    },
+    {
+      "bbox_pt": [
+        56.69,
+        230.99,
+        246.6,
+        274.32
+      ],
+      "kind": "text",
+      "object_id": "p1-text-0002",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 34.0,
+        "render_mode": 0,
+        "rgb": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Evidenzbericht"
+      },
+      "pdf_object_sha256": "bea697ec2f92e1966a1cd07c88a7d38e49b23307ef63a613cf84520a048d216d",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        56.69,
+        230.99
+      ]
+    },
+    {
+      "bbox_pt": [
+        56.69,
+        336.74,
+        71.47,
+        351.4
+      ],
+      "kind": "text",
+      "object_id": "p1-text-0003",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 11.5,
+        "render_mode": 0,
+        "rgb": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Der"
+      },
+      "pdf_object_sha256": "28435ff3a476c5c2e54d16a5a768d7b07e8cb884cae427df3a396f1d1463b8dc",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        56.69,
+        336.74
+      ]
+    },
+    {
+      "bbox_pt": [
+        74.12,
+        336.74,
+        105.53,
+        351.4
+      ],
+      "kind": "text",
+      "object_id": "p1-text-0004",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 11.5,
+        "render_mode": 0,
+        "rgb": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Bericht"
+      },
+      "pdf_object_sha256": "ba4b4ad88f60adf9896537830141c08ce467425a334a4d6c51e13353d7f54e0c",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        74.12,
+        336.74
+      ]
+    },
+    {
+      "bbox_pt": [
+        108.17,
+        336.74,
+        136.35,
+        351.4
+      ],
+      "kind": "text",
+      "object_id": "p1-text-0005",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 11.5,
+        "render_mode": 0,
+        "rgb": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "ordnet"
+      },
+      "pdf_object_sha256": "94bff1deb13709d749fe4fe66cc8c10492f1ae19392b42b2a5dc2a121dfca5b5",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        108.17,
+        336.74
+      ]
+    },
+    {
+      "bbox_pt": [
+        139.0,
+        336.74,
+        154.67,
+        351.4
+      ],
+      "kind": "text",
+      "object_id": "p1-text-0006",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 11.5,
+        "render_mode": 0,
+        "rgb": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "den"
+      },
+      "pdf_object_sha256": "d4df380359d729f3836f7600bc79f44e9a80d50fa24bb18a81e9b65fabea7184",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        139.0,
+        336.74
+      ]
+    },
+    {
+      "bbox_pt": [
+        157.31,
+        336.74,
+        224.19,
+        351.4
+      ],
+      "kind": "text",
+      "object_id": "p1-text-0007",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 11.5,
+        "render_mode": 0,
+        "rgb": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Ausgangspunkt"
+      },
+      "pdf_object_sha256": "aa32db0595be7532dce7fd5d6a5627d4de5cda456e08e288ef8d71b1e945a232",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        157.31,
+        336.74
+      ]
+    },
+    {
+      "bbox_pt": [
+        226.83,
+        336.74,
+        239.81,
+        351.4
+      ],
+      "kind": "text",
+      "object_id": "p1-text-0008",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 11.5,
+        "render_mode": 0,
+        "rgb": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "ein"
+      },
+      "pdf_object_sha256": "73f3641cbc3668a5f430092b9222f7c4c81f2650bf8d9fd9a805279e79bb59eb",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        226.83,
+        336.74
+      ]
+    },
+    {
+      "bbox_pt": [
+        242.46,
+        336.74,
+        258.13,
+        351.4
+      ],
+      "kind": "text",
+      "object_id": "p1-text-0009",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 11.5,
+        "render_mode": 0,
+        "rgb": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "und"
+      },
+      "pdf_object_sha256": "58c3e5890e19cc0785c8cd41cdb0fab45ebf0d49555c42e2a8d282fd4dc37216",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        242.46,
+        336.74
+      ]
+    },
+    {
+      "bbox_pt": [
+        260.77,
+        336.74,
+        287.72,
+        351.4
+      ],
+      "kind": "text",
+      "object_id": "p1-text-0010",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 11.5,
+        "render_mode": 0,
+        "rgb": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "trennt"
+      },
+      "pdf_object_sha256": "c62cb4176492c52bf9a51bd2e60dc23166edfe83b1213e7a014e1ed698018b41",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        260.77,
+        336.74
+      ]
+    },
+    {
+      "bbox_pt": [
+        290.37,
+        336.74,
+        349.75,
+        351.4
+      ],
+      "kind": "text",
+      "object_id": "p1-text-0011",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 11.5,
+        "render_mode": 0,
+        "rgb": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Beobachtung,"
+      },
+      "pdf_object_sha256": "92e3d14c72bf8232c1eb70d3ca2188e079321923ffd75619ec862503fc9b2c54",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        290.37,
+        336.74
+      ]
+    },
+    {
+      "bbox_pt": [
+        352.39,
+        336.74,
+        399.28,
+        351.4
+      ],
+      "kind": "text",
+      "object_id": "p1-text-0012",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 11.5,
+        "render_mode": 0,
+        "rgb": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Bewertung"
+      },
+      "pdf_object_sha256": "f5a49fcb2d9bc8603fd4580ce37336e19563c4ead338c5458c2472b8d06cd995",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        352.39,
+        336.74
+      ]
+    },
+    {
+      "bbox_pt": [
+        401.92,
+        336.74,
+        417.59,
+        351.4
+      ],
+      "kind": "text",
+      "object_id": "p1-text-0013",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 11.5,
+        "render_mode": 0,
+        "rgb": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "und"
+      },
+      "pdf_object_sha256": "58c3e5890e19cc0785c8cd41cdb0fab45ebf0d49555c42e2a8d282fd4dc37216",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        401.92,
+        336.74
+      ]
+    },
+    {
+      "bbox_pt": [
+        56.69,
+        352.74,
+        92.07,
+        367.4
+      ],
+      "kind": "text",
+      "object_id": "p1-text-0014",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 11.5,
+        "render_mode": 0,
+        "rgb": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "nächste"
+      },
+      "pdf_object_sha256": "a79c321b1dc82df22f3cc92defb66fb20a3782e4809bdbe36fcdd17bf6d686c4",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        56.69,
+        352.74
+      ]
+    },
+    {
+      "bbox_pt": [
+        94.72,
+        352.74,
+        132.65,
+        367.4
+      ],
+      "kind": "text",
+      "object_id": "p1-text-0015",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 11.5,
+        "render_mode": 0,
+        "rgb": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Schritte."
+      },
+      "pdf_object_sha256": "f9b1a2b36893ca11827f060eef906e86f7abcb259ced371d965dfe64b33556ae",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        94.72,
+        352.74
+      ]
+    },
+    {
+      "bbox_pt": [
+        0.0,
+        0.0,
+        595.2756,
+        841.8898
+      ],
+      "kind": "vector",
+      "object_id": "p1-vector-0001",
+      "paint": {
+        "blend": "/Normal",
+        "fill": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "fill_alpha": 1.0,
+        "fill_pattern": null,
+        "operator": "f*",
+        "scope": "page",
+        "softmask": "/None",
+        "stroke": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_pattern": null
+      },
+      "pdf_object_sha256": "8f5085cf906d8def2fc86f221d41980b76a9f3fcf555101118936e263251b9f0",
+      "transform": [
+        1.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "bbox_pt": [
+        439.37,
+        58.76,
+        460.039,
+        79.429
+      ],
+      "kind": "vector",
+      "object_id": "p1-vector-0002",
+      "paint": {
+        "blend": "/Normal",
+        "fill": [
+          0.227451,
+          0.686275,
+          0.662745
+        ],
+        "fill_alpha": 1.0,
+        "fill_pattern": null,
+        "operator": "f*",
+        "scope": "page",
+        "softmask": "/None",
+        "stroke": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_pattern": null
+      },
+      "pdf_object_sha256": "4b584776cef0595f47516c7f84f4bb52f9381f885d998d70c15e3cba87a1dbf7",
+      "transform": [
+        1.0,
+        0.0,
+        0.0,
+        1.0,
+        439.3701,
+        760.3937
+      ]
+    },
+    {
+      "bbox_pt": [
+        444.537,
+        63.927,
+        454.872,
+        74.262
+      ],
+      "kind": "vector",
+      "object_id": "p1-vector-0003",
+      "paint": {
+        "blend": "/Normal",
+        "fill": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "fill_alpha": 1.0,
+        "fill_pattern": null,
+        "operator": "f*",
+        "scope": "page",
+        "softmask": "/None",
+        "stroke": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_pattern": null
+      },
+      "pdf_object_sha256": "8936080de2903b378a6fe964bc5bac4e8c33f928705d9ec4354168152313a897",
+      "transform": [
+        1.0,
+        0.0,
+        0.0,
+        1.0,
+        439.3701,
+        760.3937
+      ]
+    },
+    {
+      "bbox_pt": [
+        468.307,
+        61.86,
+        538.583,
+        65.994
+      ],
+      "kind": "vector",
+      "object_id": "p1-vector-0004",
+      "paint": {
+        "blend": "/Normal",
+        "fill": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "fill_alpha": 1.0,
+        "fill_pattern": null,
+        "operator": "f*",
+        "scope": "page",
+        "softmask": "/None",
+        "stroke": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_pattern": null
+      },
+      "pdf_object_sha256": "8d459ad36441cfc584b1d300d69158363db856359c3bdd0499764922afad6150",
+      "transform": [
+        1.0,
+        0.0,
+        0.0,
+        1.0,
+        439.3701,
+        760.3937
+      ]
+    },
+    {
+      "bbox_pt": [
+        468.307,
+        72.195,
+        517.913,
+        76.329
+      ],
+      "kind": "vector",
+      "object_id": "p1-vector-0005",
+      "paint": {
+        "blend": "/Normal",
+        "fill": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "fill_alpha": 1.0,
+        "fill_pattern": null,
+        "operator": "f*",
+        "scope": "page",
+        "softmask": "/None",
+        "stroke": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_pattern": null
+      },
+      "pdf_object_sha256": "c83eef335996928a3a7465da3c91c38c5f9b074fcadf2f9751226a077e2455d9",
+      "transform": [
+        1.0,
+        0.0,
+        0.0,
+        1.0,
+        439.3701,
+        760.3937
+      ]
+    },
+    {
+      "bbox_pt": [
+        524.114,
+        74.012,
+        538.583,
+        74.512
+      ],
+      "kind": "vector",
+      "object_id": "p1-vector-0006",
+      "paint": {
+        "blend": "/Normal",
+        "fill": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "fill_alpha": 1.0,
+        "fill_pattern": null,
+        "operator": "S",
+        "scope": "page",
+        "softmask": "/None",
+        "stroke": [
+          0.227451,
+          0.686275,
+          0.662745
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_pattern": null
+      },
+      "pdf_object_sha256": "320f7b28ae7585c8a07f5bba39523ffcde140f05c08d6c9c1c5c8344fe90da23",
+      "transform": [
+        1.0,
+        0.0,
+        0.0,
+        1.0,
+        439.3701,
+        760.3937
+      ]
+    },
+    {
+      "bbox_pt": [
+        56.693,
+        286.299,
+        184.252,
+        291.969
+      ],
+      "kind": "vector",
+      "object_id": "p1-vector-0007",
+      "paint": {
+        "blend": "/Normal",
+        "fill": [
+          0.227451,
+          0.686275,
+          0.662745
+        ],
+        "fill_alpha": 1.0,
+        "fill_pattern": null,
+        "operator": "f*",
+        "scope": "page",
+        "softmask": "/None",
+        "stroke": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_pattern": null
+      },
+      "pdf_object_sha256": "6fecf5ebdd2310b6b8168e41a477c45a169d6f33f85d2295d7c5483b9ceb9a67",
+      "transform": [
+        1.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "bbox_pt": [
+        56.69,
+        31.85,
+        101.37,
+        42.05
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0001",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 8.0,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "text": "Evidenzbericht"
+      },
+      "pdf_object_sha256": "5eb9813672264677c423b494291eea2849a089d743424df18a66babf7b8326af",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        56.69,
+        31.85
+      ]
+    },
+    {
+      "bbox_pt": [
+        56.69,
+        57.06,
+        126.33,
+        80.0
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0002",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 18.0,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Abschnitt:"
+      },
+      "pdf_object_sha256": "ae5f72276f793b8515f69012e0e9c10594863a17acd2260951e495227d80c6ce",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        56.69,
+        57.06
+      ]
+    },
+    {
+      "bbox_pt": [
+        130.47,
+        57.06,
+        215.01,
+        80.0
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0003",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 18.0,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Kurzfassung"
+      },
+      "pdf_object_sha256": "c6e4aa32abc7ed342174f0fdb0d3846dac26b0e2c710e25ed23c172adfa88305",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        130.47,
+        57.06
+      ]
+    },
+    {
+      "bbox_pt": [
+        56.69,
+        90.24,
+        69.8,
+        103.24
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0004",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Der"
+      },
+      "pdf_object_sha256": "f50133e66bc78894f2f14851fd766f16a30036fb407f4bc543ebb3b68f2cfab3",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        56.69,
+        90.24
+      ]
+    },
+    {
+      "bbox_pt": [
+        72.15,
+        90.24,
+        100.01,
+        103.24
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0005",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Bericht"
+      },
+      "pdf_object_sha256": "a6f1225effa6e5453974fad68842effd749ea4999c6284e2f3d46d54f8a8d2e8",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        72.15,
+        90.24
+      ]
+    },
+    {
+      "bbox_pt": [
+        102.35,
+        90.24,
+        127.35,
+        103.24
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0006",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "ordnet"
+      },
+      "pdf_object_sha256": "fa023bf0173a6b541d0387055952f87c364046d346035237c29c41097c13cfa2",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        102.35,
+        90.24
+      ]
+    },
+    {
+      "bbox_pt": [
+        129.69,
+        90.24,
+        143.59,
+        103.24
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0007",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "den"
+      },
+      "pdf_object_sha256": "4204f80a54d837032a1f9a4b8b7b60e811cc2f240381bbd0e356b48b240f386b",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        129.69,
+        90.24
+      ]
+    },
+    {
+      "bbox_pt": [
+        145.93,
+        90.24,
+        205.25,
+        103.24
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0008",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Ausgangspunkt"
+      },
+      "pdf_object_sha256": "6cc8a6da929138cf5cb260c694adffb2520556dc1a4dc81ecdd862ca01120b81",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        145.93,
+        90.24
+      ]
+    },
+    {
+      "bbox_pt": [
+        207.6,
+        90.24,
+        219.11,
+        103.24
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0009",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "ein"
+      },
+      "pdf_object_sha256": "ec276f8938e15e4f03e8644ab23e86e1cb0c859f75ec65a91028989af03f83cd",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        207.6,
+        90.24
+      ]
+    },
+    {
+      "bbox_pt": [
+        221.46,
+        90.24,
+        235.36,
+        103.24
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0010",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "und"
+      },
+      "pdf_object_sha256": "ea8ff7a7ff8a8a2973f0c6b27cc0e98807db86b3740fb3b9a290faaa1405c532",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        221.46,
+        90.24
+      ]
+    },
+    {
+      "bbox_pt": [
+        237.7,
+        90.24,
+        261.61,
+        103.24
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0011",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "trennt"
+      },
+      "pdf_object_sha256": "9af5483c103780d88e605d839e140d394698d917d33577c5e13456e56fed9d75",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        237.7,
+        90.24
+      ]
+    },
+    {
+      "bbox_pt": [
+        263.95,
+        90.24,
+        316.61,
+        103.24
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0012",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Beobachtung,"
+      },
+      "pdf_object_sha256": "d56d800e398d3691d77544c2018ef8076d1b0b0c07c505474d150f94e3efbbac",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        263.95,
+        90.24
+      ]
+    },
+    {
+      "bbox_pt": [
+        318.96,
+        90.24,
+        360.55,
+        103.24
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0013",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Bewertung"
+      },
+      "pdf_object_sha256": "1f1897f023108354aa5f7d94e9bcfd17c66e55349e3e2a18ae76bc6cf50bdeba",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        318.96,
+        90.24
+      ]
+    },
+    {
+      "bbox_pt": [
+        362.89,
+        90.24,
+        376.79,
+        103.24
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0014",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "und"
+      },
+      "pdf_object_sha256": "ea8ff7a7ff8a8a2973f0c6b27cc0e98807db86b3740fb3b9a290faaa1405c532",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        362.89,
+        90.24
+      ]
+    },
+    {
+      "bbox_pt": [
+        379.13,
+        90.24,
+        410.51,
+        103.24
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0015",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "nächste"
+      },
+      "pdf_object_sha256": "76da96ad4001a38f53eb3fd70fe1dcb461e8627140e270dc442833edb647848d",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        379.13,
+        90.24
+      ]
+    },
+    {
+      "bbox_pt": [
+        412.86,
+        90.24,
+        446.5,
+        103.24
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0016",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Schritte."
+      },
+      "pdf_object_sha256": "68f04ae1cb099f5af9281b495d484974b2a89cdbe95cb82a4f7632b137cb7f00",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        412.86,
+        90.24
+      ]
+    },
+    {
+      "bbox_pt": [
+        56.69,
+        122.41,
+        126.33,
+        145.35
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0017",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 18.0,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Abschnitt:"
+      },
+      "pdf_object_sha256": "ae5f72276f793b8515f69012e0e9c10594863a17acd2260951e495227d80c6ce",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        56.69,
+        122.41
+      ]
+    },
+    {
+      "bbox_pt": [
+        130.47,
+        122.41,
+        185.76,
+        145.35
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0018",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 18.0,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Befunde"
+      },
+      "pdf_object_sha256": "833fffdccb2e311426aff368673d89ba3f9de56117a9769e5b9219d95cf66b2a",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        130.47,
+        122.41
+      ]
+    },
+    {
+      "bbox_pt": [
+        56.69,
+        155.59,
+        69.12,
+        168.59
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0019",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Die"
+      },
+      "pdf_object_sha256": "aa33c130d4e90610a18d0e53f2fefe069cfce5c9518368e41a99ddcb7585ee57",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        56.69,
+        155.59
+      ]
+    },
+    {
+      "bbox_pt": [
+        71.46,
+        155.59,
+        102.79,
+        168.59
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0020",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Befunde"
+      },
+      "pdf_object_sha256": "0ba423f81bf634baf0d679bc154da25d5d611804d4da064aa8e3bc012ab36eb9",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        71.46,
+        155.59
+      ]
+    },
+    {
+      "bbox_pt": [
+        105.14,
+        155.59,
+        121.33,
+        168.59
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0021",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "sind"
+      },
+      "pdf_object_sha256": "53c7a8c5ab5e81d5483d40c657545794726ac50e11418ecccab7fbeee0272bb5",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        105.14,
+        155.59
+      ]
+    },
+    {
+      "bbox_pt": [
+        123.68,
+        155.59,
+        170.49,
+        168.59
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0022",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "nummeriert,"
+      },
+      "pdf_object_sha256": "60eec39ae84f42a89ca997523edc6908cf6bb42d594cf80d2a241d75814539e7",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        123.68,
+        155.59
+      ]
+    },
+    {
+      "bbox_pt": [
+        172.83,
+        155.59,
+        203.6,
+        168.59
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0023",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "scanbar"
+      },
+      "pdf_object_sha256": "ca58f845201905a4f2e0a623485461c8bbdba8d3d4ec644c648634e8eca6a2ad",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        172.83,
+        155.59
+      ]
+    },
+    {
+      "bbox_pt": [
+        205.95,
+        155.59,
+        219.85,
+        168.59
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0024",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "und"
+      },
+      "pdf_object_sha256": "ea8ff7a7ff8a8a2973f0c6b27cc0e98807db86b3740fb3b9a290faaa1405c532",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        205.95,
+        155.59
+      ]
+    },
+    {
+      "bbox_pt": [
+        222.19,
+        155.59,
+        229.07,
+        168.59
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0025",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "in"
+      },
+      "pdf_object_sha256": "ab061de22fd7519b87d0d155235d3908f336ae4cd0de0bd721ff035128ce8d9f",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        222.19,
+        155.59
+      ]
+    },
+    {
+      "bbox_pt": [
+        231.41,
+        155.59,
+        250.48,
+        168.59
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0026",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "einer"
+      },
+      "pdf_object_sha256": "c66085ebe7a03fcb4a486c175f99787fed5ad7de559f5a9ecbfc57a604862aa3",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        231.41,
+        155.59
+      ]
+    },
+    {
+      "bbox_pt": [
+        252.83,
+        155.59,
+        284.07,
+        168.59
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0027",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "stabilen"
+      },
+      "pdf_object_sha256": "b64fa4994ff1384373346eb65bd5ce774caa1922cdbeef75e857d399b364f5bd",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        252.83,
+        155.59
+      ]
+    },
+    {
+      "bbox_pt": [
+        286.42,
+        155.59,
+        331.59,
+        168.59
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0028",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Reihenfolge"
+      },
+      "pdf_object_sha256": "5cabfc21b2ddde08cd5471325696aa4b3af54cc2ebef5391cca9e6a81cf3d870",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        286.42,
+        155.59
+      ]
+    },
+    {
+      "bbox_pt": [
+        333.93,
+        155.59,
+        379.65,
+        168.59
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0029",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "angeordnet."
+      },
+      "pdf_object_sha256": "2f6943c9f231ad8ac587d7f38fb07c407f39e9badfb7d6d158d2d020fe00e772",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        333.93,
+        155.59
+      ]
+    },
+    {
+      "bbox_pt": [
+        51.02,
+        181.9,
+        55.23,
+        193.37
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0030",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 9.0,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "•"
+      },
+      "pdf_object_sha256": "3cc480faacbd3281e5c9e2473dd6bdea3d00cf18531e82ea4d5bcb47b308d9f0",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        51.02,
+        181.9
+      ]
+    },
+    {
+      "bbox_pt": [
+        68.03,
+        181.93,
+        87.77,
+        194.93
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0031",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Klare"
+      },
+      "pdf_object_sha256": "1a6b8a7f3a7854cb442c84b65fc408107400f0d5129f78228366eef23bf94357",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        68.03,
+        181.93
+      ]
+    },
+    {
+      "bbox_pt": [
+        90.12,
+        181.93,
+        181.92,
+        194.93
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0032",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Verantwortungsgrenzen"
+      },
+      "pdf_object_sha256": "bdb4c0fa01bc31f3e0285613736e59ce208fa086ff7ae17dce65f0c0b9d35c61",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        90.12,
+        181.93
+      ]
+    },
+    {
+      "bbox_pt": [
+        51.02,
+        208.24,
+        55.23,
+        219.71
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0033",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 9.0,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "•"
+      },
+      "pdf_object_sha256": "3cc480faacbd3281e5c9e2473dd6bdea3d00cf18531e82ea4d5bcb47b308d9f0",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        51.02,
+        208.24
+      ]
+    },
+    {
+      "bbox_pt": [
+        68.03,
+        208.26,
+        133.38,
+        221.26
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0034",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Nachvollziehbare"
+      },
+      "pdf_object_sha256": "e05599ca834de19e6e77b76b63b3e9cc4571165390b8c7e243c19e3c1161bc1e",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        68.03,
+        208.26
+      ]
+    },
+    {
+      "bbox_pt": [
+        135.73,
+        208.26,
+        197.76,
+        221.26
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0035",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Entscheidungen"
+      },
+      "pdf_object_sha256": "90f357fc52c0ed2aa0994bcecc3f95621b1f3aab5b617d508641264ef21e1196",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        135.73,
+        208.26
+      ]
+    },
+    {
+      "bbox_pt": [
+        51.02,
+        234.58,
+        55.23,
+        246.05
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0036",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 9.0,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "•"
+      },
+      "pdf_object_sha256": "3cc480faacbd3281e5c9e2473dd6bdea3d00cf18531e82ea4d5bcb47b308d9f0",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        51.02,
+        234.58
+      ]
+    },
+    {
+      "bbox_pt": [
+        68.03,
+        234.6,
+        107.47,
+        247.6
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0037",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Prüffähige"
+      },
+      "pdf_object_sha256": "95a6ccce7a3011e6c60db998052b8149f421490a4574f75c77ac1f2b30ca273f",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        68.03,
+        234.6
+      ]
+    },
+    {
+      "bbox_pt": [
+        109.81,
+        234.6,
+        152.75,
+        247.6
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0038",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Ergebnisse"
+      },
+      "pdf_object_sha256": "08dc6a0656c20f5b8d436614f00e3fd50beccf23479fdd96236e53f91a0f543a",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        109.81,
+        234.6
+      ]
+    },
+    {
+      "bbox_pt": [
+        56.69,
+        266.77,
+        126.33,
+        289.71
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0039",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 18.0,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Abschnitt:"
+      },
+      "pdf_object_sha256": "ae5f72276f793b8515f69012e0e9c10594863a17acd2260951e495227d80c6ce",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        56.69,
+        266.77
+      ]
+    },
+    {
+      "bbox_pt": [
+        130.47,
+        266.77,
+        165.2,
+        289.71
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0040",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 18.0,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Fazit"
+      },
+      "pdf_object_sha256": "d25bf47f358e3d82b7c60c106d0cf75ae6ff550be6091696487a703ddd545e55",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        130.47,
+        266.77
+      ]
+    },
+    {
+      "bbox_pt": [
+        56.69,
+        299.95,
+        69.12,
+        312.95
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0041",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Die"
+      },
+      "pdf_object_sha256": "aa33c130d4e90610a18d0e53f2fefe069cfce5c9518368e41a99ddcb7585ee57",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        56.69,
+        299.95
+      ]
+    },
+    {
+      "bbox_pt": [
+        71.46,
+        299.95,
+        138.15,
+        312.95
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0042",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Schlussfolgerung"
+      },
+      "pdf_object_sha256": "82d574b1a560c72c550a1d4cb7207ba4bc3475e9696db90033c22b1a41ac0b45",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        71.46,
+        299.95
+      ]
+    },
+    {
+      "bbox_pt": [
+        140.5,
+        299.95,
+        180.03,
+        312.95
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0043",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "verdichtet"
+      },
+      "pdf_object_sha256": "30174f26ba17adfecdb0bee261ca3301ae5d55eb191fdcb3d9aad2102d88bf26",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        140.5,
+        299.95
+      ]
+    },
+    {
+      "bbox_pt": [
+        182.39,
+        299.95,
+        193.9,
+        312.95
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0044",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "die"
+      },
+      "pdf_object_sha256": "fd95d329965779dc945a2e91181ee845067d127ab72da4ce94218b2224790ace",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        182.39,
+        299.95
+      ]
+    },
+    {
+      "bbox_pt": [
+        196.24,
+        299.95,
+        229.82,
+        312.95
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0045",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "belegten"
+      },
+      "pdf_object_sha256": "15617f63a8ed9af737714d71a7236ea5372de6932cdce02bf5c5b546de9e3648",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        196.24,
+        299.95
+      ]
+    },
+    {
+      "bbox_pt": [
+        232.16,
+        299.95,
+        259.47,
+        312.95
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0046",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Punkte"
+      },
+      "pdf_object_sha256": "50c2b514a04d61e4d3d87d19eb258890c9967e5fb25c098eaddeefdff0c096b9",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        232.16,
+        299.95
+      ]
+    },
+    {
+      "bbox_pt": [
+        261.82,
+        299.95,
+        280.35,
+        312.95
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0047",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "ohne"
+      },
+      "pdf_object_sha256": "204df72647084d17fc0a11b3c0f45c32a9749b18ecd0ef775fd55072f33a119c",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        261.82,
+        299.95
+      ]
+    },
+    {
+      "bbox_pt": [
+        282.7,
+        299.95,
+        301.23,
+        312.95
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0048",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "neue"
+      },
+      "pdf_object_sha256": "caa231ee71946b644b5761dc56bda59550439b75b62eca02a59d4d498918e9a8",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        282.7,
+        299.95
+      ]
+    },
+    {
+      "bbox_pt": [
+        303.57,
+        299.95,
+        360.87,
+        312.95
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0049",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Behauptungen."
+      },
+      "pdf_object_sha256": "972c7d37b4c80e0ba7cdf3e8bb78e0ea19739a48a9807a9240588cb7dde60248",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        303.57,
+        299.95
+      ]
+    },
+    {
+      "bbox_pt": [
+        498.34,
+        794.37,
+        514.3,
+        804.57
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0050",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 8.0,
+        "render_mode": 0,
+        "rgb": [
+          0.364706,
+          0.407843,
+          0.45098
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Seite"
+      },
+      "pdf_object_sha256": "aa886c5dfa981ddea0708e7e2e023413cf26f0ee4e893c0e5ba8a05ce9d9e596",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        498.34,
+        794.37
+      ]
+    },
+    {
+      "bbox_pt": [
+        516.13,
+        794.37,
+        520.27,
+        804.57
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0051",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 8.0,
+        "render_mode": 0,
+        "rgb": [
+          0.364706,
+          0.407843,
+          0.45098
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "1"
+      },
+      "pdf_object_sha256": "09b9dac13a547dceee08a63856af67de93df96908fa46383f757711a7880eaf4",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        516.13,
+        794.37
+      ]
+    },
+    {
+      "bbox_pt": [
+        522.11,
+        794.37,
+        532.61,
+        804.57
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0052",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 8.0,
+        "render_mode": 0,
+        "rgb": [
+          0.364706,
+          0.407843,
+          0.45098
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "von"
+      },
+      "pdf_object_sha256": "5e6c59dc9b5bbe4fdfd9da55aeca421c3f76466ba792b22bc66df2e7694336b0",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        522.11,
+        794.37
+      ]
+    },
+    {
+      "bbox_pt": [
+        534.45,
+        794.37,
+        538.59,
+        804.57
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0053",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 8.0,
+        "render_mode": 0,
+        "rgb": [
+          0.364706,
+          0.407843,
+          0.45098
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "1"
+      },
+      "pdf_object_sha256": "09b9dac13a547dceee08a63856af67de93df96908fa46383f757711a7880eaf4",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        534.45,
+        794.37
+      ]
+    },
+    {
+      "bbox_pt": [
+        56.693,
+        47.939,
+        538.583,
+        48.439
+      ],
+      "kind": "vector",
+      "object_id": "p2-vector-0001",
+      "paint": {
+        "blend": "/Normal",
+        "fill": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "fill_alpha": 1.0,
+        "fill_pattern": null,
+        "operator": "S",
+        "scope": "page",
+        "softmask": "/None",
+        "stroke": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_pattern": null
+      },
+      "pdf_object_sha256": "d86bbf7e9f890ef83a10d0fbd2ead1fe05905e9ff8a990b728b3974b1236e6b4",
+      "transform": [
+        1.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ]
+    }
+  ]
+}

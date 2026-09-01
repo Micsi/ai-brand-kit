@@ -1,0 +1,31 @@
+{
+  "schema_version": "mermaid-svg-toolchain.v1",
+  "platform": "darwin-arm64",
+  "python": {"version":"3.12.12","executable":"/opt/homebrew/bin/python3.12","sha256":"51041dcef59a872d4e411dfd26f6264f70bd67294bebbe52a707490726f0d1a6"},
+  "package_lock": {"path":"toolchain/mermaid-svg/package-lock.json","sha256":"95105169465de88e690ca0c23deb0feb3f12ab919c64e0af3d142f5428b9ae5c","lockfile_version":3,"package_count":269,"root_package":"@mermaid-js/mermaid-cli","root_version":"11.9.0","transitive_integrity_count":268},
+  "package_json": {"path":"toolchain/mermaid-svg/package.json","sha256":"2101e2cb29232454c856b8d9abe4df423b01bf7936ee3aa263a1c9092ebec235"},
+  "artifact_bundle": {"path":"/Volumes/Daten/Projekte/BrandKit/external-artifacts/mermaid-svg/3dcbf4ebfcbe0fb08e5b7261dbabf72b56c62517c875bbacd7b9dc75c2971120","tree_sha256":"3dcbf4ebfcbe0fb08e5b7261dbabf72b56c62517c875bbacd7b9dc75c2971120","manifest_sha256":"00c687014b79d617b5d126e3397daebb2dd14a3703034ae8085659ab478f23bb","file_count":550},
+  "browser": {"name":"Google Chrome for Testing","version":"131.0.6778.204","download_url":"https://storage.googleapis.com/chrome-for-testing-public/131.0.6778.204/mac-arm64/chrome-mac-arm64.zip","archive_path":"browser/chrome-mac-arm64.zip","archive_sha256":"8fd911a87a91304b62e6e995114f5a3cf381a7d788d79895aff3e325b6c207ed","executable_relative_path":"browser/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing","executable_sha256":"e425eea96e2737645086ff0e89008286fed8b3e08d29d3258a875801a53adfc3"},
+  "node": {"version":"22.18.0","npm_version":"10.9.3","download_url":"https://nodejs.org/dist/v22.18.0/node-v22.18.0-darwin-arm64.tar.gz","archive_path":"node/node-v22.18.0-darwin-arm64.tar.gz","archive_sha256":"2c12913cba67af77ded8a399df3fd91c2e7f8628c7079da40bb9ff33bf00dfc0","executable_relative_path":"node/node-v22.18.0-darwin-arm64/bin/node","executable_sha256":"9187ad22c98cea5b635a79db52fa32ab3f6aa9d41e3abf5da71437cfef1ca9de","npm_cli_relative_path":"node/node-v22.18.0-darwin-arm64/lib/node_modules/npm/bin/npm-cli.js","npm_cli_sha256":"8e5f6f3429f8cdbe693cdc29904e9d5a7b127a494bd15c804bd54c7403bfcbe7"},
+  "configs": [
+    {"path":"toolchain/mermaid-svg/MERMAID_CONFIG.json","sha256":"57e6321b7a3a7168b3c07f5a2e26e4be1bd4b3c29f3126dcbd742ee93b18b6f7"},
+    {"path":"toolchain/mermaid-svg/PUPPETEER_CONFIG.json","sha256":"61c85bdb37aa94c1cf23662469a8737af117ee2d5532d13c52d2818752d6cc82"}
+  ],
+  "scripts": [
+    {"path":"toolchain/mermaid-svg/build-runtime","sha256":"8830e96ef685d4d2741cedc2062c3d62ef70d0a8eee63d30ee24cbad20592c4b"},
+    {"path":"toolchain/mermaid-svg/install-offline","sha256":"bbcc845426f901ae7d12fdc42953e759f8e7359c7dfa9601f1e8c42aaf10b6ee"},
+    {"path":"toolchain/mermaid-svg/render-offline","sha256":"955817cfe8a30661f01f02a506ecaa5d64db5e3066b09a7e224aac9142fd6dba"},
+    {"path":"toolchain/mermaid-svg/runtime.py","sha256":"123365d8640ce4aeb3a8258721e7dd9f8cff64a83a220d7e2fd7d63ab6129f8d"},
+    {"path":"toolchain/mermaid-svg/verify-clean-rooms","sha256":"80435620526fc8fe9f81115a447ed42407bf4a296a95df10458893e349d56eef"},
+    {"path":"toolchain/mermaid-svg/verify-bundle","sha256":"fed90826344cd73f3de5e80c0d7a2303678070232976f77c329dc97d23280b42"},
+    {"path":"toolchain/mermaid-svg/version-log","sha256":"a01a4491b9f31a4f84d795a1c5f1e2ac8a7a46e2f726889fcbfe6bc62e38668b"}
+  ],
+  "command": ["mmdc","-i","INPUT.mmd","-o","OUTPUT.svg","-b","transparent","-t","neutral","-c","MERMAID_CONFIG.json","-p","PUPPETEER_CONFIG.json","--quiet"],
+  "input_encoding":"UTF-8","output":"SVG",
+  "network":{"mode":"disabled","controls":["mermaid-v1-subset-no-external-forms","loopback-dead-proxy-environment","chrome-host-resolver-map-all-to-0.0.0.0","chrome-background-networking-disabled"]},
+  "environment":{"LANG":"C","LC_ALL":"C","TZ":"UTC","SOURCE_DATE_EPOCH":"0"},
+  "offline_install":{"strategy":"verified-cache-streaming-materializer","artifact_store":"immutable-manifested-node-browser-npm-bundle","missing_artifact_policy":"fail","transitive_integrity":"package-lock-v3-integrity+streamed-output-sha256"},
+  "runtime_image":{"path":"/Volumes/Daten/AgentStores/joh/runtime-store/mermaid-svg-images/5c3b5ec70d41a6f671ceea0849e70918a09c48f5b116c3387451eea07153c98e","manifest_sha256":"5c3b5ec70d41a6f671ceea0849e70918a09c48f5b116c3387451eea07153c98e","entry_count":33219},
+  "clean_room_evidence":{"fresh_directories":2,"network":"disabled","svg_sha256":"a36bc6ef8b599036c18f15454e657e80add63f373331e75273686678bf873698","byte_identical":true,"verified_at":"2026-09-01T03:13:32Z"},
+  "renderer_implemented":true
+}

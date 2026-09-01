@@ -1,0 +1,11 @@
+{
+  "$id": "impeccable-transaction.v2.schema.json", "type": "object", "additionalProperties": false,
+  "required": ["schema_version", "transaction_id", "run_id", "project_root", "project_commit", "brand_content_sha256", "backup", "staging", "entries", "key_id", "hmac_sha256"],
+  "properties": {
+    "schema_version": {"const": "brandkit-impeccable-transaction.v2"}, "transaction_id": {"$ref": "#/$defs/id"}, "run_id": {"$ref": "#/$defs/id"}, "project_root": {"type": "string", "minLength": 1},
+    "project_commit": {"$ref": "#/$defs/sha1"}, "brand_content_sha256": {"$ref": "#/$defs/sha256"},
+    "backup": {"type": "string", "pattern": "^\\.brandkit/transactions/preimages/[0-9a-f]{32}$"}, "staging": {"type": "string", "pattern": "^\\.brandkit/transactions/staging/[0-9a-f]{32}$"},
+    "entries": {"type": "array", "minItems": 1, "maxItems": 6, "items": {"type": "object", "additionalProperties": false, "required": ["path", "preimage_sha256", "postimage_sha256"], "properties": {"path": {"enum": ["PRODUCT.md", "DESIGN.md", ".impeccable/design.json", ".impeccable/config.json", ".brandkit/impeccable-policy.json", ".brandkit/review/impeccable-design-contract.md"]}, "preimage_sha256": {"anyOf": [{"type": "null"}, {"$ref": "#/$defs/sha256"}]}, "postimage_sha256": {"$ref": "#/$defs/sha256"}}}}, "key_id": {"type": "string", "pattern": "^[0-9a-f]{16}$"}, "hmac_sha256": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {"id": {"type": "string", "pattern": "^[0-9a-f]{32}$"}, "sha1": {"type": "string", "pattern": "^[0-9a-f]{40}$"}, "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}
+}

@@ -1,0 +1,32 @@
+#!/bin/sh
+set -eu
+script_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd -P)
+python3 - "$script_dir/../graphviz-svg.v1.lock.json" "${1:-}" "$script_dir" <<'PY'
+import hashlib,json,pathlib,sys
+lock=json.loads(pathlib.Path(sys.argv[1]).read_text()); root=pathlib.Path(sys.argv[2])
+if lock.get("schema_version")!="graphviz-svg-toolchain.v1":raise SystemExit("Graphviz lock schema mismatch")
+expected=pathlib.Path(lock["artifact_bundle"]["path"])
+if not sys.argv[2] or root.is_symlink() or root.resolve()!=expected.resolve() or not root.is_dir():raise SystemExit("Graphviz CAS path mismatch")
+manifest=root/"files.sha256.json"
+if manifest.is_symlink() or hashlib.sha256(manifest.read_bytes()).hexdigest()!=lock["artifact_bundle"]["manifest_sha256"]:raise SystemExit("Graphviz manifest hash mismatch")
+payload=json.loads(manifest.read_text()); records=payload.get("files") if payload.get("schema_version")=="graphviz-artifact-bundle.v1" else None
+if not isinstance(records,list) or len(records)!=lock["artifact_bundle"]["file_count"]:raise SystemExit("Graphviz manifest inventory mismatch")
+canonical=json.dumps(records,sort_keys=True,separators=(",",":")).encode()
+if hashlib.sha256(canonical).hexdigest()!=lock["artifact_bundle"]["tree_sha256"]:raise SystemExit("Graphviz tree identity mismatch")
+seen=set()
+for row in records:
+ rel=row.get("path"); p=root/rel
+ if not isinstance(rel,str) or rel.startswith("/") or ".." in pathlib.PurePosixPath(rel).parts or rel in seen:raise SystemExit("Graphviz manifest path invalid")
+ seen.add(rel)
+ if p.is_symlink() or not p.is_file() or p.stat().st_size!=row.get("size") or hashlib.sha256(p.read_bytes()).hexdigest()!=row.get("sha256"):raise SystemExit(f"Graphviz component hash mismatch: {rel}")
+actual={p.relative_to(root).as_posix() for p in root.rglob("*") if p.is_file() and p.name!="files.sha256.json"}
+if actual!=seen:raise SystemExit("Graphviz CAS contains unmanifested files")
+for component in ("node","package","font"):
+ row=lock[component]; p=root/row["archive_path"]
+ if hashlib.sha256(p.read_bytes()).hexdigest()!=row["archive_sha256"]:raise SystemExit(f"Graphviz {component} pin mismatch")
+scripts=pathlib.Path(sys.argv[3]); names={"render_mjs_sha256":"render.mjs","install_sha256":"install-offline","render_sha256":"render-offline","verify_bundle_sha256":"verify-bundle","verify_clean_rooms_sha256":"verify-clean-rooms"}
+for field,name in names.items():
+ p=scripts/name
+ if p.is_symlink() or hashlib.sha256(p.read_bytes()).hexdigest()!=lock["scripts"][field]:raise SystemExit(f"Graphviz script hash mismatch: {name}")
+print(lock["artifact_bundle"]["tree_sha256"])
+PY

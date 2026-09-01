@@ -1,0 +1,73 @@
+#!/bin/sh
+set -eu
+if [ "$#" -lt 1 ] || [ "$#" -gt 3 ]; then echo "usage: rollback HOME [KEY] [TARGET_VERSION]" >&2; exit 64; fi
+home=$1
+key=${2:-$home/.agents/keys/brand-voice-pdf.key}
+target_version=${3:-}
+exec python3.12 -B - "$home" "$key" "$target_version" <<'PY'
+import hashlib,hmac,json,os,pathlib,stat,subprocess,sys
+home=pathlib.Path(sys.argv[1]).resolve(strict=True);key_path=pathlib.Path(sys.argv[2]);requested=sys.argv[3]
+if key_path.is_symlink() or not key_path.is_file(): raise SystemExit('rollback key is missing or is a symlink')
+key=key_path.read_bytes();state=home/'.agents/activation-state';current_path=state/'brand-voice-pdf.json'
+if len(key)<32:raise SystemExit('rollback key is too short')
+def load(path):
+ e=json.loads(path.read_text());raw=json.dumps(e['payload'],sort_keys=True,separators=(',',':'),ensure_ascii=False).encode()
+ if set(e)!={'payload','hmac_sha256'} or not hmac.compare_digest(e['hmac_sha256'],hmac.new(key,raw,hashlib.sha256).hexdigest()):raise SystemExit(f'signature failed: {path}')
+ return e['payload']
+current_bytes=current_path.read_bytes();current=load(current_path)
+predecessors=current.get('predecessor_links') or {};versions={pathlib.PurePosixPath(target).name for target in predecessors.values() if target and '/skill-store/brand-voice-pdf/' in target}
+if len(versions)!=1:raise SystemExit('activation does not name exactly one predecessor version')
+target=next(iter(versions))
+if requested and requested!=target:raise SystemExit('requested rollback target differs from signed predecessor')
+manifest_path=state/f'brand-voice-pdf-{target}.manifest.json';manifest=load(manifest_path)
+links=manifest.get('link_topology');
+if manifest.get('version')!=target or not isinstance(links,dict):raise SystemExit('predecessor manifest is invalid')
+def inventory(root):
+ out=[]
+ if root.is_symlink() or not root.is_dir():raise SystemExit(f'rollback target tree is missing or linked: {root}')
+ for path in sorted(root.rglob('*')):
+  st=path.lstat();item={'path':path.relative_to(root).as_posix(),'mode':format(stat.S_IMODE(st.st_mode),'04o'),'type':'symlink' if path.is_symlink() else 'directory' if path.is_dir() else 'file'}
+  if path.is_symlink():item['target']=os.readlink(path)
+  elif path.is_file():item['sha256']=hashlib.sha256(path.read_bytes()).hexdigest()
+  out.append(item)
+ return out
+current_version=current.get('version');current_manifest_path=state/f'brand-voice-pdf-{current_version}.manifest.json';current_manifest=load(current_manifest_path)
+if hashlib.sha256(current_manifest_path.read_bytes()).hexdigest()!=current.get('manifest_sha256') or current_manifest.get('version')!=current_version:
+ raise SystemExit('active manifest differs from signed activation')
+current_release=home/'.agents/skill-store/brand-voice-pdf'/current_version;current_runtime=home/'.agents/runtime-store/brandkit-pdf-renderer'/current_version
+if inventory(current_release)!=current_manifest.get('release'):raise SystemExit('active release differs from signed manifest')
+if inventory(current_runtime)!=current_manifest.get('runtime'):raise SystemExit('active runtime differs from signed manifest')
+if current.get('links')!=current_manifest.get('link_topology'):raise SystemExit('active link topology differs from current manifest')
+for raw_path,link_target in current['links'].items():
+ path=pathlib.Path(raw_path)
+ if not path.is_symlink() or os.readlink(path)!=link_target:raise SystemExit(f'active discovery link differs: {path}')
+release=home/'.agents/skill-store/brand-voice-pdf'/target;runtime=home/'.agents/runtime-store/brandkit-pdf-renderer'/target
+if inventory(release)!=manifest.get('release') or inventory(runtime)!=manifest.get('runtime'):
+ raise SystemExit('rollback target release/runtime bytes, modes, files, or links differ from signed predecessor manifest')
+for raw_path,link_target in links.items():
+ path=pathlib.Path(raw_path)
+ try:path.parent.resolve(strict=True).relative_to(home)
+ except ValueError:raise SystemExit(f'rollback target link escapes HOME: {path}')
+ if not isinstance(link_target,str) or not link_target:raise SystemExit('rollback target link topology is invalid')
+before={p:(os.readlink(pathlib.Path(p)) if pathlib.Path(p).is_symlink() else None) for p in links}
+changed=[]
+try:
+ for index,(raw_path,link_target) in enumerate(links.items()):
+  path=pathlib.Path(raw_path);stage=path.with_name('.'+path.name+'.rollback-next');stage.unlink(missing_ok=True);stage.symlink_to(link_target);os.replace(stage,path);changed.append(path)
+  if os.environ.get('BRANDKIT_ROLLBACK_FAIL_AFTER_SWITCH')==str(index+1) or (index==0 and os.environ.get('BRANDKIT_ROLLBACK_FAIL_AFTER_AGENT_SWITCH')=='1'):raise RuntimeError(f'injected rollback failure after switch {index+1}')
+ payload={'schema_version':'brand-voice-pdf-activation.v1','version':target,'manifest_sha256':hashlib.sha256(manifest_path.read_bytes()).hexdigest(),'predecessor_links':before,'links':links}
+ envelope={'payload':payload,'hmac_sha256':hmac.new(key,json.dumps(payload,sort_keys=True,separators=(',',':')).encode(),hashlib.sha256).hexdigest()}
+ stage=current_path.with_name('.'+current_path.name+'.rollback-next');stage.write_text(json.dumps(envelope,sort_keys=True,indent=2)+'\n');os.replace(stage,current_path)
+ verifier=runtime/'toolchain/pdf-renderer/verify-installation';launcher=release/'scripts/run'
+ env={**os.environ,'BRANDKIT_HOME':str(home),'PYTHONDONTWRITEBYTECODE':'1'}
+ subprocess.run([str(verifier),str(home),str(key_path),target],check=True,capture_output=True,env=env)
+ subprocess.run([str(launcher),'--help'],check=True,capture_output=True,env=env)
+except Exception:
+ for path in reversed(changed):
+  old=before[str(path)];stage=path.with_name('.'+path.name+'.rollback-restore');stage.unlink(missing_ok=True)
+  if old is None:path.unlink(missing_ok=True)
+  else:stage.symlink_to(old);os.replace(stage,path)
+ restore=current_path.with_name('.'+current_path.name+'.activation-restore');restore.write_bytes(current_bytes);os.replace(restore,current_path)
+ raise
+print(target)
+PY

@@ -1,0 +1,22 @@
+#!/bin/sh
+set -eu
+if [ "$#" -ne 2 ]; then echo "usage: version-log INSTALL_DIR IMMUTABLE_BUNDLE" >&2; exit 64; fi
+install_dir=$1
+bundle=$2
+script_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd -P)
+bundle_hash=$($script_dir/verify-bundle "$bundle")
+node="$install_dir/node/node-v22.18.0-darwin-arm64/bin/node"
+npm="$install_dir/node/node-v22.18.0-darwin-arm64/bin/npm"
+chrome="$install_dir/browser/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing"
+node_hash=$(shasum -a 256 "$node" | awk '{print $1}')
+chrome_hash=$(shasum -a 256 "$chrome" | awk '{print $1}')
+lock_hash=$(shasum -a 256 "$script_dir/../mermaid-svg.v1.lock.json" | awk '{print $1}')
+node_version=$($node --version)
+npm_version=$(PATH="$(dirname "$node"):/usr/bin:/bin" "$npm" --version)
+mmdc_version=$(PATH="$(dirname "$node"):/usr/bin:/bin" "$install_dir/node_modules/.bin/mmdc" --version)
+chrome_version=$("$chrome" --version)
+python3 - "$bundle_hash" "$lock_hash" "$node_hash" "$node_version" "$npm_version" "$mmdc_version" "$chrome_hash" "$chrome_version" <<'PY'
+import json,sys
+keys=("bundle_tree_sha256","lock_sha256","node_executable_sha256","node_version","npm_version","mermaid_cli_version","browser_executable_sha256","browser_version")
+print(json.dumps({"schema_version":"mermaid-version-log.v1",**dict(zip(keys,sys.argv[1:]))},sort_keys=True,separators=(",",":")))
+PY

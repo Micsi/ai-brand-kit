@@ -1,0 +1,768 @@
+{
+  "children": [
+    {
+      "id": "title",
+      "level": 1,
+      "line": 14,
+      "text": "Leistungsangebot",
+      "type": "heading"
+    },
+    {
+      "line": 15,
+      "type": "blank"
+    },
+    {
+      "id": "context",
+      "level": 2,
+      "line": 16,
+      "text": "Ausgangslage",
+      "type": "heading"
+    },
+    {
+      "line": 17,
+      "type": "blank"
+    },
+    {
+      "inline": [
+        {
+          "mutable": true,
+          "text": "Das Vorhaben braucht einen klaren Rahmen und prüfbare Liefergegenstände.",
+          "type": "text"
+        }
+      ],
+      "line": 18,
+      "text": "Das Vorhaben braucht einen klaren Rahmen und prüfbare Liefergegenstände.",
+      "type": "paragraph"
+    },
+    {
+      "line": 19,
+      "type": "blank"
+    },
+    {
+      "id": "scope",
+      "level": 2,
+      "line": 20,
+      "text": "Umfang",
+      "type": "heading"
+    },
+    {
+      "line": 21,
+      "type": "blank"
+    },
+    {
+      "inline": [
+        {
+          "mutable": true,
+          "text": "Der Umfang umfasst Konzeption, Umsetzung und dokumentierte Übergabe.",
+          "type": "text"
+        }
+      ],
+      "line": 22,
+      "text": "Der Umfang umfasst Konzeption, Umsetzung und dokumentierte Übergabe.",
+      "type": "paragraph"
+    },
+    {
+      "line": 23,
+      "type": "blank"
+    },
+    {
+      "id": "deliverables",
+      "level": 2,
+      "line": 24,
+      "text": "Liefergegenstände",
+      "type": "heading"
+    },
+    {
+      "line": 25,
+      "type": "blank"
+    },
+    {
+      "items": [
+        {
+          "inline": [
+            {
+              "mutable": true,
+              "text": "Abgestimmtes Dokumentkonzept",
+              "type": "text"
+            }
+          ],
+          "text": "Abgestimmtes Dokumentkonzept"
+        },
+        {
+          "inline": [
+            {
+              "mutable": true,
+              "text": "Reproduzierbare Ausgabe",
+              "type": "text"
+            }
+          ],
+          "text": "Reproduzierbare Ausgabe"
+        },
+        {
+          "inline": [
+            {
+              "mutable": true,
+              "text": "Technischer Prüfbericht",
+              "type": "text"
+            }
+          ],
+          "text": "Technischer Prüfbericht"
+        }
+      ],
+      "line": 26,
+      "type": "unordered-list"
+    },
+    {
+      "line": 29,
+      "type": "blank"
+    },
+    {
+      "id": "terms",
+      "level": 2,
+      "line": 30,
+      "text": "Bedingungen",
+      "type": "heading"
+    },
+    {
+      "line": 31,
+      "type": "blank"
+    },
+    {
+      "inline": [
+        {
+          "mutable": true,
+          "text": "Änderungen am Umfang werden vor ihrer Umsetzung gemeinsam bestätigt.",
+          "type": "text"
+        }
+      ],
+      "line": 32,
+      "text": "Änderungen am Umfang werden vor ihrer Umsetzung gemeinsam bestätigt.",
+      "type": "paragraph"
+    }
+  ],
+  "contract": "markdown-contract.v2",
+  "frontmatter": {
+    "assets": [],
+    "document_id": "golden-offer",
+    "document_type": "offer",
+    "facts": [],
+    "lang": "de-DE",
+    "rights": [],
+    "schema_version": "markdown-document.v1",
+    "sources": [],
+    "status": "release",
+    "title": "Leistungsangebot",
+    "todos": []
+  },
+  "humanizer_segments": {
+    "mutable": [
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 329,
+        "kind": "natural-prose",
+        "old_hash": "27d59ddf74901746fbadc8015f2f8569cae9a9c931ecd7eb84bf180642cd0c5e",
+        "ordinal": 1,
+        "role": "segment",
+        "segment_id": "mutable-917f5e137903c9316c95e819",
+        "sha256": "27d59ddf74901746fbadc8015f2f8569cae9a9c931ecd7eb84bf180642cd0c5e",
+        "start_byte": 255,
+        "text": "Das Vorhaben braucht einen klaren Rahmen und prüfbare Liefergegenstände."
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 420,
+        "kind": "natural-prose",
+        "old_hash": "41ffd40a216576b81e8131879daa8dc9bb3653f227f0c8bec671dacaebfa78c9",
+        "ordinal": 2,
+        "role": "segment",
+        "segment_id": "mutable-4c7e5d76d27bb36c635e45dd",
+        "sha256": "41ffd40a216576b81e8131879daa8dc9bb3653f227f0c8bec671dacaebfa78c9",
+        "start_byte": 351,
+        "text": "Der Umfang umfasst Konzeption, Umsetzung und dokumentierte Übergabe."
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 491,
+        "kind": "natural-prose",
+        "old_hash": "0791128b7b236545f1c887061e616ea6e295fa3c7ddac79af8e1b7848232a277",
+        "ordinal": 3,
+        "role": "segment",
+        "segment_id": "mutable-4f6dd1d64a64ce142d5c8ab4",
+        "sha256": "0791128b7b236545f1c887061e616ea6e295fa3c7ddac79af8e1b7848232a277",
+        "start_byte": 463,
+        "text": "Abgestimmtes Dokumentkonzept"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 517,
+        "kind": "natural-prose",
+        "old_hash": "4749e78732e7414eed38f49754edd5b4c8f55e8d6ad52111c53320d92ccd2fd4",
+        "ordinal": 4,
+        "role": "segment",
+        "segment_id": "mutable-ff57bc81e872d97bfebabf9b",
+        "sha256": "4749e78732e7414eed38f49754edd5b4c8f55e8d6ad52111c53320d92ccd2fd4",
+        "start_byte": 494,
+        "text": "Reproduzierbare Ausgabe"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 544,
+        "kind": "natural-prose",
+        "old_hash": "1019876e59b7c36717220052f7c6fe274fe2a5c8c4eafedd470823b8efa367d4",
+        "ordinal": 5,
+        "role": "segment",
+        "segment_id": "mutable-5f79f462a104b839ffe551be",
+        "sha256": "1019876e59b7c36717220052f7c6fe274fe2a5c8c4eafedd470823b8efa367d4",
+        "start_byte": 520,
+        "text": "Technischer Prüfbericht"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 641,
+        "kind": "natural-prose",
+        "old_hash": "6712fa0f5482343e1d10c93dab5f3c0fc7576e846255495ef4ef6411f891e3c9",
+        "ordinal": 6,
+        "role": "segment",
+        "segment_id": "mutable-91675ab02f917687eef52745",
+        "sha256": "6712fa0f5482343e1d10c93dab5f3c0fc7576e846255495ef4ef6411f891e3c9",
+        "start_byte": 571,
+        "text": "Änderungen am Umfang werden vor ihrer Umsetzung gemeinsam bestätigt."
+      }
+    ],
+    "partition": [
+      {
+        "ast_path": "document/frontmatter",
+        "classification": "protected",
+        "end_byte": 198,
+        "kind": "frontmatter",
+        "old_hash": "9cf51f7f59bd65eaee200c95378700a6d609bed08a350be871963b10444b4928",
+        "ordinal": 1,
+        "role": "document-metadata",
+        "segment_id": "protected-63274e878959ab9eb92f8a7c",
+        "sha256": "9cf51f7f59bd65eaee200c95378700a6d609bed08a350be871963b10444b4928",
+        "start_byte": 0,
+        "text": "---\nschema_version: markdown-document.v1\ndocument_id: golden-offer\ndocument_type: offer\ntitle: Leistungsangebot\nlang: de-DE\nstatus: release\nfacts: []\nsources: []\nassets: []\nrights: []\ntodos: []\n---\n"
+      },
+      {
+        "ast_path": "document/directive/title",
+        "classification": "protected",
+        "end_byte": 226,
+        "kind": "directive",
+        "old_hash": "734b995c2fef5ef05f626394bd4ac7fd285a90b2724654f72c407c8a3b401285",
+        "ordinal": 1,
+        "role": "title",
+        "segment_id": "protected-0975bbfa365c9d92158ef283",
+        "sha256": "734b995c2fef5ef05f626394bd4ac7fd285a90b2724654f72c407c8a3b401285",
+        "start_byte": 198,
+        "text": "# Leistungsangebot {#title}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 227,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 1,
+        "role": "structural-bytes",
+        "segment_id": "protected-9afa7534ec84d0bf2257eef0",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 226,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/context",
+        "classification": "protected",
+        "end_byte": 254,
+        "kind": "directive",
+        "old_hash": "8c1466ea4b1504526ff812db86c91a8ce5d48a929f43b218920861cac626d872",
+        "ordinal": 1,
+        "role": "context",
+        "segment_id": "protected-3f6941f95adcf99581f4d377",
+        "sha256": "8c1466ea4b1504526ff812db86c91a8ce5d48a929f43b218920861cac626d872",
+        "start_byte": 227,
+        "text": "## Ausgangslage {#context}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 255,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 2,
+        "role": "structural-bytes",
+        "segment_id": "protected-cbc160d37b05946352292b51",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 254,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 329,
+        "kind": "natural-prose",
+        "old_hash": "27d59ddf74901746fbadc8015f2f8569cae9a9c931ecd7eb84bf180642cd0c5e",
+        "ordinal": 1,
+        "role": "segment",
+        "segment_id": "mutable-917f5e137903c9316c95e819",
+        "sha256": "27d59ddf74901746fbadc8015f2f8569cae9a9c931ecd7eb84bf180642cd0c5e",
+        "start_byte": 255,
+        "text": "Das Vorhaben braucht einen klaren Rahmen und prüfbare Liefergegenstände."
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 331,
+        "kind": "syntax",
+        "old_hash": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "ordinal": 3,
+        "role": "structural-bytes",
+        "segment_id": "protected-5339e929b7b0dbfff3091dd5",
+        "sha256": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "start_byte": 329,
+        "text": "\n\n"
+      },
+      {
+        "ast_path": "document/directive/scope",
+        "classification": "protected",
+        "end_byte": 350,
+        "kind": "directive",
+        "old_hash": "a2310e78aefe0798820209eb9e7a8333e4f92a8fc2f55b2b53cdc6ac95c52ddc",
+        "ordinal": 1,
+        "role": "scope",
+        "segment_id": "protected-bfefad51b57cb1f5417c3fae",
+        "sha256": "a2310e78aefe0798820209eb9e7a8333e4f92a8fc2f55b2b53cdc6ac95c52ddc",
+        "start_byte": 331,
+        "text": "## Umfang {#scope}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 351,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 4,
+        "role": "structural-bytes",
+        "segment_id": "protected-db9bb4c8d3316ecdfc3bc19a",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 350,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 420,
+        "kind": "natural-prose",
+        "old_hash": "41ffd40a216576b81e8131879daa8dc9bb3653f227f0c8bec671dacaebfa78c9",
+        "ordinal": 2,
+        "role": "segment",
+        "segment_id": "mutable-4c7e5d76d27bb36c635e45dd",
+        "sha256": "41ffd40a216576b81e8131879daa8dc9bb3653f227f0c8bec671dacaebfa78c9",
+        "start_byte": 351,
+        "text": "Der Umfang umfasst Konzeption, Umsetzung und dokumentierte Übergabe."
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 422,
+        "kind": "syntax",
+        "old_hash": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "ordinal": 5,
+        "role": "structural-bytes",
+        "segment_id": "protected-7406e07bb89250ac7ea4e9bc",
+        "sha256": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "start_byte": 420,
+        "text": "\n\n"
+      },
+      {
+        "ast_path": "document/directive/deliverables",
+        "classification": "protected",
+        "end_byte": 460,
+        "kind": "directive",
+        "old_hash": "3fce1638d7fe189a7c48225f39b15f8b4b7c1249588c2053086ca83f17243aba",
+        "ordinal": 1,
+        "role": "deliverables",
+        "segment_id": "protected-7f4b386567486c3a3e63b5bf",
+        "sha256": "3fce1638d7fe189a7c48225f39b15f8b4b7c1249588c2053086ca83f17243aba",
+        "start_byte": 422,
+        "text": "## Liefergegenstände {#deliverables}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 463,
+        "kind": "syntax",
+        "old_hash": "4a0b0fbdbf6ee3656f62dec525e8a2b1cbf11073bb250e465bcfdced0b953c44",
+        "ordinal": 6,
+        "role": "structural-bytes",
+        "segment_id": "protected-7e9ea612b2a3f2f6881cedae",
+        "sha256": "4a0b0fbdbf6ee3656f62dec525e8a2b1cbf11073bb250e465bcfdced0b953c44",
+        "start_byte": 460,
+        "text": "\n- "
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 491,
+        "kind": "natural-prose",
+        "old_hash": "0791128b7b236545f1c887061e616ea6e295fa3c7ddac79af8e1b7848232a277",
+        "ordinal": 3,
+        "role": "segment",
+        "segment_id": "mutable-4f6dd1d64a64ce142d5c8ab4",
+        "sha256": "0791128b7b236545f1c887061e616ea6e295fa3c7ddac79af8e1b7848232a277",
+        "start_byte": 463,
+        "text": "Abgestimmtes Dokumentkonzept"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 494,
+        "kind": "syntax",
+        "old_hash": "4a0b0fbdbf6ee3656f62dec525e8a2b1cbf11073bb250e465bcfdced0b953c44",
+        "ordinal": 7,
+        "role": "structural-bytes",
+        "segment_id": "protected-22983067b2bd565d1e0da203",
+        "sha256": "4a0b0fbdbf6ee3656f62dec525e8a2b1cbf11073bb250e465bcfdced0b953c44",
+        "start_byte": 491,
+        "text": "\n- "
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 517,
+        "kind": "natural-prose",
+        "old_hash": "4749e78732e7414eed38f49754edd5b4c8f55e8d6ad52111c53320d92ccd2fd4",
+        "ordinal": 4,
+        "role": "segment",
+        "segment_id": "mutable-ff57bc81e872d97bfebabf9b",
+        "sha256": "4749e78732e7414eed38f49754edd5b4c8f55e8d6ad52111c53320d92ccd2fd4",
+        "start_byte": 494,
+        "text": "Reproduzierbare Ausgabe"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 520,
+        "kind": "syntax",
+        "old_hash": "4a0b0fbdbf6ee3656f62dec525e8a2b1cbf11073bb250e465bcfdced0b953c44",
+        "ordinal": 8,
+        "role": "structural-bytes",
+        "segment_id": "protected-0d0c85d0e40aed27ff38e2a9",
+        "sha256": "4a0b0fbdbf6ee3656f62dec525e8a2b1cbf11073bb250e465bcfdced0b953c44",
+        "start_byte": 517,
+        "text": "\n- "
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 544,
+        "kind": "natural-prose",
+        "old_hash": "1019876e59b7c36717220052f7c6fe274fe2a5c8c4eafedd470823b8efa367d4",
+        "ordinal": 5,
+        "role": "segment",
+        "segment_id": "mutable-5f79f462a104b839ffe551be",
+        "sha256": "1019876e59b7c36717220052f7c6fe274fe2a5c8c4eafedd470823b8efa367d4",
+        "start_byte": 520,
+        "text": "Technischer Prüfbericht"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 546,
+        "kind": "syntax",
+        "old_hash": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "ordinal": 9,
+        "role": "structural-bytes",
+        "segment_id": "protected-e414e4605b991629d2ee1b9e",
+        "sha256": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "start_byte": 544,
+        "text": "\n\n"
+      },
+      {
+        "ast_path": "document/directive/terms",
+        "classification": "protected",
+        "end_byte": 570,
+        "kind": "directive",
+        "old_hash": "a3ac709f55f9255c042adb09d7a7913ac64de91a448225284a8302c328402a7d",
+        "ordinal": 1,
+        "role": "terms",
+        "segment_id": "protected-9c953811c0df69aec69c97a3",
+        "sha256": "a3ac709f55f9255c042adb09d7a7913ac64de91a448225284a8302c328402a7d",
+        "start_byte": 546,
+        "text": "## Bedingungen {#terms}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 571,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 10,
+        "role": "structural-bytes",
+        "segment_id": "protected-cfa8a38e8458379a7c1c80de",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 570,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 641,
+        "kind": "natural-prose",
+        "old_hash": "6712fa0f5482343e1d10c93dab5f3c0fc7576e846255495ef4ef6411f891e3c9",
+        "ordinal": 6,
+        "role": "segment",
+        "segment_id": "mutable-91675ab02f917687eef52745",
+        "sha256": "6712fa0f5482343e1d10c93dab5f3c0fc7576e846255495ef4ef6411f891e3c9",
+        "start_byte": 571,
+        "text": "Änderungen am Umfang werden vor ihrer Umsetzung gemeinsam bestätigt."
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 642,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 11,
+        "role": "structural-bytes",
+        "segment_id": "protected-fd2aa1643d39d8b6db1f5253",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 641,
+        "text": "\n"
+      }
+    ],
+    "protected": [
+      {
+        "ast_path": "document/frontmatter",
+        "classification": "protected",
+        "end_byte": 198,
+        "kind": "frontmatter",
+        "old_hash": "9cf51f7f59bd65eaee200c95378700a6d609bed08a350be871963b10444b4928",
+        "ordinal": 1,
+        "role": "document-metadata",
+        "segment_id": "protected-63274e878959ab9eb92f8a7c",
+        "sha256": "9cf51f7f59bd65eaee200c95378700a6d609bed08a350be871963b10444b4928",
+        "start_byte": 0,
+        "text": "---\nschema_version: markdown-document.v1\ndocument_id: golden-offer\ndocument_type: offer\ntitle: Leistungsangebot\nlang: de-DE\nstatus: release\nfacts: []\nsources: []\nassets: []\nrights: []\ntodos: []\n---\n"
+      },
+      {
+        "ast_path": "document/directive/title",
+        "classification": "protected",
+        "end_byte": 226,
+        "kind": "directive",
+        "old_hash": "734b995c2fef5ef05f626394bd4ac7fd285a90b2724654f72c407c8a3b401285",
+        "ordinal": 1,
+        "role": "title",
+        "segment_id": "protected-0975bbfa365c9d92158ef283",
+        "sha256": "734b995c2fef5ef05f626394bd4ac7fd285a90b2724654f72c407c8a3b401285",
+        "start_byte": 198,
+        "text": "# Leistungsangebot {#title}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 227,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 1,
+        "role": "structural-bytes",
+        "segment_id": "protected-9afa7534ec84d0bf2257eef0",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 226,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/context",
+        "classification": "protected",
+        "end_byte": 254,
+        "kind": "directive",
+        "old_hash": "8c1466ea4b1504526ff812db86c91a8ce5d48a929f43b218920861cac626d872",
+        "ordinal": 1,
+        "role": "context",
+        "segment_id": "protected-3f6941f95adcf99581f4d377",
+        "sha256": "8c1466ea4b1504526ff812db86c91a8ce5d48a929f43b218920861cac626d872",
+        "start_byte": 227,
+        "text": "## Ausgangslage {#context}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 255,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 2,
+        "role": "structural-bytes",
+        "segment_id": "protected-cbc160d37b05946352292b51",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 254,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 331,
+        "kind": "syntax",
+        "old_hash": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "ordinal": 3,
+        "role": "structural-bytes",
+        "segment_id": "protected-5339e929b7b0dbfff3091dd5",
+        "sha256": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "start_byte": 329,
+        "text": "\n\n"
+      },
+      {
+        "ast_path": "document/directive/scope",
+        "classification": "protected",
+        "end_byte": 350,
+        "kind": "directive",
+        "old_hash": "a2310e78aefe0798820209eb9e7a8333e4f92a8fc2f55b2b53cdc6ac95c52ddc",
+        "ordinal": 1,
+        "role": "scope",
+        "segment_id": "protected-bfefad51b57cb1f5417c3fae",
+        "sha256": "a2310e78aefe0798820209eb9e7a8333e4f92a8fc2f55b2b53cdc6ac95c52ddc",
+        "start_byte": 331,
+        "text": "## Umfang {#scope}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 351,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 4,
+        "role": "structural-bytes",
+        "segment_id": "protected-db9bb4c8d3316ecdfc3bc19a",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 350,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 422,
+        "kind": "syntax",
+        "old_hash": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "ordinal": 5,
+        "role": "structural-bytes",
+        "segment_id": "protected-7406e07bb89250ac7ea4e9bc",
+        "sha256": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "start_byte": 420,
+        "text": "\n\n"
+      },
+      {
+        "ast_path": "document/directive/deliverables",
+        "classification": "protected",
+        "end_byte": 460,
+        "kind": "directive",
+        "old_hash": "3fce1638d7fe189a7c48225f39b15f8b4b7c1249588c2053086ca83f17243aba",
+        "ordinal": 1,
+        "role": "deliverables",
+        "segment_id": "protected-7f4b386567486c3a3e63b5bf",
+        "sha256": "3fce1638d7fe189a7c48225f39b15f8b4b7c1249588c2053086ca83f17243aba",
+        "start_byte": 422,
+        "text": "## Liefergegenstände {#deliverables}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 463,
+        "kind": "syntax",
+        "old_hash": "4a0b0fbdbf6ee3656f62dec525e8a2b1cbf11073bb250e465bcfdced0b953c44",
+        "ordinal": 6,
+        "role": "structural-bytes",
+        "segment_id": "protected-7e9ea612b2a3f2f6881cedae",
+        "sha256": "4a0b0fbdbf6ee3656f62dec525e8a2b1cbf11073bb250e465bcfdced0b953c44",
+        "start_byte": 460,
+        "text": "\n- "
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 494,
+        "kind": "syntax",
+        "old_hash": "4a0b0fbdbf6ee3656f62dec525e8a2b1cbf11073bb250e465bcfdced0b953c44",
+        "ordinal": 7,
+        "role": "structural-bytes",
+        "segment_id": "protected-22983067b2bd565d1e0da203",
+        "sha256": "4a0b0fbdbf6ee3656f62dec525e8a2b1cbf11073bb250e465bcfdced0b953c44",
+        "start_byte": 491,
+        "text": "\n- "
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 520,
+        "kind": "syntax",
+        "old_hash": "4a0b0fbdbf6ee3656f62dec525e8a2b1cbf11073bb250e465bcfdced0b953c44",
+        "ordinal": 8,
+        "role": "structural-bytes",
+        "segment_id": "protected-0d0c85d0e40aed27ff38e2a9",
+        "sha256": "4a0b0fbdbf6ee3656f62dec525e8a2b1cbf11073bb250e465bcfdced0b953c44",
+        "start_byte": 517,
+        "text": "\n- "
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 546,
+        "kind": "syntax",
+        "old_hash": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "ordinal": 9,
+        "role": "structural-bytes",
+        "segment_id": "protected-e414e4605b991629d2ee1b9e",
+        "sha256": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "start_byte": 544,
+        "text": "\n\n"
+      },
+      {
+        "ast_path": "document/directive/terms",
+        "classification": "protected",
+        "end_byte": 570,
+        "kind": "directive",
+        "old_hash": "a3ac709f55f9255c042adb09d7a7913ac64de91a448225284a8302c328402a7d",
+        "ordinal": 1,
+        "role": "terms",
+        "segment_id": "protected-9c953811c0df69aec69c97a3",
+        "sha256": "a3ac709f55f9255c042adb09d7a7913ac64de91a448225284a8302c328402a7d",
+        "start_byte": 546,
+        "text": "## Bedingungen {#terms}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 571,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 10,
+        "role": "structural-bytes",
+        "segment_id": "protected-cfa8a38e8458379a7c1c80de",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 570,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 642,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 11,
+        "role": "structural-bytes",
+        "segment_id": "protected-fd2aa1643d39d8b6db1f5253",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 641,
+        "text": "\n"
+      }
+    ]
+  },
+  "rights_evidence": {},
+  "roundtrip_sha256": "687cc0b8146537590dd280286c144cf0cf96f50faa1ce8f8d89b0ca518a5f817",
+  "source": "---\nschema_version: markdown-document.v1\ndocument_id: golden-offer\ndocument_type: offer\ntitle: Leistungsangebot\nlang: de-DE\nstatus: release\nfacts: []\nsources: []\nassets: []\nrights: []\ntodos: []\n---\n# Leistungsangebot {#title}\n\n## Ausgangslage {#context}\n\nDas Vorhaben braucht einen klaren Rahmen und prüfbare Liefergegenstände.\n\n## Umfang {#scope}\n\nDer Umfang umfasst Konzeption, Umsetzung und dokumentierte Übergabe.\n\n## Liefergegenstände {#deliverables}\n\n- Abgestimmtes Dokumentkonzept\n- Reproduzierbare Ausgabe\n- Technischer Prüfbericht\n\n## Bedingungen {#terms}\n\nÄnderungen am Umfang werden vor ihrer Umsetzung gemeinsam bestätigt.\n",
+  "source_sha256": "687cc0b8146537590dd280286c144cf0cf96f50faa1ce8f8d89b0ca518a5f817",
+  "type": "document"
+}

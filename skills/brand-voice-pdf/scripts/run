@@ -1,0 +1,11 @@
+#!/bin/sh
+set -eu
+home=${BRANDKIT_HOME:-$HOME}
+runtime="$home/.agents/runtime-store/brandkit-pdf-renderer/1.2.28"
+if [ ! -x "$runtime/.venv/bin/python" ]; then
+  echo "brand-voice-pdf runtime 1.2.28 is not installed; run toolchain/pdf-renderer/install-from-lock HOME WHEELHOUSE ISSUER_KEY" >&2
+  exit 69
+fi
+PYTHONDONTWRITEBYTECODE=1 "$runtime/toolchain/pdf-renderer/verify-installation" "$home" "$home/.agents/keys/brand-voice-pdf.key" 1.2.28 >/dev/null
+export PYTHONDONTWRITEBYTECODE=1
+exec "$runtime/.venv/bin/python" -B "$runtime/scripts/brand_voice_pdf.py" "$@"

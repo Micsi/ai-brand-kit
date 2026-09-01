@@ -1,0 +1,23 @@
+{
+  "$id": "brand-package.v1.schema.json", "type": "object", "additionalProperties": false,
+  "required": ["schema_version", "brand_id", "version", "voice", "pdf", "assets", "document_types"],
+  "properties": {
+    "schema_version": {"const": "brand-package.v1"}, "brand_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]{1,62}$"}, "version": {"$ref": "#/$defs/semver"},
+    "shared_visual_tokens": {"type": "object", "additionalProperties": false, "properties": {
+      "colors": {"type": "object", "minProperties": 1, "additionalProperties": {"type": "string", "minLength": 1}},
+      "typography": {"type": "object", "minProperties": 1, "additionalProperties": {"type": ["string", "object"]}},
+      "rounded": {"type": "object", "minProperties": 1, "additionalProperties": {"type": "string", "minLength": 1}},
+      "spacing": {"type": "object", "minProperties": 1, "additionalProperties": {"type": "string", "minLength": 1}},
+      "components": {"type": "object", "minProperties": 1, "additionalProperties": {"type": "object"}}
+    }},
+    "voice": {"type": "object", "additionalProperties": false, "required": ["profile_version", "principles", "avoid", "locale"], "properties": {"profile_version": {"type": "string", "pattern": "^1\\.[0-9]+$"}, "locale": {"type": "string", "pattern": "^[a-z]{2}(?:-[A-Z]{2})?$"}, "principles": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}, "avoid": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}}},
+    "pdf": {"type": "object", "additionalProperties": false, "required": ["theme_version", "tokens"], "properties": {"theme_version": {"type": "string", "pattern": "^1\\.[0-9]+$"}, "tokens": {"type": "object", "additionalProperties": false, "required": ["color_roles", "typography_roles", "spacing_scale", "page"], "properties": {"color_roles": {"type": "object", "minProperties": 1, "additionalProperties": {"type": "string", "pattern": "^TODO(?:-[A-Z0-9-]+)?$|^#[0-9A-Fa-f]{6}$"}}, "typography_roles": {"type": "object", "minProperties": 1, "additionalProperties": {"anyOf": [{"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"}, {"enum": ["builtin:Helvetica", "builtin:Helvetica-Bold", "builtin:Courier"]}]}}, "spacing_scale": {"type": "array", "minItems": 1, "items": {"type": "number", "exclusiveMinimum": 0}}, "page": {"type": "object", "additionalProperties": false, "required": ["size", "margin_mm"], "properties": {"size": {"enum": ["A4"]}, "margin_mm": {"type": "number", "minimum": 5, "maximum": 50}}}}}}},
+    "assets": {"type": "object", "additionalProperties": false, "required": ["fonts", "logos"], "properties": {"fonts": {"$ref": "#/$defs/assetList"}, "logos": {"$ref": "#/$defs/assetList"}}},
+    "document_types": {"type": "array", "minItems": 1, "items": {"type": "object", "additionalProperties": false, "required": ["id", "version", "contract", "contract_sha256", "engine_compatibility"], "properties": {"id": {"$ref": "#/$defs/id"}, "version": {"$ref": "#/$defs/semver"}, "contract": {"type": "string", "pattern": "^documents/[a-z0-9-]+\\.json$"}, "contract_sha256": {"$ref": "#/$defs/hash"}, "engine_compatibility": {"type": "string", "pattern": "^(\\^|~)?[0-9]+\\.[0-9]+\\.[0-9]+$"}}}}
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"}, "hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "semver": {"type": "string", "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"},
+    "assetList": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/asset"}},
+    "asset": {"type": "object", "additionalProperties": false, "required": ["id", "path", "media_type", "sha256", "rights"], "properties": {"id": {"$ref": "#/$defs/id"}, "path": {"type": "string", "pattern": "^assets/(fonts|logos)/[A-Za-z0-9._-]+$"}, "media_type": {"enum": ["font/woff2", "image/svg+xml"]}, "sha256": {"$ref": "#/$defs/hash"}, "rights": {"type": "object", "additionalProperties": false, "required": ["evidence_path", "evidence_sha256"], "properties": {"evidence_path": {"type": "string", "pattern": "^rights/[a-z0-9-]+\\.rights\\.json$"}, "evidence_sha256": {"$ref": "#/$defs/hash"}}}}}
+  }
+}

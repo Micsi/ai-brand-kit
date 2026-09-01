@@ -1,0 +1,43 @@
+{
+  "closing_page": {
+    "contains_outlook": true,
+    "contains_synthesis": true,
+    "page": 5,
+    "proxy_word_count": 267,
+    "underfilled": false
+  },
+  "document_id": "benchmark-report",
+  "numbered_proof_items": 3,
+  "page_count": 5,
+  "pdf_sha256": "f5309df8ba5637dc0bec6f5cd8a7196a01083136d5739d71803f0667753c7fc1",
+  "roles": [
+    {
+      "page": 2,
+      "role": "positioning",
+      "source_id": "positioning"
+    },
+    {
+      "page": 3,
+      "role": "orientation",
+      "source_id": "orientation"
+    },
+    {
+      "page": 4,
+      "role": "proof",
+      "source_id": "proof"
+    },
+    {
+      "page": 5,
+      "role": "synthesis",
+      "source_id": "synthesis"
+    },
+    {
+      "page": 5,
+      "role": "outlook",
+      "source_id": "outlook"
+    }
+  ],
+  "schema_version": "brandkit-benchmark-report-roles.v1",
+  "source_map_sha256": "f86bd4be4557e1a6fd240b341e3e633f387d88b938aba8318e7b4e5a429673b8",
+  "status": "pass"
+}

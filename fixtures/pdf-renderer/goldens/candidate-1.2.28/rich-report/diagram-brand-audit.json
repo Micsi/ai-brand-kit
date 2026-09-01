@@ -1,0 +1,80 @@
+{
+  "active_brand": {
+    "brand_id": "neutral-fixture",
+    "manifest_sha256": "e93a2580b892e0aee93132232d0aaa61256a4e5ddf3b509413f1d312f86fba49",
+    "version": "1.0.0"
+  },
+  "forbidden_default_colors": [
+    "#000",
+    "#000000",
+    "#333",
+    "#333333",
+    "#666",
+    "#666666",
+    "#999",
+    "#999999",
+    "#EEE",
+    "#EEEEEE"
+  ],
+  "forbidden_fonts": [
+    "Arial",
+    "Times",
+    "system-ui",
+    "sans-serif",
+    "serif"
+  ],
+  "renderers": {
+    "graphviz": {
+      "colors": {
+        "accent": "#3AAFA9",
+        "background": "#FFFFFF",
+        "muted": "#5D6873",
+        "primary": "#172A3A",
+        "surface": "#EDF4F4",
+        "text": "#172A3A"
+      },
+      "contrast": {
+        "primary_on_background": 14.699,
+        "text_on_background": 14.699,
+        "text_on_surface": 13.192
+      },
+      "font": {
+        "asset_id": "neutral-font",
+        "asset_sha256": "90e63b7ece5be977129137c0c774b6764adac69399b6c20d9ddc147cbe01819d",
+        "derivative_sha256": "8809dcad25318225052f88333e208c5aad4adcb7b2c934c135735ec19aa410b4",
+        "family": "BrandKit-neutral-font"
+      },
+      "font_embedded": true,
+      "forbidden_fallbacks_absent": true,
+      "line_role": "accent",
+      "svg_sha256": "99b6c101ba4e6c8f7a33faa1effd89e83b812c65b39a695a86de61db93a85cbd"
+    },
+    "mermaid": {
+      "colors": {
+        "accent": "#3AAFA9",
+        "background": "#FFFFFF",
+        "muted": "#5D6873",
+        "primary": "#172A3A",
+        "surface": "#EDF4F4",
+        "text": "#172A3A"
+      },
+      "contrast": {
+        "primary_on_background": 14.699,
+        "text_on_background": 14.699,
+        "text_on_surface": 13.192
+      },
+      "font": {
+        "asset_id": "neutral-font",
+        "asset_sha256": "90e63b7ece5be977129137c0c774b6764adac69399b6c20d9ddc147cbe01819d",
+        "derivative_sha256": "8809dcad25318225052f88333e208c5aad4adcb7b2c934c135735ec19aa410b4",
+        "family": "BrandKit-neutral-font"
+      },
+      "font_embedded": true,
+      "forbidden_fallbacks_absent": true,
+      "line_role": "accent",
+      "svg_sha256": "7dcbf13a69ab9253b0b1d647162b6781edbd62427fceb1dbe12d62f3b4e1edca"
+    }
+  },
+  "schema_version": "brandkit-diagram-brand-audit.v1",
+  "status": "pass"
+}

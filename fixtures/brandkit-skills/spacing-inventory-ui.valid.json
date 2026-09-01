@@ -1,0 +1,9 @@
+{
+  "schema_version": "spacing-inventory.v1",
+  "brand_pin": {"id": "neutral-fixture", "version": "1.0.0", "manifest_sha256": "be2dd3d29bf15ba437eb5dc070ac6e6735cf57630e5f583a85777e6ffedf6360"},
+  "target_scope": "src/components",
+  "entries": [
+    {"id": "card-gap", "source": {"path": "src/components/card.css", "line": 8, "column": 3}, "resolved_value": "16px", "medium": "ui", "assignment": {"kind": "token", "token": "spacing.card-gap"}},
+    {"id": "focus-inset", "source": {"path": "src/components/card.css", "line": 14, "column": 3}, "resolved_value": "3px", "medium": "ui", "assignment": {"kind": "exception", "reason": "focus-ring geometry", "evidence": "WCAG focus appearance review"}}
+  ]
+}

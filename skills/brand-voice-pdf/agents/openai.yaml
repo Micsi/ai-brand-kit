@@ -1,0 +1,4 @@
+interface:
+  display_name: "Brand Voice PDF"
+  short_description: "Branded Markdown to evidence-bound PDF"
+  default_prompt: "Create a branded PDF using the project's explicit BrandKit activation."

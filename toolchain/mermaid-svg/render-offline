@@ -1,0 +1,40 @@
+#!/bin/sh
+set -eu
+if [ "$#" -lt 3 ] || [ "$#" -gt 4 ]; then echo "usage: render-offline INSTALL_DIR INPUT.mmd OUTPUT.svg [DIAGNOSTICS_DIR]" >&2; exit 64; fi
+install_dir=$1
+input=$(cd -- "$(dirname -- "$2")" && pwd -P)/$(basename -- "$2")
+output_dir=$(cd -- "$(dirname -- "$3")" && pwd -P)
+output=$output_dir/$(basename -- "$3")
+script_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd -P)
+python_bin=${PYTHON_BIN:-python3.12}
+"$python_bin" - "$script_dir/../../scripts/markdown_contract.py" "$input" <<'PY'
+import importlib.util, pathlib, sys
+spec=importlib.util.spec_from_file_location("markdown_contract",sys.argv[1]);module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+module.validate_mermaid_v1(pathlib.Path(sys.argv[2]).read_text(encoding="utf-8"))
+PY
+auto_diagnostics=0
+if [ "$#" -eq 4 ]; then
+  diagnostics=$4
+  test ! -e "$diagnostics" || { echo "diagnostics directory must be fresh" >&2; exit 65; }
+else
+  diagnostics_parent=$(mktemp -d "${TMPDIR:-/tmp}/brandkit-mermaid-render-diagnostics.XXXXXX")
+  diagnostics=$diagnostics_parent/run
+  auto_diagnostics=1
+fi
+cleanup() {
+  status=$?
+  trap - EXIT HUP INT TERM
+  if [ "$auto_diagnostics" -eq 1 ]; then
+    if [ "$status" -eq 0 ]; then
+      rm -rf -- "$diagnostics_parent"
+    else
+      printf 'Mermaid diagnostics retained: %s\n' "$diagnostics_parent" >&2
+    fi
+  fi
+  exit "$status"
+}
+trap cleanup EXIT
+trap 'exit 129' HUP
+trap 'exit 130' INT
+trap 'exit 143' TERM
+/opt/homebrew/bin/python3.12 "$script_dir/runtime.py" legacy-render "$install_dir" "$input" "$output" "$diagnostics"

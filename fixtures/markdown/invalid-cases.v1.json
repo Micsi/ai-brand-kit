@@ -1,0 +1,26 @@
+{
+  "schema_version": "markdown-invalid-cases.v1",
+  "cases": [
+    {"id": "frontmatter-open-key", "needle": "todos: []", "replacement": "todos: []\nunknown: true", "error": "frontmatter"},
+    {"id": "h4", "needle": "## Fazit {#conclusion}", "replacement": "#### Fazit {#conclusion}", "error": "H1-H3"},
+    {"id": "raw-html", "needle": "Das Fazit enthält ausschließlich natürliche Prosa.", "replacement": "<div>Fazit</div>", "error": "HTML"},
+    {"id": "raw-url", "needle": "Das Fazit enthält ausschließlich natürliche Prosa.", "replacement": "Abruf unter www.example.invalid", "error": "raw URL"},
+    {"id": "unknown-directive", "needle": "::: page-break", "replacement": "::: chart", "error": "directive"},
+    {"id": "unknown-fence", "needle": "```{mermaid #flow-main title=\"Ablauf\" description=\"Zwei verbundene neutrale Schritte\"}", "replacement": "```python", "error": "only allowed code fence"},
+    {"id": "external-asset", "needle": "asset:diagram", "replacement": "//example.invalid/diagram.svg", "error": "syntax"},
+    {"id": "page-break-mid-section", "needle": "::: page-break\n\n## Befunde", "replacement": "::: page-break\n\nNoch derselbe Abschnitt.\n\n## Befunde", "error": "section"},
+    {"id": "unbound-fact", "needle": "{{fact:metric-value|42 %}}", "replacement": "{{fact:metric-value|43 %}}", "error": "declared fact"},
+    {"id": "bare-number", "needle": "Das Fazit enthält ausschließlich natürliche Prosa.", "replacement": "Das Fazit nennt 42 Prozent.", "error": "bare numbers"},
+    {"id": "open-todo", "needle": "todos: []", "replacement": "todos:\n  - id: verify-value\n    reason: Quelle prüfen", "error": "TODO"},
+    {"id": "yaml-anchor", "needle": "title: Vertragsbericht", "replacement": "title: &shared-title Vertragsbericht", "error": "anchors"},
+    {"id": "yaml-explicit-tag", "needle": "title: Vertragsbericht", "replacement": "title: !!str Vertragsbericht", "error": "tags"},
+    {"id": "missing-local-id", "needle": "#findings)", "replacement": "#missing-target)", "error": "unknown global IDs"},
+    {"id": "table-separator-column-count", "needle": "| --- | --- |", "replacement": "| --- | --- | --- |", "error": "separator"},
+    {"id": "empty-note-callout", "needle": "Ein neutraler Hinweis.\n:::", "replacement": "\n:::", "error": "non-empty"},
+    {"id": "scientific-number", "needle": "Das Fazit enthält ausschließlich natürliche Prosa.", "replacement": "Das Fazit nennt 1e3 Fälle.", "error": "bare numbers"},
+    {"id": "locale-signed-number", "needle": "Das Fazit enthält ausschließlich natürliche Prosa.", "replacement": "Das Fazit nennt -1.234,50 Fälle.", "error": "bare numbers"},
+    {"id": "mermaid-url", "needle": "A[Start] --> B[Ende]", "replacement": "A[https://example.invalid/pixel] --> B[Ende]", "error": "Mermaid v1"},
+    {"id": "mermaid-html-image", "needle": "A[Start] --> B[Ende]", "replacement": "A[<img src=x>] --> B[Ende]", "error": "Mermaid v1"},
+    {"id": "mermaid-config", "needle": "flowchart TD", "replacement": "%%{config: {}}%%\nflowchart TD", "error": "Mermaid v1"}
+  ]
+}

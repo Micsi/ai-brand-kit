@@ -1,0 +1,50 @@
+#!/bin/sh
+set -eu
+if [ "$#" -lt 1 ] || [ "$#" -gt 2 ]; then echo "usage: verify-clean-rooms IMMUTABLE_BUNDLE [EVIDENCE_DIR]" >&2; exit 64; fi
+bundle=$1
+evidence_dir=${2:-}
+script_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd -P)
+test -d "$bundle" || { echo "immutable bundle is absent" >&2; exit 65; }
+tmp_root=$(mktemp -d "${TMPDIR:-/tmp}/brandkit-mermaid-v1.XXXXXX")
+auto_evidence=0
+if [ -n "$evidence_dir" ]; then
+  test ! -e "$evidence_dir" || { echo "evidence directory must be fresh" >&2; exit 65; }
+  mkdir -p "$evidence_dir"
+  diagnostics_root=$(cd -- "$evidence_dir" && pwd -P)
+else
+  diagnostics_parent=${BRANDKIT_SESSION_ROOT:-${TMPDIR:-/tmp}}
+  mkdir -p "$diagnostics_parent"
+  diagnostics_root=$(mktemp -d "$diagnostics_parent/mermaid-clean-room-diagnostics.XXXXXX")
+  auto_evidence=1
+fi
+cleanup() {
+  status=$?
+  trap - EXIT HUP INT TERM
+  rm -rf -- "$tmp_root"
+  if [ "$auto_evidence" -eq 1 ]; then
+    if [ "$status" -eq 0 ]; then
+      rm -rf -- "$diagnostics_root"
+    else
+      printf 'Mermaid clean-room diagnostics retained: %s\n' "$diagnostics_root" >&2
+    fi
+  fi
+  exit "$status"
+}
+trap cleanup EXIT
+trap 'exit 129' HUP
+trap 'exit 130' INT
+trap 'exit 143' TERM
+printf 'flowchart TD\n  A[Start] --> B[Ende]\n' > "$tmp_root/input.mmd"
+for room in a b; do
+  "$script_dir/install-offline" "$tmp_root/$room" "$bundle"
+  "$script_dir/version-log" "$tmp_root/$room" "$bundle" > "$diagnostics_root/room-$room.version-log.json"
+  "$script_dir/render-offline" "$tmp_root/$room" "$tmp_root/input.mmd" "$tmp_root/$room.svg" "$diagnostics_root/room-$room"
+done
+cmp "$tmp_root/a.svg" "$tmp_root/b.svg"
+svg_hash=$(shasum -a 256 "$tmp_root/a.svg" | awk '{print $1}')
+if [ -n "$evidence_dir" ]; then
+  cp "$tmp_root/a.svg" "$evidence_dir/room-a.svg"
+  cp "$tmp_root/b.svg" "$evidence_dir/room-b.svg"
+  printf '{"byte_identical":true,"room_a_svg_sha256":"%s","room_b_svg_sha256":"%s","schema_version":"mermaid-clean-room-evidence.v1"}\n' "$svg_hash" "$svg_hash" > "$evidence_dir/summary.json"
+fi
+printf '%s\n' "$svg_hash"

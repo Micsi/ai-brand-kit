@@ -1,158 +1,30 @@
 ---
 name: brandkit-build
-description: Verdichtet eine ausführliche Markenbeschreibung zu einem benutzbaren Brand Kit (brand kit, design system, design tokens, style guide). Erzeugt eine kurze verbindliche BRAND.md, ausführbare CSS-Tokens, Wordmark-SVGs, Referenz-Artboards und ein CLAUDE.md, das die Regeln automatisch greifen lässt. Nutze diesen Skill, sobald ein Markeninterview vorliegt, jemand aus einem langen Styleguide etwas Arbeitsfähiges machen will, oder fragt, warum sein Designsystem im Alltag ignoriert wird.
+description: Verdichtet eine freigegebene Markenrohfassung in ein validierbares Brand Kit. Nutze den Skill nach dem Interview-Gate für BRAND.md, Tokens, Assets, Beispiele und kanonische Agentenregeln; er produziert keine Kundenpublikation.
 license: MIT
 ---
 
-# Brand Kit bauen
+# BrandKit bauen
 
-Schritt 3 von 4. Eingabe ist die Rohfassung aus `brandkit-interview`, Ausgabe
-ein Ordner, mit dem sich arbeiten lässt.
+Owner: normatives Brand-Paket. Produkttexte und Veröffentlichungen gehören `brandkit-publish`; UI-Entscheidungen gehören nach Übergabe `brandkit-impeccable`.
 
-## Das eigentliche Problem
+## Eingabe und Ausgabe
 
-Fast jeder Styleguide scheitert nicht am Inhalt, sondern an der Länge. Neunhundert
-Zeilen liest niemand, auch kein Sprachmodell mit Kontextfenster: Es liest sie,
-gewichtet aber die zwanzigste Regel wie die erste und trifft dann trotzdem
-Durchschnittsentscheidungen.
+- Eingabe: freigegebene `brand-raw.md`, Quellenpointer und `setup-readiness.md`.
+- Ausgabe: Brand-Paket gemäß `brand-package.v1` mit `BRAND.md`, `REFERENCE.md`, ausführbaren Tokens, erlaubten Assets/Rechten, Beispielen und genau einer kanonischen `AGENTS.md`.
+- Claude-Brücke: `CLAUDE.md` ist im Projektroot ein relativer Symlink mit exakt dem Ziel `AGENTS.md`.
+- Hermes-Brücke: Hermes wird mit dem Projektroot als CWD gestartet und lädt dort `AGENTS.md` als Projektkontext. Es wird keine `.hermes.md`, `HERMES.md` oder Instruktionskopie erzeugt.
 
-Ein Kit funktioniert, wenn drei Dinge stimmen:
+## Workflow
 
-1. Die verbindlichen Regeln sind **kurz genug, dass sie wirklich gelesen werden**.
-2. Farben und Maße liegen **ausführbar** vor, nicht nur als Beschreibung.
-3. Die Regeln **greifen von selbst**, ohne dass jemand daran denken muss.
+1. Interview-Gate prüfen. Offene konkrete Werte bleiben sichtbar offen; keine Farbe, Schrift, Maße, Stimme, Referenz oder Rechtsposition erfinden.
+2. `BRAND.md` auf verbindliche Regeln verdichten; Begründungen bleiben in `REFERENCE.md`. Widersprüche stoppen den Build. Bei neuen oder strittigen Abstandsrollen liefert `brandkit-spacing` einen belegten Vorschlag; nur dieser Build materialisiert und versioniert daraus normative `shared_visual_tokens.spacing`.
+3. Nur belegte Tokens und rights-geprüfte Assets materialisieren. Beispielwerte tragen sichtbar `EXAMPLE`, offene Arbeitswerte `TODO(owner)`; beide dürfen niemals als normative Tokens ausgegeben werden.
+4. `python3 scripts/materialize_brandkit_instructions.py --project-root <git-root>` ausschließlich mit dem tatsächlichen Git-Root ausführen. Das Skript prüft alle Ziele per lstat/Realpath, schreibt `AGENTS.md` atomar, setzt den eingeschlossenen `CLAUDE.md -> AGENTS.md`-Symlink und verweigert `.hermes.md`, `HERMES.md`, `AGENTS.override.md`, `agents.md` sowie jede Quelle, die Hermes v0.20.5 in seiner Root→CWD-Prioritätskette vorziehen oder zusätzlich mergen würde. Der installierte `prompt_builder.build_context_files_prompt` bestätigt den effektiven Prompt. Hermes aus genau diesem Git-Root starten; dessen Projekt-Instruktionsdiscovery ist von Skill-Discovery getrennt.
+5. Beispiele gegen `BRAND.md` prüfen und das Brand-Paket validieren. Fertig, wenn jeder normative Wert auf die Rohfassung/Quelle zurückführbar ist und keine TODO als verbindlicher Wert erscheint.
 
-Punkt 3 ist der, den alle vergessen. Er ist ein `CLAUDE.md` im Ordner.
+## Gate
 
-## Was entsteht
+`brandkit-publish` erhält nur ein auflösbares, validiertes und gepinntes Paket. Stoppe bei fehlender Provenienz, konfliktbehafteten Werten, ungeklärten Assetrechten, fehlendem Brand-Pin oder einer nichtkanonischen Agentenregel-Kopie. Kommerzielle Inhalte bleiben projektlokal; der Skill verlangt keinen bestimmten Anbieter.
 
-```
-Brand/
-├── CLAUDE.md            Arbeitsregeln, greifen automatisch in diesem Ordner
-├── BRAND.md             die verbindliche Kurzfassung, das Herzstück
-├── REFERENCE.md         die Rohfassung aus dem Interview, als Nachschlagewerk
-├── README.md            was wo liegt, plus Starter-Satz für außerhalb
-├── brand-helmet.html    Farb- und Schrift-Tokens als fertiger CSS-Block
-├── brand-props.json     Akzentfarbe im Design-Editor umschaltbar
-├── wordmark.svg         Schriftzug, Standardfall
-├── mark.svg             quadratische Bildmarke für kleine Flächen
-└── beispiel/            lauffähige Referenz mit allen Bausteinen
-```
-
-Lege den Ordner dort an, wo er dauerhaft bleibt, und mache ihn zu einem
-Git-Repository. Ein Brand Kit ohne Versionsgeschichte verliert man.
-
-## BRAND.md, die Kurzfassung
-
-Das ist die wichtigste Datei. Zielgröße: unter 250 Zeilen. Wird sie länger,
-wandert Material nach `REFERENCE.md`.
-
-Bewährter Aufbau:
-
-1. **Marke in einem Satz** plus Persönlichkeit in einer Zeile
-2. **Tokens** als Tabelle: Variablenname, Hexwert, Rolle. Dazu die
-   Flächenverteilung in Prozent
-3. **Typografie**: die zwei bis drei Rollen und eine Größenskala je Format
-4. **Raster und Abstände**: Zahlenreihe, Seitenränder, Radien, Rahmen, Schatten
-5. **Wordmark**: welche Datei wann, Mindestgröße, Schutzraum, Verbote
-6. **Bausteine**: die wiederkehrenden Elemente mit konkreten Maßen
-7. **Formate**: Pixelmaße je Zweck
-8. **Text**: Sprache, Ansprache, ein gutes und ein schlechtes Beispiel, die
-   Verbotsliste
-9. **Nicht benutzen**: die harte Verbotsliste, visuell
-10. **Prüfliste vor dem Abgeben**: zehn Fragen, die sich mit ja oder nein
-    beantworten lassen
-
-Zwei Dinge machen den Unterschied zwischen einem Kit, das wirkt, und einem, das
-dekoriert:
-
-**Prozentangaben statt Adjektive.** „Akzentfarbe sparsam einsetzen" ist nicht
-prüfbar. „Akzentfarbe unter 10 Prozent der Fläche, nie als Sektionshintergrund,
-nie als Verlauf" ist es.
-
-**Konkrete Maße statt Prinzipien.** „Großzügige Abstände" hilft niemandem.
-„Sektionsabstand 96 bis 128 Pixel auf Desktop, 56 bis 72 auf Mobil" schon.
-
-Schreibe die Verbotslisten ausführlich. Sie sind der Teil, der Durchschnitt
-verhindert, und sie sind billig zu befolgen.
-
-## CLAUDE.md, der Mechanismus
-
-Ohne diese Datei muss jemand das Kit bei jeder Sitzung von Hand erwähnen. Mit
-ihr gelten die Regeln, sobald im Ordner gearbeitet wird.
-
-Sie ist kurz und regelt nur, wie mit den anderen Dateien umzugehen ist:
-welche Datei bei Widerspruch gewinnt, dass nur definierte Tokens benutzt werden,
-wo die Referenzbeispiele liegen, und dass Änderungen am Kit selbst vorher
-abzustimmen sind. Eine Vorlage liegt in `assets/CLAUDE.md.template`.
-
-Für Arbeit außerhalb des Ordners gehört ein **Starter-Satz** in die README, den
-man an den Anfang einer Sitzung kopiert, etwa:
-
-```
-Lies zuerst <PFAD>\BRAND.md und halte dich exakt daran.
-Referenz-Artboards: <PFAD>\beispiel\
-```
-
-Das Kit lädt sich nicht von allein. Sag das in der README ausdrücklich, sonst
-wundert sich die Person beim ersten Mal.
-
-## Die ausführbaren Teile
-
-**brand-helmet.html** enthält den Google-Fonts-Link und einen `:root`-Block mit
-allen Tokens als CSS-Variablen, dazu Grundstile und ein bis zwei
-Hilfsklassen für wiederkehrende Rollen (etwa `.lbl` für technische Labels,
-`.val` für Zahlen in Mono). Vorlage: `assets/brand-helmet.html.template`.
-
-Der Sinn: Im Layout stehen danach nur noch `var(--...)`, keine rohen Hexwerte.
-Eine Farbänderung ist dann eine Zeile statt einer Suche über alle Dateien.
-
-**brand-props.json** macht die Akzentfarbe in Design-Editoren umschaltbar.
-Vorsicht bei den Optionen: Bietest du dort funktionale Farben an (Warnung,
-Fehler), kann jemand den Markenakzent auf die Fehlerfarbe stellen, und positiv
-und negativ fallen zusammen. Entweder nur Markenfarben anbieten, oder in
-BRAND.md ausdrücklich schreiben, dass die Umschaltung ein Prüfwerkzeug ist und
-kein zweiter Markenakzent.
-
-**wordmark.svg und mark.svg** baust du aus dem Schriftzug, nicht aus Symbolen.
-Verzichte auf Roboter, Gehirne, Platinen und Verlaufskugeln, außer die Marke
-verlangt sie ausdrücklich.
-
-Ein Fallstrick, der später weh tut: Ein SVG mit `<text>` braucht die Schrift auf
-dem anzeigenden Gerät. Im Browser mit geladenem Google Font stimmt das, im
-Druck oder in Illustrator greift die Ersatzschrift. Schreibe in die README, dass
-die Wordmark in Pfade umgewandelt werden muss, sobald sie den Browser verlässt.
-
-## beispiel/, die Referenz
-
-Baue mindestens zwei lauffähige Beispielflächen, die **alle** Bausteine in den
-richtigen Maßen zeigen, typischerweise Desktop und Mobil. Das ist der Teil, der
-am meisten Arbeit macht und am meisten spart: Beim nächsten Mal wird kopiert
-statt neu erfunden.
-
-Kennzeichne Beispieldaten klar als solche. Erfundene Zahlen aus einem
-Referenz-Artboard landen sonst auf einer echten Seite.
-
-## Verdichten, nicht kürzen
-
-Beim Weg von der Rohfassung zu BRAND.md gilt:
-
-- **Behalte** jede Zahl, jeden Hexwert, jedes Maß, jede Verbotsliste.
-- **Streiche** Begründungen, Herleitungen, Wiederholungen und alles, was zweimal
-  dasteht. Es bleibt in REFERENCE.md erhalten.
-- **Verwandle** Prosa in Tabellen. „Die Hauptüberschrift ist 52 Pixel groß und
-  wird in der Display-Schrift gesetzt" wird eine Tabellenzeile.
-
-Was in der Rohfassung offen blieb, bleibt auch hier offen. Schreibe hin, dass es
-offen ist. Erfinde keinen plausiblen Wert, um eine Lücke zu füllen: Er wird
-sonst wie eine Entscheidung behandelt, die nie jemand getroffen hat.
-
-## Zum Schluss
-
-Gehe die Prüfliste, die du gerade geschrieben hast, einmal gegen die
-Referenz-Artboards durch. Wenn dein eigenes Beispiel deine eigene Prüfliste
-nicht besteht, stimmt eines von beiden nicht.
-
-Berichte dann kurz: was entstanden ist, wo es liegt, wie lang BRAND.md geworden
-ist, und was noch offen blieb. Verweise auf `brandkit-publish` für das Bauen mit
-dem Kit.
+Für UI-Arbeit übergib ausschließlich Brand-Pin plus projektlokale `.brandkit/impeccable-product.json` an `brandkit-impeccable`. Dieser Skill gibt keine parallelen UI- oder DESIGN.md-Anweisungen.

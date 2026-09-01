@@ -1,0 +1,76 @@
+{
+  "schema_version": "humanizer-de-toolchain-lock.v2",
+  "skill": {
+    "name": "humanizer-de",
+    "version": "5.22.2-brandkit.2",
+    "repository": "https://github.com/marmbiz/humanizer-de.git",
+    "source_revision": "17059735ba1cd2eea7e66a517f79b91b0797b366",
+    "git_archive_sha256": "722b2bbe98cd20a8d11bbd65403a470f0ec71671c8c6ad69aa0e5b65cb7149eb",
+    "content_sha256": "fd163dd167fe08f8244ae77e728e3514c3a10466a1a35c9f2d199821ef5517ec",
+    "transform": "move the nested bundle wrapper from SKILL.md to non-discoverable SKILL.bundle.md and update doctor.py; root SKILL.md is the only discoverable entry"
+  },
+  "layout": {
+    "release": "~/.agents/skill-store/humanizer-de/5.22.2-brandkit.2",
+    "canonical_activation": "~/.agents/skills/humanizer-de",
+    "active_lock": "~/.agents/.skill-lock.json",
+    "claude_bridge": "~/.claude/skills/humanizer-de",
+    "claude_bridge_target": "../../.agents/skills/humanizer-de",
+    "codex_discovery": "~/.agents/skills",
+    "hermes_external_dir": "~/.agents/skills",
+    "archive": "~/.agents/skill-archive/humanizer-de"
+  },
+  "python": {
+    "implementation": "CPython",
+    "version": "3.12.12",
+    "platform": "macOS-arm64",
+    "requirements_lock": "requirements-precise.lock.txt",
+    "installer_flags": ["--only-binary=:all:", "--require-hashes"],
+    "freeze_sha256": "8455197852a23712180b35ac0514d3d4f8e8fd558367a98a162a6024f07ec3d1",
+    "installed_distributions_sha256": "c61406ef87fb5b0c46dbe08e44a9858190c9849cb30ec452c7525a394f128014",
+    "runtime_distribution_count": 45,
+    "bootstrap": {
+      "distribution": "pip",
+      "version": "26.0",
+      "ensurepip_wheel_sha256": "a71c2003c43330f26fdf99cae405a8927f251926d3d45cf17eee24d1e1ffd419"
+    },
+    "installed_distribution_count": 46,
+    "venv_count": 1,
+    "spacy": "3.8.15",
+    "german_model": "de_core_news_sm==3.8.0"
+  },
+  "system_tools": {
+    "mode": "verified-external-state",
+    "claim": "The installer does not reproduce Homebrew artifacts; it verifies installed formula version strings and hashes the two installed Hunspell dictionary files.",
+    "platform": "macOS-arm64",
+    "homebrew": {
+      "hunspell": {"version": "1.7.3"},
+      "languagetool": {"version": "6.8"},
+      "openjdk@17": {"version": "17.0.20.1"}
+    },
+    "hunspell_dictionary": {
+      "name": "de_DE",
+      "version": "20161207+frami20170109",
+      "aff_sha256": "c7a7d49f73394c8ffd189e9ebec065ad63f6a3feb15417dbf90b2dc68760227e",
+      "dic_sha256": "98ebd2e9ff49dcac16316acaa47763768b25c378e66e8f6e5843138fe1482843"
+    }
+  },
+  "legacy_same_name_roots": [
+    "~/.claude/plugins/cache/humanizer-de",
+    "~/.claude/plugins/marketplaces/humanizer-de"
+  ],
+  "provider_roots": [
+    "~/.agents/skills",
+    "~/.codex/skills",
+    "~/.codex/plugins",
+    "~/.codex/.tmp/bundled-marketplaces/openai-bundled",
+    "~/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime",
+    "~/.claude/skills",
+    "~/.claude/plugins/cache",
+    "~/.claude/plugins/marketplaces",
+    "~/.hermes/skills",
+    "~/.hermes/profiles",
+    "~/.hermes/hermes-agent/skills",
+    "~/.hermes/hermes-agent/plugins",
+    "~/Projekte/ClawSkills/skills"
+  ]
+}

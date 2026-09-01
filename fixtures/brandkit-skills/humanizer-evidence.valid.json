@@ -1,0 +1,100 @@
+{
+  "schema_version": "brandkit-humanizer-evidence.v1",
+  "humanizer_release": {
+    "name": "humanizer-de",
+    "version": "5.22.2-brandkit.2",
+    "source_revision": "17059735ba1cd2eea7e66a517f79b91b0797b366",
+    "content_sha256": "fd163dd167fe08f8244ae77e728e3514c3a10466a1a35c9f2d199821ef5517ec"
+  },
+  "pattern_catalog": {
+    "path": "references/patterns.md",
+    "source_revision": "17059735ba1cd2eea7e66a517f79b91b0797b366",
+    "sha256": "9664a1c8c5bbb7700447042babba1c1b78cbf999f349643160cfd517bb6b5f2d",
+    "canonical_pattern_ids": [
+      "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18",
+      "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36",
+      "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54",
+      "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "70", "71", "72"
+    ]
+  },
+  "runner": "scripts/humanizer_two_pass.py --file --out-dir --mode --provider claude --model",
+  "evidence_lint": {
+    "command": "scripts/evidence_lint.py --before-file --after-file --fail-on never",
+    "script_sha256": "9452db48572885f9b4d96efc64f1a73d3e1dcc248a34be38ea8055597c7c3fe0",
+    "before_path": "fixtures/brandkit-skills/humanizer/original.md",
+    "before_sha256": "89a4dd3f5e7bbaa7369d9f1286d90e2a2e35c240a419b108a96d6f02310a5cf3",
+    "after_path": "fixtures/brandkit-skills/humanizer/result.md",
+    "after_sha256": "1e526ad0d89b11e9ef820f3a50fa48421a95e1988b5668201dba80173f25c0e5",
+    "exit_code": 0,
+    "stdout_sha256": "1150f123209f96c52a8de1830efaf1a957e177dcb4a804ac18501f991995e896"
+  },
+  "accepted": true,
+  "generic_smoothing": false,
+  "artifacts": [
+    {
+      "name": "original.md",
+      "path": "fixtures/brandkit-skills/humanizer/original.md",
+      "sha256": "89a4dd3f5e7bbaa7369d9f1286d90e2a2e35c240a419b108a96d6f02310a5cf3"
+    },
+    {
+      "name": "preflight.json",
+      "path": "fixtures/brandkit-skills/humanizer/preflight.json",
+      "sha256": "3de7de0d279145bfc45b79095846fd212d706561c867303ec46eee389c5fc326"
+    },
+    {
+      "name": "audit-call.json",
+      "path": "fixtures/brandkit-skills/humanizer/audit-call.json",
+      "sha256": "c15d130fe0568b529a4e2c45a6212f7ebcbd43adab38a0d67c66e51d99756119"
+    },
+    {
+      "name": "audit-ledger.json",
+      "path": "fixtures/brandkit-skills/humanizer/audit-ledger.json",
+      "sha256": "83759a210e1e5da50fb58b1f7870898a779ef2ddada11267ab1193615ce858a2"
+    },
+    {
+      "name": "confirmed-ledger.json",
+      "path": "fixtures/brandkit-skills/humanizer/confirmed-ledger.json",
+      "sha256": "ad502484ce7b595361b0067eb5aa3dd8941c1bb92b05763b50281e75b2af5682"
+    },
+    {
+      "name": "edits.json",
+      "path": "fixtures/brandkit-skills/humanizer/edits.json",
+      "sha256": "322f350cc6954e97a64cb014e9397d0b2e561ca2426e0c544e6658cce0715d5e"
+    },
+    {
+      "name": "rewrite-call.json",
+      "path": "fixtures/brandkit-skills/humanizer/rewrite-call.json",
+      "sha256": "d1937b3c391a64606ec63db2a201969499933d9a8bc7f23645b34abb982d378f"
+    },
+    {
+      "name": "evidence-ledger.json",
+      "path": "fixtures/brandkit-skills/humanizer/evidence-ledger.json",
+      "sha256": "fa521c2c1431e8dc54baab632478ae7057734d50ba7240b135e6f5372d6bfad9"
+    },
+    {
+      "name": "evidence-report.json",
+      "path": "fixtures/brandkit-skills/humanizer/evidence-report.json",
+      "sha256": "1150f123209f96c52a8de1830efaf1a957e177dcb4a804ac18501f991995e896"
+    },
+    {
+      "name": "report.json",
+      "path": "fixtures/brandkit-skills/humanizer/report.json",
+      "sha256": "723368bda9a1ac3f1c7d882effac0e3f87efbdee334cb27b80df55b644b7a4e9"
+    },
+    {
+      "name": "result.md",
+      "path": "fixtures/brandkit-skills/humanizer/result.md",
+      "sha256": "1e526ad0d89b11e9ef820f3a50fa48421a95e1988b5668201dba80173f25c0e5"
+    },
+    {
+      "name": "changes.diff",
+      "path": "fixtures/brandkit-skills/humanizer/changes.diff",
+      "sha256": "3ed785d50b6d2eb1ab5b7789d8fb0b152b61c5fd6c352643a98296fd12075a4f"
+    },
+    {
+      "name": "brandkit-provenance.json",
+      "path": "fixtures/brandkit-skills/humanizer/brandkit-provenance.json",
+      "sha256": "87144597d2ff859f81d5f59f40adfb70d674c08bdaa8713bb406f79c7f8f44c3"
+    }
+  ]
+}

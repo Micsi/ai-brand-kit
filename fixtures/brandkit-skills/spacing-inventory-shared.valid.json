@@ -1,0 +1,8 @@
+{
+  "schema_version": "spacing-inventory.v1",
+  "brand_pin": {"id": "neutral-fixture", "version": "1.0.0", "manifest_sha256": "be2dd3d29bf15ba437eb5dc070ac6e6735cf57630e5f583a85777e6ffedf6360"},
+  "target_scope": "brand-package proposal",
+  "entries": [
+    {"id": "shared-section-gap", "source": {"path": "brand-raw.md", "line": 12, "column": 1}, "resolved_value": "24px", "medium": "shared", "assignment": {"kind": "token", "token": "spacing.section-gap"}}
+  ]
+}

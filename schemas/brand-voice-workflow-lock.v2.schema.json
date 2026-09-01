@@ -1,0 +1,53 @@
+{
+  "$id": "brand-voice-workflow-lock.v2.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "activation", "brand", "humanizer", "renderer", "markdown_contract", "document_type", "owner_approval_key_sha256"],
+  "properties": {
+    "schema_version": {"const": "brand-voice-workflow-lock.v2"},
+    "activation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["project_sha256", "lock_sha256", "state_sha256", "project_utf8_base64", "lock_utf8_base64"],
+      "properties": {
+        "project_sha256": {"$ref": "#/$defs/hash"}, "lock_sha256": {"$ref": "#/$defs/hash"},
+        "state_sha256": {"$ref": "#/$defs/hash"}, "project_utf8_base64": {"type": "string", "minLength": 8},
+        "lock_utf8_base64": {"type": "string", "minLength": 8}
+      }
+    },
+    "brand": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "version", "manifest_sha256", "content_sha256"],
+      "properties": {"id": {"$ref": "#/$defs/id"}, "version": {"type": "string", "minLength": 1}, "manifest_sha256": {"$ref": "#/$defs/hash"}, "content_sha256": {"$ref": "#/$defs/hash"}}
+    },
+    "humanizer": {
+      "type": "object", "additionalProperties": false,
+      "required": ["version", "release_attestation_sha256", "tool_hashes", "provider_capability"],
+      "properties": {
+        "version": {"const": "5.22.2-brandkit.2"}, "release_attestation_sha256": {"$ref": "#/$defs/hash"},
+        "tool_hashes": {"type": "object", "additionalProperties": false, "required": ["runner", "skill", "catalog"], "properties": {"runner": {"$ref": "#/$defs/hash"}, "skill": {"$ref": "#/$defs/hash"}, "catalog": {"$ref": "#/$defs/hash"}}},
+        "provider_capability": {
+          "type": "object", "additionalProperties": false,
+          "required": ["provider", "allowed_states"],
+          "properties": {
+            "provider": {"const": "claude"},
+            "allowed_states": {
+              "const": [
+                {"mode": "audit-only", "outcome": "no-confirmed-change", "model_calls": 1, "confirmed_edit_count": 0, "rejected_candidates": "evidence-required", "rewrite_present": false},
+                {"mode": "audit+rewrite", "outcome": "changed", "model_calls": 2, "minimum_edit_count": 1, "rewrite_present": true}
+              ]
+            }
+          }
+        }
+      }
+    },
+    "renderer": {
+      "type": "object", "additionalProperties": false,
+      "required": ["name", "version", "lock_sha256", "trust_sha256"],
+      "properties": {"name": {"const": "brandkit-pdf-renderer"}, "version": {"type": "string", "minLength": 1}, "lock_sha256": {"$ref": "#/$defs/hash"}, "trust_sha256": {"$ref": "#/$defs/hash"}}
+    },
+    "markdown_contract": {"type": "object", "additionalProperties": false, "required": ["sha256"], "properties": {"sha256": {"$ref": "#/$defs/hash"}}},
+    "document_type": {"type": "object", "additionalProperties": false, "required": ["id", "version", "sha256"], "properties": {"id": {"$ref": "#/$defs/id"}, "version": {"type": "string", "minLength": 1}, "sha256": {"$ref": "#/$defs/hash"}}},
+    "owner_approval_key_sha256": {"$ref": "#/$defs/hash"}
+  },
+  "$defs": {"hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "id": {"type": "string", "pattern": "^[a-z][a-z0-9-]{1,63}$"}}
+}

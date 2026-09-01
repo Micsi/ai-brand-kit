@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="339pt" height="44pt" viewBox="0.00 0.00 339.00 44.00" data-brand-primary="#172A3A" data-brand-accent="#3AAFA9" data-brand-text="#172A3A" data-brand-muted="#5D6873" data-brand-background="#FFFFFF" data-brand-surface="#EDF4F4">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 40)">
+<title>G</title>
+<polygon fill="#EDF4F4" stroke="none" points="-4,4 -4,-40 335.31,-40 335.31,4 -4,4" />
+<g id="node1" class="node">
+<title>input</title>
+<ellipse fill="none" stroke="#3AAFA9" cx="42.68" cy="-18" rx="42.68" ry="18" />
+<text xml:space="preserve" text-anchor="middle" x="42.68" y="-13.8" font-family="BrandKit-neutral-font" font-size="14.00" fill="#172A3A">Eingabe</text>
+</g>
+<g id="node2" class="node">
+<title>check</title>
+<ellipse fill="none" stroke="#3AAFA9" cx="163.51" cy="-18" rx="42.15" ry="18" />
+<text xml:space="preserve" text-anchor="middle" x="163.51" y="-13.8" font-family="BrandKit-neutral-font" font-size="14.00" fill="#172A3A">Prüfung</text>
+</g>
+<g id="edge1" class="edge">
+<title>input-&gt;check</title>
+<path fill="none" stroke="#3AAFA9" d="M85.57,-18C93.38,-18 101.64,-18 109.73,-18" />
+<polygon fill="#3AAFA9" stroke="#3AAFA9" points="109.48,-21.5 119.48,-18 109.48,-14.5 109.48,-21.5" />
+</g>
+<g id="node3" class="node">
+<title>output</title>
+<ellipse fill="none" stroke="#3AAFA9" cx="286.48" cy="-18" rx="44.83" ry="18" />
+<text xml:space="preserve" text-anchor="middle" x="286.48" y="-13.8" font-family="BrandKit-neutral-font" font-size="14.00" fill="#172A3A">Ausgabe</text>
+</g>
+<g id="edge2" class="edge">
+<title>check-&gt;output</title>
+<path fill="none" stroke="#3AAFA9" d="M206.14,-18C213.76,-18 221.83,-18 229.79,-18" />
+<polygon fill="#3AAFA9" stroke="#3AAFA9" points="229.78,-21.5 239.78,-18 229.78,-14.5 229.78,-21.5" />
+</g>
+</g>
+</svg>

@@ -1,0 +1,12 @@
+{
+  "schema_version": "rights-evidence.v1",
+  "issuer": "BrandKit test fixture",
+  "source": "repository-authored neutral test asset",
+  "scope": "single-asset",
+  "asset_id": "diagram",
+  "license_id": "BrandKit-fixture-owned",
+  "status": "owned",
+  "version": "1.0",
+  "date": "2026-08-26",
+  "todo": null
+}

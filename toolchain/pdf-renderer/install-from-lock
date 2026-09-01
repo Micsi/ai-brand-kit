@@ -1,0 +1,110 @@
+#!/bin/sh
+set -eu
+if [ "$#" -ne 3 ]; then echo "usage: install-from-lock HOME WHEELHOUSE ISSUER_KEY" >&2; exit 64; fi
+home=$1; wheels=$2; key=$3
+root=$(CDPATH= cd -- "$(dirname -- "$0")/../.." && pwd -P)
+version=1.2.28
+release="$home/.agents/skill-store/brand-voice-pdf/$version"
+runtime="$home/.agents/runtime-store/brandkit-pdf-renderer/$version"
+test -f "$key"; test -d "$wheels"
+if [ -e "$release" ] || [ -L "$release" ] || [ -e "$runtime" ] || [ -L "$runtime" ]; then
+  echo "refusing to replace an existing immutable renderer/skill release" >&2
+  exit 73
+fi
+python3.12 - "$root/renderer-trust.v1.json" "$root/toolchain/pdf-renderer.production.v1.lock.json" "$key" "$wheels" <<'PY'
+import hashlib,json,pathlib,sys
+t=json.loads(pathlib.Path(sys.argv[1]).read_text());lock=json.loads(pathlib.Path(sys.argv[2]).read_text());h=hashlib.sha256(pathlib.Path(sys.argv[3]).read_bytes()).hexdigest();wheels=pathlib.Path(sys.argv[4]).resolve(strict=True)
+assert t['status']=='installed' and h==t['issuer_key_sha256']
+pin=lock['wheelhouse'];inventory=wheels/pin['inventory']
+assert wheels.name==pin['cas_id'] and hashlib.sha256(inventory.read_bytes()).hexdigest()==pin['inventory_sha256']
+value=json.loads(inventory.read_text());expected={x['name']:x['sha256'] for x in value['files']};actual={x.name for x in wheels.iterdir()}
+assert actual==set(expected)|{pin['inventory']}
+for name,digest in expected.items():assert hashlib.sha256((wheels/name).read_bytes()).hexdigest()==digest
+PY
+mkdir -p "$home/.agents/skill-store/brand-voice-pdf" "$home/.agents/runtime-store/brandkit-pdf-renderer" "$home/.agents/skills" "$home/.claude/skills" "$home/.hermes/skills" "$home/.agents/activation-state" "$home/.agents/keys"
+verification_key="$home/.agents/keys/brand-voice-pdf.key"
+if [ "$key" != "$verification_key" ]; then
+  if [ -e "$verification_key" ] || [ -L "$verification_key" ]; then cmp "$key" "$verification_key" >/dev/null || { echo "verification key differs from installed key" >&2; exit 73; }
+  else cp "$key" "$verification_key"; chmod 600 "$verification_key"; fi
+fi
+tmp="$release.next.$$"
+trap 'chmod -R u+w "$tmp" "$runtime" 2>/dev/null || true; rm -rf "$tmp"; if [ ! -e "$release" ]; then rm -rf "$runtime"; fi' EXIT HUP INT TERM
+copy_source_fixtures() {
+  destination=$1
+  mkdir -p "$destination/fixtures/pdf-renderer"
+  cp -R "$root/fixtures/brand-registry" "$root/fixtures/brandkit-skills" "$root/fixtures/markdown" "$destination/fixtures/"
+  cp -R "$root/fixtures/pdf-renderer/e2e" "$root/fixtures/pdf-renderer/live-e2e" "$root/fixtures/pdf-renderer/reference-report" "$destination/fixtures/pdf-renderer/"
+}
+mkdir -p "$tmp/scripts" "$runtime/scripts"; cp -R "$root/skills/brand-voice-pdf/." "$tmp/"; cp "$root/scripts/pdf_renderer.py" "$root/scripts/pdf_visual_qa.py" "$root/scripts/brand_voice_pdf.py" "$root/scripts/brand_package.py" "$root/scripts/markdown_contract.py" "$root/scripts/project_brand_tokens.py" "$root/scripts/generate_pdf_e2e_goldens.py" "$root/toolchain/pdf-renderer/render" "$root/toolchain/pdf-renderer/verify-installation" "$root/toolchain/pdf-renderer/rollback" "$tmp/scripts/"; cp -R "$root/schemas" "$root/document-types" "$tmp/"; copy_source_fixtures "$tmp"; cp "$root/renderer-trust.v1.json" "$root/markdown-contract.v1.json" "$root/markdown-contract.v2.json" "$root/markdown-contract-migration.v1.json" "$tmp/"; mkdir -p "$tmp/toolchain"; cp "$root/toolchain/pdf-renderer.production.v1.lock.json" "$root/toolchain/mermaid-svg.v1.lock.json" "$root/toolchain/mermaid-linux-worker.v2.lock.json" "$root/toolchain/graphviz-svg.v1.lock.json" "$tmp/toolchain/"; cp -R "$root/toolchain/pdf-renderer" "$root/toolchain/mermaid-svg" "$root/toolchain/graphviz-svg" "$tmp/toolchain/"
+python3.12 -m venv "$runtime/.venv"; "$runtime/.venv/bin/pip" install --no-index --require-hashes -r "$root/toolchain/pdf-renderer/requirements.lock.txt" --find-links "$wheels"
+cp "$root/scripts/pdf_renderer.py" "$root/scripts/pdf_visual_qa.py" "$root/scripts/brand_voice_pdf.py" "$root/scripts/brand_package.py" "$root/scripts/markdown_contract.py" "$root/scripts/project_brand_tokens.py" "$root/scripts/generate_pdf_e2e_goldens.py" "$runtime/scripts/"; cp -R "$root/schemas" "$root/document-types" "$runtime/"; copy_source_fixtures "$runtime"; cp "$root/renderer-trust.v1.json" "$root/markdown-contract.v1.json" "$root/markdown-contract.v2.json" "$root/markdown-contract-migration.v1.json" "$runtime/"; mkdir -p "$runtime/toolchain" "$runtime/skills"; cp -R "$root/skills/brand-voice-pdf" "$runtime/skills/"; cp "$root/toolchain/pdf-renderer.production.v1.lock.json" "$root/toolchain/mermaid-svg.v1.lock.json" "$root/toolchain/mermaid-linux-worker.v2.lock.json" "$root/toolchain/graphviz-svg.v1.lock.json" "$runtime/toolchain/"; cp -R "$root/toolchain/pdf-renderer" "$root/toolchain/mermaid-svg" "$root/toolchain/graphviz-svg" "$runtime/toolchain/"
+python3.12 - "$root" "$tmp" "$runtime" <<'PY'
+import hashlib,json,pathlib,sys
+root,release,runtime=map(pathlib.Path,sys.argv[1:])
+lock=json.loads((root/'toolchain/pdf-renderer.production.v1.lock.json').read_text())
+assert lock['engine']['version']=='1.2.28'
+for record in lock['files'].values():
+    source=root/record['path']
+    assert source.is_file() and not source.is_symlink()
+    assert hashlib.sha256(source.read_bytes()).hexdigest()==record['sha256']
+copies={
+ 'skills/brand-voice-pdf/scripts/run':release/'scripts/run',
+ 'toolchain/pdf-renderer/render':release/'scripts/render',
+ 'scripts/brand_voice_pdf.py':runtime/'scripts/brand_voice_pdf.py',
+ 'scripts/pdf_renderer.py':runtime/'scripts/pdf_renderer.py',
+ 'scripts/generate_pdf_e2e_goldens.py':runtime/'scripts/generate_pdf_e2e_goldens.py',
+}
+for source_name,target in copies.items():
+    source=root/source_name
+    assert target.read_bytes()==source.read_bytes(),(source_name,target)
+for target in copies.values():
+    text=target.read_text(errors='ignore')
+    assert all(old not in text for old in ('1.2.3','1.2.4','1.2.5')),target
+PY
+chmod +x "$tmp/scripts/run" "$tmp/scripts/render" "$tmp/scripts/verify-installation" "$tmp/scripts/rollback" "$runtime/toolchain/pdf-renderer/render" "$runtime/toolchain/pdf-renderer/verify-installation" "$runtime/toolchain/pdf-renderer/rollback" "$runtime/toolchain/mermaid-svg/render-offline" "$runtime/toolchain/mermaid-svg/render-linux-worker" "$runtime/toolchain/mermaid-svg/linux_worker.py" "$runtime/toolchain/mermaid-svg/linux-worker-entrypoint" "$runtime/toolchain/mermaid-svg/install-offline" "$runtime/toolchain/mermaid-svg/verify-bundle" "$runtime/toolchain/mermaid-svg/verify-clean-rooms" "$runtime/toolchain/mermaid-svg/version-log" "$runtime/toolchain/graphviz-svg/render-offline" "$runtime/toolchain/graphviz-svg/install-offline" "$runtime/toolchain/graphviz-svg/verify-bundle" "$runtime/toolchain/graphviz-svg/verify-clean-rooms"
+find "$tmp" "$runtime" -type d -exec chmod 555 {} +
+find "$tmp" "$runtime" -type f -exec chmod 444 {} +
+chmod 555 "$tmp/scripts/run" "$tmp/scripts/render" "$tmp/scripts/verify-installation" "$tmp/scripts/rollback" "$runtime/toolchain/pdf-renderer/render" "$runtime/toolchain/pdf-renderer/verify-installation" "$runtime/toolchain/pdf-renderer/rollback" "$runtime/toolchain/mermaid-svg/render-offline" "$runtime/toolchain/mermaid-svg/render-linux-worker" "$runtime/toolchain/mermaid-svg/linux_worker.py" "$runtime/toolchain/mermaid-svg/linux-worker-entrypoint" "$runtime/toolchain/mermaid-svg/install-offline" "$runtime/toolchain/mermaid-svg/verify-bundle" "$runtime/toolchain/mermaid-svg/verify-clean-rooms" "$runtime/toolchain/mermaid-svg/version-log" "$runtime/toolchain/graphviz-svg/render-offline" "$runtime/toolchain/graphviz-svg/install-offline" "$runtime/toolchain/graphviz-svg/verify-bundle" "$runtime/toolchain/graphviz-svg/verify-clean-rooms"
+mv "$tmp" "$release"
+python3.12 - "$home" "$version" "$key" <<'PY'
+import hashlib,hmac,json,os,pathlib,stat,sys
+home=pathlib.Path(sys.argv[1]);version=sys.argv[2];key=pathlib.Path(sys.argv[3]).read_bytes()
+release=home/'.agents/skill-store/brand-voice-pdf'/version;runtime=home/'.agents/runtime-store/brandkit-pdf-renderer'/version
+links={home/'.agents/skills/brand-voice-pdf':f'../skill-store/brand-voice-pdf/{version}',home/'.claude/skills/brand-voice-pdf':'../../.agents/skills/brand-voice-pdf',home/'.hermes/skills/brand-voice-pdf':'../../.agents/skills/brand-voice-pdf'}
+previous={str(p):(os.readlink(p) if p.is_symlink() else None) for p in links}
+def inventory(root):
+ out=[]
+ for path in sorted(root.rglob('*')):
+  st=path.lstat();item={'path':path.relative_to(root).as_posix(),'mode':format(stat.S_IMODE(st.st_mode),'04o'),'type':'symlink' if path.is_symlink() else 'directory' if path.is_dir() else 'file'}
+  if path.is_symlink():item['target']=os.readlink(path)
+  elif path.is_file():item['sha256']=hashlib.sha256(path.read_bytes()).hexdigest()
+  out.append(item)
+ return out
+payload={'schema_version':'brand-voice-pdf-release-manifest.v1','version':version,'predecessor_links':previous,'release':inventory(release),'runtime':inventory(runtime),'link_topology':{str(k):v for k,v in links.items()}}
+raw=json.dumps(payload,sort_keys=True,separators=(',',':'),ensure_ascii=False).encode();envelope={'payload':payload,'hmac_sha256':hmac.new(key,raw,hashlib.sha256).hexdigest()}
+state=home/'.agents/activation-state';manifest=state/f'brand-voice-pdf-{version}.manifest.json';tmp=manifest.with_name('.'+manifest.name+'.tmp');tmp.write_text(json.dumps(envelope,sort_keys=True,indent=2,ensure_ascii=False)+'\n');os.replace(tmp,manifest)
+changed=[]
+try:
+ for index,(path,target) in enumerate(links.items()):
+  stage=path.with_name('.'+path.name+'.next');
+  try:stage.unlink()
+  except FileNotFoundError:pass
+  stage.symlink_to(target);os.replace(stage,path);changed.append(path)
+  if index==0 and os.environ.get('BRANDKIT_INSTALL_FAIL_AFTER_AGENT_SWITCH')=='1':raise RuntimeError('injected activation failure')
+ current={'schema_version':'brand-voice-pdf-activation.v1','version':version,'manifest_sha256':hashlib.sha256(manifest.read_bytes()).hexdigest(),'predecessor_links':previous,'links':{str(k):v for k,v in links.items()}}
+ signed={'payload':current,'hmac_sha256':hmac.new(key,json.dumps(current,sort_keys=True,separators=(',',':')).encode(),hashlib.sha256).hexdigest()};target=state/'brand-voice-pdf.json';stage=target.with_name('.'+target.name+'.tmp');stage.write_text(json.dumps(signed,sort_keys=True,indent=2)+'\n');os.replace(stage,target)
+except Exception:
+ for path in reversed(changed):
+  old=previous[str(path)];stage=path.with_name('.'+path.name+'.rollback')
+  try:stage.unlink()
+  except FileNotFoundError:pass
+  if old is None:path.unlink(missing_ok=True)
+  else:stage.symlink_to(old);os.replace(stage,path)
+ raise
+PY
+PYTHONDONTWRITEBYTECODE=1 BRANDKIT_HOME="$home" "$release/scripts/verify-installation" "$home" "$verification_key" "$version" >/dev/null
+PYTHONDONTWRITEBYTECODE=1 BRANDKIT_HOME="$home" "$release/scripts/run" --help >/dev/null
+PYTHONDONTWRITEBYTECODE=1 BRANDKIT_HOME="$home" "$release/scripts/render" --help >/dev/null
+PYTHONDONTWRITEBYTECODE=1 BRANDKIT_HOME="$home" "$release/scripts/verify-installation" "$home" "$verification_key" "$version" >/dev/null
+trap - EXIT HUP INT TERM
+printf '%s\n' "$release" "$runtime"

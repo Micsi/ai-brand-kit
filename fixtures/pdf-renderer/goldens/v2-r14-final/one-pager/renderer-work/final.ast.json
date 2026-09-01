@@ -1,0 +1,637 @@
+{
+  "children": [
+    {
+      "id": "title",
+      "level": 1,
+      "line": 14,
+      "text": "Projektüberblick",
+      "type": "heading"
+    },
+    {
+      "line": 15,
+      "type": "blank"
+    },
+    {
+      "id": "summary",
+      "level": 2,
+      "line": 16,
+      "text": "Zusammenfassung",
+      "type": "heading"
+    },
+    {
+      "line": 17,
+      "type": "blank"
+    },
+    {
+      "inline": [
+        {
+          "mutable": true,
+          "text": "Ein kompakter Überblick verbindet Ziel, Nutzen und nächsten Schritt auf einer Seite.",
+          "type": "text"
+        }
+      ],
+      "line": 18,
+      "text": "Ein kompakter Überblick verbindet Ziel, Nutzen und nächsten Schritt auf einer Seite.",
+      "type": "paragraph"
+    },
+    {
+      "line": 19,
+      "type": "blank"
+    },
+    {
+      "id": "key-points",
+      "level": 2,
+      "line": 20,
+      "text": "Kernpunkte",
+      "type": "heading"
+    },
+    {
+      "line": 21,
+      "type": "blank"
+    },
+    {
+      "items": [
+        {
+          "inline": [
+            {
+              "mutable": true,
+              "text": "Ein gemeinsamer Dokumentvertrag",
+              "type": "text"
+            }
+          ],
+          "text": "Ein gemeinsamer Dokumentvertrag"
+        },
+        {
+          "inline": [
+            {
+              "mutable": true,
+              "text": "Eine reproduzierbare Ausgabe",
+              "type": "text"
+            }
+          ],
+          "text": "Eine reproduzierbare Ausgabe"
+        },
+        {
+          "inline": [
+            {
+              "mutable": true,
+              "text": "Eine sichtbare Qualitätsprüfung",
+              "type": "text"
+            }
+          ],
+          "text": "Eine sichtbare Qualitätsprüfung"
+        }
+      ],
+      "line": 22,
+      "type": "unordered-list"
+    },
+    {
+      "line": 25,
+      "type": "blank"
+    },
+    {
+      "id": "next-step",
+      "level": 2,
+      "line": 26,
+      "text": "Nächster Schritt",
+      "type": "heading"
+    },
+    {
+      "line": 27,
+      "type": "blank"
+    },
+    {
+      "inline": [
+        {
+          "mutable": true,
+          "text": "Die fachliche Freigabe schließt den Ablauf ab.",
+          "type": "text"
+        }
+      ],
+      "line": 28,
+      "text": "Die fachliche Freigabe schließt den Ablauf ab.",
+      "type": "paragraph"
+    }
+  ],
+  "contract": "markdown-contract.v2",
+  "frontmatter": {
+    "assets": [],
+    "document_id": "golden-one-pager",
+    "document_type": "one-pager",
+    "facts": [],
+    "lang": "de-DE",
+    "rights": [],
+    "schema_version": "markdown-document.v1",
+    "sources": [],
+    "status": "release",
+    "title": "Projektüberblick",
+    "todos": []
+  },
+  "humanizer_segments": {
+    "mutable": [
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 354,
+        "kind": "natural-prose",
+        "old_hash": "5fefe2c6da8ffbea27747cbbe33bf1ae2662108d8e6878a2f6400360f7b8c313",
+        "ordinal": 1,
+        "role": "segment",
+        "segment_id": "mutable-917f5e137903c9316c95e819",
+        "sha256": "5fefe2c6da8ffbea27747cbbe33bf1ae2662108d8e6878a2f6400360f7b8c313",
+        "start_byte": 268,
+        "text": "Ein kompakter Überblick verbindet Ziel, Nutzen und nächsten Schritt auf einer Seite."
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 418,
+        "kind": "natural-prose",
+        "old_hash": "1d76f0919a3ae3ed836b4f91c1edf73bfa250fa41067261afc8e8a0bf53cd2f0",
+        "ordinal": 2,
+        "role": "segment",
+        "segment_id": "mutable-4c7e5d76d27bb36c635e45dd",
+        "sha256": "1d76f0919a3ae3ed836b4f91c1edf73bfa250fa41067261afc8e8a0bf53cd2f0",
+        "start_byte": 387,
+        "text": "Ein gemeinsamer Dokumentvertrag"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 449,
+        "kind": "natural-prose",
+        "old_hash": "8ae0d7d4a3e1f214fcfbdd493ba41d3dc8cbff0185d92fe99067c101d8d1ef6e",
+        "ordinal": 3,
+        "role": "segment",
+        "segment_id": "mutable-4f6dd1d64a64ce142d5c8ab4",
+        "sha256": "8ae0d7d4a3e1f214fcfbdd493ba41d3dc8cbff0185d92fe99067c101d8d1ef6e",
+        "start_byte": 421,
+        "text": "Eine reproduzierbare Ausgabe"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 485,
+        "kind": "natural-prose",
+        "old_hash": "c0520de9538d9a59c8748609aa6794c2a32ffc258967bc83c34952687ee29f43",
+        "ordinal": 4,
+        "role": "segment",
+        "segment_id": "mutable-ff57bc81e872d97bfebabf9b",
+        "sha256": "c0520de9538d9a59c8748609aa6794c2a32ffc258967bc83c34952687ee29f43",
+        "start_byte": 452,
+        "text": "Eine sichtbare Qualitätsprüfung"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 569,
+        "kind": "natural-prose",
+        "old_hash": "307186bcc808eece8d5718b308d28241705c81da656cba1e04d458a7e2aa43b5",
+        "ordinal": 5,
+        "role": "segment",
+        "segment_id": "mutable-5f79f462a104b839ffe551be",
+        "sha256": "307186bcc808eece8d5718b308d28241705c81da656cba1e04d458a7e2aa43b5",
+        "start_byte": 522,
+        "text": "Die fachliche Freigabe schließt den Ablauf ab."
+      }
+    ],
+    "partition": [
+      {
+        "ast_path": "document/frontmatter",
+        "classification": "protected",
+        "end_byte": 207,
+        "kind": "frontmatter",
+        "old_hash": "657966c398a9b5197e0ae50221c66b34d92b2433d35a8230897467d9fe14824b",
+        "ordinal": 1,
+        "role": "document-metadata",
+        "segment_id": "protected-63274e878959ab9eb92f8a7c",
+        "sha256": "657966c398a9b5197e0ae50221c66b34d92b2433d35a8230897467d9fe14824b",
+        "start_byte": 0,
+        "text": "---\nschema_version: markdown-document.v1\ndocument_id: golden-one-pager\ndocument_type: one-pager\ntitle: Projektüberblick\nlang: de-DE\nstatus: release\nfacts: []\nsources: []\nassets: []\nrights: []\ntodos: []\n---\n"
+      },
+      {
+        "ast_path": "document/directive/title",
+        "classification": "protected",
+        "end_byte": 236,
+        "kind": "directive",
+        "old_hash": "d1a5ee21e14b4143d446b6aee31883e37d5f08cd3156ba18296fad5fab38be36",
+        "ordinal": 1,
+        "role": "title",
+        "segment_id": "protected-0975bbfa365c9d92158ef283",
+        "sha256": "d1a5ee21e14b4143d446b6aee31883e37d5f08cd3156ba18296fad5fab38be36",
+        "start_byte": 207,
+        "text": "# Projektüberblick {#title}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 237,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 1,
+        "role": "structural-bytes",
+        "segment_id": "protected-9afa7534ec84d0bf2257eef0",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 236,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/summary",
+        "classification": "protected",
+        "end_byte": 267,
+        "kind": "directive",
+        "old_hash": "bd0af257d3ab5c2ca97ef1e7279957e0134ba7d68f95f5380cc05ce6eca82dfa",
+        "ordinal": 1,
+        "role": "summary",
+        "segment_id": "protected-3a9edb52d179bdf74c15f80f",
+        "sha256": "bd0af257d3ab5c2ca97ef1e7279957e0134ba7d68f95f5380cc05ce6eca82dfa",
+        "start_byte": 237,
+        "text": "## Zusammenfassung {#summary}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 268,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 2,
+        "role": "structural-bytes",
+        "segment_id": "protected-cbc160d37b05946352292b51",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 267,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 354,
+        "kind": "natural-prose",
+        "old_hash": "5fefe2c6da8ffbea27747cbbe33bf1ae2662108d8e6878a2f6400360f7b8c313",
+        "ordinal": 1,
+        "role": "segment",
+        "segment_id": "mutable-917f5e137903c9316c95e819",
+        "sha256": "5fefe2c6da8ffbea27747cbbe33bf1ae2662108d8e6878a2f6400360f7b8c313",
+        "start_byte": 268,
+        "text": "Ein kompakter Überblick verbindet Ziel, Nutzen und nächsten Schritt auf einer Seite."
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 356,
+        "kind": "syntax",
+        "old_hash": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "ordinal": 3,
+        "role": "structural-bytes",
+        "segment_id": "protected-5339e929b7b0dbfff3091dd5",
+        "sha256": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "start_byte": 354,
+        "text": "\n\n"
+      },
+      {
+        "ast_path": "document/directive/key-points",
+        "classification": "protected",
+        "end_byte": 384,
+        "kind": "directive",
+        "old_hash": "27b77e3682f2cbac29036d32ef2868cf3f91ccd011c593774ad109dd9d8dfa7a",
+        "ordinal": 1,
+        "role": "key-points",
+        "segment_id": "protected-d30c7fa816b564fa33449681",
+        "sha256": "27b77e3682f2cbac29036d32ef2868cf3f91ccd011c593774ad109dd9d8dfa7a",
+        "start_byte": 356,
+        "text": "## Kernpunkte {#key-points}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 387,
+        "kind": "syntax",
+        "old_hash": "4a0b0fbdbf6ee3656f62dec525e8a2b1cbf11073bb250e465bcfdced0b953c44",
+        "ordinal": 4,
+        "role": "structural-bytes",
+        "segment_id": "protected-db9bb4c8d3316ecdfc3bc19a",
+        "sha256": "4a0b0fbdbf6ee3656f62dec525e8a2b1cbf11073bb250e465bcfdced0b953c44",
+        "start_byte": 384,
+        "text": "\n- "
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 418,
+        "kind": "natural-prose",
+        "old_hash": "1d76f0919a3ae3ed836b4f91c1edf73bfa250fa41067261afc8e8a0bf53cd2f0",
+        "ordinal": 2,
+        "role": "segment",
+        "segment_id": "mutable-4c7e5d76d27bb36c635e45dd",
+        "sha256": "1d76f0919a3ae3ed836b4f91c1edf73bfa250fa41067261afc8e8a0bf53cd2f0",
+        "start_byte": 387,
+        "text": "Ein gemeinsamer Dokumentvertrag"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 421,
+        "kind": "syntax",
+        "old_hash": "4a0b0fbdbf6ee3656f62dec525e8a2b1cbf11073bb250e465bcfdced0b953c44",
+        "ordinal": 5,
+        "role": "structural-bytes",
+        "segment_id": "protected-7406e07bb89250ac7ea4e9bc",
+        "sha256": "4a0b0fbdbf6ee3656f62dec525e8a2b1cbf11073bb250e465bcfdced0b953c44",
+        "start_byte": 418,
+        "text": "\n- "
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 449,
+        "kind": "natural-prose",
+        "old_hash": "8ae0d7d4a3e1f214fcfbdd493ba41d3dc8cbff0185d92fe99067c101d8d1ef6e",
+        "ordinal": 3,
+        "role": "segment",
+        "segment_id": "mutable-4f6dd1d64a64ce142d5c8ab4",
+        "sha256": "8ae0d7d4a3e1f214fcfbdd493ba41d3dc8cbff0185d92fe99067c101d8d1ef6e",
+        "start_byte": 421,
+        "text": "Eine reproduzierbare Ausgabe"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 452,
+        "kind": "syntax",
+        "old_hash": "4a0b0fbdbf6ee3656f62dec525e8a2b1cbf11073bb250e465bcfdced0b953c44",
+        "ordinal": 6,
+        "role": "structural-bytes",
+        "segment_id": "protected-7e9ea612b2a3f2f6881cedae",
+        "sha256": "4a0b0fbdbf6ee3656f62dec525e8a2b1cbf11073bb250e465bcfdced0b953c44",
+        "start_byte": 449,
+        "text": "\n- "
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 485,
+        "kind": "natural-prose",
+        "old_hash": "c0520de9538d9a59c8748609aa6794c2a32ffc258967bc83c34952687ee29f43",
+        "ordinal": 4,
+        "role": "segment",
+        "segment_id": "mutable-ff57bc81e872d97bfebabf9b",
+        "sha256": "c0520de9538d9a59c8748609aa6794c2a32ffc258967bc83c34952687ee29f43",
+        "start_byte": 452,
+        "text": "Eine sichtbare Qualitätsprüfung"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 487,
+        "kind": "syntax",
+        "old_hash": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "ordinal": 7,
+        "role": "structural-bytes",
+        "segment_id": "protected-22983067b2bd565d1e0da203",
+        "sha256": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "start_byte": 485,
+        "text": "\n\n"
+      },
+      {
+        "ast_path": "document/directive/next-step",
+        "classification": "protected",
+        "end_byte": 521,
+        "kind": "directive",
+        "old_hash": "98c24a4c538258e365b1a97c86c582c382aed72ac72bd568ea342931b17900b8",
+        "ordinal": 1,
+        "role": "next-step",
+        "segment_id": "protected-5e5aa495102534a6d4b7f219",
+        "sha256": "98c24a4c538258e365b1a97c86c582c382aed72ac72bd568ea342931b17900b8",
+        "start_byte": 487,
+        "text": "## Nächster Schritt {#next-step}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 522,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 8,
+        "role": "structural-bytes",
+        "segment_id": "protected-0d0c85d0e40aed27ff38e2a9",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 521,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 569,
+        "kind": "natural-prose",
+        "old_hash": "307186bcc808eece8d5718b308d28241705c81da656cba1e04d458a7e2aa43b5",
+        "ordinal": 5,
+        "role": "segment",
+        "segment_id": "mutable-5f79f462a104b839ffe551be",
+        "sha256": "307186bcc808eece8d5718b308d28241705c81da656cba1e04d458a7e2aa43b5",
+        "start_byte": 522,
+        "text": "Die fachliche Freigabe schließt den Ablauf ab."
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 570,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 9,
+        "role": "structural-bytes",
+        "segment_id": "protected-e414e4605b991629d2ee1b9e",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 569,
+        "text": "\n"
+      }
+    ],
+    "protected": [
+      {
+        "ast_path": "document/frontmatter",
+        "classification": "protected",
+        "end_byte": 207,
+        "kind": "frontmatter",
+        "old_hash": "657966c398a9b5197e0ae50221c66b34d92b2433d35a8230897467d9fe14824b",
+        "ordinal": 1,
+        "role": "document-metadata",
+        "segment_id": "protected-63274e878959ab9eb92f8a7c",
+        "sha256": "657966c398a9b5197e0ae50221c66b34d92b2433d35a8230897467d9fe14824b",
+        "start_byte": 0,
+        "text": "---\nschema_version: markdown-document.v1\ndocument_id: golden-one-pager\ndocument_type: one-pager\ntitle: Projektüberblick\nlang: de-DE\nstatus: release\nfacts: []\nsources: []\nassets: []\nrights: []\ntodos: []\n---\n"
+      },
+      {
+        "ast_path": "document/directive/title",
+        "classification": "protected",
+        "end_byte": 236,
+        "kind": "directive",
+        "old_hash": "d1a5ee21e14b4143d446b6aee31883e37d5f08cd3156ba18296fad5fab38be36",
+        "ordinal": 1,
+        "role": "title",
+        "segment_id": "protected-0975bbfa365c9d92158ef283",
+        "sha256": "d1a5ee21e14b4143d446b6aee31883e37d5f08cd3156ba18296fad5fab38be36",
+        "start_byte": 207,
+        "text": "# Projektüberblick {#title}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 237,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 1,
+        "role": "structural-bytes",
+        "segment_id": "protected-9afa7534ec84d0bf2257eef0",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 236,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/summary",
+        "classification": "protected",
+        "end_byte": 267,
+        "kind": "directive",
+        "old_hash": "bd0af257d3ab5c2ca97ef1e7279957e0134ba7d68f95f5380cc05ce6eca82dfa",
+        "ordinal": 1,
+        "role": "summary",
+        "segment_id": "protected-3a9edb52d179bdf74c15f80f",
+        "sha256": "bd0af257d3ab5c2ca97ef1e7279957e0134ba7d68f95f5380cc05ce6eca82dfa",
+        "start_byte": 237,
+        "text": "## Zusammenfassung {#summary}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 268,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 2,
+        "role": "structural-bytes",
+        "segment_id": "protected-cbc160d37b05946352292b51",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 267,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 356,
+        "kind": "syntax",
+        "old_hash": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "ordinal": 3,
+        "role": "structural-bytes",
+        "segment_id": "protected-5339e929b7b0dbfff3091dd5",
+        "sha256": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "start_byte": 354,
+        "text": "\n\n"
+      },
+      {
+        "ast_path": "document/directive/key-points",
+        "classification": "protected",
+        "end_byte": 384,
+        "kind": "directive",
+        "old_hash": "27b77e3682f2cbac29036d32ef2868cf3f91ccd011c593774ad109dd9d8dfa7a",
+        "ordinal": 1,
+        "role": "key-points",
+        "segment_id": "protected-d30c7fa816b564fa33449681",
+        "sha256": "27b77e3682f2cbac29036d32ef2868cf3f91ccd011c593774ad109dd9d8dfa7a",
+        "start_byte": 356,
+        "text": "## Kernpunkte {#key-points}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 387,
+        "kind": "syntax",
+        "old_hash": "4a0b0fbdbf6ee3656f62dec525e8a2b1cbf11073bb250e465bcfdced0b953c44",
+        "ordinal": 4,
+        "role": "structural-bytes",
+        "segment_id": "protected-db9bb4c8d3316ecdfc3bc19a",
+        "sha256": "4a0b0fbdbf6ee3656f62dec525e8a2b1cbf11073bb250e465bcfdced0b953c44",
+        "start_byte": 384,
+        "text": "\n- "
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 421,
+        "kind": "syntax",
+        "old_hash": "4a0b0fbdbf6ee3656f62dec525e8a2b1cbf11073bb250e465bcfdced0b953c44",
+        "ordinal": 5,
+        "role": "structural-bytes",
+        "segment_id": "protected-7406e07bb89250ac7ea4e9bc",
+        "sha256": "4a0b0fbdbf6ee3656f62dec525e8a2b1cbf11073bb250e465bcfdced0b953c44",
+        "start_byte": 418,
+        "text": "\n- "
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 452,
+        "kind": "syntax",
+        "old_hash": "4a0b0fbdbf6ee3656f62dec525e8a2b1cbf11073bb250e465bcfdced0b953c44",
+        "ordinal": 6,
+        "role": "structural-bytes",
+        "segment_id": "protected-7e9ea612b2a3f2f6881cedae",
+        "sha256": "4a0b0fbdbf6ee3656f62dec525e8a2b1cbf11073bb250e465bcfdced0b953c44",
+        "start_byte": 449,
+        "text": "\n- "
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 487,
+        "kind": "syntax",
+        "old_hash": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "ordinal": 7,
+        "role": "structural-bytes",
+        "segment_id": "protected-22983067b2bd565d1e0da203",
+        "sha256": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "start_byte": 485,
+        "text": "\n\n"
+      },
+      {
+        "ast_path": "document/directive/next-step",
+        "classification": "protected",
+        "end_byte": 521,
+        "kind": "directive",
+        "old_hash": "98c24a4c538258e365b1a97c86c582c382aed72ac72bd568ea342931b17900b8",
+        "ordinal": 1,
+        "role": "next-step",
+        "segment_id": "protected-5e5aa495102534a6d4b7f219",
+        "sha256": "98c24a4c538258e365b1a97c86c582c382aed72ac72bd568ea342931b17900b8",
+        "start_byte": 487,
+        "text": "## Nächster Schritt {#next-step}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 522,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 8,
+        "role": "structural-bytes",
+        "segment_id": "protected-0d0c85d0e40aed27ff38e2a9",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 521,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 570,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 9,
+        "role": "structural-bytes",
+        "segment_id": "protected-e414e4605b991629d2ee1b9e",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 569,
+        "text": "\n"
+      }
+    ]
+  },
+  "rights_evidence": {},
+  "roundtrip_sha256": "9d12703b89b920afeea05e2fe7543b9cbb6d9f6f3d2c1dc2f234988d203b6ef5",
+  "source": "---\nschema_version: markdown-document.v1\ndocument_id: golden-one-pager\ndocument_type: one-pager\ntitle: Projektüberblick\nlang: de-DE\nstatus: release\nfacts: []\nsources: []\nassets: []\nrights: []\ntodos: []\n---\n# Projektüberblick {#title}\n\n## Zusammenfassung {#summary}\n\nEin kompakter Überblick verbindet Ziel, Nutzen und nächsten Schritt auf einer Seite.\n\n## Kernpunkte {#key-points}\n\n- Ein gemeinsamer Dokumentvertrag\n- Eine reproduzierbare Ausgabe\n- Eine sichtbare Qualitätsprüfung\n\n## Nächster Schritt {#next-step}\n\nDie fachliche Freigabe schließt den Ablauf ab.\n",
+  "source_sha256": "9d12703b89b920afeea05e2fe7543b9cbb6d9f6f3d2c1dc2f234988d203b6ef5",
+  "type": "document"
+}

@@ -1,0 +1,14 @@
+{
+  "schema_version": "pdf-visual-qa.v1",
+  "renderer": "brandkit-pdf-renderer@1.0.0",
+  "pages_inspected": [1, 2, 3],
+  "checks": {
+    "overflow": 0,
+    "overlap": 0,
+    "missing_glyphs": 0,
+    "contrast_failures": 0,
+    "pagination_failures": 0
+  },
+  "result": "pass",
+  "inspected_at": "2026-08-26T00:00:00Z"
+}

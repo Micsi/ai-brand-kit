@@ -1,0 +1,107 @@
+{
+  "schema_version": "impeccable-adapter.v1",
+  "contract_version": "1.0.0",
+  "upstream": {
+    "repository": "github:pbakaus/impeccable",
+    "commit": "fcd7622cd2d8e2b09344ba8ede9fcac82cec4e70",
+    "tree": "e5721fadc3ef0f9b2386b6f4330ba8490dd451bc",
+    "package_version": "3.6.0",
+    "plugin_version": "4.1.1",
+    "canonical_skill_subtree": ".agents/skills/impeccable",
+    "canonical_skill_tree": "0024cd8b54c3e23531bdeaed20409b4ac569e2cc",
+    "license": "Apache-2.0",
+    "license_sha256": "02bb8c3b4e70190e3986c0404ad2fd8d639b4f534252d82379cc1b502b6d1812",
+    "notice_path": "NOTICE.md",
+    "notice_sha256": "c60a093c2845fd9fb82f9c6f742ece31f379f8190b535309d32d66c45ccffdcb",
+    "committed_at": "2026-08-25T12:17:17Z"
+  },
+  "adapted_release": {
+    "tree_sha256": "13de7f5be0d65efbcffae0845f2b52bd880d13c0855db576286733dc53ff947d",
+    "marker": {"schema_version": "brandkit-impeccable-release.v2", "version": "4.1.1+fcd7622.brandkit6", "upstream_commit": "fcd7622cd2d8e2b09344ba8ede9fcac82cec4e70", "upstream_tree": "e5721fadc3ef0f9b2386b6f4330ba8490dd451bc", "upstream_skill_tree": "0024cd8b54c3e23531bdeaed20409b4ac569e2cc"}
+  },
+  "capability_matrix": {
+    "direct_entrypoints": {
+      "generate-image.mjs": ["image_generation", "network"], "hook.mjs": ["hooks"], "hook-admin.mjs": ["hooks"], "hook-before-edit.mjs": ["hooks"], "doctor.mjs": ["update"], "pin.mjs": ["update"], "serve-question.mjs": ["browser", "network"],
+      "live.mjs": ["live", "browser", "network"], "live-server.mjs": ["live", "browser", "network"], "live-discard-manual-edits.mjs": ["live"]
+    },
+    "import_safe_direct_checks": {"live-inject.mjs": ["live", "browser", "network"], "live-insert.mjs": ["live"], "live-target.mjs": ["live"], "live-wrap.mjs": ["live"], "live-manual-edit-evidence.mjs": ["live"], "live-accept.mjs": ["live"], "live-commit-manual-edits.mjs": ["live"], "live-complete.mjs": ["live", "network"], "live-copy-edit-agent.mjs": ["live"], "live-poll.mjs": ["live", "network"], "live-resume.mjs": ["live"], "live-status.mjs": ["live", "network"]},
+    "indirect_owned": {"lib/open-system-browser.mjs": {"owner": "serve-question.mjs", "capabilities": ["browser"]}, "live-browser.js": {"owner": "live-server.mjs", "capabilities": ["live", "browser"]}, "live-browser-session.js": {"owner": "live-server.mjs", "capabilities": ["live", "browser"]}, "live-browser-dom.js": {"owner": "live-server.mjs", "capabilities": ["live", "browser"]}}
+  },
+  "installation": {
+    "status": "implemented-active",
+    "release_store": "~/.agents/skill-store/impeccable/4.1.1+fcd7622.brandkit6",
+    "activation": "atomic-symlink-swap",
+    "canonical_discovery": ".agents/skills/impeccable",
+    "claude_bridge": ".claude/skills -> ../.agents/skills",
+    "codex_discovery": ".agents/skills/impeccable",
+    "hermes_discovery": "trusted project .agents/skills plus skills.external_dirs for global scope",
+    "collision_identity": "frontmatter.name",
+    "collision_policy": "fail-closed",
+    "rollback": "restore previous lock and activation symlink",
+    "copy_upstream_into_brandkit_skill": false
+  },
+  "inventory": {
+    "path_manifest": "impeccable-upstream-inventory.v1.json",
+    "provider_skill_outputs": [
+      ".agent/skills/impeccable/SKILL.md",
+      ".agents/skills/impeccable/SKILL.md",
+      ".claude/skills/impeccable/SKILL.md",
+      ".cursor/skills/impeccable/SKILL.md",
+      ".gemini/skills/impeccable/SKILL.md",
+      ".github/skills/impeccable/SKILL.md",
+      ".grok/skills/impeccable/SKILL.md",
+      ".hermes/skills/impeccable/SKILL.md",
+      ".kiro/skills/impeccable/SKILL.md",
+      ".opencode/skills/impeccable/SKILL.md",
+      ".pi/skills/impeccable/SKILL.md",
+      ".qoder/skills/impeccable/SKILL.md",
+      ".rovodev/skills/impeccable/SKILL.md",
+      ".trae-cn/skills/impeccable/SKILL.md",
+      ".trae/skills/impeccable/SKILL.md",
+      ".vibe/skills/impeccable/SKILL.md",
+      "plugin/skills/impeccable/SKILL.md"
+    ],
+    "routes": ["craft", "shape", "init", "document", "extract", "critique", "audit", "polish", "bolder", "quieter", "distill", "harden", "onboard", "animate", "colorize", "typeset", "layout", "delight", "overdrive", "clarify", "adapt", "optimize", "live"],
+    "reference_count": 39,
+    "script_count": 108,
+    "roles": [
+      ".agents/skills/impeccable/agents/impeccable_asset_producer.toml",
+      ".agents/skills/impeccable/agents/impeccable_documenter.toml",
+      ".agents/skills/impeccable/agents/impeccable_finish_reviewer.toml",
+      ".agents/skills/impeccable/agents/impeccable_manual_edit_applier.toml",
+      ".agents/skills/impeccable/agents/openai.yaml"
+    ],
+    "hook_manifests": [".claude/settings.json", ".codex/hooks.json", ".cursor/hooks.json", ".github/hooks/impeccable.json", ".grok/hooks/impeccable.json"],
+    "runtime_features": {
+      "hooks": [".agents/skills/impeccable/scripts/hook.mjs", ".agents/skills/impeccable/scripts/hook-admin.mjs"],
+      "browser": [".agents/skills/impeccable/scripts/live-browser.js", ".agents/skills/impeccable/scripts/lib/open-system-browser.mjs"],
+      "live": [".agents/skills/impeccable/scripts/live.mjs", ".agents/skills/impeccable/scripts/live-server.mjs", ".agents/skills/impeccable/scripts/live-accept.mjs", ".agents/skills/impeccable/scripts/live-discard-manual-edits.mjs"],
+      "image_generation": [".agents/skills/impeccable/scripts/generate-image.mjs"],
+      "staleness_doctor": [".agents/skills/impeccable/scripts/doctor.mjs", ".agents/skills/impeccable/scripts/lib/staleness.mjs"],
+      "pin_admin": [".agents/skills/impeccable/scripts/pin.mjs"]
+    },
+    "blob_count": 155,
+    "blob_set_sha256": "1becaf85df5b7de153dffac775c3f4a5cc6b6029e7260b8dc162b8babc3351cc"
+  },
+  "defaults": {
+    "hooks": false,
+    "update": false,
+    "browser": false,
+    "live": false,
+    "image_generation": false,
+    "network": false,
+    "required_provider": null
+  },
+  "artifacts": {
+    "product": "PRODUCT.md",
+    "design": "DESIGN.md",
+    "impeccable_sidecar": ".impeccable/design.json",
+    "impeccable_config": ".impeccable/config.json",
+    "policy": ".brandkit/impeccable-policy.json",
+    "review": ".brandkit/review/impeccable-design-contract.md"
+  },
+  "token_namespaces": ["shared", "ui", "web", "pdf"],
+  "unknown_policy": "TODO",
+  "conflict_policy": "hard-stop-with-diff-and-review-todo",
+  "reverse_sync": "human-review-only"
+}

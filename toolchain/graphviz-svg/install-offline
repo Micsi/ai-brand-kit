@@ -1,0 +1,39 @@
+#!/bin/sh
+set -eu
+script_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd -P)
+destination=${1:?destination required}; cas=${2:?CAS required}
+[ ! -e "$destination" ] || { echo "Graphviz destination must be absent" >&2; exit 1; }
+"$script_dir/verify-bundle" "$cas" >/dev/null
+python3 - "$cas/node/node-v22.18.0-darwin-arm64.tar.gz" "$cas/package/viz-js-viz-3.29.0.tgz" <<'PY'
+import pathlib,posixpath,sys,tarfile
+for raw in sys.argv[1:]:
+ archive=pathlib.Path(raw)
+ with tarfile.open(archive) as handle:
+  members=handle.getmembers()
+  if not members:raise SystemExit("Graphviz archive is empty")
+  for member in members:
+   parts=pathlib.PurePosixPath(member.name).parts
+   unsafe=not parts or member.name.startswith("/") or ".." in parts or member.isdev()
+   if member.issym() or member.islnk():
+    target=member.linkname
+    resolved=posixpath.normpath(posixpath.join(posixpath.dirname(member.name),target))
+    unsafe=unsafe or target.startswith("/") or resolved==".." or resolved.startswith("../") or not resolved.startswith(parts[0]+"/")
+   if unsafe:
+    raise SystemExit(f"unsafe Graphviz archive member: {member.name}")
+PY
+mkdir -p "$destination/node" "$destination/viz"
+tar -xzf "$cas/node/node-v22.18.0-darwin-arm64.tar.gz" -C "$destination/node" --strip-components=1
+tar -xzf "$cas/package/viz-js-viz-3.29.0.tgz" -C "$destination/viz" --strip-components=1
+python3 - "$script_dir/../graphviz-svg.v1.lock.json" "$destination" <<'PY'
+import hashlib,json,pathlib,sys
+lock=json.loads(pathlib.Path(sys.argv[1]).read_text()); root=pathlib.Path(sys.argv[2])
+for key,path in (("node","node/bin/node"),("package","viz/lib/backend.js")):
+ p=root/path
+ if p.is_symlink() or hashlib.sha256(p.read_bytes()).hexdigest()!=lock[key]["executable_sha256"]:raise SystemExit(f"installed Graphviz {key} hash mismatch")
+PY
+python3 - "$script_dir/../graphviz-svg.v1.lock.json" "$destination/node/bin/node" <<'PY'
+import json,subprocess,sys
+lock=json.load(open(sys.argv[1]));output=subprocess.run(["/usr/bin/otool","-L",sys.argv[2]],check=True,text=True,capture_output=True).stdout
+lines=[x.strip().split(" ",1)[0] for x in output.splitlines() if x.startswith("\t")]
+if lines!=lock["node"]["system_libraries"]:raise SystemExit(f"Graphviz Node dynamic libraries differ: {lines}")
+PY

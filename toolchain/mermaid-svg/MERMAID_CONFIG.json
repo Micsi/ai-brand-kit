@@ -1,0 +1,8 @@
+{
+  "deterministicIds": true,
+  "deterministicIDSeed": "brandkit-mermaid-svg-v1",
+  "flowchart": {"htmlLabels": false, "useMaxWidth": false},
+  "fontFamily": "BrandKitPinnedFont",
+  "securityLevel": "strict",
+  "theme": "neutral"
+}

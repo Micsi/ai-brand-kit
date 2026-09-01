@@ -1,0 +1,23 @@
+#!/bin/sh
+set -eu
+script_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd -P); cas=${1:?CAS required}; evidence=${2:-}
+case "${TMPDIR:?}" in /Volumes/Daten/Projekte/BrandKit/.runtime/*) ;; *) echo "TMPDIR must be BrandKit runtime storage on /Volumes/Daten" >&2; exit 1;; esac
+root=$(mktemp -d "${TMPDIR}/brandkit-graphviz-v1.XXXXXX"); trap 'rm -rf "$root"' EXIT
+printf '%s\n' 'digraph G {' '  start [label="Start"];' '  end [label="Ende"];' '  start -> end;' '}' > "$root/input.dot"
+for room in a b; do "$script_dir/install-offline" "$root/$room" "$cas"; "$script_dir/render-offline" "$root/$room" "$root/input.dot" "$root/$room.svg"; done
+cmp "$root/a.svg" "$root/b.svg"
+hash=$(shasum -a 256 "$root/a.svg" | awk '{print $1}')
+[ "$hash" = "$(python3 -c 'import json,sys;print(json.load(open(sys.argv[1]))["clean_room_evidence"]["svg_sha256"])' "$script_dir/../graphviz-svg.v1.lock.json")" ]
+node_version=$($root/a/node/bin/node --version)
+network_log=$root/network-deny.log
+if /usr/bin/sandbox-exec -p '(version 1)(deny network*)(allow default)' "$root/a/node/bin/node" -e 'require("node:net").connect(9,"127.0.0.1").on("error",e=>{console.error(e.code);process.exit(e.code==="EPERM"?0:2)})' 2>"$network_log"; then :; else echo "Graphviz network-deny probe failed" >&2; cat "$network_log" >&2; exit 1; fi
+if [ -n "$evidence" ]; then
+ mkdir -p "$evidence"; cp "$root/a.svg" "$evidence/cleanroom-a.svg"; cp "$root/b.svg" "$evidence/cleanroom-b.svg"; cp "$network_log" "$evidence/network-deny.log"
+ python3 - "$script_dir/../graphviz-svg.v1.lock.json" "$evidence" "$hash" "$node_version" <<'PY'
+import hashlib,json,pathlib,sys
+lock_path=pathlib.Path(sys.argv[1]);out=pathlib.Path(sys.argv[2])
+value={"schema_version":"graphviz-clean-room-evidence.v1","lock_sha256":hashlib.sha256(lock_path.read_bytes()).hexdigest(),"cas_tree_sha256":json.loads(lock_path.read_text())["artifact_bundle"]["tree_sha256"],"cleanrooms":2,"network":"sandbox-exec-deny-network:EPERM","node_version":sys.argv[4],"graphviz_version":"15.1.1","svg_sha256":sys.argv[3],"byte_identical":(out/"cleanroom-a.svg").read_bytes()==(out/"cleanroom-b.svg").read_bytes()}
+(out/"evidence.json").write_text(json.dumps(value,sort_keys=True,indent=2)+"\n")
+PY
+fi
+printf '%s\n' "$hash"

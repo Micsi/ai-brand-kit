@@ -1,0 +1,381 @@
+{
+  "children": [
+    {
+      "id": "title",
+      "level": 1,
+      "line": 14,
+      "text": "Strategische Notiz",
+      "type": "heading"
+    },
+    {
+      "line": 15,
+      "type": "blank"
+    },
+    {
+      "id": "content",
+      "level": 2,
+      "line": 16,
+      "text": "Inhalt",
+      "type": "heading"
+    },
+    {
+      "line": 17,
+      "type": "blank"
+    },
+    {
+      "inline": [
+        {
+          "mutable": true,
+          "text": "Diese Notiz hält eine Entscheidung knapp fest. Sie stellt Kontext, Konsequenz und offenen Prüfpunkt in einen lesbaren Zusammenhang.",
+          "type": "text"
+        }
+      ],
+      "line": 18,
+      "text": "Diese Notiz hält eine Entscheidung knapp fest. Sie stellt Kontext, Konsequenz und offenen Prüfpunkt in einen lesbaren Zusammenhang.",
+      "type": "paragraph"
+    },
+    {
+      "line": 19,
+      "type": "blank"
+    },
+    {
+      "attrs": {
+        "appearance": "minimal",
+        "icon": "false",
+        "id": "decision-note",
+        "title": "Entscheidung"
+      },
+      "children": [
+        {
+          "inline": [
+            {
+              "mutable": true,
+              "text": "Die nächste Arbeitsphase beginnt erst nach der fachlichen Freigabe.",
+              "type": "text"
+            }
+          ],
+          "line": 21,
+          "text": "Die nächste Arbeitsphase beginnt erst nach der fachlichen Freigabe.",
+          "type": "paragraph"
+        }
+      ],
+      "kind": "note",
+      "line": 23,
+      "type": "callout"
+    }
+  ],
+  "contract": "markdown-contract.v2",
+  "figure_registry": [],
+  "frontmatter": {
+    "assets": [],
+    "document_id": "golden-freeform",
+    "document_type": "freeform",
+    "facts": [],
+    "lang": "de-DE",
+    "rights": [],
+    "schema_version": "markdown-document.v1",
+    "sources": [],
+    "status": "release",
+    "title": "Strategische Notiz",
+    "todos": []
+  },
+  "humanizer_segments": {
+    "mutable": [
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 392,
+        "kind": "natural-prose",
+        "old_hash": "b986eee7ee7fbf0ddb7743c4c26742595fb813bad39085bd93f6f2337a35057a",
+        "ordinal": 1,
+        "role": "segment",
+        "segment_id": "mutable-917f5e137903c9316c95e819",
+        "sha256": "b986eee7ee7fbf0ddb7743c4c26742595fb813bad39085bd93f6f2337a35057a",
+        "start_byte": 259,
+        "text": "Diese Notiz hält eine Entscheidung knapp fest. Sie stellt Kontext, Konsequenz und offenen Prüfpunkt in einen lesbaren Zusammenhang."
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 540,
+        "kind": "natural-prose",
+        "old_hash": "1a3f6d7270f129924595841ac090169deb285959e1dbc40c86a7dbafc99b87fe",
+        "ordinal": 2,
+        "role": "segment",
+        "segment_id": "mutable-4c7e5d76d27bb36c635e45dd",
+        "sha256": "1a3f6d7270f129924595841ac090169deb285959e1dbc40c86a7dbafc99b87fe",
+        "start_byte": 472,
+        "text": "Die nächste Arbeitsphase beginnt erst nach der fachlichen Freigabe."
+      }
+    ],
+    "partition": [
+      {
+        "ast_path": "document/frontmatter",
+        "classification": "protected",
+        "end_byte": 206,
+        "kind": "frontmatter",
+        "old_hash": "a8a141cef495f7bde75ab13f43bf5c4883200d8cf16d5388f159f7c1424d62c8",
+        "ordinal": 1,
+        "role": "document-metadata",
+        "segment_id": "protected-63274e878959ab9eb92f8a7c",
+        "sha256": "a8a141cef495f7bde75ab13f43bf5c4883200d8cf16d5388f159f7c1424d62c8",
+        "start_byte": 0,
+        "text": "---\nschema_version: markdown-document.v1\ndocument_id: golden-freeform\ndocument_type: freeform\ntitle: Strategische Notiz\nlang: de-DE\nstatus: release\nfacts: []\nsources: []\nassets: []\nrights: []\ntodos: []\n---\n"
+      },
+      {
+        "ast_path": "document/directive/title",
+        "classification": "protected",
+        "end_byte": 236,
+        "kind": "directive",
+        "old_hash": "c8eade30efb9a55d01d15d38476a3e4a5c86ec8ecc7a354e9d5070c7677341cb",
+        "ordinal": 1,
+        "role": "title",
+        "segment_id": "protected-0975bbfa365c9d92158ef283",
+        "sha256": "c8eade30efb9a55d01d15d38476a3e4a5c86ec8ecc7a354e9d5070c7677341cb",
+        "start_byte": 206,
+        "text": "# Strategische Notiz {#title}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 237,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 1,
+        "role": "structural-bytes",
+        "segment_id": "protected-9afa7534ec84d0bf2257eef0",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 236,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/content",
+        "classification": "protected",
+        "end_byte": 258,
+        "kind": "directive",
+        "old_hash": "98a7d64eef1a3f813073986bbf8469da30bbbbf3e232af957f8b5fb95f3394a3",
+        "ordinal": 1,
+        "role": "content",
+        "segment_id": "protected-be175df1df72c9c583d7ec54",
+        "sha256": "98a7d64eef1a3f813073986bbf8469da30bbbbf3e232af957f8b5fb95f3394a3",
+        "start_byte": 237,
+        "text": "## Inhalt {#content}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 259,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 2,
+        "role": "structural-bytes",
+        "segment_id": "protected-cbc160d37b05946352292b51",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 258,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 392,
+        "kind": "natural-prose",
+        "old_hash": "b986eee7ee7fbf0ddb7743c4c26742595fb813bad39085bd93f6f2337a35057a",
+        "ordinal": 1,
+        "role": "segment",
+        "segment_id": "mutable-917f5e137903c9316c95e819",
+        "sha256": "b986eee7ee7fbf0ddb7743c4c26742595fb813bad39085bd93f6f2337a35057a",
+        "start_byte": 259,
+        "text": "Diese Notiz hält eine Entscheidung knapp fest. Sie stellt Kontext, Konsequenz und offenen Prüfpunkt in einen lesbaren Zusammenhang."
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 394,
+        "kind": "syntax",
+        "old_hash": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "ordinal": 3,
+        "role": "structural-bytes",
+        "segment_id": "protected-5339e929b7b0dbfff3091dd5",
+        "sha256": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "start_byte": 392,
+        "text": "\n\n"
+      },
+      {
+        "ast_path": "document/directive/decision-note",
+        "classification": "protected",
+        "end_byte": 472,
+        "kind": "directive",
+        "old_hash": "ca7eb256fbfeedbf44404e476a80404bdb4751e7d0cf3625eac8dea88dbce1f3",
+        "ordinal": 1,
+        "role": "decision-note",
+        "segment_id": "protected-a7472b0dac8dee91ef1ff666",
+        "sha256": "ca7eb256fbfeedbf44404e476a80404bdb4751e7d0cf3625eac8dea88dbce1f3",
+        "start_byte": 394,
+        "text": "::: {.note #decision-note title=\"Entscheidung\" appearance=minimal icon=false}\n"
+      },
+      {
+        "ast_path": "document/natural-prose/segment",
+        "classification": "mutable",
+        "end_byte": 540,
+        "kind": "natural-prose",
+        "old_hash": "1a3f6d7270f129924595841ac090169deb285959e1dbc40c86a7dbafc99b87fe",
+        "ordinal": 2,
+        "role": "segment",
+        "segment_id": "mutable-4c7e5d76d27bb36c635e45dd",
+        "sha256": "1a3f6d7270f129924595841ac090169deb285959e1dbc40c86a7dbafc99b87fe",
+        "start_byte": 472,
+        "text": "Die nächste Arbeitsphase beginnt erst nach der fachlichen Freigabe."
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 541,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 4,
+        "role": "structural-bytes",
+        "segment_id": "protected-db9bb4c8d3316ecdfc3bc19a",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 540,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/decision-note",
+        "classification": "protected",
+        "end_byte": 545,
+        "kind": "directive",
+        "old_hash": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "ordinal": 2,
+        "role": "decision-note",
+        "segment_id": "protected-45c1d92dcd3c9f7c3a04efc3",
+        "sha256": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "start_byte": 541,
+        "text": ":::\n"
+      }
+    ],
+    "protected": [
+      {
+        "ast_path": "document/frontmatter",
+        "classification": "protected",
+        "end_byte": 206,
+        "kind": "frontmatter",
+        "old_hash": "a8a141cef495f7bde75ab13f43bf5c4883200d8cf16d5388f159f7c1424d62c8",
+        "ordinal": 1,
+        "role": "document-metadata",
+        "segment_id": "protected-63274e878959ab9eb92f8a7c",
+        "sha256": "a8a141cef495f7bde75ab13f43bf5c4883200d8cf16d5388f159f7c1424d62c8",
+        "start_byte": 0,
+        "text": "---\nschema_version: markdown-document.v1\ndocument_id: golden-freeform\ndocument_type: freeform\ntitle: Strategische Notiz\nlang: de-DE\nstatus: release\nfacts: []\nsources: []\nassets: []\nrights: []\ntodos: []\n---\n"
+      },
+      {
+        "ast_path": "document/directive/title",
+        "classification": "protected",
+        "end_byte": 236,
+        "kind": "directive",
+        "old_hash": "c8eade30efb9a55d01d15d38476a3e4a5c86ec8ecc7a354e9d5070c7677341cb",
+        "ordinal": 1,
+        "role": "title",
+        "segment_id": "protected-0975bbfa365c9d92158ef283",
+        "sha256": "c8eade30efb9a55d01d15d38476a3e4a5c86ec8ecc7a354e9d5070c7677341cb",
+        "start_byte": 206,
+        "text": "# Strategische Notiz {#title}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 237,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 1,
+        "role": "structural-bytes",
+        "segment_id": "protected-9afa7534ec84d0bf2257eef0",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 236,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/content",
+        "classification": "protected",
+        "end_byte": 258,
+        "kind": "directive",
+        "old_hash": "98a7d64eef1a3f813073986bbf8469da30bbbbf3e232af957f8b5fb95f3394a3",
+        "ordinal": 1,
+        "role": "content",
+        "segment_id": "protected-be175df1df72c9c583d7ec54",
+        "sha256": "98a7d64eef1a3f813073986bbf8469da30bbbbf3e232af957f8b5fb95f3394a3",
+        "start_byte": 237,
+        "text": "## Inhalt {#content}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 259,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 2,
+        "role": "structural-bytes",
+        "segment_id": "protected-cbc160d37b05946352292b51",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 258,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 394,
+        "kind": "syntax",
+        "old_hash": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "ordinal": 3,
+        "role": "structural-bytes",
+        "segment_id": "protected-5339e929b7b0dbfff3091dd5",
+        "sha256": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "start_byte": 392,
+        "text": "\n\n"
+      },
+      {
+        "ast_path": "document/directive/decision-note",
+        "classification": "protected",
+        "end_byte": 472,
+        "kind": "directive",
+        "old_hash": "ca7eb256fbfeedbf44404e476a80404bdb4751e7d0cf3625eac8dea88dbce1f3",
+        "ordinal": 1,
+        "role": "decision-note",
+        "segment_id": "protected-a7472b0dac8dee91ef1ff666",
+        "sha256": "ca7eb256fbfeedbf44404e476a80404bdb4751e7d0cf3625eac8dea88dbce1f3",
+        "start_byte": 394,
+        "text": "::: {.note #decision-note title=\"Entscheidung\" appearance=minimal icon=false}\n"
+      },
+      {
+        "ast_path": "document/syntax",
+        "classification": "protected",
+        "end_byte": 541,
+        "kind": "syntax",
+        "old_hash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "ordinal": 4,
+        "role": "structural-bytes",
+        "segment_id": "protected-db9bb4c8d3316ecdfc3bc19a",
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "start_byte": 540,
+        "text": "\n"
+      },
+      {
+        "ast_path": "document/directive/decision-note",
+        "classification": "protected",
+        "end_byte": 545,
+        "kind": "directive",
+        "old_hash": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "ordinal": 2,
+        "role": "decision-note",
+        "segment_id": "protected-45c1d92dcd3c9f7c3a04efc3",
+        "sha256": "64042736e140cd75a8bf09cd8e01dd57e56ba754439083257dbf6f3e2fb82501",
+        "start_byte": 541,
+        "text": ":::\n"
+      }
+    ]
+  },
+  "rights_evidence": {},
+  "roundtrip_sha256": "23fdc1545bc8df976feb1dcc0041186a59220db8b5cf957cc3edbfca98fb12b0",
+  "source": "---\nschema_version: markdown-document.v1\ndocument_id: golden-freeform\ndocument_type: freeform\ntitle: Strategische Notiz\nlang: de-DE\nstatus: release\nfacts: []\nsources: []\nassets: []\nrights: []\ntodos: []\n---\n# Strategische Notiz {#title}\n\n## Inhalt {#content}\n\nDiese Notiz hält eine Entscheidung knapp fest. Sie stellt Kontext, Konsequenz und offenen Prüfpunkt in einen lesbaren Zusammenhang.\n\n::: {.note #decision-note title=\"Entscheidung\" appearance=minimal icon=false}\nDie nächste Arbeitsphase beginnt erst nach der fachlichen Freigabe.\n:::\n",
+  "source_sha256": "23fdc1545bc8df976feb1dcc0041186a59220db8b5cf957cc3edbfca98fb12b0",
+  "type": "document"
+}

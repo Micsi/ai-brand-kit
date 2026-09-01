@@ -1,0 +1,6 @@
+{
+  "allowed_elements": ["heading", "paragraph", "ordered-list", "unordered-list", "link", "footnote", "table", "image", "callout", "mermaid"], "allowed_overrides": {"section_numbering": [false], "toc": [false]}, "engine_compatibility": "^1.0.0", "extends": null,
+  "forbidden_features": ["active-content", "embedded-credentials", "external-resources", "raw-html", "embedded-css", "unknown-directives", "unknown-code-fences"], "hash_policy": "sha256", "id": "one-pager", "layout": {"footer": false, "header": false, "manual_page_break": false, "toc": false}, "minimum_margin_mm": 15,
+  "pagination": {"content_start": null, "format": "none", "title_page_number": null}, "publication_gates": ["contract-valid", "no-open-todos", "assets-resolved", "rights-valid", "protected-hashes-stable", "render-success"], "rights_required": true, "schema_version": "document-type.v1",
+  "sections": {"optional": ["evidence", "next-step"], "order": ["summary", "key-points", "evidence", "next-step"], "required": ["summary", "key-points"]}, "version": "1.0.0"
+}

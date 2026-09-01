@@ -1,0 +1,81 @@
+{
+  "schema_version": "brandkit-skill-contract.v1",
+  "sequence": ["brandkit-setup", "brandkit-interview", "brandkit-build", "brandkit-publish"],
+  "skills": {
+    "brandkit-setup": {
+      "owner": "readiness-and-scope",
+      "inputs": ["requested_outputs", "project_root", "supplied_sources"],
+      "outputs": ["setup-readiness.md"],
+      "gate": "required capabilities have observed evidence or accepted fallback",
+      "fails_on": ["missing_write_target", "ambiguous_project_root", "required_capability_without_fallback"]
+    },
+    "brandkit-interview": {
+      "owner": "brand-source-capture",
+      "inputs": ["setup-readiness.md", "owner_answers", "supplied_sources"],
+      "outputs": ["brand-raw.md", "conflict_register", "open_item_register"],
+      "gate": "required axes are sourced, explicitly open, or not applicable and no normative conflict remains",
+      "fails_on": ["missing_owner", "normative_brand_conflict", "unsupported_legal_claim"]
+    },
+    "brandkit-build": {
+      "owner": "normative-brand-package",
+      "inputs": ["brand-raw.md", "source_pointers", "setup-readiness.md"],
+      "outputs": ["brand-package.v1", "AGENTS.md", "CLAUDE.md -> AGENTS.md", "Hermes cwd/AGENTS.md"],
+      "gate": "package validates and every normative value has provenance",
+      "fails_on": ["missing_provenance", "normative_brand_conflict", "unresolved_asset_rights", "missing_brand_pin", "instruction_copy"]
+    },
+    "brandkit-publish": {
+      "owner": "project-artifact-production",
+      "inputs": ["brand_pin", "approved_content", "document_type", "target_medium", "review_evidence", "humanizer_applicability=required"],
+      "outputs": ["artifact", "qa_report", "fact_ledger", "humanizer_evidence"],
+      "gate": "brand, facts, rights, contracts, renderer and visual review pass with no open-work marker",
+      "fails_on": ["missing_brand_pin", "missing_fact", "legal_review_todo", "unsupported_legal_claim", "protected_fact_mutation", "brand_conflict", "unresolved_asset_rights", "markdown_contract_failure", "missing_or_rejected_humanizer_evidence", "generic_smoothing", "improper_impeccable_handoff", "open_todo", "renderer_evidence_failure", "visual_review_failure"]
+    }
+  },
+  "optional_adapters": {
+    "brandkit-spacing": {
+      "owner": "spacing-tokens-roles-and-audit",
+      "inputs": ["brand_pin", "target_medium", "target_scope", "hashed_spacing_inventory"],
+      "outputs": ["closed_spacing_result", "unconfirmed_spacing_token_proposal", "validated_spacing_roles", "spacing_audit_findings", "ui_patch_handoff"],
+      "mutates": [],
+      "read_only": ["brand-package.v1", "shared_visual_tokens.spacing", "pdf.tokens", "document-type-layout", "DESIGN.md"],
+      "gate": "one pinned brand and one medium namespace resolve; every inventory entry maps to exactly one token or evidenced exception",
+      "fails_on": ["missing_brand_pin", "ambiguous_target_medium", "normative_spacing_conflict", "unknown_spacing_provenance", "medium_namespace_collision", "forbidden_spacing_mutation"]
+    }
+  },
+  "routing": {
+    "spacing-audit-or-token-role": "brandkit-spacing",
+    "general-ui-redesign": "brandkit-impeccable -> impeccable",
+    "brand-package-generation": "brandkit-build",
+    "pdf-publication-or-layout": "brand-voice-pdf -> brandkit-publish",
+    "design-md-generation-or-validation": "brandkit-impeccable"
+  },
+  "todo_policy": {
+    "allowed_locations": ["brand-raw.md", ".brandkit/work"],
+    "required_forms": ["TODO(owner)", "TODO(legal-review)"],
+    "publication_blocks_any_todo": true
+  },
+  "legal_policy": {
+    "accepted_basis": "official source supplied by the user",
+    "fallback": "TODO(legal-review)",
+    "publication_without_review": false
+  },
+  "humanizer_policy": {
+    "applicability": "required",
+    "scope": "mutable single-line prose segments from the markdown contract",
+    "runner": "scripts/humanizer_two_pass.py --file <file> --out-dir <empty-dir>",
+    "passes": "Pass 0 triage; Pass 1 evidence/artifacts; confirmed-cluster Passes 2-4; Pass 5 self-audit",
+    "protected": ["frontmatter", "facts", "links", "quotes", "code", "tables", "callouts", "ids", "structure"],
+    "old_hash_semantics": "validates the addressed baseline segment; replacement bytes may and normally do hash differently",
+    "pattern_catalog_contract": "pinned references/patterns.md revision/hash plus the exact canonical ids 1..72; aliases, duplicates and malformed or unknown ids fail",
+    "model_call_contract": "Claude Code 2.1.223 only: closed full raw result envelope including usage/modelUsage/permission fields; Codex CLI 0.144.3 is unsupported and fail-closed as the pinned release's LLM provider; every raw call byte hash is bound in report.json and BrandKit provenance",
+    "provenance_contract": "BrandKit-derived brandkit-provenance.json is regenerated from canonical UTF-8/LF original and result raw bytes, confirmed edits and exact Unicode-codepoint spans; its raw before/after hashes equal manifest, lint and report bindings",
+    "required_evidence": ["original.md", "preflight.json", "audit-call.json", "audit-ledger.json", "confirmed-ledger.json", "edits.json", "rewrite-call.json|null-edit", "evidence-ledger.json", "evidence-report.json", "changes.diff", "brandkit-provenance.json", "report.json", "result.md|rejected.md"],
+    "null_edit_allowed": true
+  },
+  "impeccable_policy": {
+    "adapter": "brandkit-impeccable",
+    "handoff": ["brand_pin", ".brandkit/impeccable-product.json"],
+    "required_outputs_before_route": ["PRODUCT.md", "DESIGN.md"],
+    "parallel_design_instructions": false
+  }
+}

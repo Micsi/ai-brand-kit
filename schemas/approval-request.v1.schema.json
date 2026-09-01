@@ -1,0 +1,17 @@
+{
+  "$id": "approval-request.v1.schema.json", "type": "object", "additionalProperties": false,
+  "required": ["schema_version", "payload"],
+  "properties": {
+    "schema_version": {"const": "approval-request.v1"},
+    "payload": {"type": "object", "additionalProperties": false,
+      "required": ["final_sha256", "brand_id", "document_type_id", "workflow_lock_sha256", "project_identity_sha256", "run_id"],
+      "properties": {
+        "final_sha256": {"$ref": "#/$defs/hash"}, "brand_id": {"$ref": "#/$defs/id"},
+        "document_type_id": {"$ref": "#/$defs/id"}, "workflow_lock_sha256": {"$ref": "#/$defs/hash"},
+        "project_identity_sha256": {"$ref": "#/$defs/hash"},
+        "run_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9._-]{0,63}$"}
+      }
+    }
+  },
+  "$defs": {"hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "id": {"type": "string", "pattern": "^[a-z][a-z0-9-]{1,63}$"}}
+}

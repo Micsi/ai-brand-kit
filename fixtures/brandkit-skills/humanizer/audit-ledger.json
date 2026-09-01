@@ -1,0 +1,32 @@
+{
+  "register": "sachlich",
+  "candidates": [
+    {
+      "id": "generic-smoothing-1",
+      "source": "Insgesamt ist das Ergebnis wirklich sehr gut.",
+      "patterns": [
+        "5",
+        "64"
+      ],
+      "reason": "Austauschbarer Zusammenfassungs- und Wertungssatz ohne Informationsgehalt.",
+      "goal": "Den unbelegten Glättungssatz entfernen.",
+      "action": "delete",
+      "scope": "sentence"
+    }
+  ],
+  "advisories": [],
+  "protected": {
+    "facts": [
+      "Status 200"
+    ],
+    "quotes": [
+      "verlässlich"
+    ],
+    "terms": [
+      "BrandKit"
+    ],
+    "persona": [
+      "Wir"
+    ]
+  }
+}

@@ -1,0 +1,66 @@
+#!/opt/homebrew/bin/python3.12
+"""Verify the immutable, content-addressed npm cache before it is copied."""
+import hashlib, json, stat, sys
+from pathlib import Path
+
+if len(sys.argv) != 2:
+    raise SystemExit("usage: verify-bundle BUNDLE")
+script_dir = Path(__file__).resolve(strict=True).parent
+lock_path = script_dir.parent / "mermaid-svg.v1.lock.json"
+if lock_path.is_symlink() or not lock_path.is_file():
+    raise SystemExit("Mermaid lock is absent or linked")
+lock = json.loads(lock_path.read_text(encoding="utf-8"))
+if lock.get("schema_version") != "mermaid-svg-toolchain.v1":
+    raise SystemExit("Mermaid lock identity is invalid")
+pin = lock.get("artifact_bundle")
+if not isinstance(pin, dict):
+    raise SystemExit("Mermaid bundle pin is absent")
+locked_text = pin.get("path", "")
+requested = Path(sys.argv[1])
+if not requested.is_absolute() or str(requested) != locked_text or requested.is_symlink():
+    raise SystemExit("bundle path differs from the immutable Mermaid lock")
+locked_bundle = Path(locked_text).resolve(strict=True)
+bundle = requested.resolve(strict=True)
+if bundle != locked_bundle:
+    raise SystemExit("bundle path differs from the immutable Mermaid lock")
+manifest_path = bundle / "files.sha256.json"
+roots = [bundle / "npm-cache", bundle / "browser", bundle / "node"]
+if not manifest_path.is_file() or any(not root.is_dir() for root in roots):
+    raise SystemExit("bundle lacks manifest, npm cache, browser, or node archive")
+manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+if manifest.get("schema_version") != "mermaid-artifact-bundle.v2" or set(manifest) != {"schema_version", "files"}:
+    raise SystemExit("bundle manifest is not closed")
+records = manifest["files"]
+if not isinstance(records, list) or not records:
+    raise SystemExit("bundle manifest is empty")
+if hashlib.sha256(manifest_path.read_bytes()).hexdigest() != pin.get("manifest_sha256"):
+    raise SystemExit("bundle manifest hash differs from the immutable Mermaid lock")
+actual = []
+for root in roots:
+    for path in sorted(root.rglob("*")):
+        mode = path.lstat().st_mode
+        if stat.S_ISLNK(mode): raise SystemExit("bundle contains a symlink")
+        if path.is_file():
+            rel = path.relative_to(bundle).as_posix()
+            actual.append({"path": rel, "sha256": hashlib.sha256(path.read_bytes()).hexdigest(), "size": path.stat().st_size})
+if actual != records:
+    raise SystemExit("bundle file set/hash/size differs from manifest")
+if len(actual) != pin.get("file_count"):
+    raise SystemExit("bundle file count differs from the immutable Mermaid lock")
+tree_hash = hashlib.sha256(json.dumps(records, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+if bundle.name != tree_hash or tree_hash != pin.get("tree_sha256"):
+    raise SystemExit("bundle directory is not named by its tree hash")
+for component, field in (("browser", "archive_sha256"), ("node", "archive_sha256")):
+    record = lock.get(component)
+    if not isinstance(record, dict):
+        raise SystemExit(f"{component} lock is absent")
+    archive = bundle / record.get("archive_path", "")
+    try:
+        archive.relative_to(bundle)
+    except ValueError:
+        raise SystemExit(f"{component} archive escapes the bundle")
+    if archive.is_symlink() or not archive.is_file():
+        raise SystemExit(f"{component} archive is absent or linked")
+    if hashlib.sha256(archive.read_bytes()).hexdigest() != record.get(field):
+        raise SystemExit(f"{component} archive hash differs from the immutable Mermaid lock")
+print(tree_hash)

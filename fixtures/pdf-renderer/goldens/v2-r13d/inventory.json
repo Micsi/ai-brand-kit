@@ -1,0 +1,43 @@
+{
+  "schema_version": "pdf-e2e-goldens.inventory.v1",
+  "round": 13,
+  "renderer_release": "1.2.21",
+  "status": "partial",
+  "complete_document_types": [
+    {
+      "document_type": "report",
+      "pages": 2,
+      "pdf_sha256": "4f19bfe19b1549f2bfaf28da3f30c4b54720e5785aa7181d91b39c75644475b6",
+      "html_sha256": "47c1bc786067d2973dad0c8d0b94225bf88f9d3dc0ce535b4b99971f627b9584",
+      "visual_qa": "pass"
+    },
+    {
+      "document_type": "offer",
+      "pages": 2,
+      "pdf_sha256": "76ce242b6b3026b81002496d17e5f2a09eb1e915c9a069e3d787078763a4dacb",
+      "html_sha256": "c511feaa27ddd52295dae514cbf2a42d90a1ba56155f62671e458c7de8d03081",
+      "visual_qa": "pass"
+    },
+    {
+      "document_type": "freeform",
+      "pages": 2,
+      "pdf_sha256": "af9262cddec5ebdbfebe2062daf8945181a7c40994d1742defdff91306b9984f",
+      "html_sha256": "b8a85a3428aa36f2dcd533ac18eba5303c4af07a8205b0ee6dd605ae7762ede6",
+      "visual_qa": "pass"
+    }
+  ],
+  "incomplete_document_types": [
+    {
+      "document_type": "one-pager",
+      "reason": "PDF rendered, but the existing fail-closed title-paint policy rejected the white hero title; incomplete output is intentionally excluded from this golden set."
+    },
+    {
+      "document_type": "rich-report",
+      "reason": "Not rendered after the preceding fail-closed one-pager rejection."
+    }
+  ],
+  "graphviz": {
+    "status": "blocked",
+    "reason": "No pinned offline Graphviz toolchain is present in renderer release 1.2.21."
+  }
+}

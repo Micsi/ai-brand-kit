@@ -1,0 +1,60 @@
+#!/bin/sh
+set -eu
+home=${1:-${BRANDKIT_HOME:-$HOME}}
+key=${2:-$home/.agents/keys/brand-voice-pdf.key}
+version=${3:-1.2.28}
+exec python3.12 -B - "$home" "$key" "$version" <<'PY'
+import hashlib,hmac,json,os,pathlib,stat,sys
+
+home=pathlib.Path(sys.argv[1]).resolve(strict=True)
+key_path=pathlib.Path(sys.argv[2])
+version=sys.argv[3]
+if key_path.is_symlink() or not key_path.is_file():
+    raise SystemExit("activation verification key is missing or is a symlink")
+key=key_path.read_bytes()
+if len(key)<32: raise SystemExit("activation verification key is too short")
+state=home/'.agents/activation-state'
+activation_path=state/'brand-voice-pdf.json'
+manifest_path=state/f'brand-voice-pdf-{version}.manifest.json'
+
+def load_signed(path):
+    if path.is_symlink() or not path.is_file(): raise SystemExit(f"signed state is missing or is a symlink: {path}")
+    envelope=json.loads(path.read_text(encoding='utf-8'))
+    if set(envelope)!={'payload','hmac_sha256'}: raise SystemExit(f"signed state envelope is open: {path}")
+    raw=json.dumps(envelope['payload'],sort_keys=True,separators=(',',':'),ensure_ascii=False).encode()
+    if not hmac.compare_digest(envelope['hmac_sha256'],hmac.new(key,raw,hashlib.sha256).hexdigest()):
+        raise SystemExit(f"signed state signature failed: {path}")
+    return envelope['payload']
+
+def inventory(root):
+    out=[]
+    for path in sorted(root.rglob('*')):
+        st=path.lstat()
+        item={'path':path.relative_to(root).as_posix(),'mode':format(stat.S_IMODE(st.st_mode),'04o'),'type':'symlink' if path.is_symlink() else 'directory' if path.is_dir() else 'file'}
+        if path.is_symlink(): item['target']=os.readlink(path)
+        elif path.is_file(): item['sha256']=hashlib.sha256(path.read_bytes()).hexdigest()
+        out.append(item)
+    return out
+
+activation=load_signed(activation_path)
+if activation.get('schema_version')!='brand-voice-pdf-activation.v1' or activation.get('version')!=version:
+    raise SystemExit("active brand-voice-pdf version differs from launcher pin")
+if hashlib.sha256(manifest_path.read_bytes()).hexdigest()!=activation.get('manifest_sha256'):
+    raise SystemExit("active manifest bytes differ from activation")
+manifest=load_signed(manifest_path)
+if manifest.get('schema_version')!='brand-voice-pdf-release-manifest.v1' or manifest.get('version')!=version:
+    raise SystemExit("release manifest version differs from launcher pin")
+release=home/'.agents/skill-store/brand-voice-pdf'/version
+runtime=home/'.agents/runtime-store/brandkit-pdf-renderer'/version
+if inventory(release)!=manifest.get('release') or inventory(runtime)!=manifest.get('runtime'):
+    raise SystemExit("release/runtime file set, bytes, modes, or symlink topology differs from signed manifest")
+expected=manifest.get('link_topology')
+if not isinstance(expected,dict): raise SystemExit("manifest link topology is missing")
+for raw_path,target in expected.items():
+    path=pathlib.Path(raw_path)
+    if not path.is_symlink() or os.readlink(path)!=target:
+        raise SystemExit(f"active discovery link differs from manifest: {path}")
+if activation.get('links')!=expected:
+    raise SystemExit("activation and release manifest link topology differ")
+print(json.dumps({'schema_version':'brand-voice-pdf-install-verification.v1','status':'pass','version':version,'manifest_sha256':activation['manifest_sha256']},sort_keys=True,separators=(',',':')))
+PY

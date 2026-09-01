@@ -1,0 +1,12 @@
+{
+  "asset_id": "neutral-logo",
+  "date": "2026-08-26",
+  "issuer": "BrandKit test fixture",
+  "license_id": "LicenseRef-BrandKit-Owned-Fixture",
+  "schema_version": "rights-evidence.v1",
+  "scope": "single-asset",
+  "source": "repository-created non-production fixture",
+  "status": "owned",
+  "todo": null,
+  "version": "1.0"
+}

@@ -1,0 +1,18 @@
+{
+  "asset_id": "neutral-font",
+  "date": "2026-08-26",
+  "issuer": "Abel Project Authors",
+  "license_evidence_path": "ofl/abel/OFL.txt",
+  "license_evidence_sha256": "4f4bc3806a1e55789c6ef75ca5fc628297b05292f74966474dc0d40324abc609",
+  "license_id": "OFL-1.1",
+  "schema_version": "rights-evidence.v1",
+  "scope": "single-asset",
+  "source": "upstream Abel source repository at the pinned revision",
+  "source_path": "ofl/abel/Abel-Regular.ttf",
+  "source_revision": "6a003b5eb672dc8bf5bff5937cf5863f8b175445",
+  "source_sha256": "8809dcad25318225052f88333e208c5aad4adcb7b2c934c135735ec19aa410b4",
+  "status": "open-license",
+  "todo": null,
+  "transformation": "Converted byte-for-byte from the pinned TrueType source to WOFF2 without changing font outlines.",
+  "version": "1.0"
+}

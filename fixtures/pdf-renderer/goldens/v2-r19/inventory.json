@@ -1,0 +1,506 @@
+{
+  "document_isolation": {
+    "aggregate_fail_closed": true,
+    "attempted": 7,
+    "events": [
+      {
+        "id": "report",
+        "phase": "document",
+        "project_materialized": true,
+        "state": "rendered"
+      },
+      {
+        "id": "offer",
+        "phase": "document",
+        "project_materialized": true,
+        "state": "rendered"
+      },
+      {
+        "id": "freeform",
+        "phase": "document",
+        "project_materialized": true,
+        "state": "rendered"
+      },
+      {
+        "id": "one-pager",
+        "phase": "document",
+        "project_materialized": true,
+        "state": "rendered"
+      },
+      {
+        "id": "rich-report",
+        "phase": "document",
+        "project_materialized": true,
+        "state": "failed"
+      },
+      {
+        "id": "report-toggle-on",
+        "phase": "activation-toggle",
+        "project_materialized": true,
+        "state": "rendered"
+      },
+      {
+        "id": "report-toggle-off",
+        "phase": "activation-toggle",
+        "project_materialized": true,
+        "state": "rendered"
+      }
+    ],
+    "failed": 1,
+    "failed_document_does_not_skip_later_documents": true,
+    "materialized_projects": 7,
+    "rendered": 6,
+    "skipped": 0
+  },
+  "documents": [
+    {
+      "ast": {
+        "path": "fixtures/pdf-renderer/goldens/v2-r19/report/renderer-work/final.ast.json",
+        "sha256": "33dcfd5d3a044763393a9695a132767f4ce246b5592d470e42dfab4ad6d6e88b"
+      },
+      "document_type": "report",
+      "html": {
+        "html_sha256": "599eace20791df7aadaf5e37e2809aebd33521763498a3620387a79ff6104039",
+        "layout_strategy": {
+          "cover": "dark",
+          "hero_mm": 0,
+          "id": "report-evidence",
+          "section_numbers": true,
+          "toc": true
+        },
+        "marker_count": 7,
+        "markers": [
+          "executive-summary",
+          "block",
+          "findings",
+          "block",
+          "block",
+          "conclusion",
+          "block"
+        ],
+        "path": "fixtures/pdf-renderer/goldens/v2-r19/report/report.html"
+      },
+      "id": "report",
+      "layout_strategy": {
+        "cover": "dark",
+        "hero_mm": 0,
+        "id": "report-evidence",
+        "section_numbers": true,
+        "toc": true
+      },
+      "pdf": {
+        "page_pngs": [
+          {
+            "path": "fixtures/pdf-renderer/goldens/v2-r19/report/pages/page-1.png",
+            "sha256": "f43cf34e5a12a5c45abcd948df46db64e926b43d6bdd0211a83057c8cbadaf92"
+          },
+          {
+            "path": "fixtures/pdf-renderer/goldens/v2-r19/report/pages/page-2.png",
+            "sha256": "a5bbc43b3fd222c21daa737029615e4c191b28c466f1dfc8f8332a6f10c96865"
+          }
+        ],
+        "pages": 2,
+        "path": "fixtures/pdf-renderer/goldens/v2-r19/report/report.pdf",
+        "sha256": "97723a2f53bb448f96bf54a4008e404960984840c5e9328271ab0b8817037124"
+      },
+      "render_result": {
+        "path": "fixtures/pdf-renderer/goldens/v2-r19/report/render-result.json",
+        "sha256": "b14fec1d9e0ed762d83b5e961cc40718b8e44a8709ce40cd71e78d787eb00f66"
+      },
+      "source": {
+        "path": "fixtures/pdf-renderer/e2e/report.md",
+        "sha256": "79ab20c672aa36c73b8609fb1b47c8be12d630f69155b10535b4c95c698e0be9"
+      },
+      "source_map": {
+        "path": "fixtures/pdf-renderer/goldens/v2-r19/report/renderer-work/renderer-source-map.json",
+        "sha256": "41896b8dd9205b581f19d354b1a96a5f68d5b0e95adfa0e13c13cf5489251f03"
+      },
+      "visual_qa": {
+        "path": "fixtures/pdf-renderer/goldens/v2-r19/report/visual-qa.json",
+        "sha256": "994db8d284d0cb81a725d5e06ffa04238fe1ca45ae7b21c0cb6aa528674327a5"
+      }
+    },
+    {
+      "ast": {
+        "path": "fixtures/pdf-renderer/goldens/v2-r19/offer/renderer-work/final.ast.json",
+        "sha256": "7fdf0585f0f486244a2c64bce1e193ed954a74990852635d1f0b64d29c4f7b10"
+      },
+      "document_type": "offer",
+      "html": {
+        "html_sha256": "7116cdfa768586a6206b83e8a72ff25bd1594d973f497acbe55e6781fccfd7f6",
+        "layout_strategy": {
+          "cover": "light-band",
+          "hero_mm": 0,
+          "id": "offer-proposal",
+          "section_numbers": false,
+          "toc": false
+        },
+        "marker_count": 8,
+        "markers": [
+          "context",
+          "block",
+          "scope",
+          "block",
+          "deliverables",
+          "block",
+          "terms",
+          "block"
+        ],
+        "path": "fixtures/pdf-renderer/goldens/v2-r19/offer/offer.html"
+      },
+      "id": "offer",
+      "layout_strategy": {
+        "cover": "light-band",
+        "hero_mm": 0,
+        "id": "offer-proposal",
+        "section_numbers": false,
+        "toc": false
+      },
+      "pdf": {
+        "page_pngs": [
+          {
+            "path": "fixtures/pdf-renderer/goldens/v2-r19/offer/pages/page-1.png",
+            "sha256": "4b1c03148e2797957824bc69f349b599a63cb07d5a2a630025a9540fedb19a91"
+          },
+          {
+            "path": "fixtures/pdf-renderer/goldens/v2-r19/offer/pages/page-2.png",
+            "sha256": "25f7c85b7b9fdea38e1bf458b398de000d1062533c8d3e06d2d5f18383042caa"
+          }
+        ],
+        "pages": 2,
+        "path": "fixtures/pdf-renderer/goldens/v2-r19/offer/offer.pdf",
+        "sha256": "72fe36274992801aa2b4eccdc958ae9a60afa672edcab86295bf5511fbb4b15d"
+      },
+      "render_result": {
+        "path": "fixtures/pdf-renderer/goldens/v2-r19/offer/render-result.json",
+        "sha256": "bbcb8f33713268f0f5ef1b469ff9e6f40cda1dae2d5be74baf76235bca70ba9f"
+      },
+      "source": {
+        "path": "fixtures/pdf-renderer/e2e/offer.md",
+        "sha256": "687cc0b8146537590dd280286c144cf0cf96f50faa1ce8f8d89b0ca518a5f817"
+      },
+      "source_map": {
+        "path": "fixtures/pdf-renderer/goldens/v2-r19/offer/renderer-work/renderer-source-map.json",
+        "sha256": "6535fa0060b7a5e2a73373a7a921522148a5a98e781a440fbd932cebe30f4591"
+      },
+      "visual_qa": {
+        "path": "fixtures/pdf-renderer/goldens/v2-r19/offer/visual-qa.json",
+        "sha256": "e42fdf290b85cd618446c4386808d24d3094dbed215ecdc14565f04ed6778173"
+      }
+    },
+    {
+      "ast": {
+        "path": "fixtures/pdf-renderer/goldens/v2-r19/freeform/renderer-work/final.ast.json",
+        "sha256": "22657789f43e5f770f0402f6541e8e6a05db66376da38f684c2df37c9937a2c3"
+      },
+      "document_type": "freeform",
+      "html": {
+        "html_sha256": "c6f04da799ecc0ea919689399417c8867248245735c2395aeece7e8093dfad3c",
+        "layout_strategy": {
+          "cover": "editorial",
+          "hero_mm": 0,
+          "id": "freeform-editorial",
+          "section_numbers": false,
+          "toc": false
+        },
+        "marker_count": 3,
+        "markers": [
+          "content",
+          "block",
+          "block"
+        ],
+        "path": "fixtures/pdf-renderer/goldens/v2-r19/freeform/freeform.html"
+      },
+      "id": "freeform",
+      "layout_strategy": {
+        "cover": "editorial",
+        "hero_mm": 0,
+        "id": "freeform-editorial",
+        "section_numbers": false,
+        "toc": false
+      },
+      "pdf": {
+        "page_pngs": [
+          {
+            "path": "fixtures/pdf-renderer/goldens/v2-r19/freeform/pages/page-1.png",
+            "sha256": "ff15792683807d5a64f6743830d3a7c95be3d9d26e391d250e1f952abddba140"
+          },
+          {
+            "path": "fixtures/pdf-renderer/goldens/v2-r19/freeform/pages/page-2.png",
+            "sha256": "3ca1aa35b20c3db5f97727a1f01427e18bf9d9ec9625e8a69caa2907284f16d8"
+          }
+        ],
+        "pages": 2,
+        "path": "fixtures/pdf-renderer/goldens/v2-r19/freeform/freeform.pdf",
+        "sha256": "9526cff8f599db3480879739ad61c6c904d6be2e879988dfd4d85b539f3f44c2"
+      },
+      "render_result": {
+        "path": "fixtures/pdf-renderer/goldens/v2-r19/freeform/render-result.json",
+        "sha256": "71ed405bc11edc23ddcaecb9781a743ebff6f37245882731ec62af3296e73954"
+      },
+      "source": {
+        "path": "fixtures/pdf-renderer/e2e/freeform.md",
+        "sha256": "23fdc1545bc8df976feb1dcc0041186a59220db8b5cf957cc3edbfca98fb12b0"
+      },
+      "source_map": {
+        "path": "fixtures/pdf-renderer/goldens/v2-r19/freeform/renderer-work/renderer-source-map.json",
+        "sha256": "67c5df338d979dc78e911d77ff7898037ab7ac078731989ea7b1ab5d0771b5e8"
+      },
+      "visual_qa": {
+        "path": "fixtures/pdf-renderer/goldens/v2-r19/freeform/visual-qa.json",
+        "sha256": "d82c954f1d120bbf5b590557f25d037c9f8a6b326bdb5cc1505fcf379ed12221"
+      }
+    },
+    {
+      "ast": {
+        "path": "fixtures/pdf-renderer/goldens/v2-r19/one-pager/renderer-work/final.ast.json",
+        "sha256": "10793bf7bdcbb43e8476a30cea27f573518807308e2c55ca68d56315ed33404c"
+      },
+      "document_type": "one-pager",
+      "html": {
+        "html_sha256": "b79994b7ec1048aa0acb4fc49dfa91f09f28726d43254c5ee5d9598e761793bb",
+        "layout_strategy": {
+          "cover": "hero",
+          "hero_mm": 48,
+          "id": "one-pager-hero",
+          "section_numbers": false,
+          "toc": false
+        },
+        "marker_count": 6,
+        "markers": [
+          "summary",
+          "block",
+          "key-points",
+          "block",
+          "next-step",
+          "block"
+        ],
+        "path": "fixtures/pdf-renderer/goldens/v2-r19/one-pager/one-pager.html"
+      },
+      "id": "one-pager",
+      "layout_strategy": {
+        "cover": "hero",
+        "hero_mm": 48,
+        "id": "one-pager-hero",
+        "section_numbers": false,
+        "toc": false
+      },
+      "one_page_contract": {
+        "ast_present": true,
+        "html_layout": "one-pager-hero",
+        "page_count": 1,
+        "page_label_count": 0,
+        "qa_status": "pass",
+        "source_map_page_count": 1
+      },
+      "pdf": {
+        "page_pngs": [
+          {
+            "path": "fixtures/pdf-renderer/goldens/v2-r19/one-pager/pages/page-1.png",
+            "sha256": "3405d2da8af75cb33e1ce1de0a9fcd9594f50e575971bac4c32e8283d60fa923"
+          }
+        ],
+        "pages": 1,
+        "path": "fixtures/pdf-renderer/goldens/v2-r19/one-pager/one-pager.pdf",
+        "sha256": "e5fd9697e942378182f054851ba1a95387e4020f739f3593d45cb98b523498bb"
+      },
+      "render_result": {
+        "path": "fixtures/pdf-renderer/goldens/v2-r19/one-pager/render-result.json",
+        "sha256": "e6605116ea8abe15b2009fe1a1ca1141326ca4f2e0f8edec64255ef6e6ef449a"
+      },
+      "source": {
+        "path": "fixtures/pdf-renderer/e2e/one-pager.md",
+        "sha256": "9d12703b89b920afeea05e2fe7543b9cbb6d9f6f3d2c1dc2f234988d203b6ef5"
+      },
+      "source_map": {
+        "path": "fixtures/pdf-renderer/goldens/v2-r19/one-pager/renderer-work/renderer-source-map.json",
+        "sha256": "3ac391abb3b2db749276dddd39ff360163cbc009284138c7989b8b3d8b65ea0b"
+      },
+      "visual_qa": {
+        "path": "fixtures/pdf-renderer/goldens/v2-r19/one-pager/visual-qa.json",
+        "sha256": "b9ebfdf801f039635a069daeaa0de05a4611a624eb89daeaf8c9b5caa899b2f9"
+      }
+    }
+  ],
+  "evidence_origin": "deterministic-e2e-fixture-not-provider-evidence",
+  "failures": [
+    {
+      "error_type": "ValueError",
+      "id": "rich-report",
+      "message": "format not resolved, probably missing URL scheme or undefined destination target for 'flow-rich'"
+    }
+  ],
+  "graphviz": {
+    "reason": "production lock capability is not-installed; no output is claimed",
+    "status": "blocked"
+  },
+  "markdown_contract": {
+    "migration_sha256": "eeebaa51895a65b6d08d8aa8c9d115a88208b08fa67193cf8d247b66d2f393b3",
+    "sha256": "b0b7947a6eb11293481b52fb7ec1aca89d1af660e374009b22e4d6a9353e39a3",
+    "version": "markdown-contract.v2"
+  },
+  "renderer": {
+    "name": "brandkit-pdf-renderer",
+    "version": "1.2.25"
+  },
+  "report_activation_double_render": [
+    {
+      "document": {
+        "ast": {
+          "path": "fixtures/pdf-renderer/goldens/v2-r19/report-toggle-on/renderer-work/final.ast.json",
+          "sha256": "33dcfd5d3a044763393a9695a132767f4ce246b5592d470e42dfab4ad6d6e88b"
+        },
+        "document_type": "report",
+        "html": {
+          "html_sha256": "599eace20791df7aadaf5e37e2809aebd33521763498a3620387a79ff6104039",
+          "layout_strategy": {
+            "cover": "dark",
+            "hero_mm": 0,
+            "id": "report-evidence",
+            "section_numbers": true,
+            "toc": true
+          },
+          "marker_count": 7,
+          "markers": [
+            "executive-summary",
+            "block",
+            "findings",
+            "block",
+            "block",
+            "conclusion",
+            "block"
+          ],
+          "path": "fixtures/pdf-renderer/goldens/v2-r19/report-toggle-on/report-toggle-on.html"
+        },
+        "id": "report-toggle-on",
+        "layout_strategy": {
+          "cover": "dark",
+          "hero_mm": 0,
+          "id": "report-evidence",
+          "section_numbers": true,
+          "toc": true
+        },
+        "pdf": {
+          "page_pngs": [
+            {
+              "path": "fixtures/pdf-renderer/goldens/v2-r19/report-toggle-on/pages/page-1.png",
+              "sha256": "f43cf34e5a12a5c45abcd948df46db64e926b43d6bdd0211a83057c8cbadaf92"
+            },
+            {
+              "path": "fixtures/pdf-renderer/goldens/v2-r19/report-toggle-on/pages/page-2.png",
+              "sha256": "a5bbc43b3fd222c21daa737029615e4c191b28c466f1dfc8f8332a6f10c96865"
+            }
+          ],
+          "pages": 2,
+          "path": "fixtures/pdf-renderer/goldens/v2-r19/report-toggle-on/report-toggle-on.pdf",
+          "sha256": "97723a2f53bb448f96bf54a4008e404960984840c5e9328271ab0b8817037124"
+        },
+        "render_result": {
+          "path": "fixtures/pdf-renderer/goldens/v2-r19/report-toggle-on/render-result.json",
+          "sha256": "e3907f0d289245751bd2f8195d7753cb6422168b592b565d1a78a748e32134d8"
+        },
+        "source": {
+          "path": "fixtures/pdf-renderer/e2e/report.md",
+          "sha256": "79ab20c672aa36c73b8609fb1b47c8be12d630f69155b10535b4c95c698e0be9"
+        },
+        "source_map": {
+          "path": "fixtures/pdf-renderer/goldens/v2-r19/report-toggle-on/renderer-work/renderer-source-map.json",
+          "sha256": "41896b8dd9205b581f19d354b1a96a5f68d5b0e95adfa0e13c13cf5489251f03"
+        },
+        "visual_qa": {
+          "path": "fixtures/pdf-renderer/goldens/v2-r19/report-toggle-on/visual-qa.json",
+          "sha256": "994db8d284d0cb81a725d5e06ffa04238fe1ca45ae7b21c0cb6aa528674327a5"
+        }
+      },
+      "enabled": true,
+      "observed": {
+        "numbering_html": true,
+        "numbering_pdf": true,
+        "pdf_internal_links": 3,
+        "source_map_toc_objects": 4,
+        "toc_html": true,
+        "toc_pdf": true
+      }
+    },
+    {
+      "document": {
+        "ast": {
+          "path": "fixtures/pdf-renderer/goldens/v2-r19/report-toggle-off/renderer-work/final.ast.json",
+          "sha256": "33dcfd5d3a044763393a9695a132767f4ce246b5592d470e42dfab4ad6d6e88b"
+        },
+        "document_type": "report",
+        "html": {
+          "html_sha256": "9caf41834e2d838b10617c40f628d30e9cb41c56134c9928592eb1f199d26a67",
+          "layout_strategy": {
+            "cover": "dark",
+            "hero_mm": 0,
+            "id": "report-evidence",
+            "section_numbers": false,
+            "toc": false
+          },
+          "marker_count": 7,
+          "markers": [
+            "executive-summary",
+            "block",
+            "findings",
+            "block",
+            "block",
+            "conclusion",
+            "block"
+          ],
+          "path": "fixtures/pdf-renderer/goldens/v2-r19/report-toggle-off/report-toggle-off.html"
+        },
+        "id": "report-toggle-off",
+        "layout_strategy": {
+          "cover": "dark",
+          "hero_mm": 0,
+          "id": "report-evidence",
+          "section_numbers": false,
+          "toc": false
+        },
+        "pdf": {
+          "page_pngs": [
+            {
+              "path": "fixtures/pdf-renderer/goldens/v2-r19/report-toggle-off/pages/page-1.png",
+              "sha256": "f43cf34e5a12a5c45abcd948df46db64e926b43d6bdd0211a83057c8cbadaf92"
+            },
+            {
+              "path": "fixtures/pdf-renderer/goldens/v2-r19/report-toggle-off/pages/page-2.png",
+              "sha256": "999854b49649e54e94605a78e41057bfe5a69b2d5a1d80b1052c0c1440c5ac49"
+            }
+          ],
+          "pages": 2,
+          "path": "fixtures/pdf-renderer/goldens/v2-r19/report-toggle-off/report-toggle-off.pdf",
+          "sha256": "ee50916336444e13a81a3e19ef844f94ab93ca16920592cf5cd60a03f3c6d42e"
+        },
+        "render_result": {
+          "path": "fixtures/pdf-renderer/goldens/v2-r19/report-toggle-off/render-result.json",
+          "sha256": "2f19b8f32a3bcf8243d19680a896ead20453817fad3dee6c2a2a0e1fe154d007"
+        },
+        "source": {
+          "path": "fixtures/pdf-renderer/e2e/report.md",
+          "sha256": "79ab20c672aa36c73b8609fb1b47c8be12d630f69155b10535b4c95c698e0be9"
+        },
+        "source_map": {
+          "path": "fixtures/pdf-renderer/goldens/v2-r19/report-toggle-off/renderer-work/renderer-source-map.json",
+          "sha256": "888f17879703a7ca954e24532b9eb207eab388f084b80e7452b27dd367e623f9"
+        },
+        "visual_qa": {
+          "path": "fixtures/pdf-renderer/goldens/v2-r19/report-toggle-off/visual-qa.json",
+          "sha256": "20fe2ff2cd534fb1182912ef69b27febd4de654649dcf18dcd60558107578ceb"
+        }
+      },
+      "enabled": false,
+      "observed": {
+        "numbering_html": false,
+        "numbering_pdf": false,
+        "pdf_internal_links": 0,
+        "source_map_toc_objects": 0,
+        "toc_html": false,
+        "toc_pdf": false
+      }
+    }
+  ],
+  "schema_version": "brandkit-pdf-e2e-goldens.v2",
+  "status": "fail"
+}

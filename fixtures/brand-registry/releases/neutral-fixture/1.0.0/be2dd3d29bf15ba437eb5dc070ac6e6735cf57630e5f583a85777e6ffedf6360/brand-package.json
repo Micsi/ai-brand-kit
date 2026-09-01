@@ -1,0 +1,55 @@
+{
+  "assets": {
+    "fonts": [
+      {
+        "id": "neutral-font",
+        "media_type": "font/woff2",
+        "path": "assets/fonts/neutral.woff2",
+        "rights": {
+          "evidence_path": "rights/neutral-font.rights.json",
+          "evidence_sha256": "1f7f606406a8c38e9ca870cca72bffdca4a323c48618f38f1f17f90121d18bfd"
+        },
+        "sha256": "90e63b7ece5be977129137c0c774b6764adac69399b6c20d9ddc147cbe01819d"
+      }
+    ],
+    "logos": [
+      {
+        "id": "neutral-logo",
+        "media_type": "image/svg+xml",
+        "path": "assets/logos/neutral.svg",
+        "rights": {
+          "evidence_path": "rights/neutral-logo.rights.json",
+          "evidence_sha256": "5fd7475dbdb7d8eb02e31cdf9c66f7e89c2c2c35e7d40282516a7c7e5a0c0af9"
+        },
+        "sha256": "b82446b1cbeb5bb1cf9de3138dbb7e2877c081806ff8006ee7bb565275cb4f57"
+      }
+    ]
+  },
+  "brand_id": "neutral-fixture",
+  "document_types": [
+    {
+      "contract": "documents/report.json",
+      "contract_sha256": "e0a95f516a906d48ece55588b4cae20c2f550a12673283e3168798b7d399f0d2",
+      "engine_compatibility": "^1.0.0",
+      "id": "report",
+      "version": "1.0.0"
+    }
+  ],
+  "pdf": {
+    "theme_version": "1.0",
+    "tokens": {
+      "color_roles": {"primary": "#172A3A", "accent": "#3AAFA9", "text": "#172A3A", "muted": "#5D6873", "background": "#FFFFFF", "surface": "#EDF4F4"},
+      "page": {"margin_mm": 20, "size": "A4"},
+      "spacing_scale": [1, 2, 4],
+      "typography_roles": {"body": "neutral-font", "heading": "neutral-font", "mono": "builtin:Courier"}
+    }
+  },
+  "schema_version": "brand-package.v1",
+  "version": "1.0.0",
+  "voice": {
+    "avoid": ["Unbelegte Aussagen"],
+    "locale": "de-DE",
+    "principles": ["Neutral und klar"],
+    "profile_version": "1.0"
+  }
+}

@@ -1,0 +1,1 @@
+"""BrandKit executable regression suite."""

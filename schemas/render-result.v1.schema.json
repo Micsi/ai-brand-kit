@@ -1,0 +1,49 @@
+{
+  "$id": "render-result.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "issuer", "payload", "hmac_sha256"],
+  "properties": {
+    "schema_version": {"const": "render-result.v1"},
+    "issuer": {"type": "string", "minLength": 1},
+    "hmac_sha256": {"$ref": "#/$defs/hash"},
+    "payload": {
+      "type": "object", "additionalProperties": false,
+      "required": ["final_input_sha256", "output_pdf", "engine", "exit", "assets", "brand_assets", "pages", "nonce", "created_at", "binding", "figures", "mermaid", "graphviz", "visual_qa"],
+      "properties": {
+        "final_input_sha256": {"$ref": "#/$defs/hash"},
+        "binding": {"type": "object", "additionalProperties": false, "required": ["project_identity_sha256", "activation_sha256", "brand", "document_type", "markdown_contract_sha256", "humanizer_audit_sha256", "owner_approval_sha256"], "properties": {
+          "project_identity_sha256": {"$ref": "#/$defs/hash"}, "activation_sha256": {"$ref": "#/$defs/hash"}, "markdown_contract_sha256": {"$ref": "#/$defs/hash"}, "humanizer_audit_sha256": {"$ref": "#/$defs/hash"}, "owner_approval_sha256": {"$ref": "#/$defs/hash"},
+          "brand": {"type": "object", "additionalProperties": false, "required": ["id", "version", "manifest_sha256", "content_sha256"], "properties": {"id": {"$ref": "#/$defs/id"}, "version": {"type": "string", "minLength": 1}, "manifest_sha256": {"$ref": "#/$defs/hash"}, "content_sha256": {"$ref": "#/$defs/hash"}}},
+          "document_type": {"type": "object", "additionalProperties": false, "required": ["id", "version", "sha256"], "properties": {"id": {"$ref": "#/$defs/id"}, "version": {"type": "string", "minLength": 1}, "sha256": {"$ref": "#/$defs/hash"}}}
+        }},
+        "figures": {"type": "array", "uniqueItems": true, "items": {"type": "object", "additionalProperties": false, "required": ["id", "number", "type", "caption", "description", "caption_text", "reference_text", "reference_count"], "properties": {"id": {"$ref": "#/$defs/id"}, "number": {"type": "integer", "minimum": 1}, "type": {"enum": ["mermaid", "graphviz"]}, "caption": {"type": "string", "minLength": 1}, "description": {"type": "string", "minLength": 1}, "caption_text": {"type": "string", "pattern": "^Abbildung [1-9][0-9]*: .+"}, "reference_text": {"type": "string", "pattern": "^Abbildung [1-9][0-9]*$"}, "reference_count": {"type": "integer", "minimum": 0}}}},
+        "mermaid": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["id", "source_path", "source_sha256", "config_path", "config_sha256", "worker_svg_path", "worker_svg_sha256", "svg_path", "svg_sha256", "raster_path", "raster_sha256", "toolchain_lock_sha256", "brand_projection", "linux_worker"], "properties": {"id": {"$ref": "#/$defs/id"}, "source_path": {"$ref": "#/$defs/path"}, "source_sha256": {"$ref": "#/$defs/hash"}, "config_path": {"$ref": "#/$defs/path"}, "config_sha256": {"$ref": "#/$defs/hash"}, "worker_svg_path": {"$ref": "#/$defs/path"}, "worker_svg_sha256": {"$ref": "#/$defs/hash"}, "svg_path": {"$ref": "#/$defs/path"}, "svg_sha256": {"$ref": "#/$defs/hash"}, "raster_path": {"$ref": "#/$defs/path"}, "raster_sha256": {"$ref": "#/$defs/hash"}, "toolchain_lock_sha256": {"$ref": "#/$defs/hash"}, "brand_projection": {"$ref": "#/$defs/diagramBrandProjection"}, "linux_worker": {"type": "object", "additionalProperties": false, "required": ["duration_seconds", "svg_sha256", "png_sha256", "config_sha256", "base_image_id", "node_image_id", "runtime_mount_inventory_sha256", "network", "sandbox_disable_flags"], "properties": {"duration_seconds": {"type": "number", "minimum": 0}, "svg_sha256": {"$ref": "#/$defs/hash"}, "png_sha256": {"$ref": "#/$defs/hash"}, "config_sha256": {"$ref": "#/$defs/hash"}, "base_image_id": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}, "node_image_id": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}, "runtime_mount_inventory_sha256": {"$ref": "#/$defs/hash"}, "network": {"const": "none"}, "sandbox_disable_flags": {"type": "array", "maxItems": 0}}}}}},
+        "graphviz": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["id", "source_path", "source_sha256", "svg_path", "svg_sha256", "toolchain_lock_sha256", "brand_projection"], "properties": {"id": {"$ref": "#/$defs/id"}, "source_path": {"$ref": "#/$defs/path"}, "source_sha256": {"$ref": "#/$defs/hash"}, "svg_path": {"$ref": "#/$defs/path"}, "svg_sha256": {"$ref": "#/$defs/hash"}, "toolchain_lock_sha256": {"$ref": "#/$defs/hash"}, "brand_projection": {"$ref": "#/$defs/diagramBrandProjection"}}}},
+        "visual_qa": {"type": "object", "additionalProperties": false, "required": ["path", "sha256", "status", "dpi", "page_pngs"], "properties": {"path": {"$ref": "#/$defs/path"}, "sha256": {"$ref": "#/$defs/hash"}, "status": {"const": "pass"}, "dpi": {"const": 144}, "page_pngs": {"type": "array", "minItems": 1, "items": {"type": "object", "additionalProperties": false, "required": ["index", "path", "sha256"], "properties": {"index": {"type": "integer", "minimum": 1}, "path": {"$ref": "#/$defs/path"}, "sha256": {"$ref": "#/$defs/hash"}}}}}},
+        "output_pdf": {"type": "object", "additionalProperties": false, "required": ["path", "sha256"], "properties": {"path": {"$ref": "#/$defs/path"}, "sha256": {"$ref": "#/$defs/hash"}}},
+        "engine": {"type": "object", "additionalProperties": false, "required": ["name", "version", "lock_path", "lock_sha256"], "properties": {"name": {"type": "string", "minLength": 1}, "version": {"type": "string", "minLength": 1}, "lock_path": {"$ref": "#/$defs/path"}, "lock_sha256": {"$ref": "#/$defs/hash"}}},
+        "exit": {"type": "object", "additionalProperties": false, "required": ["code", "errors", "warnings"], "properties": {"code": {"const": 0}, "errors": {"type": "array", "maxItems": 0}, "warnings": {"type": "array", "maxItems": 0}}},
+        "assets": {"type": "array", "uniqueItems": true, "items": {"type": "object", "additionalProperties": false, "required": ["id", "path", "media_type", "sha256"], "properties": {"id": {"$ref": "#/$defs/id"}, "path": {"$ref": "#/$defs/path"}, "media_type": {"enum": ["image/png", "image/jpeg", "image/svg+xml"]}, "sha256": {"$ref": "#/$defs/hash"}}}},
+        "brand_assets": {"type": "array", "minItems": 2, "uniqueItems": true, "items": {"type": "object", "additionalProperties": false, "required": ["id", "path", "media_type", "sha256", "rights_path", "rights_sha256"], "properties": {"id": {"$ref": "#/$defs/id"}, "path": {"$ref": "#/$defs/path"}, "media_type": {"enum": ["font/woff2", "image/svg+xml"]}, "sha256": {"$ref": "#/$defs/hash"}, "rights_path": {"$ref": "#/$defs/path"}, "rights_sha256": {"$ref": "#/$defs/hash"}}}},
+        "pages": {
+          "type": "object", "additionalProperties": false, "required": ["count", "title", "content"],
+          "properties": {
+            "count": {"type": "integer", "minimum": 1},
+            "title": {"type": "object", "additionalProperties": false, "required": ["index", "label"], "properties": {"index": {"const": 1}, "label": {"const": null}}},
+            "content": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["index", "number", "label"], "properties": {"index": {"type": "integer", "minimum": 2}, "number": {"type": "integer", "minimum": 1}, "label": {"type": "string", "pattern": "^Seite [1-9][0-9]* von [1-9][0-9]*$"}}}}
+          }
+        },
+        "nonce": {"type": "string", "pattern": "^[A-Za-z0-9._-]{16,128}$"},
+        "created_at": {"type": "string", "format": "date-time"}
+      }
+    }
+  },
+  "$defs": {
+    "hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "id": {"type": "string", "pattern": "^[a-z][a-z0-9-]{1,63}$"},
+    "path": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._/-]*$"},
+    "diagramBrandProjection": {"type": "object", "additionalProperties": false, "required": ["font", "colors", "line_role", "contrast", "font_embedded", "forbidden_fallbacks_absent", "svg_sha256"], "properties": {"font": {"type": "object", "additionalProperties": false, "required": ["asset_id", "family", "asset_sha256", "derivative_sha256"], "properties": {"asset_id": {"$ref": "#/$defs/id"}, "family": {"type": "string", "pattern": "^BrandKit-[A-Za-z0-9-]+$"}, "asset_sha256": {"$ref": "#/$defs/hash"}, "derivative_sha256": {"$ref": "#/$defs/hash"}}}, "colors": {"type": "object", "additionalProperties": false, "required": ["primary", "accent", "text", "muted", "background", "surface"], "properties": {"primary": {"$ref": "#/$defs/color"}, "accent": {"$ref": "#/$defs/color"}, "text": {"$ref": "#/$defs/color"}, "muted": {"$ref": "#/$defs/color"}, "background": {"$ref": "#/$defs/color"}, "surface": {"$ref": "#/$defs/color"}}}, "line_role": {"const": "accent"}, "contrast": {"type": "object", "additionalProperties": false, "required": ["text_on_background", "text_on_surface", "primary_on_background"], "properties": {"text_on_background": {"type": "number", "minimum": 4.5}, "text_on_surface": {"type": "number", "minimum": 4.5}, "primary_on_background": {"type": "number", "minimum": 4.5}}}, "font_embedded": {"const": true}, "forbidden_fallbacks_absent": {"const": true}, "svg_sha256": {"$ref": "#/$defs/hash"}}},
+    "color": {"type": "string", "pattern": "^#[0-9A-F]{6}$"}
+  }
+}

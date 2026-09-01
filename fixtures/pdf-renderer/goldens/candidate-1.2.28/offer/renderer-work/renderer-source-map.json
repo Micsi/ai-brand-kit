@@ -1,0 +1,2819 @@
+{
+  "expected_internal_links": [],
+  "figure_references": [],
+  "figure_registry": [],
+  "objects": [
+    {
+      "bbox_pt": [
+        439.37,
+        56.693,
+        538.583,
+        81.496
+      ],
+      "evidence_kind": "vector",
+      "evidence_sha256": "b82446b1cbeb5bb1cf9de3138dbb7e2877c081806ff8006ee7bb565275cb4f57",
+      "page": 1,
+      "source_id": "furniture-logo-1",
+      "type": "logo",
+      "visible": true
+    },
+    {
+      "bbox_pt": [
+        56.693,
+        81.893,
+        79.72,
+        93.363
+      ],
+      "evidence_kind": "text",
+      "evidence_text": "OFFER",
+      "page": 1,
+      "source_id": "furniture-cover-kicker-1",
+      "type": "cover-kicker",
+      "visible": true
+    },
+    {
+      "bbox_pt": [
+        56.693,
+        116.906,
+        538.583,
+        155.906
+      ],
+      "evidence_kind": "text",
+      "evidence_text": "Leistungsangebot",
+      "page": 1,
+      "source_id": "title",
+      "type": "title",
+      "visible": true
+    },
+    {
+      "bbox_pt": [
+        56.693,
+        281.638,
+        453.543,
+        297.638
+      ],
+      "evidence_kind": "text",
+      "evidence_text": "Das Vorhaben braucht einen klaren Rahmen und prüfbare Liefergegenstände.",
+      "page": 1,
+      "source_id": "furniture-cover-deck-1",
+      "type": "cover-deck",
+      "visible": true
+    },
+    {
+      "bbox_pt": [
+        56.693,
+        47.939,
+        538.583,
+        48.439
+      ],
+      "evidence_kind": "vector",
+      "evidence_sha256": "7f0a93f2374d11d4a734ff6436665be4c0c2fa3853c9d8c4f1eccdce3c2bde98",
+      "page": 2,
+      "source_id": "furniture-divider-2",
+      "type": "divider",
+      "visible": true
+    },
+    {
+      "bbox_pt": [
+        56.693,
+        31.849,
+        111.048,
+        42.044
+      ],
+      "evidence_kind": "text",
+      "evidence_text": "Leistungsangebot",
+      "page": 2,
+      "source_id": "furniture-header-2",
+      "type": "header",
+      "visible": true
+    },
+    {
+      "bbox_pt": [
+        56.693,
+        56.693,
+        538.583,
+        78.693
+      ],
+      "evidence_kind": "text",
+      "evidence_text": "Abschnitt: Ausgangslage",
+      "page": 2,
+      "source_id": "context",
+      "type": "heading",
+      "visible": true
+    },
+    {
+      "bbox_pt": [
+        56.693,
+        90.031,
+        538.583,
+        105.031
+      ],
+      "evidence_kind": "text",
+      "evidence_text": "Das Vorhaben braucht einen klaren Rahmen und prüfbare Liefergegenstände.",
+      "page": 2,
+      "source_id": "node-3",
+      "type": "paragraph",
+      "visible": true
+    },
+    {
+      "bbox_pt": [
+        56.693,
+        122.039,
+        538.583,
+        144.039
+      ],
+      "evidence_kind": "text",
+      "evidence_text": "Abschnitt: Umfang",
+      "page": 2,
+      "source_id": "scope",
+      "type": "heading",
+      "visible": true
+    },
+    {
+      "bbox_pt": [
+        56.693,
+        155.378,
+        538.583,
+        170.378
+      ],
+      "evidence_kind": "text",
+      "evidence_text": "Der Umfang umfasst Konzeption, Umsetzung und dokumentierte Übergabe.",
+      "page": 2,
+      "source_id": "node-5",
+      "type": "paragraph",
+      "visible": true
+    },
+    {
+      "bbox_pt": [
+        56.693,
+        187.386,
+        538.583,
+        209.386
+      ],
+      "evidence_kind": "text",
+      "evidence_text": "Abschnitt: Liefergegenstände",
+      "page": 2,
+      "source_id": "deliverables",
+      "type": "heading",
+      "visible": true
+    },
+    {
+      "bbox_pt": [
+        56.693,
+        220.724,
+        538.583,
+        288.402
+      ],
+      "evidence_kind": "text",
+      "evidence_text": "Abgestimmtes Dokumentkonzept",
+      "page": 2,
+      "source_id": "node-7",
+      "type": "unordered-list",
+      "visible": true
+    },
+    {
+      "bbox_pt": [
+        56.693,
+        305.409,
+        538.583,
+        327.409
+      ],
+      "evidence_kind": "text",
+      "evidence_text": "Abschnitt: Bedingungen",
+      "page": 2,
+      "source_id": "terms",
+      "type": "heading",
+      "visible": true
+    },
+    {
+      "bbox_pt": [
+        56.693,
+        338.748,
+        538.583,
+        353.748
+      ],
+      "evidence_kind": "text",
+      "evidence_text": "Änderungen am Umfang werden vor ihrer Umsetzung gemeinsam bestätigt.",
+      "page": 2,
+      "source_id": "node-9",
+      "type": "paragraph",
+      "visible": true
+    },
+    {
+      "bbox_pt": [
+        498.337,
+        794.369,
+        538.583,
+        804.564
+      ],
+      "evidence_kind": "text",
+      "evidence_text": "Seite 1 von 1",
+      "page": 2,
+      "source_id": "furniture-footer-2",
+      "type": "footer",
+      "visible": true
+    }
+  ],
+  "page_coordinate_system": "pdf-points-top-left",
+  "page_count": 2,
+  "required_furniture": [
+    "furniture-header-2",
+    "furniture-footer-2"
+  ],
+  "schema_version": "renderer-source-map.v1",
+  "visible_inventory": [
+    {
+      "bbox_pt": [
+        56.69,
+        81.89,
+        79.72,
+        93.36
+      ],
+      "kind": "text",
+      "object_id": "p1-text-0001",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 9.0,
+        "render_mode": 0,
+        "rgb": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "OFFER"
+      },
+      "pdf_object_sha256": "a694be43ff2bbb8c62c1037e85aeeea10ce0cdd55094d4a669bf56e7929b43bc",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        56.69,
+        81.89
+      ]
+    },
+    {
+      "bbox_pt": [
+        56.69,
+        117.6,
+        287.7,
+        160.93
+      ],
+      "kind": "text",
+      "object_id": "p1-text-0002",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 34.0,
+        "render_mode": 0,
+        "rgb": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Leistungsangebot"
+      },
+      "pdf_object_sha256": "e5ab34f7a341e38e238766d8ba5dd023264d2af34ee919b116ed96d1ee937ac8",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        56.69,
+        117.6
+      ]
+    },
+    {
+      "bbox_pt": [
+        56.69,
+        281.87,
+        73.45,
+        296.53
+      ],
+      "kind": "text",
+      "object_id": "p1-text-0003",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 11.5,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Das"
+      },
+      "pdf_object_sha256": "3ed35acb95911ae91b5e6026911af071dffb017abd578dc89dbd51c3fc0748dd",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        56.69,
+        281.87
+      ]
+    },
+    {
+      "bbox_pt": [
+        76.09,
+        281.87,
+        116.06,
+        296.53
+      ],
+      "kind": "text",
+      "object_id": "p1-text-0004",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 11.5,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Vorhaben"
+      },
+      "pdf_object_sha256": "94c8cc1eae7715401cf9b82210946cfe528d14d08f903faa1bc2beffd0617b02",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        76.09,
+        281.87
+      ]
+    },
+    {
+      "bbox_pt": [
+        118.71,
+        281.87,
+        152.12,
+        296.53
+      ],
+      "kind": "text",
+      "object_id": "p1-text-0005",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 11.5,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "braucht"
+      },
+      "pdf_object_sha256": "9fa70f8c66ac7e0cfef37331a7b3f80d6fea52397c4e17ea9b592f67df1905eb",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        118.71,
+        281.87
+      ]
+    },
+    {
+      "bbox_pt": [
+        154.76,
+        281.87,
+        178.18,
+        296.53
+      ],
+      "kind": "text",
+      "object_id": "p1-text-0006",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 11.5,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "einen"
+      },
+      "pdf_object_sha256": "4bdc5676486c250f195322b486ce412eb603f8ad84af7eb092e09e89b693b6ca",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        154.76,
+        281.87
+      ]
+    },
+    {
+      "bbox_pt": [
+        180.82,
+        281.87,
+        207.54,
+        296.53
+      ],
+      "kind": "text",
+      "object_id": "p1-text-0007",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 11.5,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "klaren"
+      },
+      "pdf_object_sha256": "db59eedf82ab082eca6ea90f0df16fad1266b58ccdd7f8778fd03f75f04eeca8",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        180.82,
+        281.87
+      ]
+    },
+    {
+      "bbox_pt": [
+        210.19,
+        281.87,
+        245.22,
+        296.53
+      ],
+      "kind": "text",
+      "object_id": "p1-text-0008",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 11.5,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Rahmen"
+      },
+      "pdf_object_sha256": "39489ee737ea1da4ada99aeba83f150d7332153b2150e2e57ad1e1e08a55e5de",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        210.19,
+        281.87
+      ]
+    },
+    {
+      "bbox_pt": [
+        247.87,
+        281.87,
+        263.54,
+        296.53
+      ],
+      "kind": "text",
+      "object_id": "p1-text-0009",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 11.5,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "und"
+      },
+      "pdf_object_sha256": "ee6112c5344bc8bb1dcdc9a86615edfb8d1882904790964b37eea6decbd619a2",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        247.87,
+        281.87
+      ]
+    },
+    {
+      "bbox_pt": [
+        266.18,
+        281.87,
+        302.2,
+        296.53
+      ],
+      "kind": "text",
+      "object_id": "p1-text-0010",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 11.5,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "prüfbare"
+      },
+      "pdf_object_sha256": "1711024367e7f79a3e1ffe65f1760ff511583912bf40e91f047a85cd8599a8d3",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        266.18,
+        281.87
+      ]
+    },
+    {
+      "bbox_pt": [
+        304.84,
+        281.87,
+        388.0,
+        296.53
+      ],
+      "kind": "text",
+      "object_id": "p1-text-0011",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 11.5,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Liefergegenstände."
+      },
+      "pdf_object_sha256": "c081695c8f804f2d0330b7d97a13fc2992a4e97738259a81a105c735dcd5c7e8",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        304.84,
+        281.87
+      ]
+    },
+    {
+      "bbox_pt": [
+        0.0,
+        0.0,
+        595.2756,
+        841.8898
+      ],
+      "kind": "vector",
+      "object_id": "p1-vector-0001",
+      "paint": {
+        "blend": "/Normal",
+        "fill": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "fill_alpha": 1.0,
+        "fill_pattern": null,
+        "operator": "f*",
+        "scope": "page",
+        "softmask": "/None",
+        "stroke": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_pattern": null
+      },
+      "pdf_object_sha256": "54b678261fb79f35bb8751eeb23a6b2b29e880f2c13fbcb786e4577355cc7592",
+      "transform": [
+        1.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "bbox_pt": [
+        0.0,
+        0.0,
+        595.2756,
+        204.095
+      ],
+      "kind": "vector",
+      "object_id": "p1-vector-0002",
+      "paint": {
+        "blend": "/Normal",
+        "fill": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "fill_alpha": 1.0,
+        "fill_pattern": null,
+        "operator": "f*",
+        "scope": "page",
+        "softmask": "/None",
+        "stroke": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_pattern": null
+      },
+      "pdf_object_sha256": "660f335928970a60aff76048fa55f15c27729eb80ae61da5bf98eccf1b4f1457",
+      "transform": [
+        1.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "bbox_pt": [
+        439.37,
+        58.76,
+        460.039,
+        79.429
+      ],
+      "kind": "vector",
+      "object_id": "p1-vector-0003",
+      "paint": {
+        "blend": "/Normal",
+        "fill": [
+          0.227451,
+          0.686275,
+          0.662745
+        ],
+        "fill_alpha": 1.0,
+        "fill_pattern": null,
+        "operator": "f*",
+        "scope": "page",
+        "softmask": "/None",
+        "stroke": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_pattern": null
+      },
+      "pdf_object_sha256": "4b584776cef0595f47516c7f84f4bb52f9381f885d998d70c15e3cba87a1dbf7",
+      "transform": [
+        1.0,
+        0.0,
+        0.0,
+        1.0,
+        439.3701,
+        760.3937
+      ]
+    },
+    {
+      "bbox_pt": [
+        444.537,
+        63.927,
+        454.872,
+        74.262
+      ],
+      "kind": "vector",
+      "object_id": "p1-vector-0004",
+      "paint": {
+        "blend": "/Normal",
+        "fill": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "fill_alpha": 1.0,
+        "fill_pattern": null,
+        "operator": "f*",
+        "scope": "page",
+        "softmask": "/None",
+        "stroke": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_pattern": null
+      },
+      "pdf_object_sha256": "8936080de2903b378a6fe964bc5bac4e8c33f928705d9ec4354168152313a897",
+      "transform": [
+        1.0,
+        0.0,
+        0.0,
+        1.0,
+        439.3701,
+        760.3937
+      ]
+    },
+    {
+      "bbox_pt": [
+        468.307,
+        61.86,
+        538.583,
+        65.994
+      ],
+      "kind": "vector",
+      "object_id": "p1-vector-0005",
+      "paint": {
+        "blend": "/Normal",
+        "fill": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "fill_alpha": 1.0,
+        "fill_pattern": null,
+        "operator": "f*",
+        "scope": "page",
+        "softmask": "/None",
+        "stroke": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_pattern": null
+      },
+      "pdf_object_sha256": "8d459ad36441cfc584b1d300d69158363db856359c3bdd0499764922afad6150",
+      "transform": [
+        1.0,
+        0.0,
+        0.0,
+        1.0,
+        439.3701,
+        760.3937
+      ]
+    },
+    {
+      "bbox_pt": [
+        468.307,
+        72.195,
+        517.913,
+        76.329
+      ],
+      "kind": "vector",
+      "object_id": "p1-vector-0006",
+      "paint": {
+        "blend": "/Normal",
+        "fill": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "fill_alpha": 1.0,
+        "fill_pattern": null,
+        "operator": "f*",
+        "scope": "page",
+        "softmask": "/None",
+        "stroke": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_pattern": null
+      },
+      "pdf_object_sha256": "c83eef335996928a3a7465da3c91c38c5f9b074fcadf2f9751226a077e2455d9",
+      "transform": [
+        1.0,
+        0.0,
+        0.0,
+        1.0,
+        439.3701,
+        760.3937
+      ]
+    },
+    {
+      "bbox_pt": [
+        524.114,
+        74.012,
+        538.583,
+        74.512
+      ],
+      "kind": "vector",
+      "object_id": "p1-vector-0007",
+      "paint": {
+        "blend": "/Normal",
+        "fill": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "fill_alpha": 1.0,
+        "fill_pattern": null,
+        "operator": "S",
+        "scope": "page",
+        "softmask": "/None",
+        "stroke": [
+          0.227451,
+          0.686275,
+          0.662745
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_pattern": null
+      },
+      "pdf_object_sha256": "320f7b28ae7585c8a07f5bba39523ffcde140f05c08d6c9c1c5c8344fe90da23",
+      "transform": [
+        1.0,
+        0.0,
+        0.0,
+        1.0,
+        439.3701,
+        760.3937
+      ]
+    },
+    {
+      "bbox_pt": [
+        56.693,
+        172.913,
+        184.252,
+        178.583
+      ],
+      "kind": "vector",
+      "object_id": "p1-vector-0008",
+      "paint": {
+        "blend": "/Normal",
+        "fill": [
+          0.227451,
+          0.686275,
+          0.662745
+        ],
+        "fill_alpha": 1.0,
+        "fill_pattern": null,
+        "operator": "f*",
+        "scope": "page",
+        "softmask": "/None",
+        "stroke": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_pattern": null
+      },
+      "pdf_object_sha256": "80fe02e08d1f439f32a3ec72c6b3d4dc23877d64b199a598e62fd429d00c2128",
+      "transform": [
+        1.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "bbox_pt": [
+        56.69,
+        31.85,
+        111.05,
+        42.05
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0001",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 8.0,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "text": "Leistungsangebot"
+      },
+      "pdf_object_sha256": "56731c2d7375ba6a1f03a4112c4fbf056c401ce7e09d7abc067ad849f37495fd",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        56.69,
+        31.85
+      ]
+    },
+    {
+      "bbox_pt": [
+        56.69,
+        57.06,
+        126.33,
+        80.0
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0002",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 18.0,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Abschnitt:"
+      },
+      "pdf_object_sha256": "ae5f72276f793b8515f69012e0e9c10594863a17acd2260951e495227d80c6ce",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        56.69,
+        57.06
+      ]
+    },
+    {
+      "bbox_pt": [
+        130.47,
+        57.06,
+        224.7,
+        80.0
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0003",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 18.0,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Ausgangslage"
+      },
+      "pdf_object_sha256": "77f597b5a30855797dc3f59ee12fb2ceb8fc651f36bc86dfc2b1db14e26e81f5",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        130.47,
+        57.06
+      ]
+    },
+    {
+      "bbox_pt": [
+        56.69,
+        90.24,
+        71.55,
+        103.24
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0004",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Das"
+      },
+      "pdf_object_sha256": "5dc7d2299da1f7e23c2c0ed0622f2acf1889d10dee9e7b5e6f82f04d1232f5ae",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        56.69,
+        90.24
+      ]
+    },
+    {
+      "bbox_pt": [
+        73.9,
+        90.24,
+        109.35,
+        103.24
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0005",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Vorhaben"
+      },
+      "pdf_object_sha256": "b690ad40466c64daea34fffe11d20e006c6094cd5b5a78bff4a80db97956bfa9",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        73.9,
+        90.24
+      ]
+    },
+    {
+      "bbox_pt": [
+        111.7,
+        90.24,
+        141.33,
+        103.24
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0006",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "braucht"
+      },
+      "pdf_object_sha256": "a7b946279e80e238e48b9a05dec7cdbfe9bf78216291b7a9398680c167e8d75c",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        111.7,
+        90.24
+      ]
+    },
+    {
+      "bbox_pt": [
+        143.67,
+        90.24,
+        164.44,
+        103.24
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0007",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "einen"
+      },
+      "pdf_object_sha256": "55e325ab347f862019c82d6d87343dc73fb7164cd96a4bc733e599c69fd192f7",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        143.67,
+        90.24
+      ]
+    },
+    {
+      "bbox_pt": [
+        166.79,
+        90.24,
+        190.49,
+        103.24
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0008",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "klaren"
+      },
+      "pdf_object_sha256": "1bdd1b599982d20744d97793f36987b61754ba4db03b19e45e5a7e63a7e01860",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        166.79,
+        90.24
+      ]
+    },
+    {
+      "bbox_pt": [
+        192.84,
+        90.24,
+        223.91,
+        103.24
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0009",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Rahmen"
+      },
+      "pdf_object_sha256": "8a765462d000896d1249d1c36f94e2b62d2a36a35975ed2055fe0c885f8cc13b",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        192.84,
+        90.24
+      ]
+    },
+    {
+      "bbox_pt": [
+        226.26,
+        90.24,
+        240.16,
+        103.24
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0010",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "und"
+      },
+      "pdf_object_sha256": "ea8ff7a7ff8a8a2973f0c6b27cc0e98807db86b3740fb3b9a290faaa1405c532",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        226.26,
+        90.24
+      ]
+    },
+    {
+      "bbox_pt": [
+        242.5,
+        90.24,
+        274.44,
+        103.24
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0011",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "prüfbare"
+      },
+      "pdf_object_sha256": "46d4975d5320af28a11b47466cbeee5fd484d2803dc4c93f63ac6cecf0ccfb85",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        242.5,
+        90.24
+      ]
+    },
+    {
+      "bbox_pt": [
+        276.79,
+        90.24,
+        350.55,
+        103.24
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0012",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Liefergegenstände."
+      },
+      "pdf_object_sha256": "c52de0a542ef3bcd9db4482cb022794e36bfd08ce9627452bff41afc9cd637fc",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        276.79,
+        90.24
+      ]
+    },
+    {
+      "bbox_pt": [
+        56.69,
+        122.41,
+        126.33,
+        145.35
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0013",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 18.0,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Abschnitt:"
+      },
+      "pdf_object_sha256": "ae5f72276f793b8515f69012e0e9c10594863a17acd2260951e495227d80c6ce",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        56.69,
+        122.41
+      ]
+    },
+    {
+      "bbox_pt": [
+        130.47,
+        122.41,
+        182.52,
+        145.35
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0014",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 18.0,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Umfang"
+      },
+      "pdf_object_sha256": "8aca3ebe04e3564247fbb8b8e83ed73afa54bbcb5c79589701d9701064ea32f9",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        130.47,
+        122.41
+      ]
+    },
+    {
+      "bbox_pt": [
+        56.69,
+        155.59,
+        69.8,
+        168.59
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0015",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Der"
+      },
+      "pdf_object_sha256": "f50133e66bc78894f2f14851fd766f16a30036fb407f4bc543ebb3b68f2cfab3",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        56.69,
+        155.59
+      ]
+    },
+    {
+      "bbox_pt": [
+        72.15,
+        155.59,
+        101.64,
+        168.59
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0016",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Umfang"
+      },
+      "pdf_object_sha256": "6885f42ec263c05ea10aaeedbecd86e856c2cdcf517c615edbb7bffc317b97d4",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        72.15,
+        155.59
+      ]
+    },
+    {
+      "bbox_pt": [
+        103.99,
+        155.59,
+        136.31,
+        168.59
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0017",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "umfasst"
+      },
+      "pdf_object_sha256": "1f0a791c0d5bf7e34893f20134d1bdfd110e7b6f9361b7b79725b040006dbd07",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        103.99,
+        155.59
+      ]
+    },
+    {
+      "bbox_pt": [
+        138.65,
+        155.59,
+        183.95,
+        168.59
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0018",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Konzeption,"
+      },
+      "pdf_object_sha256": "304f6337c421a5378806a9e58ce6a490e67f5cd02fe258ac4a9b35613e7a20f2",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        138.65,
+        155.59
+      ]
+    },
+    {
+      "bbox_pt": [
+        186.29,
+        155.59,
+        229.93,
+        168.59
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0019",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Umsetzung"
+      },
+      "pdf_object_sha256": "3535cfd792120d03a013d6ba7ec84454c07203b66d7c9faa64390d591a8422bd",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        186.29,
+        155.59
+      ]
+    },
+    {
+      "bbox_pt": [
+        232.28,
+        155.59,
+        246.18,
+        168.59
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0020",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "und"
+      },
+      "pdf_object_sha256": "ea8ff7a7ff8a8a2973f0c6b27cc0e98807db86b3740fb3b9a290faaa1405c532",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        232.28,
+        155.59
+      ]
+    },
+    {
+      "bbox_pt": [
+        248.53,
+        155.59,
+        305.06,
+        168.59
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0021",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "dokumentierte"
+      },
+      "pdf_object_sha256": "5c2276aa99a6fe3a8dab9d78293b0c22a2c76609494fbd2569f76a92282a7f97",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        248.53,
+        155.59
+      ]
+    },
+    {
+      "bbox_pt": [
+        307.4,
+        155.59,
+        345.76,
+        168.59
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0022",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Übergabe."
+      },
+      "pdf_object_sha256": "3a07f36ea3efee09c4854c312befb86241f9ded0fed584d58228e3d6a8b32235",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        307.4,
+        155.59
+      ]
+    },
+    {
+      "bbox_pt": [
+        56.69,
+        187.76,
+        126.33,
+        210.7
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0023",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 18.0,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Abschnitt:"
+      },
+      "pdf_object_sha256": "ae5f72276f793b8515f69012e0e9c10594863a17acd2260951e495227d80c6ce",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        56.69,
+        187.76
+      ]
+    },
+    {
+      "bbox_pt": [
+        130.47,
+        187.76,
+        256.77,
+        210.7
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0024",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 18.0,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Liefergegenstände"
+      },
+      "pdf_object_sha256": "62ce8e0467838480ba93a185b12262b14f9d76c6fdef4c7a74f62e8e110b73dd",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        130.47,
+        187.76
+      ]
+    },
+    {
+      "bbox_pt": [
+        51.02,
+        220.91,
+        55.23,
+        232.38
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0025",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 9.0,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "•"
+      },
+      "pdf_object_sha256": "3cc480faacbd3281e5c9e2473dd6bdea3d00cf18531e82ea4d5bcb47b308d9f0",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        51.02,
+        220.91
+      ]
+    },
+    {
+      "bbox_pt": [
+        68.03,
+        220.93,
+        124.42,
+        233.93
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0026",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Abgestimmtes"
+      },
+      "pdf_object_sha256": "ca6cce4a70c3785e2f79c80cccfd65c421d9d2c883b223f2e1aff94fa5bf9fec",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        68.03,
+        220.93
+      ]
+    },
+    {
+      "bbox_pt": [
+        126.77,
+        220.93,
+        197.16,
+        233.93
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0027",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Dokumentkonzept"
+      },
+      "pdf_object_sha256": "eeb934dc1cd07ae442864a09e81eb73c109b9249e23129dba642f109afc0231e",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        126.77,
+        220.93
+      ]
+    },
+    {
+      "bbox_pt": [
+        51.02,
+        247.25,
+        55.23,
+        258.72
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0028",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 9.0,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "•"
+      },
+      "pdf_object_sha256": "3cc480faacbd3281e5c9e2473dd6bdea3d00cf18531e82ea4d5bcb47b308d9f0",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        51.02,
+        247.25
+      ]
+    },
+    {
+      "bbox_pt": [
+        68.03,
+        247.27,
+        130.3,
+        260.27
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0029",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Reproduzierbare"
+      },
+      "pdf_object_sha256": "2ab927a52bfc350b5006d419202fe6c4b0f49547e7e8e8956317a4ed3e997eba",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        68.03,
+        247.27
+      ]
+    },
+    {
+      "bbox_pt": [
+        132.64,
+        247.27,
+        165.21,
+        260.27
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0030",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Ausgabe"
+      },
+      "pdf_object_sha256": "42aa801c945e2411273e8284906fc9ad74d4f0bf6de36f4260ac8ecd8f763add",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        132.64,
+        247.27
+      ]
+    },
+    {
+      "bbox_pt": [
+        51.02,
+        273.59,
+        55.23,
+        285.06
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0031",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 9.0,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "•"
+      },
+      "pdf_object_sha256": "3cc480faacbd3281e5c9e2473dd6bdea3d00cf18531e82ea4d5bcb47b308d9f0",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        51.02,
+        273.59
+      ]
+    },
+    {
+      "bbox_pt": [
+        68.03,
+        273.61,
+        114.77,
+        286.61
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0032",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Technischer"
+      },
+      "pdf_object_sha256": "b99bad5a30fa03291777f82b2c6f08e2dda5755b427e23ceaef187ea52669a33",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        68.03,
+        273.61
+      ]
+    },
+    {
+      "bbox_pt": [
+        117.11,
+        273.61,
+        160.09,
+        286.61
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0033",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Prüfbericht"
+      },
+      "pdf_object_sha256": "97b0f04fd99bb8b45f3487e98b4e19cc886b173339a90cece5f9f26fc462036d",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        117.11,
+        273.61
+      ]
+    },
+    {
+      "bbox_pt": [
+        56.69,
+        305.78,
+        126.33,
+        328.72
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0034",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 18.0,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Abschnitt:"
+      },
+      "pdf_object_sha256": "ae5f72276f793b8515f69012e0e9c10594863a17acd2260951e495227d80c6ce",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        56.69,
+        305.78
+      ]
+    },
+    {
+      "bbox_pt": [
+        130.47,
+        305.78,
+        217.25,
+        328.72
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0035",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 18.0,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Bedingungen"
+      },
+      "pdf_object_sha256": "9faf88c07e468e6abba957a9a2567b21f9929bc631dafd0120858d22d5a4809f",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        130.47,
+        305.78
+      ]
+    },
+    {
+      "bbox_pt": [
+        56.69,
+        338.96,
+        101.4,
+        351.96
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0036",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Änderungen"
+      },
+      "pdf_object_sha256": "f18fb035ed8117fa33a6a2a973e6310c1d43fb98eb4091232bf0ac5b088a37ba",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        56.69,
+        338.96
+      ]
+    },
+    {
+      "bbox_pt": [
+        103.75,
+        338.96,
+        115.6,
+        351.96
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0037",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "am"
+      },
+      "pdf_object_sha256": "63320e006e276a889a8572f0d44192683e9603f88e1554b6d2a4528b98cfa21d",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        103.75,
+        338.96
+      ]
+    },
+    {
+      "bbox_pt": [
+        117.95,
+        338.96,
+        147.44,
+        351.96
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0038",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Umfang"
+      },
+      "pdf_object_sha256": "6885f42ec263c05ea10aaeedbecd86e856c2cdcf517c615edbb7bffc317b97d4",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        117.95,
+        338.96
+      ]
+    },
+    {
+      "bbox_pt": [
+        149.79,
+        338.96,
+        177.96,
+        351.96
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0039",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "werden"
+      },
+      "pdf_object_sha256": "bc8a370c7b18d01e83f2a4f6265f127b8e96c1292855ca186e7fe2638a2788ab",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        149.79,
+        338.96
+      ]
+    },
+    {
+      "bbox_pt": [
+        180.31,
+        338.96,
+        191.99,
+        351.96
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0040",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "vor"
+      },
+      "pdf_object_sha256": "27c6405e60b43787829535f0c2b342a081cb55ae97f10625551bbc048d89bcdb",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        180.31,
+        338.96
+      ]
+    },
+    {
+      "bbox_pt": [
+        194.33,
+        338.96,
+        211.7,
+        351.96
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0041",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "ihrer"
+      },
+      "pdf_object_sha256": "2caa48477c8c2d4028795bdaa8655184a0f565e27ab3897ad7d338d71800932a",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        194.33,
+        338.96
+      ]
+    },
+    {
+      "bbox_pt": [
+        214.05,
+        338.96,
+        257.69,
+        351.96
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0042",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Umsetzung"
+      },
+      "pdf_object_sha256": "3535cfd792120d03a013d6ba7ec84454c07203b66d7c9faa64390d591a8422bd",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        214.05,
+        338.96
+      ]
+    },
+    {
+      "bbox_pt": [
+        260.04,
+        338.96,
+        304.57,
+        351.96
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0043",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "gemeinsam"
+      },
+      "pdf_object_sha256": "a883ea503e76c91424f258e0210702903c147384ea433dd0a40cfa8ae67c450c",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        260.04,
+        338.96
+      ]
+    },
+    {
+      "bbox_pt": [
+        306.91,
+        338.96,
+        345.18,
+        351.96
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0044",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 10.2,
+        "render_mode": 0,
+        "rgb": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "bestätigt."
+      },
+      "pdf_object_sha256": "b9a313181500e9300ef337b16d5fb9b4fb2b4ac338e90f111f401f1d71a7a996",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        306.91,
+        338.96
+      ]
+    },
+    {
+      "bbox_pt": [
+        498.34,
+        794.37,
+        514.3,
+        804.57
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0045",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 8.0,
+        "render_mode": 0,
+        "rgb": [
+          0.364706,
+          0.407843,
+          0.45098
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "Seite"
+      },
+      "pdf_object_sha256": "aa886c5dfa981ddea0708e7e2e023413cf26f0ee4e893c0e5ba8a05ce9d9e596",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        498.34,
+        794.37
+      ]
+    },
+    {
+      "bbox_pt": [
+        516.13,
+        794.37,
+        520.27,
+        804.57
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0046",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 8.0,
+        "render_mode": 0,
+        "rgb": [
+          0.364706,
+          0.407843,
+          0.45098
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "1"
+      },
+      "pdf_object_sha256": "09b9dac13a547dceee08a63856af67de93df96908fa46383f757711a7880eaf4",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        516.13,
+        794.37
+      ]
+    },
+    {
+      "bbox_pt": [
+        522.11,
+        794.37,
+        532.61,
+        804.57
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0047",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 8.0,
+        "render_mode": 0,
+        "rgb": [
+          0.364706,
+          0.407843,
+          0.45098
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "von"
+      },
+      "pdf_object_sha256": "5e6c59dc9b5bbe4fdfd9da55aeca421c3f76466ba792b22bc66df2e7694336b0",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        522.11,
+        794.37
+      ]
+    },
+    {
+      "bbox_pt": [
+        534.45,
+        794.37,
+        538.59,
+        804.57
+      ],
+      "kind": "text",
+      "object_id": "p2-text-0048",
+      "paint": {
+        "bold": false,
+        "fill_alpha": 1.0,
+        "font": "/AAAAAA+Abel-Regular",
+        "font_size_pt": 8.0,
+        "render_mode": 0,
+        "rgb": [
+          0.364706,
+          0.407843,
+          0.45098
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "text": "1"
+      },
+      "pdf_object_sha256": "09b9dac13a547dceee08a63856af67de93df96908fa46383f757711a7880eaf4",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        534.45,
+        794.37
+      ]
+    },
+    {
+      "bbox_pt": [
+        56.693,
+        47.939,
+        538.583,
+        48.439
+      ],
+      "kind": "vector",
+      "object_id": "p2-vector-0001",
+      "paint": {
+        "blend": "/Normal",
+        "fill": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "fill_alpha": 1.0,
+        "fill_pattern": null,
+        "operator": "S",
+        "scope": "page",
+        "softmask": "/None",
+        "stroke": [
+          0.090196,
+          0.164706,
+          0.227451
+        ],
+        "stroke_alpha": 1.0,
+        "stroke_pattern": null
+      },
+      "pdf_object_sha256": "d86bbf7e9f890ef83a10d0fbd2ead1fe05905e9ff8a990b728b3974b1236e6b4",
+      "transform": [
+        1.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ]
+    }
+  ]
+}

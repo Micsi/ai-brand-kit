@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "brandkit-humanizer-evidence.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "humanizer_release", "pattern_catalog", "runner", "evidence_lint", "accepted", "generic_smoothing", "artifacts"],
+  "properties": {
+    "schema_version": {"const": "brandkit-humanizer-evidence.v1"},
+    "humanizer_release": {
+      "type": "object", "additionalProperties": false,
+      "required": ["name", "version", "source_revision", "content_sha256"],
+      "properties": {
+        "name": {"const": "humanizer-de"},
+        "version": {"const": "5.22.2-brandkit.2"},
+        "source_revision": {"const": "17059735ba1cd2eea7e66a517f79b91b0797b366"},
+        "content_sha256": {"const": "fd163dd167fe08f8244ae77e728e3514c3a10466a1a35c9f2d199821ef5517ec"}
+      }
+    },
+    "pattern_catalog": {
+      "type": "object", "additionalProperties": false,
+      "required": ["path", "source_revision", "sha256", "canonical_pattern_ids"],
+      "properties": {
+        "path": {"const": "references/patterns.md"},
+        "source_revision": {"const": "17059735ba1cd2eea7e66a517f79b91b0797b366"},
+        "sha256": {"const": "9664a1c8c5bbb7700447042babba1c1b78cbf999f349643160cfd517bb6b5f2d"},
+        "canonical_pattern_ids": {
+          "type": "array", "minItems": 72, "maxItems": 72, "uniqueItems": true,
+          "items": {"type": "string", "pattern": "^(?:[1-9]|[1-6][0-9]|7[0-2])$"}
+        }
+      }
+    },
+    "runner": {"const": "scripts/humanizer_two_pass.py --file --out-dir --mode --provider claude --model"},
+    "evidence_lint": {
+      "type": "object", "additionalProperties": false,
+      "required": ["command", "script_sha256", "before_path", "before_sha256", "after_path", "after_sha256", "exit_code", "stdout_sha256"],
+      "properties": {
+        "command": {"const": "scripts/evidence_lint.py --before-file --after-file --fail-on never"},
+        "script_sha256": {"const": "9452db48572885f9b4d96efc64f1a73d3e1dcc248a34be38ea8055597c7c3fe0"},
+        "before_path": {"type": "string", "minLength": 1}, "before_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "after_path": {"type": "string", "minLength": 1}, "after_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "exit_code": {"const": 0}, "stdout_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "accepted": {"type": "boolean"},
+    "generic_smoothing": {"type": "boolean"},
+    "artifacts": {
+      "type": "array", "minItems": 12, "maxItems": 13,
+      "items": {"type": "object", "additionalProperties": false, "required": ["name", "path", "sha256"], "properties": {
+        "name": {"enum": ["original.md", "preflight.json", "audit-call.json", "audit-ledger.json", "confirmed-ledger.json", "edits.json", "rewrite-call.json", "evidence-ledger.json", "evidence-report.json", "report.json", "result.md", "rejected.md", "changes.diff", "brandkit-provenance.json"]},
+        "path": {"type": "string", "minLength": 1}, "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }}
+    }
+  }
+}
