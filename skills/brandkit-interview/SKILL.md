@@ -6,6 +6,12 @@ license: MIT
 
 # BrandKit-Interview
 
+## Routing
+
+| Route | Primäres Playbook |
+|---|---|
+| Markenquellen erheben | [`references/workflow.md`](references/workflow.md) |
+
 Owner: Aussagen der Markenquelle erfassen, nicht Designwerte ergänzen oder das finale Kit bauen.
 
 ## Eingabe und Ausgabe

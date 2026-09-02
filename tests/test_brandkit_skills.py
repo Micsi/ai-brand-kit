@@ -15,10 +15,11 @@ from jsonschema import ValidationError
 
 import scripts.materialize_brandkit_instructions as instruction_materializer
 from scripts.materialize_brandkit_instructions import materialize
-from scripts.validate_brandkit_skills import COLLISION_FIXTURES, FIXTURES, ROOT, collision_dry_run, dry_run, execute_request, frontmatter, load, route_design_request, validate
+from scripts.validate_brandkit_skills import COLLISION_FIXTURES, FIXTURES, IMPECCABLE_COMMANDS, ROOT, collision_dry_run, dry_run, execute_request, frontmatter, impeccable_load_trace, impeccable_source_routes, load, route_design_request, transitive_playbook_trace, validate, validate_impeccable_load_trace, validate_progressive_disclosure, validate_public_contracts, validate_real_impeccable_context_matrix, validate_release_manifest
 
 
 class BrandKitSkillContractTests(unittest.TestCase):
+    RELEASE_MANIFEST_SHA256 = "2040dfaedd87dd7f88765f76486ca3ed38e7f1a7cfa8f46d7ab656a44b34383f"
     def test_publish_skill_pins_claude_provider_without_conflating_agent_discovery(self) -> None:
         skill = (ROOT / "skills/brandkit-publish/SKILL.md").read_text(encoding="utf-8")
         self.assertIn("Claude, Codex und Hermes rufen denselben `brandkit-publish`-Skill auf", skill)
@@ -56,6 +57,227 @@ class BrandKitSkillContractTests(unittest.TestCase):
             self.assertEqual(len(cases) * 2, len(list(result_dir.glob("*.json"))))
             for result in result_dir.glob("*.result.json"):
                 self.assertEqual("brandkit-skill-result.v1", load(result)["schema_version"])
+
+    def test_public_skill_contract_binds_cli_python_package_and_document_surfaces(self) -> None:
+        contract = load(ROOT / "brandkit-skill-contract.v1.json")
+        public = contract["public_contracts"]
+        self.assertEqual(
+            ["materialize", "migrate", "pin", "resolve", "rollback", "validate"],
+            public["cli"]["scripts/brand_package.py"]["commands"],
+        )
+        self.assertIn("validate_package", public["python"]["scripts/brand_package.py"])
+        self.assertEqual("brand-package.v1", public["brand_package"]["schema_version"])
+        self.assertEqual(
+            {"freeform", "offer", "one-pager", "report"},
+            set(public["documents"]["types"]),
+        )
+
+    def test_public_contract_drift_and_undeclared_document_type_fail_closed(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = self._copy_repo(temporary)
+            cli = root / "scripts/brand_package.py"
+            cli.write_text(cli.read_text(encoding="utf-8").replace('sub.add_parser("validate")', 'sub.add_parser("verify")'), encoding="utf-8")
+            errors = validate(root)
+            self.assertTrue(any("CLI commands drifted" in item for item in errors), errors)
+        with tempfile.TemporaryDirectory() as temporary:
+            root = self._copy_repo(temporary)
+            shutil.copy2(root / "document-types/report.v1.json", root / "document-types/brief.v1.json")
+            errors = validate(root)
+            self.assertTrue(any("document type catalog drifted" in item for item in errors), errors)
+
+    def test_progressive_disclosure_is_closed_and_design_context_is_complete(self) -> None:
+        contract = load(ROOT / "brandkit-skill-contract.v1.json")
+        disclosure = contract["progressive_disclosure"]
+        self.assertEqual(7, len(disclosure["routes"]))
+        self.assertEqual(7, len({route["skill"] for route in disclosure["routes"].values()}))
+        self.assertEqual(
+            ["Overview", "Source of Truth", "Visual Direction", "Tokens and Roles", "Typography", "Spacing", "Components", "Usage Rules", "Anti-References"],
+            disclosure["design_context"]["required_sections"],
+        )
+        with tempfile.TemporaryDirectory() as temporary:
+            root = self._copy_repo(temporary)
+            manifest = load(root / "brandkit-skill-contract.v1.json")
+            manifest["progressive_disclosure"]["routes"]["pdf"]["context"].append(
+                manifest["progressive_disclosure"]["routes"]["pdf"]["primary"]
+            )
+            self._write_json(root / "brandkit-skill-contract.v1.json", manifest)
+            errors = validate(root)
+            self.assertTrue(any("load trace is not disjoint" in item for item in errors), errors)
+
+    def test_impeccable_full_route_platform_matrix_and_negative_traces(self) -> None:
+        routes = ["routing", "new-work", *IMPECCABLE_COMMANDS]
+        for route in routes:
+            for platform in ("web", "ios", "android", "adaptive"):
+                edit = route not in {"routing", "init", "shape"}
+                if route == "live" and platform != "web":
+                    with self.assertRaisesRegex(ValueError, "web-only"):
+                        impeccable_load_trace(route, platform, edit=edit)
+                    continue
+                trace = impeccable_load_trace(route, platform, edit=edit)
+                validate_impeccable_load_trace(trace, route, platform, edit=edit)
+                self.assertEqual(1, trace.count("context:once"))
+                self.assertEqual(1, sum(item.startswith("primary:") for item in trace))
+        expected_init = {
+            "web": ["context:once", "primary:init.md", "write:PRODUCT.md"],
+            "ios": ["context:once", "primary:init.md", "write:PRODUCT.md", "native:ios.md"],
+            "android": ["context:once", "primary:init.md", "write:PRODUCT.md", "native:android.md"],
+            "adaptive": ["context:once", "primary:init.md", "write:PRODUCT.md", "native:ios.md+android.md"],
+        }
+        for platform, trace in expected_init.items():
+            self.assertEqual(trace, impeccable_load_trace("init", platform))
+        bad = (
+            (["context:once", "primary:init.md", "native:ios.md", "write:PRODUCT.md"], "init", "ios"),
+            (["context:once", "primary:audit.md", "native:ios.md"], "audit", "web"),
+            (["context:once", "primary:audit.native.md", "primary:audit.md", "native:ios.md"], "audit", "ios"),
+            (["context:once", "primary:init.md", "write:PRODUCT.md", "native:ios.md", "native:android.md"], "init", "adaptive"),
+            (["context:once", "context:once", "primary:polish.md", "cross:craft-floor.md"], "polish", "web"),
+        )
+        for trace, route, platform in bad:
+            with self.assertRaises(ValueError):
+                validate_impeccable_load_trace(trace, route, platform, edit=route == "polish")
+
+    def test_catalog_semantics_reject_self_foreign_unknown_and_content_drift(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = self._copy_repo(temporary)
+            contract_path = root / "brandkit-skill-contract.v1.json"
+            original = load(contract_path)
+            cases = []
+            self_ref = json.loads(json.dumps(original)); self_ref["progressive_disclosure"]["catalog"]["build-workflow"]["sha256"] = hashlib.sha256(b"[self](workflow.md)\n").hexdigest(); cases.append((self_ref, "[self](workflow.md)\n", "self-references"))
+            foreign = json.loads(json.dumps(original)); foreign["progressive_disclosure"]["routes"]["build"]["context"].append("foreign-license"); foreign["progressive_disclosure"]["catalog"]["foreign-license"] = {"path":"LICENSE","role":"contract","sha256":hashlib.sha256((root/"LICENSE").read_bytes()).hexdigest()}; cases.append((foreign, None, "forbidden"))
+            unknown = json.loads(json.dumps(original)); unknown["progressive_disclosure"]["routes"]["build"]["context"].append("not-catalogued"); cases.append((unknown, None, "unknown"))
+            drift = json.loads(json.dumps(original)); cases.append((drift, "# Replaced\n", "content hash drifted"))
+            playbook = root / "skills/brandkit-build/references/workflow.md"; original_bytes = playbook.read_bytes()
+            for contract, replacement, expected in cases:
+                playbook.write_bytes(original_bytes if replacement is None else replacement.encode())
+                self._write_json(contract_path, contract)
+                errors = validate_progressive_disclosure(root, contract)
+                self.assertTrue(any(expected in item for item in errors), errors)
+
+    def test_python_surface_locators_and_closed_schema_fail_on_review_attacks(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = self._copy_repo(temporary)
+            contract = load(root / "brandkit-skill-contract.v1.json")
+            brand = root / "scripts/brand_package.py"
+            brand.write_text(brand.read_text().replace("def git_root(", "def git_root_changed("), encoding="utf-8")
+            self.assertTrue(any("public Python surface drifted" in item for item in validate_public_contracts(root, contract)))
+        with tempfile.TemporaryDirectory() as temporary:
+            root = self._copy_repo(temporary); contract = load(root / "brandkit-skill-contract.v1.json")
+            contract["public_contracts"]["brand_package"]["validator"] = "scripts/brand_package.py:not_real"
+            self.assertTrue(any("unresolved Python locator" in item for item in validate_public_contracts(root, contract)))
+        schema = load(ROOT / "schemas/brandkit-skill-contract.v1.schema.json")
+        from jsonschema import Draft202012Validator
+        for mutate in (
+            lambda value: value["skills"].update({"invented-skill": value["skills"]["brandkit-setup"]}),
+            lambda value: value["todo_policy"].update({"unreviewed_extension": True}),
+            lambda value: value["routing"].update({"invented-route": "anything"}),
+        ):
+            value = load(ROOT / "brandkit-skill-contract.v1.json"); mutate(value)
+            self.assertTrue(list(Draft202012Validator(schema).iter_errors(value)))
+
+    def test_design_generator_execution_rejects_broken_return_and_pdf_escalation(self) -> None:
+        for mutation in (
+            lambda text: text.replace('return "\\n".join(front).encode()', 'return b"# Broken DESIGN\\n"'),
+            lambda text: text.replace('tokens=shared_tokens(manifest)', 'tokens={**shared_tokens(manifest), "pdf": manifest.get("pdf", {})}'),
+        ):
+            with tempfile.TemporaryDirectory() as temporary:
+                root = self._copy_repo(temporary); path = root / "scripts/impeccable_adapter.py"
+                path.write_text(mutation(path.read_text(encoding="utf-8")), encoding="utf-8")
+                errors = validate_progressive_disclosure(root, load(root / "brandkit-skill-contract.v1.json"))
+                self.assertTrue(any("DESIGN.md" in item or "frontmatter" in item for item in errors), errors)
+
+    def test_real_impeccable_loader_and_source_derived_route_matrix(self) -> None:
+        routes = impeccable_source_routes()
+        self.assertEqual("new-work.md", routes["craft"]["primary"])
+        self.assertEqual(["new-work.md"], routes["shape"]["transitive"])
+        self.assertEqual("init", routes["teach"]["alias"])
+        self.assertEqual([], validate_real_impeccable_context_matrix())
+        craft = transitive_playbook_trace("craft", Path("/Volumes/Daten/Projekte/BrandKit/external-sources/impeccable/.agents/skills/impeccable"))
+        shape = transitive_playbook_trace("shape", Path("/Volumes/Daten/Projekte/BrandKit/external-sources/impeccable/.agents/skills/impeccable"))
+        self.assertEqual(1, sum(item["role"] == "primary" for item in craft))
+        self.assertEqual(1, sum(item["role"] == "primary" for item in shape))
+        self.assertIn({"path":"new-work.md", "role":"primary"}, craft)
+        self.assertIn({"path":"new-work.md", "role":"delegated"}, shape)
+        self.assertRaisesRegex(ValueError, "web-only", impeccable_load_trace, "live", "ios")
+        for route in ("pin", "unpin"):
+            validate_impeccable_load_trace(impeccable_load_trace(route), route)
+
+    def test_generated_validator_mutations_and_exact_design_roles_fail_closed(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = self._copy_repo(temporary)
+            path = root / "scripts/brand_package.py"
+            path.write_text(path.read_text().replace(
+                "def validate_package(package: Path) -> tuple[dict[str, Any], Path, str]:\n",
+                "def validate_package(package: Path) -> tuple[dict[str, Any], Path, str]:\n    if 'neutral-fixture' not in str(package):\n        probe = package if package.is_file() else package / 'brand-package.json'\n        doc = load_json(probe); validate_schema(doc, 'brand-package.v1.schema.json', 'package schema')\n        return (doc, probe.parent, '0' * 64)\n",
+            ), encoding="utf-8")
+            errors = validate_public_contracts(root, load(root / "brandkit-skill-contract.v1.json"))
+            self.assertTrue(any("generated mutation" in item or "binding" in item for item in errors), errors)
+        with tempfile.TemporaryDirectory() as temporary:
+            root = self._copy_repo(temporary); path = root / "scripts/impeccable_adapter.py"
+            path.write_text(path.read_text().replace(
+                'front += ["---","",f"# Design System:',
+                'front += ["invented_visual_role: unsafe","---","",f"# Design System:',
+            ), encoding="utf-8")
+            errors = validate_progressive_disclosure(root, load(root / "brandkit-skill-contract.v1.json"))
+            self.assertTrue(any("invented normative roles" in item for item in errors), errors)
+
+    def test_impeccable_source_blob_pin_and_productive_init_wrapper(self) -> None:
+        source = Path("/Volumes/Daten/Projekte/BrandKit/external-sources/impeccable/.agents/skills/impeccable")
+        for relative in ("reference/polish.md", "scripts/context.mjs"):
+            with tempfile.TemporaryDirectory() as temporary:
+                copy = Path(temporary) / "impeccable"; shutil.copytree(source, copy)
+                target = copy / relative; target.write_bytes(target.read_bytes() + b"\nR4 mutation\n")
+                with patch.dict(os.environ, {"BRANDKIT_IMPECCABLE_SOURCE":str(copy)}):
+                    errors = validate_progressive_disclosure(ROOT, load(ROOT / "brandkit-skill-contract.v1.json"))
+                self.assertTrue(any("blob differs from pin" in item for item in errors), errors)
+        with tempfile.TemporaryDirectory() as temporary:
+            project = Path(temporary) / "project"; project.mkdir(); old = b"# Product\n\n## Platform\n\nios\n\nOLD-AUTHORITY\n"; (project / "PRODUCT.md").write_bytes(old)
+            product = Path(temporary) / "new-product.md"; new = b"# Product\n\n<!-- impeccable:product-schema 1 -->\n\n## Platform\n\nadaptive\n"; product.write_bytes(new)
+            command = [sys.executable, str(ROOT / "scripts/impeccable_adapter.py"), "init-defer", "--project", str(project), "--product", str(product), "--source-root", str(source)]
+            env = {**os.environ, "PYTHONPATH":f"{ROOT / 'scripts'}:/Users/joh/.local/lib/python3.13/site-packages"}
+            result = subprocess.run(command, text=True, capture_output=True, env=env)
+            self.assertEqual(0, result.returncode, result.stderr); output = json.loads(result.stdout)
+            self.assertEqual(new, (project / "PRODUCT.md").read_bytes())
+            self.assertNotIn("OLD-AUTHORITY", output["context"])
+            self.assertEqual(["reference/ios.md", "reference/android.md"], [item["path"] for item in output["native"]])
+            self.assertEqual(1, sum(item["event"] == "context" for item in output["events"]))
+            (project / "PRODUCT.md").write_bytes(old); env["BRANDKIT_IMPECCABLE_INIT_FAIL_AFTER_WRITE"] = "1"
+            failed = subprocess.run(command, text=True, capture_output=True, env=env)
+            self.assertNotEqual(0, failed.returncode); self.assertEqual(old, (project / "PRODUCT.md").read_bytes())
+
+    def test_release_manifest_rejects_coordinated_contract_and_fixture_hash_tamper(self) -> None:
+        self.assertEqual(self.RELEASE_MANIFEST_SHA256, hashlib.sha256((ROOT / "skill-contract-release.v1.json").read_bytes()).hexdigest())
+        self.assertEqual([], validate_release_manifest(ROOT))
+        with tempfile.TemporaryDirectory() as temporary:
+            root = self._copy_repo(temporary)
+            contract_path = root / "brandkit-skill-contract.v1.json"; contract = load(contract_path)
+            contract["todo_policy"]["allowed_locations"].append("invented")
+            self._write_json(contract_path, contract)
+            fixture = root / "fixtures/brandkit-skills/dry-runs.v1.json"; suite = load(fixture)
+            suite["input_artifacts"][0]["sha256"] = hashlib.sha256(contract_path.read_bytes()).hexdigest(); self._write_json(fixture, suite)
+            release_path = root / "skill-contract-release.v1.json"; release = load(release_path)
+            for member in release["members"]:
+                if member["path"] in {"brandkit-skill-contract.v1.json", "fixtures/brandkit-skills/dry-runs.v1.json"}:
+                    member["sha256"] = hashlib.sha256((root / member["path"]).read_bytes()).hexdigest()
+            self._write_json(release_path, release)
+            errors = validate_release_manifest(root)
+            self.assertTrue(any("external attestation" in item for item in errors), errors)
+
+    def test_owner_signed_but_false_part1_pass_is_reexecuted_and_rejected(self) -> None:
+        attestation = Path(os.environ["BRANDKIT_SKILL_RELEASE_ATTESTATION"]); envelope = load(attestation)
+        envelope["payload"]["part1_pass"]["entries"] += 1
+        key = Path(os.environ["BRANDKIT_OWNER_KEY"]).read_bytes()
+        signed = {name:envelope[name] for name in ("schema_version", "issuer", "payload")}
+        canonical = (json.dumps(signed, sort_keys=True, separators=(",", ":"), ensure_ascii=False) + "\n").encode()
+        import hmac
+        envelope["hmac_sha256"] = hmac.new(key, canonical, hashlib.sha256).hexdigest()
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary) / "signed-false-pass.json"; self._write_json(path, envelope)
+            expected = hashlib.sha256(path.read_bytes()).hexdigest()
+            errors = validate_release_manifest(
+                ROOT, expected_attestation_sha256=expected, attestation_path=path,
+                owner_key=Path(os.environ["BRANDKIT_OWNER_KEY"]), part1_snapshot=Path(os.environ["BRANDKIT_PART1_SNAPSHOT"]),
+            )
+        self.assertTrue(any("fresh semantic PASS differs" in item for item in errors), errors)
 
     def test_every_fails_on_and_all_eight_r1_counterexamples_are_blocked(self) -> None:
         cases = load(FIXTURES)["cases"]
@@ -140,7 +362,21 @@ class BrandKitSkillContractTests(unittest.TestCase):
 
     def _copy_repo(self, temporary: str) -> Path:
         root = Path(temporary).resolve() / "repo"
-        shutil.copytree(ROOT, root, symlinks=True, ignore=shutil.ignore_patterns(".git", "node_modules", "__pycache__"))
+        root.mkdir()
+        # This suite mutates only contract sources. Copying unrelated PDF goldens
+        # made every negative case depend on tens of thousands of I/O operations.
+        # Keep the cleanroom source set explicit and fail if a validator dependency
+        # escapes it; this is also the frozen inventory used by every mutation case.
+        source_directories = (
+            "docs", "document-types", "fixtures/brandkit-skills", "schemas",
+            "scripts", "skills", "toolchain",
+        )
+        for relative in source_directories:
+            source = ROOT / relative
+            shutil.copytree(source, root / relative, symlinks=True, ignore=shutil.ignore_patterns("node_modules", "__pycache__"))
+        for source in ROOT.iterdir():
+            if source.is_file() and source.name != ".git":
+                shutil.copy2(source, root / source.name)
         return root
 
     def _refresh_humanizer_artifact(self, root: Path, name: str) -> None:

@@ -110,6 +110,79 @@ def verify(checkout:Path)->dict[str,Any]:
  c=checkout.resolve(strict=True);a=checkout_inventory(c)
  return {"status":"verified","checkout":str(c),"commit":CONTRACT["upstream"]["commit"],"tree":CONTRACT["upstream"]["tree"],"skill_tree":CONTRACT["upstream"]["canonical_skill_tree"],"inventory":{"providers":len(a["provider_skill_outputs"]),"routes":len(a["routes"]),"references":len(a["references"]),"scripts":len(a["scripts"]),"roles":len(a["roles"]),"blobs":a["blob_count"]}}
 
+def stable_regular_bytes(path:Path)->bytes:
+ before=path.lstat()
+ if not stat.S_ISREG(before.st_mode):raise AdapterError(f"source is not a regular file: {path}")
+ fd=os.open(path,os.O_RDONLY|getattr(os,"O_NOFOLLOW",0)|getattr(os,"O_CLOEXEC",0))
+ try:
+  opened=os.fstat(fd);chunks=[]
+  while True:
+   block=os.read(fd,1024*1024)
+   if not block:break
+   chunks.append(block)
+  after=os.fstat(fd);final=path.lstat()
+  identity=lambda s:(s.st_dev,s.st_ino,s.st_mode,s.st_size,s.st_mtime_ns,s.st_ctime_ns)
+  if identity(opened)!=identity(after) or identity(after)!=identity(final):raise AdapterError(f"source changed during read: {path}")
+  return b"".join(chunks)
+ finally:os.close(fd)
+
+def verify_source_bytes(source_root:Path,checkout:Path=DEFAULT_CHECKOUT)->dict[str,bytes]:
+ """Bind an arbitrary materialized skill path to the pinned Git blob set."""
+ checkout_inventory(checkout.resolve(strict=True));u=CONTRACT["upstream"];prefix=u["canonical_skill_subtree"]+"/"
+ raw=git(checkout,"ls-tree","-r","--full-tree",u["commit"],u["canonical_skill_subtree"]);expected={}
+ for line in raw.splitlines():
+  meta,path=line.split("\t",1);mode,kind,oid=meta.split()
+  if kind!="blob":raise AdapterError(f"non-blob in canonical skill tree: {path}")
+  expected[path.removeprefix(prefix)]=(mode,oid)
+ actual={p.relative_to(source_root).as_posix() for p in source_root.rglob("*") if p.is_file() or p.is_symlink()}
+ if actual!=set(expected):raise AdapterError("materialized skill path set differs from pinned Git tree")
+ result={}
+ for relative,(mode,oid) in expected.items():
+  data=stable_regular_bytes(source_root/relative)
+  blob=hashlib.sha1(f"blob {len(data)}\0".encode()+data).hexdigest()
+  if not hmac.compare_digest(blob,oid):raise AdapterError(f"materialized skill blob differs from pin: {relative}")
+  result[relative]=data
+ return result
+
+def _atomic_product(path:Path,data:bytes|None)->None:
+ if data is None:
+  if path.exists():path.unlink()
+  return
+ fd,name=tempfile.mkstemp(prefix=".PRODUCT.md.init-",dir=path.parent)
+ try:
+  with os.fdopen(fd,"wb") as handle:handle.write(data);handle.flush();os.fsync(handle.fileno())
+  os.replace(name,path)
+ finally:
+  if os.path.exists(name):os.unlink(name)
+
+def init_defer(project:Path,product:bytes,source_root:Path,checkout:Path=DEFAULT_CHECKOUT)->dict[str,Any]:
+ """Run one PRODUCT-free context, atomically write PRODUCT, then load native guidance."""
+ root=project.resolve(strict=True);verified=verify_source_bytes(source_root,checkout)
+ text=product.decode("utf-8",errors="strict");match=re.search(r"(?m)^## Platform\s*\n+\s*(web|ios|android|adaptive)\s*$",text)
+ if not match:raise AdapterError("new PRODUCT must declare exactly one supported Platform")
+ platform=match.group(1);old=(root/"PRODUCT.md").read_bytes() if (root/"PRODUCT.md").is_file() else None;events=[]
+ with tempfile.TemporaryDirectory(prefix="impeccable-init-defer-") as temporary:
+  skill=Path(temporary)/"skill"
+  for relative,data in verified.items():
+   target=skill/relative;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(data)
+  shadow=Path(temporary)/"project";shutil.copytree(root,shadow,symlinks=True,ignore=shutil.ignore_patterns("PRODUCT.md",".git"))
+  context_path=skill/"scripts/context.mjs";events.append({"event":"read","path":"scripts/context.mjs","sha256":sha(verified["scripts/context.mjs"])})
+  run=subprocess.run(["node",str(context_path)],cwd=shadow,text=True,capture_output=True,timeout=30,env={**os.environ,"IMPECCABLE_NO_UPDATE_CHECK":"1"})
+  events.append({"event":"context","count":1,"returncode":run.returncode})
+  if run.returncode:raise AdapterError(f"context.mjs failed: {run.stderr.strip()}")
+  if "# PRODUCT.md" in run.stdout or "# NATIVE PLATFORM REFERENCE:" in run.stdout:raise AdapterError("init context leaked old PRODUCT/native authority")
+  try:
+   _atomic_product(root/"PRODUCT.md",product);events.append({"event":"write","path":"PRODUCT.md","sha256":sha(product)})
+   if os.environ.get("BRANDKIT_IMPECCABLE_INIT_FAIL_AFTER_WRITE")=="1":raise AdapterError("injected init failure after PRODUCT write")
+   names=[] if platform=="web" else [platform] if platform!="adaptive" else ["ios","android"];native=[]
+   for name in names:
+    relative=f"reference/{name}.md";data=stable_regular_bytes(skill/relative)
+    if data!=verified[relative]:raise AdapterError(f"native reference changed after verification: {relative}")
+    events.append({"event":"read","path":relative,"sha256":sha(data)});native.append({"path":relative,"content":data.decode("utf-8")})
+   return {"status":"pass","platform":platform,"context":run.stdout,"native":native,"events":events}
+  except BaseException:
+   _atomic_product(root/"PRODUCT.md",old);raise
+
 def tree_hash(root:Path,skip_marker:bool=False)->str:
  d=hashlib.sha256()
  for p in sorted(root.rglob("*"),key=lambda x:x.relative_to(root).as_posix()):
@@ -650,16 +723,25 @@ def shared_tokens(manifest:dict[str,Any])->dict[str,Any]:return manifest.get("sh
 def yaml_lines(value:Any,indent:int)->list[str]:
  lines=[]
  for key,item in sorted(value.items()):
-  if isinstance(item,dict):lines.append(" "*indent+f"{key}:");lines.extend(yaml_lines(item,indent+2))
+  if isinstance(item,dict):
+   if item:lines.append(" "*indent+f"{key}:");lines.extend(yaml_lines(item,indent+2))
+   else:lines.append(" "*indent+f"{key}: {{}}")
   else:lines.append(" "*indent+f"{key}: {json.dumps(item,ensure_ascii=False)}")
  return lines
 def design_md(manifest:dict[str,Any])->bytes:
  tokens=shared_tokens(manifest);front=["---",f"name: {json.dumps(manifest['brand_id'])}",f"description: {json.dumps('Brand package '+manifest['version'])}"]
  for key in ("colors","typography","rounded","spacing","components"):
-  if tokens.get(key):
+  if key in tokens:
    front.append(f"{key}:")
    front.extend(yaml_lines(tokens[key],2))
- front += ["---","",f"# Design System: {manifest['brand_id']}","","## Overview","",f"This portable design record is bound to Brand Package `{manifest['brand_id']}@{manifest['version']}`.","Only explicitly shared visual tokens are normative in frontmatter. PDF renderer tokens remain PDF-only.",""]
+ principles=manifest.get("voice",{}).get("principles",[]);avoid=manifest.get("voice",{}).get("avoid",[])
+ token_roles=", ".join(sorted(tokens)) or "No portable visual token roles are declared."
+ typography=", ".join(sorted(tokens.get("typography",{}))) or "No shared typography roles are declared."
+ spacing=", ".join(sorted(tokens.get("spacing",{}))) or "No shared spacing roles are declared."
+ components=", ".join(sorted(tokens.get("components",{}))) or "No shared component roles are declared."
+ direction="; ".join(principles) or "Use only the explicitly sourced package rules."
+ anti="\n".join(f"- {item}" for item in avoid) or "- Do not infer unrecorded brand values."
+ front += ["---","",f"# Design System: {manifest['brand_id']}","","## Overview","",f"This portable design record is bound to Brand Package `{manifest['brand_id']}@{manifest['version']}`.","","## Source of Truth","","brand-package.v1 shared_visual_tokens is the only normative source for portable visual values. PDF renderer tokens remain PDF-only.","","## Visual Direction","",direction,"","## Tokens and Roles","",token_roles,"","## Typography","",typography,"","## Spacing","",spacing,"","## Components","",components,"","## Usage Rules","","Use only roles present in frontmatter; preserve medium namespaces and asset-rights constraints.","","## Anti-References","",anti,""]
  return "\n".join(front).encode()
 def sidecar(manifest:dict[str,Any],content:str,product:dict[str,Any])->bytes:
  assets=[]
@@ -907,6 +989,7 @@ def main()->int:
  p=argparse.ArgumentParser();sub=p.add_subparsers(dest="command",required=True)
  for name in ("sync","check"):c=sub.add_parser(name);c.add_argument("--project",required=True,type=Path)
  c=sub.add_parser("verify");c.add_argument("--checkout",type=Path,default=DEFAULT_CHECKOUT)
+ c=sub.add_parser("init-defer");c.add_argument("--project",required=True,type=Path);c.add_argument("--product",required=True,type=Path);c.add_argument("--source-root",required=True,type=Path);c.add_argument("--checkout",type=Path,default=DEFAULT_CHECKOUT)
  c=sub.add_parser("materialize");c.add_argument("--checkout",type=Path,default=DEFAULT_CHECKOUT);c.add_argument("--home",type=Path,default=Path.home())
  for name in ("activate","status","rollback"):c=sub.add_parser(name);c.add_argument("--home",type=Path,default=Path.home())
  c=sub.add_parser("approve");c.add_argument("--project",required=True,type=Path);c.add_argument("--home",type=Path,default=Path.home());c.add_argument("--capability",action="append",required=True,choices=sorted(CAPABILITIES));c.add_argument("--evidence",required=True,help="materializes the current explicit user instruction as sealed receipt evidence");c.add_argument("--ttl",type=int,default=3600)
@@ -921,6 +1004,7 @@ def main()->int:
   elif args.command=="revoke":result=revoke(args.project,args.home)
   elif args.command=="rotate-secret":result=rotate_secret(args.home)
   elif args.command=="verify":result=verify(args.checkout)
+  elif args.command=="init-defer":result=init_defer(args.project,stable_regular_bytes(args.product),args.source_root,args.checkout)
   elif args.command=="materialize":result=materialize(args.checkout,args.home)
   elif args.command=="activate":result=activate(args.home)
   elif args.command=="status":result=status(args.home)

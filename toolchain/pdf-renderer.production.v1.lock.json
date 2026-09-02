@@ -41,7 +41,7 @@
     },
     "graphviz_bundle_verifier": {
       "path": "toolchain/graphviz-svg/verify-bundle",
-      "sha256": "61eb6d42a1435b4e9e41ad8171c0a1546e32a5ca5a1cdcaa5114dc116d948e8c"
+      "sha256": "2348fa47a5d122ec838ef6fde5ce4122f76ee7c0ce22fd28716e26bf4074e90a"
     },
     "graphviz_clean_room_verifier": {
       "path": "toolchain/graphviz-svg/verify-clean-rooms",
@@ -53,7 +53,7 @@
     },
     "graphviz_lock": {
       "path": "toolchain/graphviz-svg.v1.lock.json",
-      "sha256": "7e5fadcbb32a7038b96c1535f0c0e58ed581f08adb959d7bbb341e03191de5ef"
+      "sha256": "e3ded5ba30928720cbf4a7a5d745eaf3c026e5e9e9b8d99321b24132144dbd03"
     },
     "graphviz_lock_schema": {
       "path": "schemas/graphviz-svg-toolchain.v1.schema.json",
@@ -77,7 +77,7 @@
     },
     "installer": {
       "path": "toolchain/pdf-renderer/install-from-lock",
-      "sha256": "af1a6f1a18047761762fcfdd537c1a21e9df37dc806ae6855af80f79d2744e77"
+      "sha256": "fecd224ed59e5a320bd41a55158def437a1762f0017f98c9a99c2573121d5024"
     },
     "golden_generator": {
       "path": "scripts/generate_pdf_e2e_goldens.py",
@@ -113,7 +113,7 @@
     },
     "mermaid_bundle_verifier": {
       "path": "toolchain/mermaid-svg/verify-bundle",
-      "sha256": "fed90826344cd73f3de5e80c0d7a2303678070232976f77c329dc97d23280b42"
+      "sha256": "9e28f5b9f33d0341bde5528a11511bc211cceb19ef07ab91c272a85d795bb01f"
     },
     "mermaid_clean_room_verifier": {
       "path": "toolchain/mermaid-svg/verify-clean-rooms",
@@ -125,7 +125,7 @@
     },
     "mermaid_lock": {
       "path": "toolchain/mermaid-svg.v1.lock.json",
-      "sha256": "8f428ec9d194f26a862effb5899d9dc30a03598a49a99babdc57dcda962d1da9"
+      "sha256": "b31362934ac34a04bce7d700d85c92b6da0db6911e7a1eb719e9b9f03e7ffba7"
     },
     "mermaid_lock_schema": {
       "path": "schemas/mermaid-svg-toolchain.v1.schema.json",

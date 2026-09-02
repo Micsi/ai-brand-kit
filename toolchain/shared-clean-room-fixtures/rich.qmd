@@ -1,0 +1,21 @@
+---
+title: "Normative Toolchain Clean Room"
+format:
+  html: default
+  pdf:
+    pdf-engine: lualatex
+---
+
+# Geschlossene Ausgabe
+
+Die Ausgabe nutzt den gesperrten Stand mit Umlauten: äöü. Abbildung
+@fig-flow zeigt den Ablauf; @fig-dependencies zeigt seine Abhängigkeiten.
+
+![Ablauf der reproduzierbaren Ausgabe](mermaid.svg){#fig-flow}
+
+![Abhängigkeiten der reproduzierbaren Ausgabe](graphviz.svg){#fig-dependencies}
+
+| Gate | Zustand |
+|---|---|
+| Netzwerk | gesperrt |
+| Lock | exakt |

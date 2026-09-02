@@ -17,12 +17,11 @@ if not isinstance(pin, dict):
     raise SystemExit("Mermaid bundle pin is absent")
 locked_text = pin.get("path", "")
 requested = Path(sys.argv[1])
-if not requested.is_absolute() or str(requested) != locked_text or requested.is_symlink():
-    raise SystemExit("bundle path differs from the immutable Mermaid lock")
-locked_bundle = Path(locked_text).resolve(strict=True)
+if not requested.is_absolute() or requested.is_symlink():
+    raise SystemExit("bundle path is not an absolute unlinked content-addressed root")
 bundle = requested.resolve(strict=True)
-if bundle != locked_bundle:
-    raise SystemExit("bundle path differs from the immutable Mermaid lock")
+if bundle.name != pin.get("tree_sha256"):
+    raise SystemExit("bundle directory is not named by the locked tree hash")
 manifest_path = bundle / "files.sha256.json"
 roots = [bundle / "npm-cache", bundle / "browser", bundle / "node"]
 if not manifest_path.is_file() or any(not root.is_dir() for root in roots):

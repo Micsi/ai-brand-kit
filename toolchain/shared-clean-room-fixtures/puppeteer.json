@@ -1,0 +1,14 @@
+{
+  "executablePath": "/usr/local/bin/google-chrome-stable",
+  "headless": true,
+  "pipe": true,
+  "args": [
+    "--disable-background-networking",
+    "--disable-component-update",
+    "--disable-default-apps",
+    "--disable-extensions",
+    "--disable-sync",
+    "--host-resolver-rules=MAP * 0.0.0.0, EXCLUDE localhost",
+    "--no-first-run"
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "schema_version": "brandkit-toolchain-lock.v1",
+  "release": {"id": "brandkit-shared-toolchain-1.2.28.2", "source_revision": "d651794"},
+  "execution": {"host_platform": "darwin-arm64", "render_platform": "linux-amd64", "container_image": "brandkit/normative-render@sha256:f674fe3c98749ab1008d93777259022296886ac012db14dbb68cff9eaf786800", "container_digest": "sha256:f674fe3c98749ab1008d93777259022296886ac012db14dbb68cff9eaf786800", "base_image": "ghcr.io/quarto-dev/quarto@sha256:cdc12093a8fd224993a9e4643dd479f23727d7618031e84b3884065e0f9160f1", "base_image_digest": "sha256:cdc12093a8fd224993a9e4643dd479f23727d7618031e84b3884065e0f9160f1", "worker_container_image": "zenika/alpine-chrome@sha256:3fa41c728e866a57795cd61b2c6ec8b886684e43be9f87c6d20b5c2e39a4ed0d"},
+  "environment": {"LANG": "C", "LC_ALL": "C", "TZ": "UTC", "SOURCE_DATE_EPOCH": "0", "network": "disabled"},
+  "components": {
+    "humanizer": {"path": "toolchain/humanizer-de/toolchain.lock.json", "sha256": "ca49bd0cb8c44b7f725c024622674162125c51d2a7448bf6dc2a969d64f9456e", "schema_version": "humanizer-de-toolchain-lock.v2"},
+    "pdf_renderer": {"path": "toolchain/pdf-renderer.production.v1.lock.json", "sha256": "bb24d03c61d7432a3a86e96e2e555edf23a8f200d9a71e66feb992e08e67fab2", "schema_version": "pdf-renderer-lock.v1"},
+    "mermaid": {"path": "toolchain/mermaid-svg.v1.lock.json", "sha256": "b31362934ac34a04bce7d700d85c92b6da0db6911e7a1eb719e9b9f03e7ffba7", "schema_version": "mermaid-svg-toolchain.v1"},
+    "mermaid_linux_worker": {"path": "toolchain/mermaid-linux-worker.v2.lock.json", "sha256": "3c300abdfc7f5d1287cedb2059f815c63501ad7c0929b8116821d4d9528bca7a", "schema_version": "mermaid-linux-worker.v2"},
+    "graphviz": {"path": "toolchain/graphviz-svg.v1.lock.json", "sha256": "e3ded5ba30928720cbf4a7a5d745eaf3c026e5e9e9b8d99321b24132144dbd03", "schema_version": "graphviz-svg-toolchain.v1"}
+  },
+  "artifacts": {
+    "humanizer_source": {"kind": "git-archive-tar", "path": "/Volumes/Daten/Projekte/BrandKit/external-artifacts/humanizer-de-source/722b2bbe98cd20a8d11bbd65403a470f0ec71671c8c6ad69aa0e5b65cb7149eb/source.tar", "sha256": "722b2bbe98cd20a8d11bbd65403a470f0ec71671c8c6ad69aa0e5b65cb7149eb"},
+    "humanizer_wheelhouse": {"kind": "content-addressed-directory", "path": "/Volumes/Daten/Projekte/BrandKit/external-artifacts/humanizer-wheelhouse/2ba0d40e8d30e081b25b5322d684c1757eb91ac05a6d6d504d1d79777594ae3c", "sha256": "2ba0d40e8d30e081b25b5322d684c1757eb91ac05a6d6d504d1d79777594ae3c", "manifest": "/Volumes/Daten/Projekte/BrandKit/external-artifacts/humanizer-wheelhouse/2ba0d40e8d30e081b25b5322d684c1757eb91ac05a6d6d504d1d79777594ae3c/files.sha256.json", "manifest_sha256": "8c709c29b4254d7f187cabe134b0ec657292edeff815511a26fb33580b32b134"},
+    "pdf_wheelhouse": {"kind": "content-addressed-directory", "path": "/Volumes/Daten/Projekte/BrandKit/external-artifacts/pdf-wheelhouse/d4e592fb198f21235ba2981cacaee1133a679481fc2623806bf03c63b3bb87f7", "sha256": "d4e592fb198f21235ba2981cacaee1133a679481fc2623806bf03c63b3bb87f7", "manifest": "/Volumes/Daten/Projekte/BrandKit/external-artifacts/pdf-wheelhouse/d4e592fb198f21235ba2981cacaee1133a679481fc2623806bf03c63b3bb87f7/files.sha256.json", "manifest_sha256": "bddae8db67a0f82d382187ee255b04b78bdeda49dd467f17e7157795b8770e13"},
+    "pdf_issuer_key": {"kind": "sha256-bound-secret-file", "path": "/Users/joh/.agents/keys/brand-voice-pdf.key", "sha256": "55547dbdba3ec03f26c5c2100f511698b7f85a4baf24ea3306563d738d1a1de3"},
+    "mermaid_bundle": {"kind": "content-addressed-directory", "path": "/Volumes/Daten/Projekte/BrandKit/external-artifacts/mermaid-svg/3dcbf4ebfcbe0fb08e5b7261dbabf72b56c62517c875bbacd7b9dc75c2971120", "sha256": "3dcbf4ebfcbe0fb08e5b7261dbabf72b56c62517c875bbacd7b9dc75c2971120", "manifest": "/Volumes/Daten/Projekte/BrandKit/external-artifacts/mermaid-svg/3dcbf4ebfcbe0fb08e5b7261dbabf72b56c62517c875bbacd7b9dc75c2971120/files.sha256.json", "manifest_sha256": "00c687014b79d617b5d126e3397daebb2dd14a3703034ae8085659ab478f23bb"},
+    "graphviz_bundle": {"kind": "content-addressed-directory", "path": "/Volumes/Daten/Projekte/BrandKit/external-artifacts/graphviz-svg/038b5c91af2d12655377c29cca73bb653979c0a62a2a8b0efccb87cb50c464bf", "sha256": "038b5c91af2d12655377c29cca73bb653979c0a62a2a8b0efccb87cb50c464bf", "manifest": "/Volumes/Daten/Projekte/BrandKit/external-artifacts/graphviz-svg/038b5c91af2d12655377c29cca73bb653979c0a62a2a8b0efccb87cb50c464bf/files.sha256.json", "manifest_sha256": "3d2cb8d87581bbf3f80aaf830e62c91bb1303d0066dfbd659f37d08d64eaa59a"},
+    "normative_render_oci": {"kind": "docker-save-archive", "path": "/Volumes/Daten/Projekte/BrandKit/external-artifacts/normative-render-oci/0d5464bb076c7b5d6e7ebd17ae68e1eceea45f96cbcffcce0e3f9fbfcf9cf563/image.tar", "sha256": "0d5464bb076c7b5d6e7ebd17ae68e1eceea45f96cbcffcce0e3f9fbfcf9cf563"},
+    "node_linux": {"kind": "official-archive", "path": "/Volumes/Daten/Projekte/BrandKit/external-artifacts/nodejs/c1bfeecf1d7404fa74728f9db72e697decbd8119ccc6f5a294d795756dfcfca7/node.tar.xz", "sha256": "c1bfeecf1d7404fa74728f9db72e697decbd8119ccc6f5a294d795756dfcfca7"},
+    "chrome_linux": {"kind": "official-archive", "path": "/Volumes/Daten/Projekte/BrandKit/external-artifacts/chrome-for-testing/fba7d5e87cdcf0dc974c9ac8a0a9dbcf5686c935455d5e6beed337c6ada88bc2/chrome-linux64.zip", "sha256": "fba7d5e87cdcf0dc974c9ac8a0a9dbcf5686c935455d5e6beed337c6ada88bc2"},
+    "qemu_runtime": {"kind": "content-addressed-directory", "path": "/Volumes/Daten/Projekte/BrandKit/external-artifacts/qemu-homebrew-runtime/5b1fa2c88be902c16961b78516373fcd890c95e37cb0cd7ea3e631ff826c52b9", "sha256": "5b1fa2c88be902c16961b78516373fcd890c95e37cb0cd7ea3e631ff826c52b9", "manifest": "/Volumes/Daten/Projekte/BrandKit/external-artifacts/qemu-homebrew-runtime/5b1fa2c88be902c16961b78516373fcd890c95e37cb0cd7ea3e631ff826c52b9/files.sha256.json", "manifest_sha256": "5b1fa2c88be902c16961b78516373fcd890c95e37cb0cd7ea3e631ff826c52b9"}
+  },
+  "bindings": {"python_version": "3.12.12", "python_executable": "/opt/homebrew/opt/python@3.12/bin/python3.12", "python_sha256": "51041dcef59a872d4e411dfd26f6264f70bd67294bebbe52a707490726f0d1a6", "node_version": "22.18.0", "chrome_version": "131.0.6778.204", "chrome_sha256": "e425eea96e2737645086ff0e89008286fed8b3e08d29d3258a875801a53adfc3", "font_path": "toolchain/pdf-renderer/fonts/abel-8809dcad25318225052f88333e208c5aad4adcb7b2c934c135735ec19aa410b4.ttf", "font_postscript_name": "Abel-Regular", "font_sha256": "8809dcad25318225052f88333e208c5aad4adcb7b2c934c135735ec19aa410b4"},
+  "transforms": {"humanizer_doctor_runtime_adapter": {"path": "toolchain/humanizer-doctor-runtime-adapter.py", "sha256": "bccfec344168c3fd94d22f2dec5a77b3792b523e0fba94652a762fad7c190737", "child_timeout_seconds": 600, "doctor_argument": "--require-full"}, "network_deny_policy": {"path": "toolchain/shared-network-deny.sb", "sha256": "900be42f4cde2183e2877b068597906b289663b6facc5a583b8d8869bb59a374", "loopback": "allowed"}},
+  "normative": {
+    "versions": {"quarto": "1.9.38", "node": "22.18.0", "chrome": "Google Chrome for Testing 131.0.6778.204", "mermaid": "11.9.0", "graphviz": "dot - graphviz version 2.43.0 (0)", "lualatex": "This is LuaHBTeX, Version 1.14.0 (TeX Live 2022/dev/Debian)", "poppler": "pdfinfo version 22.02.0", "qpdf": "qpdf version 10.6.3", "tesseract": "tesseract 4.1.1", "tesseract_languages": ["deu"], "tessdata_deu_sha256": "19d219bbb6672c869d20a9636c6816a81eb9a71796cb93ebe0cb1530e2cdb22d"},
+    "package_inventory": {"path": "toolchain/normative-render-oci.dpkg.lock.txt", "sha256": "d905ef96f2e4b6fcee192300a26cfa552fd062482c1faf7e135ede8587d3d3ac", "line_count": 293},
+    "version_inventory": {"path": "toolchain/normative-render-oci.versions.lock.txt", "sha256": "0063503b6948086ab8e3928c8744e443467e074ffd52f6f62e15f8417eabc49d", "line_count": 58},
+    "build": {"dockerfile": "toolchain/normative-render-oci.Dockerfile", "dockerfile_sha256": "5a53c3463a7b3fc87dc30ca94e26f65a27ed8068771b30d342efc1056603b189"},
+    "installed_inventory": {"humanizer": "a9fb0a560c8ffc317abdeae94631584e72f707fbc4aab392cd4b1ff239807ca8", "mermaid": "09f46bd69d84789669ef5339b7877fdd7d3b8e16e5c85b8d7ecf33d96268fabf", "graphviz": "b1289da7fbb1510e4ea02aee3511c27ff1662c7fd291de1faaa4a6db6c4be0a1", "pdf-home": "daa7966d242e1167762001eaed341beaed17a5ae6c89bce77f00b459905da74f"},
+    "fixtures": [
+      {"path": "toolchain/shared-clean-room-fixtures/diagram.dot", "sha256": "3860109827dd7133b8de4453141006809d53d0a18b7ae621961ae12278f03b97"},
+      {"path": "toolchain/shared-clean-room-fixtures/diagram.mmd", "sha256": "ec98f2f0dbd436dc23bd3c3348426b602f5864bd148f80ccab8bcf75b99533b8"},
+      {"path": "toolchain/shared-clean-room-fixtures/puppeteer.json", "sha256": "3ae2a615aeb23d6775787ff81dae46fce14f3626b64784cc23cd8889308a83cb"},
+      {"path": "toolchain/shared-clean-room-fixtures/rich.qmd", "sha256": "0deed8052f53850f435e9fc983b436a4d6ce586e68a99a205a15735503a8c964"},
+      {"path": "toolchain/shared-clean-room-fixtures/run-render-smoke", "sha256": "a22c467980df36d4e2e9384cfac944d8babc30a6d00ba0d99ec7c631c749aea5"},
+      {"path": "toolchain/mermaid-svg/MERMAID_CONFIG.json", "sha256": "57e6321b7a3a7168b3c07f5a2e26e4be1bd4b3c29f3126dcbd742ee93b18b6f7"}
+    ],
+    "gates": {"M4": true, "M6": true, "M9": true, "U4": true}
+  },
+  "commands": {
+    "implementation": {"path": "scripts/shared_toolchain.py", "sha256": "2caf5a5601ad75a48c4931279c508c040908cf5b48ad0c6af32bc2d1e48972ec"},
+    "install": {"path": "toolchain/install-from-lock", "sha256": "c3e1552e1b5383ea3aa8fb16cd49dfebd3ec74f1dd4e0a7840e6101660e77ac4"},
+    "verify": {"path": "toolchain/verify-installation", "sha256": "4ff849f063590dbae7c7ed293f4571ad7e5b23a4b4d801b55ca1c36622c82bf7"},
+    "version_log": {"path": "toolchain/version-log", "sha256": "be69443befa408b757b0d3aee487e1c856a9fc1415504f37ecdfb98831fee783"},
+    "rollback": {"path": "toolchain/rollback", "sha256": "609d79ed881be1ae1377813879154e221fc7b5ea13052b4b0da5a20b7cc45175"},
+    "restore": {"path": "toolchain/restore", "sha256": "873820831f80399d2b4663b768fed2036a7d61db9d59d19042679a8dd160f40a"},
+    "clean_rooms": {"path": "toolchain/verify-shared-clean-rooms", "sha256": "de57e85c5ced3b27eb72e6c2fc2106d6200ee56d8d116bbe55923b5ca4512815"}
+  }
+}

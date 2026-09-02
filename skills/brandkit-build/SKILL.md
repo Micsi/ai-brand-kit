@@ -6,6 +6,12 @@ license: MIT
 
 # BrandKit bauen
 
+## Routing
+
+| Route | Primäres Playbook |
+|---|---|
+| Brand-Paket bauen | [`references/workflow.md`](references/workflow.md) |
+
 Owner: normatives Brand-Paket. Produkttexte und Veröffentlichungen gehören `brandkit-publish`; UI-Entscheidungen gehören nach Übergabe `brandkit-impeccable`.
 
 ## Eingabe und Ausgabe

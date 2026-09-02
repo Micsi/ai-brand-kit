@@ -5,8 +5,7 @@ python3 - "$script_dir/../graphviz-svg.v1.lock.json" "${1:-}" "$script_dir" <<'P
 import hashlib,json,pathlib,sys
 lock=json.loads(pathlib.Path(sys.argv[1]).read_text()); root=pathlib.Path(sys.argv[2])
 if lock.get("schema_version")!="graphviz-svg-toolchain.v1":raise SystemExit("Graphviz lock schema mismatch")
-expected=pathlib.Path(lock["artifact_bundle"]["path"])
-if not sys.argv[2] or root.is_symlink() or root.resolve()!=expected.resolve() or not root.is_dir():raise SystemExit("Graphviz CAS path mismatch")
+if not sys.argv[2] or not root.is_absolute() or root.is_symlink() or not root.is_dir() or root.name!=lock["artifact_bundle"]["tree_sha256"]:raise SystemExit("Graphviz content-addressed root mismatch")
 manifest=root/"files.sha256.json"
 if manifest.is_symlink() or hashlib.sha256(manifest.read_bytes()).hexdigest()!=lock["artifact_bundle"]["manifest_sha256"]:raise SystemExit("Graphviz manifest hash mismatch")
 payload=json.loads(manifest.read_text()); records=payload.get("files") if payload.get("schema_version")=="graphviz-artifact-bundle.v1" else None

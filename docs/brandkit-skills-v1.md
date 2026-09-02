@@ -4,6 +4,38 @@ Normativ sind `brandkit-skill-contract.v1.json`, die vier Kern-Skills, der
 optionale Adapter `skills/brandkit-spacing/SKILL.md` und
 `scripts/validate_brandkit_skills.py`.
 
+Der Skillvertrag wird geschlossen gegen
+`schemas/brandkit-skill-contract.v1.schema.json` validiert. Sein Abschnitt
+`public_contracts` bindet die von Skills genannten CLI-Subcommands und
+Python-Einstiegspunkte an den aktuellen Python-AST, das Brand-Paket an
+`brand-package.v1` sowie den vollständigen Dokumenttyp-Katalog an die vier
+versionierten Verträge. Fehlende, umbenannte oder zusätzlich eingecheckte
+Oberflächen sind Vertragsdrift und schlagen fehl.
+
+`progressive_disclosure.routes` ist die kanonische Ladematrix: Eine Route hat
+genau ein primäres Playbook und eine geschlossene, disjunkte Liste erlaubter
+Kontextdateien. Sie deckt alle sieben Repo-Skills genau einmal ab. Der
+projektlokal erzeugte `DESIGN.md`-Vertrag nennt Brand Package
+`shared_visual_tokens` ausdrücklich als einzige normative Quelle portabler
+visueller Werte und materialisiert Leitidee, Rollen/Tokens, Typografie,
+Spacing, Komponenten, Einsatzregeln und Anti-Referenzen, ohne PDF-Tokens in
+den portablen Namespace zu heben.
+
+Der zugehörige Katalog bindet jede Primär- und Querschnittsreferenz mit ID,
+Rolle und SHA-256. Rollen-/Pfadkombinationen sind geschlossen; Selbstreferenz,
+fremde Repo-Dateien, unbekannte oder unbenutzte Katalogeinträge blockieren.
+Für den gepinnten Impeccable-Release wird außerdem jede Command-Route auf allen
+vier Plattformwerten als ausführbarer Load-Trace geprüft. Ein Trace enthält
+genau einen Context-Lauf und ein Primärplaybook. `init` lädt Native-Guidance
+erst nach `PRODUCT.md`; `adaptive` fasst iOS und Android in genau einem späten
+Native-Load-Ereignis zusammen.
+
+`skill-contract-release.v1.json` attestiert Vertrag, Schema, Skills,
+Playbooks, Produktionsskripte, Dokumenttypen und Testfixtures gemeinsam. Der
+Manifesthash ist unabhängig in der Contract-Test-Suite verankert. Damit reicht
+es nicht, nach einer Vertragsmanipulation nur den Dry-Run-Inputhash
+nachzuziehen.
+
 ## Sequenz und Grenzen
 
 `setup -> interview -> build -> publish` ist eine Gate-Sequenz, kein Router
@@ -93,6 +125,41 @@ umbenannten Impeccable-Ausgaben.
 
 ## Prüfung
 
+Die Impeccable-Matrix wird aus der gepinnten materialisierten `SKILL.md`
+einschließlich Command-Tabelle, Aliassen, Sonderrouten und transitiven
+Playbook-Links abgeleitet. Der Validator führt den echten `context.mjs` in
+isolierten Web-, iOS-, Android- und Adaptive-Projekten aus. Für `init` blendet
+der kanonische Defer-Wrapper ein vorhandenes PRODUCT während dieses einen
+Context-Laufs aus; erst das neu geschriebene PRODUCT autorisiert genau einen
+späten Native-Load. Alle anderen Native-Routen behalten den beobachteten
+frühen Context-Load. `live` ist Web-only; Pin/Unpin sind administrative
+`pin.mjs`-Routen ohne Design-Context.
+
+Vor jeder Nutzung wird eine materialisierte Impeccable-Quelle descriptor-sicher
+gegen Commit `fcd7622...`, Upstream-Tree, Skill-Tree und die geschlossene
+Git-Pfad-/Blobmenge geprüft. Ein per Environment gewählter Pfad ist nur bei
+bytegleicher Materialisierung zulässig. Der produktive Befehl
+`impeccable_adapter.py init-defer` führt den PRODUCT-freien Context genau
+einmal aus, schreibt das neue PRODUCT atomar und liest erst danach die realen
+gepinnten Native-Referenzen; Fehler stellen das alte PRODUCT wieder her.
+
+Die Release-Prüfung ist ohne externe Inputs fail-closed. Der Aufrufer liefert
+Pfad und SHA-256 des Owner-HMAC-signierten Release-Statements sowie den
+read-only Owner-Key und das immutable historische Part-1-Snapshot-Archiv. Das
+Statement bindet den Release-Manifest-Hash an Snapshot, Root, Signatur,
+geschlossene Membermenge und Bootstrap-Pin. Der produktive Validator extrahiert
+das Snapshot geschlossen und führt den extern gepinnten Bootstrap erneut aus;
+erst dessen semantisch identisches `status: pass` autorisiert den Release. Ein Pin im
+Repository oder in dessen Tests wird nicht als Trust-Root akzeptiert.
+
+```sh
+python scripts/validate_brandkit_skills.py \
+  --release-attestation /operator/path/skill-contract-release-attestation.json \
+  --expected-release-attestation-sha256 <extern-gelieferter-sha256> \
+  --owner-key /operator/read-only/brand-voice-pdf-owner.key \
+  --part1-snapshot /operator/immutable/part1-f5-snapshot.tar.gz
+```
+
 `fixtures/brandkit-skills/dry-runs.v1.json` deckt alle vier Kern-Skills und den
 Spacing-Adapter ab. `fixtures/brandkit-skills/collision-dry-runs.v1.json`
 leitet die eindeutigen Routen aus dem Requesttext fuer Spacing-Audit,
@@ -103,7 +170,7 @@ Fehlerfälle fehlende Fakten, Brand-Konflikt, Legal-TODO, geschützte
 Faktenmutation und unzulässige Impeccable-Parallelübergabe ab.
 
 ```sh
-python scripts/validate_brandkit_skills.py
+# Vollvalidator mit den oben gezeigten externen Trust-Argumenten
 python -m unittest tests/test_brandkit_skills.py
 scripts/check_brandkit_skills.sh
 ```

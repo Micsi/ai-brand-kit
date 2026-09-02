@@ -6,6 +6,12 @@ license: MIT
 
 # BrandKit-Impeccable-Adapter
 
+## Routing
+
+| Route | Primäres Playbook |
+|---|---|
+| Designkontext synchronisieren | [`references/workflow.md`](references/workflow.md) |
+
 Dieser Skill orchestriert zwei getrennte Quellen. Er enthaelt keinen
 Impeccable-Quelltext und keine Marke. Impeccable wird separat aus dem in
 `impeccable-adapter.v1.json` gepinnten Release installiert und nur nach

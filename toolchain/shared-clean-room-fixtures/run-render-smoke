@@ -1,0 +1,79 @@
+#!/bin/sh
+set -eu
+export LANG=C LC_ALL=C TZ=UTC SOURCE_DATE_EPOCH=0 HOME=/work/home
+mkdir -p "$HOME" /work/out/gallery
+
+node - <<'JS'
+const net=require("net"),dns=require("dns");
+let local=false,dnsDenied=false,tcpDenied=false;
+const done=()=>{if(local&&dnsDenied&&tcpDenied){console.log("network-deny: pass");process.exit(0)}};
+const server=net.createServer(c=>c.end("ok"));
+server.listen(0,"127.0.0.1",()=>{const c=net.connect(server.address().port,"127.0.0.1",()=>{});c.on("data",()=>{local=true;c.destroy();server.close();done()});c.on("error",()=>process.exit(31))});
+dns.lookup("example.com",error=>{if(!error)process.exit(32);dnsDenied=true;done()});
+const external=net.connect(443,"1.1.1.1");external.setTimeout(5000);external.on("connect",()=>process.exit(33));external.on("error",()=>{tcpDenied=true;done()});external.on("timeout",()=>{tcpDenied=true;external.destroy();done()});
+setTimeout(()=>process.exit(34),15000);
+JS
+
+/opt/brandkit-mermaid/node_modules/.bin/mmdc -p puppeteer.json -c mermaid-config.json -i diagram.mmd -o mermaid.svg
+/opt/brandkit-mermaid/node_modules/.bin/mmdc -p puppeteer.json -c mermaid-config.json -i diagram.mmd -o out/mermaid-second.svg
+cmp mermaid.svg out/mermaid-second.svg
+dot -Tsvg diagram.dot -o graphviz.svg
+
+render_rich() {
+  for asset in mermaid.svg graphviz.svg; do
+    test -f "$asset" && test ! -L "$asset" || { echo "required rich-render asset differs: $asset" >&2; return 42; }
+  done
+  quarto render rich.qmd "$@"
+}
+
+render_rich --to html --embed-resources --output-dir .quarto-html --output rich.html
+mv .quarto-html/rich.html out/rich.html
+render_rich --to pdf --output-dir .quarto-pdf-a --output rich-a.pdf
+mv .quarto-pdf-a/rich-a.pdf out/rich-a.pdf
+render_rich --to pdf --output-dir .quarto-pdf-b --output rich-b.pdf
+mv .quarto-pdf-b/rich-b.pdf out/rich-b.pdf
+cmp out/rich-a.pdf out/rich-b.pdf
+qpdf --check out/rich-a.pdf
+pdfinfo out/rich-a.pdf > out/pdfinfo.txt
+pdftotext out/rich-a.pdf out/rich.txt
+grep -F "Geschlossene Ausgabe" out/rich.txt
+grep -F "Ablauf der reproduzierbaren Ausgabe" out/rich.txt
+grep -F "Abhängigkeiten der reproduzierbaren Ausgabe" out/rich.txt
+pdftoppm -png -r 96 out/rich-a.pdf out/gallery/page
+test "$(find out/gallery -type f -name 'page-*.png' | wc -l | tr -d ' ')" = "$(pdfinfo out/rich-a.pdf | awk '/^Pages:/ {print $2}')"
+test "$(tesseract --list-langs 2>/dev/null | tail -n +2)" = deu
+tesseract out/gallery/page-1.png out/ocr -l deu 2>out/ocr.stderr
+grep -F "Geschlossene Ausgabe" out/ocr.txt
+
+mv mermaid.svg mermaid.svg.missing
+if render_rich --to html --embed-resources --output-dir .quarto-degraded --output degraded.html >out/degraded.stdout 2>out/degraded.stderr; then
+  test ! -s .quarto-degraded/degraded.html || { echo "degraded HTML unexpectedly rendered" >&2; exit 41; }
+fi
+mv mermaid.svg.missing mermaid.svg
+
+python3 - <<'PY'
+import hashlib,json,os,pathlib,platform,subprocess
+def output(*command):
+    return subprocess.check_output(command,text=True,stderr=subprocess.STDOUT).strip().splitlines()[0]
+payload={
+ "schema_version":"brandkit-normative-container-version-log.v1",
+ "environment":{key:os.environ.get(key) for key in ("LANG","LC_ALL","TZ","SOURCE_DATE_EPOCH")},
+ "platform":{"system":platform.system(),"machine":platform.machine()},
+ "quarto":output("quarto","--version"),
+ "node":output("node","--version").removeprefix("v"),
+ "chrome":output("google-chrome-stable","--version"),
+ "mermaid":output("/opt/brandkit-mermaid/node_modules/.bin/mmdc","--version"),
+ "graphviz":output("dot","-V"),
+ "lualatex":output("lualatex","--version"),
+ "poppler":output("pdfinfo","-v"),
+ "qpdf":output("qpdf","--version"),
+ "tesseract":output("tesseract","--version"),
+ "tessdata_deu_sha256":hashlib.sha256(pathlib.Path("/opt/brandkit-tessdata/deu.traineddata").read_bytes()).hexdigest(),
+ "font_sha256":hashlib.sha256(pathlib.Path("/usr/local/share/fonts/brandkit/Abel-Regular.ttf").read_bytes()).hexdigest(),
+ "tesseract_languages":subprocess.check_output(["tesseract","--list-langs"],text=True,stderr=subprocess.DEVNULL).splitlines()[1:],
+}
+pathlib.Path("out/container-version-log.json").write_text(json.dumps(payload,sort_keys=True,separators=(",",":"))+"\n")
+PY
+
+cp mermaid.svg graphviz.svg out/
+sha256sum out/mermaid.svg out/graphviz.svg out/rich.html out/rich-a.pdf out/gallery/page-1.png out/ocr.txt > out/hashes.sha256

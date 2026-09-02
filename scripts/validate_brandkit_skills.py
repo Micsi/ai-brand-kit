@@ -4,16 +4,22 @@
 from __future__ import annotations
 
 import argparse
+import ast
 import hashlib
+import hmac
 import importlib.util
 import json
 import math
 import os
 import re
+import secrets
+import shutil
 import stat
 import subprocess
 import sys
+import tarfile
 import tempfile
+from contextlib import contextmanager
 from pathlib import Path
 from typing import Any
 
@@ -27,6 +33,13 @@ FIXTURES = ROOT / "fixtures/brandkit-skills/dry-runs.v1.json"
 COLLISION_FIXTURES = ROOT / "fixtures/brandkit-skills/collision-dry-runs.v1.json"
 CORE_SEQUENCE = ["brandkit-setup", "brandkit-interview", "brandkit-build", "brandkit-publish"]
 CONTRACT_SKILLS = [*CORE_SEQUENCE, "brandkit-spacing"]
+CANONICAL_SKILLS = [*CONTRACT_SKILLS, "brandkit-impeccable", "brand-voice-pdf"]
+IMPECCABLE_COMMANDS = ["craft", "shape", "init", "document", "extract", "critique", "audit", "polish", "bolder", "quieter", "distill", "harden", "onboard", "animate", "colorize", "typeset", "layout", "delight", "overdrive", "clarify", "adapt", "optimize", "live"]
+IMPECCABLE_SOURCE = Path(os.environ.get(
+    "BRANDKIT_IMPECCABLE_SOURCE",
+    "/Volumes/Daten/Projekte/BrandKit/external-sources/impeccable/.agents/skills/impeccable",
+))
+RELEASE_MANIFEST = "skill-contract-release.v1.json"
 DESIGN_ROUTES = {
     "spacing-audit-or-token-role": "brandkit-spacing",
     "general-ui-redesign": "brandkit-impeccable -> impeccable",
@@ -121,6 +134,653 @@ def frontmatter(text: str) -> tuple[dict[str, Any], str]:
     if not body.strip():
         raise ValueError("SKILL.md body is empty")
     return meta, body
+
+
+def _python_surface(path: Path) -> tuple[set[str], set[str], set[str]]:
+    """Return public function names and literal argparse commands from source."""
+    tree = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
+    functions = {
+        node.name for node in tree.body
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef))
+        and not node.name.startswith("_") and node.name != "main"
+    }
+    commands: set[str] = set()
+    options: set[str] = set()
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.Call) or not isinstance(node.func, ast.Attribute):
+            continue
+        if node.func.attr == "add_parser" and node.args and isinstance(node.args[0], ast.Constant) and isinstance(node.args[0].value, str):
+            commands.add(node.args[0].value)
+        if node.func.attr == "add_argument" and node.args and isinstance(node.args[0], ast.Constant) and node.args[0].value == "command":
+            for keyword in node.keywords:
+                if keyword.arg == "choices" and isinstance(keyword.value, (ast.Tuple, ast.List)):
+                    commands.update(
+                        item.value for item in keyword.value.elts
+                        if isinstance(item, ast.Constant) and isinstance(item.value, str)
+                    )
+        if node.func.attr == "add_argument":
+            options.update(
+                item.value for item in node.args
+                if isinstance(item, ast.Constant) and isinstance(item.value, str)
+            )
+    return functions, commands, options
+
+
+def _locator(root: Path, value: str) -> tuple[Path, str]:
+    relative, symbol = value.split(":", 1)
+    path = root / relative
+    functions, _, _ = _python_surface(path)
+    if symbol not in functions:
+        raise ValueError(f"unresolved Python locator: {value}")
+    return path, symbol
+
+
+def _import_locator(root: Path, value: str) -> Any:
+    path, symbol = _locator(root, value)
+    scripts = str(root / "scripts")
+    old_path = list(sys.path)
+    displaced = {name: sys.modules.pop(name) for name in ("brand_package", "markdown_contract") if name in sys.modules}
+    try:
+        sys.path.insert(0, scripts)
+        spec = importlib.util.spec_from_file_location(f"brandkit_contract_{path.stem}_{id(root)}", path)
+        if spec is None or spec.loader is None:
+            raise ValueError(f"cannot import Python locator: {value}")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        target = getattr(module, symbol, None)
+        if not callable(target):
+            raise ValueError(f"Python locator is not callable: {value}")
+        return target
+    finally:
+        sys.path[:] = old_path
+        for name in ("brand_package", "markdown_contract"):
+            sys.modules.pop(name, None)
+        sys.modules.update(displaced)
+
+
+@contextmanager
+def verified_impeccable_snapshot(root: Path, source_root: Path | None = None):
+    """Copy descriptor-verified bytes from a materialization of the pinned Git tree."""
+    source = source_root or Path(os.environ.get("BRANDKIT_IMPECCABLE_SOURCE", str(IMPECCABLE_SOURCE)))
+    checkout = Path("/Volumes/Daten/Projekte/BrandKit/external-sources/impeccable")
+    verifier = _import_locator(root, "scripts/impeccable_adapter.py:verify_source_bytes")
+    blobs = verifier(source, checkout)
+    with tempfile.TemporaryDirectory(prefix="impeccable-verified-source-") as temporary:
+        snapshot = Path(temporary) / "impeccable"
+        for relative, data in blobs.items():
+            target = snapshot / relative; target.parent.mkdir(parents=True, exist_ok=True); target.write_bytes(data)
+            if relative.startswith("scripts/"): target.chmod(0o755)
+        yield snapshot
+
+
+def _schema_mutations(value: Any, schema: dict[str, Any], root_schema: dict[str, Any], path: tuple[Any, ...] = (), whole: Any = None) -> list[tuple[str, Any]]:
+    """Generate independent required/closed-object mutations from a schema tree."""
+    if "$ref" in schema:
+        target: Any = root_schema
+        for part in schema["$ref"].removeprefix("#/").split("/"):
+            target = target[part]
+        schema = target
+    if whole is None: whole = value
+    mutations: list[tuple[str, Any]] = []
+    if isinstance(value, dict) and schema.get("type") == "object":
+        if schema.get("additionalProperties") is False:
+            changed = json.loads(json.dumps(whole)); cursor = changed
+            for part in path: cursor = cursor[part]
+            cursor["generated_unknown_contract_role"] = True
+            mutations.append(("unknown:" + ".".join(map(str, path or ("root",))), changed))
+        for key in schema.get("required", []):
+            if key in value:
+                changed = json.loads(json.dumps(whole)); cursor = changed
+                for part in path: cursor = cursor[part]
+                del cursor[key]
+                mutations.append(("missing:" + ".".join(map(str, (*path, key))), changed))
+        for key, child in value.items():
+            child_schema = schema.get("properties", {}).get(key)
+            if isinstance(child_schema, dict):
+                changed = json.loads(json.dumps(whole)); cursor = changed
+                for part in path: cursor = cursor[part]
+                resolved = child_schema
+                if "$ref" in resolved:
+                    resolved = root_schema
+                    for part in child_schema["$ref"].removeprefix("#/").split("/"): resolved = resolved[part]
+                cursor[key] = "__invalid__" if resolved.get("const") is None and "const" in resolved else {} if isinstance(resolved.get("type"), list) and "null" in resolved.get("type", []) else None
+                mutations.append(("invalid:" + ".".join(map(str, (*path, key))), changed))
+                mutations.extend(_schema_mutations(child, child_schema, root_schema, (*path, key), whole))
+    elif isinstance(value, list) and value and isinstance(schema.get("items"), dict):
+        mutations.extend(_schema_mutations(value[0], schema["items"], root_schema, (*path, 0), whole))
+    return mutations
+
+
+def impeccable_load_trace(route: str, platform: str = "web", *, edit: bool = False) -> list[str]:
+    """Normative adapter trace derived from the pinned skill's route catalog.
+
+    Init deliberately runs context without PRODUCT even when an old PRODUCT exists;
+    the adapter loads the newly written platform reference afterwards.  Other native
+    routes retain the real loader's early native load.  Deprecated aliases normalize
+    before loading, so there is exactly one primary contract.
+    """
+    if platform not in {"web", "ios", "android", "adaptive"}:
+        raise ValueError("unknown Impeccable platform")
+    if route == "live" and platform != "web":
+        raise ValueError("live is web-only")
+    route = "init" if route == "teach" else "new-work" if route == "craft" else route
+    if route in {"pin", "unpin"}:
+        return [f"admin:pin.mjs:{route}"]
+    primary = route
+    if route in {"audit", "adapt"} and platform != "web":
+        primary += ".native"
+    trace = ["context:once"]
+    if route != "init" and platform != "web":
+        trace.append(f"native:{'ios.md+android.md' if platform == 'adaptive' else platform + '.md'}")
+    trace.append(f"primary:{primary}.md")
+    if route == "init":
+        trace.append("write:PRODUCT.md")
+        if platform != "web":
+            trace.append(f"native:{'ios.md+android.md' if platform == 'adaptive' else platform + '.md'}")
+    if edit and route not in {"routing", "init", "shape"}:
+        trace.append("cross:craft-floor.md")
+    return trace
+
+
+def validate_impeccable_load_trace(trace: list[str], route: str, platform: str = "web", *, edit: bool = False) -> None:
+    expected = impeccable_load_trace(route, platform, edit=edit)
+    if trace != expected:
+        raise ValueError(f"invalid Impeccable load trace: expected {expected}, got {trace}")
+    if route in {"pin", "unpin"}:
+        if trace != [f"admin:pin.mjs:{route}"]:
+            raise ValueError("pin administration must not enter the design loader")
+        return
+    if trace.count("context:once") != 1 or sum(item.startswith("primary:") for item in trace) != 1:
+        raise ValueError("trace must contain exactly one context run and primary playbook")
+    native = [item for item in trace if item.startswith("native:")]
+    if len(native) > 1 or (platform == "web" and native):
+        raise ValueError("trace has forbidden native guidance")
+    if route == "init" and native and trace.index(native[0]) < trace.index("write:PRODUCT.md"):
+        raise ValueError("init native guidance must load after PRODUCT.md")
+
+
+def impeccable_source_routes(skill_root: Path = IMPECCABLE_SOURCE) -> dict[str, dict[str, Any]]:
+    """Parse commands, aliases, specials, and transitive playbook links from the pinned source."""
+    skill = (skill_root / "SKILL.md").read_text(encoding="utf-8")
+    routes: dict[str, dict[str, Any]] = {}
+    for command, reference in re.findall(r"^\| `([a-z-]+)(?: [^`]*)?` .*?\[reference/([^]]+\.md)\]", skill, re.M):
+        routes[command] = {"source": reference, "primary": reference, "transitive": []}
+    if "`teach` aliases `init`" not in skill or "`craft` is a deprecated alias" not in skill:
+        raise ValueError("Impeccable alias contract missing")
+    routes["teach"] = {"alias": "init", "source": "init.md", "primary": "init.md", "transitive": []}
+    routes["craft"].update(primary="new-work.md", transitive=["new-work.md"], alias="new-work")
+    shape = (skill_root / "reference/shape.md").read_text(encoding="utf-8")
+    if "[new-work.md](new-work.md)" not in shape:
+        raise ValueError("shape transitive new-work route missing")
+    routes["shape"]["transitive"] = ["new-work.md"]
+    for special in ("hooks", "doctor"):
+        if f"reference/{special}.md" not in skill:
+            raise ValueError(f"Impeccable special route missing: {special}")
+        routes[special] = {"source": f"{special}.md", "primary": f"{special}.md", "transitive": []}
+    for admin in ("pin", "unpin"):
+        if "pin.mjs" not in skill:
+            raise ValueError("Impeccable pin administration missing")
+        routes[admin] = {"admin": "pin.mjs", "primary": None, "transitive": []}
+    routes["routing"] = {"source":"routing.md", "primary":"routing.md", "transitive":[]}
+    routes["new-work"] = {"source":"new-work.md", "primary":"new-work.md", "transitive":[]}
+    return routes
+
+
+def transitive_playbook_trace(route: str, skill_root: Path) -> list[dict[str, str]]:
+    routes = impeccable_source_routes(skill_root)
+    if route not in routes or not routes[route].get("source"):
+        raise ValueError(f"unknown playbook route: {route}")
+    start = routes[route]["source"]
+    queue = [start]; seen: set[str] = set(); trace: list[dict[str, str]] = []
+    while queue:
+        relative = queue.pop(0)
+        if relative in seen: continue
+        seen.add(relative); path = skill_root / "reference" / relative
+        text = path.read_text(encoding="utf-8")
+        if route == "craft":
+            role = "primary" if relative == "new-work.md" else "alias" if relative == "craft.md" else "prerequisite" if relative == "init.md" else "context"
+        else:
+            role = "primary" if relative == start else "delegated" if relative == "new-work.md" else "context"
+        trace.append({"path": relative, "role": role})
+        for target in re.findall(r"\[[^]]+\]\(([^)#]+\.md)(?:#[^)]+)?\)", text):
+            name = Path(target).name
+            if (skill_root / "reference" / name).is_file() and name not in seen: queue.append(name)
+    if sum(item["role"] == "primary" for item in trace) != 1:
+        raise ValueError("transitive trace must have exactly one primary playbook")
+    return trace
+
+
+def run_real_impeccable_context(project: Path, platform: str, *, init: bool = False, skill_root: Path = IMPECCABLE_SOURCE) -> list[str]:
+    """Execute the pinned context.mjs and return instrumented file-load events."""
+    if platform not in {"web", "ios", "android", "adaptive"}:
+        raise ValueError("unknown Impeccable platform")
+    run_root = project
+    shadow: tempfile.TemporaryDirectory[str] | None = None
+    try:
+        # Canonical init wrapper defers all native authority until the freshly
+        # written PRODUCT: context sees the project but not a stale PRODUCT.
+        if init and (project / "PRODUCT.md").exists():
+            shadow = tempfile.TemporaryDirectory(prefix="impeccable-init-defer-")
+            run_root = Path(shadow.name) / "project"
+            shutil.copytree(project, run_root, ignore=shutil.ignore_patterns("PRODUCT.md", ".git"))
+        result = subprocess.run(
+            ["node", str(skill_root / "scripts/context.mjs")], cwd=run_root,
+            text=True, capture_output=True, timeout=30,
+            env={**os.environ, "IMPECCABLE_NO_UPDATE_CHECK":"1"},
+        )
+        if result.returncode:
+            raise ValueError(f"context.mjs failed: {result.stderr.strip()}")
+        events = ["context:once"]
+        if "# PRODUCT.md" in result.stdout:
+            events.append("load:PRODUCT.md")
+        for name in ("ios", "android"):
+            if f"# NATIVE PLATFORM REFERENCE: {name.upper()}" in result.stdout:
+                events.append(f"native:{name}.md")
+        return events
+    finally:
+        if shadow is not None:
+            shadow.cleanup()
+
+
+def validate_real_impeccable_context_matrix(skill_root: Path = IMPECCABLE_SOURCE, root: Path = ROOT) -> list[str]:
+    errors: list[str] = []
+    for platform in ("web", "ios", "android", "adaptive"):
+        native = [] if platform == "web" else [f"native:{platform}.md"] if platform != "adaptive" else ["native:ios.md", "native:android.md"]
+        for product_exists in (False, True):
+            with tempfile.TemporaryDirectory(prefix=f"impeccable-{platform}-init-") as temporary:
+                project = Path(temporary) / "project"; project.mkdir()
+                if product_exists:
+                    (project / "PRODUCT.md").write_text(f"# Product\n\n<!-- impeccable:product-schema 1 -->\n\n## Platform\n\n{platform}\n", encoding="utf-8")
+                product = f"# Product\n\n<!-- impeccable:product-schema 1 -->\n\n## Platform\n\n{platform}\n".encode()
+                try:
+                    wrapper = _import_locator(root, "scripts/impeccable_adapter.py:init_defer")
+                    result = wrapper(project, product, skill_root, Path("/Volumes/Daten/Projekte/BrandKit/external-sources/impeccable"))
+                    events = result["events"]
+                    native_reads = [item["path"] for item in events if item["event"] == "read" and item["path"].startswith("reference/")]
+                    expected_native = [] if platform == "web" else [f"reference/{platform}.md"] if platform != "adaptive" else ["reference/ios.md", "reference/android.md"]
+                    if sum(item["event"] == "context" for item in events) != 1 or native_reads != expected_native or (project / "PRODUCT.md").read_bytes() != product:
+                        errors.append(f"init/{platform}/product={product_exists}: invalid productive wrapper events: {events}")
+                except Exception as exc:
+                    errors.append(f"init/{platform}/product={product_exists}: productive wrapper failed: {exc}")
+        with tempfile.TemporaryDirectory(prefix=f"impeccable-{platform}-route-") as temporary:
+            project = Path(temporary) / "project"; project.mkdir()
+            (project / "PRODUCT.md").write_text(f"# Product\n\n<!-- impeccable:product-schema 1 -->\n\n## Platform\n\n{platform}\n", encoding="utf-8")
+            observed = run_real_impeccable_context(project, platform, skill_root=skill_root)
+            expected = ["context:once", "load:PRODUCT.md", *native]
+            if observed != expected:
+                errors.append(f"context/{platform}: observed real loader events {observed}, expected {expected}")
+    return errors
+
+
+def validate_public_contracts(root: Path, contract: dict[str, Any]) -> list[str]:
+    errors: list[str] = []
+    binding = contract["public_contracts"]
+    for relative, expected in binding["cli"].items():
+        path = root / relative
+        try:
+            _, actual_commands, actual_options = _python_surface(path)
+            if actual_commands != set(expected["commands"]):
+                errors.append(f"{relative}: CLI commands drifted: expected {sorted(expected['commands'])}, got {sorted(actual_commands)}")
+            if actual_options != set(expected["options"]):
+                errors.append(f"{relative}: CLI options drifted: expected {sorted(expected['options'])}, got {sorted(actual_options)}")
+        except (OSError, SyntaxError) as exc:
+            errors.append(f"{relative}: cannot inspect CLI: {exc}")
+    for relative, expected in binding["python"].items():
+        path = root / relative
+        try:
+            actual, _, _ = _python_surface(path)
+            if actual != set(expected):
+                errors.append(f"{relative}: public Python surface drifted: expected {sorted(expected)}, got {sorted(actual)}")
+        except (OSError, SyntaxError) as exc:
+            errors.append(f"{relative}: cannot inspect Python API: {exc}")
+    package = binding["brand_package"]
+    try:
+        schema = load(root / package["schema"])
+        if schema.get("properties", {}).get("schema_version", {}).get("const") != package["schema_version"]:
+            errors.append("brand-package schema version differs from skill contract")
+        package_validator = _import_locator(root, package["validator"])
+        valid_package = root / "fixtures/brand-registry/releases/neutral-fixture/1.0.0/be2dd3d29bf15ba437eb5dc070ac6e6735cf57630e5f583a85777e6ffedf6360"
+        valid_manifest, _, _ = package_validator(valid_package)
+        manifest_mutations = _schema_mutations(valid_manifest, schema, schema)
+        for kind in ("fonts", "logos"):
+            for index, _asset in enumerate(valid_manifest["assets"][kind]):
+                for pointer, field in (("asset", "sha256"), ("rights", "evidence_sha256")):
+                    changed = json.loads(json.dumps(valid_manifest))
+                    target = changed["assets"][kind][index]
+                    (target if pointer == "asset" else target["rights"])[field] = "0" * 64
+                    manifest_mutations.append((f"pointer:{kind}:{index}:{pointer}", changed))
+        for index, _document in enumerate(valid_manifest["document_types"]):
+            changed = json.loads(json.dumps(valid_manifest)); changed["document_types"][index]["contract_sha256"] = "0" * 64
+            manifest_mutations.append((f"pointer:document:{index}", changed))
+        byte_mutations: list[tuple[str, str | None]] = []
+        for kind in ("fonts", "logos"):
+            for asset in valid_manifest["assets"][kind]:
+                byte_mutations.extend([(f"bytes:asset:{asset['id']}", asset["path"]), (f"bytes:rights:{asset['id']}", asset["rights"]["evidence_path"])])
+        byte_mutations.extend((f"bytes:document:{item['id']}", item["contract"]) for item in valid_manifest["document_types"])
+        byte_mutations.append(("closed-tree:undeclared", None))
+        expected_cases = {label for label, _ in manifest_mutations} | {label for label, _ in byte_mutations}; executed: set[str] = set()
+        for label, invalid in manifest_mutations:
+            with tempfile.TemporaryDirectory(prefix=secrets.token_hex(16)) as temporary:
+                candidate = Path(temporary) / secrets.token_hex(12); shutil.copytree(valid_package, candidate)
+                (candidate / "brand-package.json").write_text(json.dumps(invalid, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+                try: package_validator(candidate)
+                except Exception: executed.add(label)
+                else: errors.append(f"brand-package production validator accepted generated mutation {label}")
+        for label, relative in byte_mutations:
+            with tempfile.TemporaryDirectory(prefix=secrets.token_hex(16)) as temporary:
+                candidate = Path(temporary) / secrets.token_hex(12); shutil.copytree(valid_package, candidate)
+                target = candidate / (relative or f"undeclared-{secrets.token_hex(8)}.bin")
+                target.write_bytes((target.read_bytes() if target.exists() else b"") + b"\x00R4-mutation")
+                try: package_validator(candidate)
+                except Exception: executed.add(label)
+                else: errors.append(f"brand-package production validator accepted generated mutation {label}")
+        if executed != expected_cases:
+            errors.append(f"brand-package mutation table incomplete: missing={sorted(expected_cases-executed)} extra={sorted(executed-expected_cases)}")
+    except (OSError, ValueError, json.JSONDecodeError) as exc:
+        errors.append(f"brand-package schema binding cannot be read: {exc}")
+    documents = binding["documents"]
+    try:
+        schema = load(root / documents["schema"])
+        validator = jsonschema.Draft202012Validator(schema)
+        document_validator = _import_locator(root, documents["validator"])
+        base_types = _import_locator(root, "scripts/markdown_contract.py:load_base_types")()
+        declared = documents["types"]
+        actual_files = {path.stem.removesuffix(".v1"): path.relative_to(root).as_posix() for path in (root / "document-types").glob("*.v1.json")}
+        if declared != actual_files:
+            errors.append(f"document type catalog drifted: expected {declared}, got {actual_files}")
+        for document_id, relative in declared.items():
+            document = load(root / relative)
+            validator.validate(document)
+            document_validator(document, base_types)
+            if document.get("id") != document_id or document.get("schema_version") != "document-type.v1":
+                errors.append(f"{relative}: document identity differs from catalog")
+            for label, invalid in _schema_mutations(document, schema, schema):
+                try: document_validator(invalid, base_types)
+                except Exception: pass
+                else: errors.append(f"{relative}: production validator accepted generated mutation {label}")
+    except (OSError, ValueError, json.JSONDecodeError, jsonschema.ValidationError) as exc:
+        errors.append(f"document contract binding failed: {exc}")
+    return errors
+
+
+def validate_progressive_disclosure(root: Path, contract: dict[str, Any]) -> list[str]:
+    errors: list[str] = []
+    routes = contract["progressive_disclosure"]["routes"]
+    catalog = contract["progressive_disclosure"]["catalog"]
+    used: set[str] = set()
+    for item_id, item in catalog.items():
+        path = root / item["path"]
+        role, relative = item["role"], item["path"]
+        role_path_ok = (
+            (role == "primary" and re.fullmatch(r"skills/[^/]+/references/[^/]+\.md", relative))
+            or (role == "authoring" and relative == "skills/brand-voice-pdf/references/markdown-authoring.md")
+            or (role == "contract" and (relative.startswith("schemas/") and relative.endswith(".json") or relative == "markdown-contract.v2.json"))
+            or (role == "release" and relative == "impeccable-adapter.v1.json")
+        )
+        if not role_path_ok:
+            errors.append(f"{item_id}: catalog role/path combination is forbidden")
+        try:
+            if sha256(path) != item["sha256"]:
+                errors.append(f"{item_id}: catalog content hash drifted")
+            if role == "primary" and (path.stat().st_size < 120 or not path.read_text(encoding="utf-8").startswith("# ")):
+                errors.append(f"{item_id}: primary playbook is semantically empty")
+        except OSError as exc:
+            errors.append(f"{item_id}: catalog path cannot be read: {exc}")
+    seen_skills: list[str] = []
+    for route_id, route in routes.items():
+        seen_skills.append(route["skill"])
+        loads = [route["primary"], *route["context"]]
+        used.update(loads)
+        if route["primary"] in route["context"] or len(loads) != len(set(loads)):
+            errors.append(f"{route_id}: load trace is not disjoint")
+        if route["primary"] not in catalog or catalog.get(route["primary"], {}).get("role") != "primary":
+            errors.append(f"{route_id}: primary is not a catalogued primary playbook")
+        if any(item not in catalog or catalog.get(item, {}).get("role") == "primary" for item in route["context"]):
+            errors.append(f"{route_id}: context contains unknown or primary-role entry")
+        for item_id in loads:
+            if item_id not in catalog:
+                continue
+            relative = catalog[item_id]["path"]
+            path = root / relative
+            try:
+                resolved = path.resolve(strict=True)
+                if not _is_confined(root.resolve(strict=True), resolved) or not resolved.is_file():
+                    raise ValueError("reference is outside repository or nonregular")
+            except (OSError, ValueError) as exc:
+                errors.append(f"{route_id}: invalid load {relative}: {exc}")
+        skill_path = root / "skills" / route["skill"] / "SKILL.md"
+        try:
+            meta, body = frontmatter(skill_path.read_text(encoding="utf-8"))
+            if meta.get("name") != route["skill"]:
+                errors.append(f"{route_id}: route skill identity drifted")
+            primary_path = catalog.get(route["primary"], {}).get("path", "")
+            relative_primary = Path(primary_path).relative_to(skill_path.parent.relative_to(root)).as_posix()
+            if relative_primary not in body:
+                errors.append(f"{route_id}: SKILL.md does not route to its primary playbook")
+            playbook = (root / primary_path).read_text(encoding="utf-8")
+            for target in re.findall(r"\[[^]]+\]\(([^)]+)\)", playbook):
+                if (root / primary_path).parent.joinpath(target).resolve() == (root / primary_path).resolve():
+                    errors.append(f"{route_id}: primary playbook self-references")
+        except (OSError, ValueError, yaml.YAMLError) as exc:
+            errors.append(f"{route_id}: skill cannot be validated: {exc}")
+    if sorted(seen_skills) != sorted(CANONICAL_SKILLS):
+        errors.append("progressive-disclosure routes must cover every canonical skill exactly once")
+    if used != set(catalog):
+        errors.append("progressive-disclosure catalog contains unused or routes omit catalogued entries")
+    impeccable = contract["progressive_disclosure"]["impeccable"]
+    adapter = load(root / "impeccable-adapter.v1.json")
+    inventory = load(root / "impeccable-upstream-inventory.v1.json")
+    commands = adapter["inventory"]["routes"]
+    references = {Path(item).name for item in inventory["references"]}
+    try:
+        with verified_impeccable_snapshot(root) as pinned_skill:
+            source_routes = impeccable_source_routes(pinned_skill)
+            parsed_commands = [name for name in source_routes if name in commands]
+            if commands != IMPECCABLE_COMMANDS or set(parsed_commands) != set(commands):
+                errors.append("Impeccable command catalog drifted from pinned SKILL.md")
+            for name, route in source_routes.items():
+                for reference in [route.get("source"), route.get("primary"), *route.get("transitive", [])]:
+                    if reference and reference not in references:
+                        errors.append(f"Impeccable source route {name} has uncatalogued {reference}")
+            for transitive_route in ("craft", "shape"):
+                playbook_trace = transitive_playbook_trace(transitive_route, pinned_skill)
+                if sum(item["role"] == "primary" for item in playbook_trace) != 1:
+                    errors.append(f"Impeccable {transitive_route} has a second primary playbook")
+            matrix_routes = ["routing", "new-work", *commands, "teach", "hooks", "doctor", "pin", "unpin"]
+            for route_name in matrix_routes:
+                for platform in impeccable["platforms"]:
+                    try:
+                        trace = impeccable_load_trace(route_name, platform, edit=route_name not in {"routing", "init", "shape"})
+                        validate_impeccable_load_trace(trace, route_name, platform, edit=route_name not in {"routing", "init", "shape"})
+                        primary = next((item.removeprefix("primary:") for item in trace if item.startswith("primary:")), None)
+                        if primary and primary not in references:
+                            errors.append(f"Impeccable route {route_name}/{platform} has uncatalogued primary {primary}")
+                        for native in (item.removeprefix("native:") for item in trace if item.startswith("native:")):
+                            if any(part not in references for part in native.split("+")):
+                                errors.append(f"Impeccable route {route_name}/{platform} has uncatalogued native guidance")
+                    except ValueError as exc:
+                        if not (route_name == "live" and platform != "web" and str(exc) == "live is web-only"):
+                            errors.append(f"Impeccable route {route_name}/{platform}: {exc}")
+            errors.extend(validate_real_impeccable_context_matrix(pinned_skill, root))
+    except Exception as exc:
+        errors.append(f"Impeccable pinned source cannot be authenticated or executed: {exc}")
+    design = contract["progressive_disclosure"]["design_context"]
+    module_path, function_name = design["generator"].split(":", 1)
+    try:
+        functions, _, _ = _python_surface(root / module_path)
+        if function_name not in functions:
+            errors.append("DESIGN.md generator is missing")
+        tree = ast.parse((root / module_path).read_text(encoding="utf-8"))
+        selected = [node for node in tree.body if isinstance(node, ast.FunctionDef) and node.name in {"shared_tokens", "yaml_lines", function_name}]
+        namespace: dict[str, Any] = {"json": json, "Any": Any}
+        exec(compile(ast.Module(body=selected, type_ignores=[]), str(root / module_path), "exec"), namespace)
+        generator = namespace[function_name]
+        cases = [
+            {"brand_id":"empty","version":"1.0.0","voice":{"principles":[],"avoid":[]},"shared_visual_tokens":{},"pdf":{"tokens":{"color_roles":{"bad":"#123456"}}}},
+            {"brand_id":"full","version":"1.0.0","voice":{"principles":["Quiet confidence"],"avoid":["No spectacle"]},"shared_visual_tokens":{"colors":{"primary":"#112233"},"typography":{"body":"builtin:Helvetica"},"spacing":{"section":"16px"},"components":{"card":{}},"rounded":{"card":"4px"}},"pdf":{"tokens":{"color_roles":{"pdf-only":"#abcdef"}}}}
+        ]
+        for manifest in cases:
+            text = generator(manifest).decode("utf-8")
+            meta, body = frontmatter(text)
+            expected_root = {"name", "description", *manifest["shared_visual_tokens"]}
+            if set(meta) != expected_root:
+                errors.append("DESIGN.md frontmatter has missing or invented normative roles")
+            if any(key in meta for key in ("pdf", "pdf-only")) or "#abcdef" in text or "#123456" in text:
+                errors.append("DESIGN.md escalates PDF-only tokens")
+            if any(meta.get(key) != manifest["shared_visual_tokens"].get(key) for key in manifest["shared_visual_tokens"]):
+                errors.append("DESIGN.md frontmatter differs from shared_visual_tokens")
+            expected_roles = ", ".join(sorted(manifest["shared_visual_tokens"])) or "No portable visual token roles are declared."
+            actual_roles = body.split("## Tokens and Roles\n\n", 1)[1].split("\n", 1)[0] if "## Tokens and Roles\n\n" in body else None
+            if actual_roles != expected_roles:
+                errors.append("DESIGN.md token-role summary escalates or omits namespaces")
+            positions = [body.find(f"## {section}") for section in design["required_sections"]]
+            if any(position < 0 for position in positions) or positions != sorted(positions):
+                errors.append("DESIGN.md sections are missing or out of order")
+            if design["source_of_truth"] not in body or "PDF renderer tokens remain PDF-only" not in body:
+                errors.append("DESIGN.md source-of-truth or medium separation is missing")
+            if manifest["voice"]["avoid"] and not all(item in body for item in manifest["voice"]["avoid"]):
+                errors.append("DESIGN.md anti-references differ from Brand Package")
+    except (OSError, SyntaxError, ValueError) as exc:
+        errors.append(f"DESIGN.md contract cannot be inspected: {exc}")
+    return errors
+
+
+_PART1_PASS_CACHE: set[tuple[str, ...]] = set()
+
+
+def _verify_part1_snapshot(snapshot: Path, payload: dict[str, Any], owner_key: Path) -> None:
+    snapshot_hash = sha256(snapshot)
+    if snapshot_hash != payload["part1_snapshot_sha256"]:
+        raise ValueError("Part1 snapshot digest mismatch")
+    pass_hash = sha256_bytes((json.dumps(payload["part1_pass"], sort_keys=True, separators=(",", ":")) + "\n").encode())
+    cache_key = (snapshot_hash, payload["part1_bootstrap_sha256"], sha256(owner_key), pass_hash)
+    if cache_key in _PART1_PASS_CACHE: return
+    with tempfile.TemporaryDirectory(prefix="part1-authenticated-snapshot-") as temporary:
+        evidence = Path(temporary) / "evidence"; evidence.mkdir()
+        regular: set[str] = set()
+        with tarfile.open(snapshot, "r:gz") as archive:
+            for member in archive.getmembers():
+                name = member.name.removeprefix("./")
+                if not name: continue
+                pure = Path(name)
+                if pure.is_absolute() or ".." in pure.parts or member.issym() or member.islnk():
+                    raise ValueError("Part1 snapshot has unsafe member")
+                target = evidence / pure
+                if member.isdir(): target.mkdir(parents=True, exist_ok=True); continue
+                if not member.isfile() or name in regular: raise ValueError("Part1 snapshot member is not a unique regular file")
+                handle = archive.extractfile(member)
+                if handle is None: raise ValueError("Part1 snapshot member cannot be read")
+                target.parent.mkdir(parents=True, exist_ok=True); target.write_bytes(handle.read()); regular.add(name)
+        root_rel = "quality-loop/evidence/base-part1-trust-f5-evidence-root.json"
+        signature_rel = "quality-loop/evidence/base-part1-trust-f5-evidence-signature.json"
+        generator_rel = "quality-loop/evidence/generate-base-part1-trust-f5.py"
+        root_doc = load(evidence / root_rel)
+        expected_members = {row["path"] for row in root_doc["members"]} | {root_rel, signature_rel}
+        if regular != expected_members or root_doc.get("member_count") != payload["part1_pass"]["members"]:
+            raise ValueError("Part1 snapshot closed member set mismatch")
+        snapshot_parent = Path(temporary) / "trusted"; snapshot_parent.mkdir(mode=0o700)
+        bootstrap = Path("/Volumes/Daten/Projekte/BrandKit/quality-loop/trusted-verifiers/brandkit-candidate-trust-v1.py")
+        result = subprocess.run([
+            sys.executable, str(bootstrap), "--expected-bootstrap-sha256", payload["part1_bootstrap_sha256"],
+            "--evidence-root", str(evidence), "--root", root_rel, "--signature", signature_rel,
+            "--generator", generator_rel, "--owner-key", str(owner_key), "--trusted-snapshot-parent", str(snapshot_parent),
+        ], text=True, capture_output=True, timeout=120)
+        if result.returncode: raise ValueError(f"Part1 bootstrap rejected historical snapshot: {result.stderr.strip()}")
+        observed = json.loads(result.stdout); full = observed.get("full_verifier", {}); auth = observed.get("authenticated_root", {})
+        semantic = {
+            "status": observed.get("status"), "bootstrap_sha256": observed.get("bootstrap_sha256"),
+            "root_sha256": auth.get("root_sha256"), "key_id": auth.get("key_id"), "members": auth.get("members"),
+            "full_status": full.get("status"), "tree": full.get("tree"), "entries": full.get("entries"),
+            "evidence_members": full.get("evidence_members"), "authenticated_snapshot": full.get("authenticated_snapshot"),
+        }
+        if semantic != payload["part1_pass"] or semantic["status"] != "pass" or semantic["full_status"] != "pass" or semantic["authenticated_snapshot"] is not True:
+            raise ValueError("Part1 fresh semantic PASS differs from owner attestation")
+    _PART1_PASS_CACHE.add(cache_key)
+
+
+def validate_release_manifest(root: Path, *, expected_attestation_sha256: str | None = None, attestation_path: Path | None = None, owner_key: Path | None = None, part1_snapshot: Path | None = None) -> list[str]:
+    errors: list[str] = []
+    try:
+        document = load(root / RELEASE_MANIFEST)
+        if set(document) != {"schema_version", "baseline_head", "members"} or document["schema_version"] != "brandkit-skill-contract-release.v1":
+            return ["skill-contract release manifest is not closed v1"]
+        if document["baseline_head"] != "d65179442ca2e4c14dd2636bcb3511ca326d893f":
+            errors.append("skill-contract release baseline drifted")
+        if not isinstance(document["members"], list) or not document["members"]:
+            return ["skill-contract release manifest has no members"]
+        seen: set[str] = set()
+        for member in document["members"]:
+            if not isinstance(member, dict) or set(member) != {"path", "sha256"}:
+                errors.append("skill-contract release member is not closed")
+                continue
+            relative = member["path"]
+            if relative in seen or not re.fullmatch(r"[A-Za-z0-9._/-]+", relative):
+                errors.append(f"skill-contract release has duplicate/invalid member: {relative}")
+                continue
+            seen.add(relative)
+            path = root / relative
+            try:
+                if not _is_confined(root.resolve(strict=True), path.resolve(strict=True)) or not path.is_file() or sha256(path) != member["sha256"]:
+                    errors.append(f"skill-contract release member drifted: {relative}")
+            except OSError as exc:
+                errors.append(f"skill-contract release member missing: {relative}: {exc}")
+        contract = load(root / CONTRACT.name)
+        required = {
+            CONTRACT.name, "schemas/brandkit-skill-contract.v1.schema.json",
+            "schemas/brandkit-skill-request.v1.schema.json", "schemas/brandkit-skill-result.v1.schema.json",
+            "scripts/validate_brandkit_skills.py", "scripts/impeccable_adapter.py",
+            "fixtures/brandkit-skills/dry-runs.v1.json", "fixtures/brandkit-skills/collision-dry-runs.v1.json",
+            "impeccable-adapter.v1.json", "impeccable-upstream-inventory.v1.json",
+        }
+        public = contract["public_contracts"]
+        required.update(public["cli"]); required.update(public["python"])
+        required.add(public["brand_package"]["schema"]); required.add(public["documents"]["schema"])
+        required.update(public["documents"]["types"].values())
+        required.update(item["path"] for item in contract["progressive_disclosure"]["catalog"].values())
+        required.update(f"skills/{name}/SKILL.md" for name in CANONICAL_SKILLS)
+        if seen != required:
+            errors.append(f"skill-contract release inventory differs from canonical catalogs: missing={sorted(required-seen)} extra={sorted(seen-required)}")
+        expected_attestation_sha256 = expected_attestation_sha256 or os.environ.get("BRANDKIT_SKILL_RELEASE_ATTESTATION_SHA256")
+        attestation_path = attestation_path or (Path(os.environ["BRANDKIT_SKILL_RELEASE_ATTESTATION"]) if os.environ.get("BRANDKIT_SKILL_RELEASE_ATTESTATION") else None)
+        owner_key = owner_key or (Path(os.environ["BRANDKIT_OWNER_KEY"]) if os.environ.get("BRANDKIT_OWNER_KEY") else None)
+        if not expected_attestation_sha256 or attestation_path is None or owner_key is None:
+            errors.append("external release attestation inputs are required")
+        else:
+            raw = attestation_path.read_bytes()
+            if sha256_bytes(raw) != expected_attestation_sha256:
+                errors.append("external release attestation digest mismatch")
+            envelope = json.loads(raw)
+            if set(envelope) != {"schema_version","issuer","payload","algorithm","key_id","hmac_sha256","threat_model"}:
+                errors.append("external release attestation is not closed")
+            else:
+                payload = envelope["payload"]
+                if set(payload) != {"release_manifest_sha256","inventory_sha256","part1_root_sha256","part1_signature_sha256","part1_bootstrap_sha256","part1_snapshot_sha256","part1_pass"}:
+                    errors.append("external release attestation payload is not closed")
+                key = owner_key.read_bytes()
+                signed = {"schema_version":envelope["schema_version"], "issuer":envelope["issuer"], "payload":payload}
+                canonical = (json.dumps(signed, sort_keys=True, separators=(",", ":"), ensure_ascii=False) + "\n").encode()
+                if envelope["algorithm"] != "HMAC-SHA256" or envelope["key_id"] != sha256_bytes(key)[:16] or not hmac.compare_digest(envelope["hmac_sha256"], hmac.new(key, canonical, hashlib.sha256).hexdigest()):
+                    errors.append("external release owner-HMAC failed")
+                if payload["release_manifest_sha256"] != sha256(root / RELEASE_MANIFEST):
+                    errors.append("release manifest differs from external attestation")
+                if payload["inventory_sha256"] != sha256(root / "impeccable-upstream-inventory.v1.json"):
+                    errors.append("release inventory differs from external attestation")
+                part1_root = Path("/Volumes/Daten/Projekte/BrandKit/quality-loop/evidence/base-part1-trust-f5-evidence-root.json")
+                part1_signature = Path("/Volumes/Daten/Projekte/BrandKit/quality-loop/evidence/base-part1-trust-f5-evidence-signature.json")
+                bootstrap = Path("/Volumes/Daten/Projekte/BrandKit/quality-loop/trusted-verifiers/brandkit-candidate-trust-v1.py")
+                if (payload["part1_root_sha256"] != sha256(part1_root)
+                    or payload["part1_signature_sha256"] != sha256(part1_signature)
+                    or payload["part1_bootstrap_sha256"] != sha256(bootstrap)):
+                    errors.append("external release attestation is not bound to the Part1 trust chain")
+                part1_snapshot = part1_snapshot or (Path(os.environ["BRANDKIT_PART1_SNAPSHOT"]) if os.environ.get("BRANDKIT_PART1_SNAPSHOT") else None)
+                if part1_snapshot is None:
+                    errors.append("external authenticated Part1 snapshot is required")
+                else:
+                    try: _verify_part1_snapshot(part1_snapshot, payload, owner_key)
+                    except (OSError, ValueError, json.JSONDecodeError, subprocess.TimeoutExpired) as exc: errors.append(f"Part1 semantic verification failed: {exc}")
+    except (OSError, ValueError, json.JSONDecodeError) as exc:
+        errors.append(f"skill-contract release manifest cannot be verified: {exc}")
+    return errors
 
 
 def validate_artifact_refs(root: Path, refs: list[dict[str, str]]) -> list[str]:
@@ -704,10 +1364,12 @@ def execute_request(request: dict[str, Any], root: Path = ROOT, raw_request_sha2
     return result
 
 
-def validate(root: Path = ROOT) -> list[str]:
+def validate(root: Path = ROOT, **trust: Any) -> list[str]:
     errors: list[str] = []
     try:
+        errors.extend(validate_release_manifest(root, **trust))
         contract = load(root / CONTRACT.name)
+        jsonschema.Draft202012Validator(load(root / "schemas/brandkit-skill-contract.v1.schema.json")).validate(contract)
         if contract.get("schema_version") != "brandkit-skill-contract.v1" or contract.get("sequence") != CORE_SEQUENCE:
             errors.append("invalid skill contract/sequence")
         spacing = contract.get("optional_adapters", {}).get("brandkit-spacing", {})
@@ -775,7 +1437,9 @@ def validate(root: Path = ROOT) -> list[str]:
         if adapter_version != "4.1.1+fcd7622.brandkit6": errors.append("impeccable-adapter canonical release drifted")
         if re.search(r"4\.1\.1\+fcd7622\.brandkit\d+", readme): errors.append("README contains a stale copied adapter release literal")
         if "impeccable-adapter.v1.json#/adapted_release/marker/version" not in readme: errors.append("README does not derive adapter release from canonical contract")
-    except (OSError, ValueError, json.JSONDecodeError, yaml.YAMLError) as exc:
+        errors.extend(validate_public_contracts(root, contract))
+        errors.extend(validate_progressive_disclosure(root, contract))
+    except (OSError, ValueError, json.JSONDecodeError, yaml.YAMLError, jsonschema.ValidationError) as exc:
         errors.append(str(exc))
     return errors
 
@@ -920,6 +1584,10 @@ def main() -> int:
     parser.add_argument("--dry-runs", type=Path)
     parser.add_argument("--request", type=Path)
     parser.add_argument("--result", type=Path)
+    parser.add_argument("--release-attestation", type=Path)
+    parser.add_argument("--expected-release-attestation-sha256")
+    parser.add_argument("--owner-key", type=Path)
+    parser.add_argument("--part1-snapshot", type=Path)
     args = parser.parse_args()
     if args.request:
         if not args.result: parser.error("--request requires --result")
@@ -953,7 +1621,13 @@ def main() -> int:
             print(f"invalid request: {result['error']['message']}", file=sys.stderr)
             return 2
         return 0 if result["decision"] != "blocked" else 1
-    errors = validate(args.root)
+    errors = validate(
+        args.root,
+        expected_attestation_sha256=args.expected_release_attestation_sha256,
+        attestation_path=args.release_attestation,
+        owner_key=args.owner_key,
+        part1_snapshot=args.part1_snapshot,
+    )
     errors.extend(dry_run(args.dry_runs or args.root / "fixtures/brandkit-skills/dry-runs.v1.json", args.root))
     errors.extend(collision_dry_run(args.root / "fixtures/brandkit-skills/collision-dry-runs.v1.json"))
     if errors:

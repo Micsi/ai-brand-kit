@@ -77,5 +77,90 @@
     "handoff": ["brand_pin", ".brandkit/impeccable-product.json"],
     "required_outputs_before_route": ["PRODUCT.md", "DESIGN.md"],
     "parallel_design_instructions": false
+  },
+  "public_contracts": {
+    "cli": {
+      "scripts/brand_package.py": {
+        "commands": ["materialize", "migrate", "pin", "resolve", "rollback", "validate"],
+        "options": ["--brand-id", "--create-roots", "--destination", "--engine-version", "--index", "--legacy", "--package", "--project", "--run-id", "--version", "package"]
+      },
+      "scripts/brand_voice_pdf.py": {
+        "commands": ["prepare", "publish"],
+        "options": ["--asset-root", "--brand-id", "--draft", "--issuer-key", "--mermaid-cas", "--model", "--owner-approval", "--owner-key", "--print-workflow-lock", "--project", "--provider", "--run-id", "--timeout", "--workflow-lock", "command"]
+      },
+      "scripts/markdown_contract.py": {
+        "commands": ["validate", "validate-contracts"],
+        "options": ["--asset-root", "--ast-json", "--document-type", "--humanizer-baseline", "--issuer-key", "--publication", "--render-result", "document"]
+      },
+      "scripts/materialize_brandkit_instructions.py": {
+        "commands": [],
+        "options": ["--agents-source", "--project-root"]
+      }
+    },
+    "python": {
+      "scripts/brand_package.py": ["ContractError", "atomic_bytes", "atomic_symlink", "canonical", "compatible", "copy_release", "current_state_target", "ensure_state_aliases", "git_root", "journal_binding", "load_json", "make_lock", "materialize", "migrate", "pin_project", "read_closed_activation", "read_state", "resolve", "rollback", "safe_dir", "safe_package_file", "sha256_file", "sha_bytes", "state_identity", "tree_hash", "validate_bound_state", "validate_lock_object", "validate_package", "validate_schema", "validate_svg", "validate_woff2", "write_state"],
+      "scripts/brand_voice_pdf.py": ["PublicationSnapshot", "WorkflowError", "atomic_publication_commit", "canonical", "expected_binding", "humanizer_release", "make_audit", "mutable_segments", "prepare", "publication_snapshot", "publish", "run", "sha", "signed_run", "verify_global_installation", "verify_owner_approval", "verify_signed_run", "verify_workflow_lock", "workflow_preflight", "write_json"],
+      "scripts/markdown_contract.py": ["ContractError", "Parser", "UniqueLoader", "canonical_json", "create_humanizer_baseline", "load_base_types", "load_json", "publication_gate", "rewrite_humanizer", "run_validate", "serialize_ast", "sha", "stable_read", "validate_ast_document", "validate_document_type", "validate_figure_registry", "validate_graphviz_text", "validate_graphviz_v1", "validate_image_bytes", "validate_mermaid_text", "validate_mermaid_toolchain", "validate_mermaid_v1", "validate_production_renderer_trust", "validate_schema", "verify_humanizer_baseline", "verify_humanizer_roundtrip"],
+      "scripts/materialize_brandkit_instructions.py": ["materialize"]
+    },
+    "brand_package": {
+      "schema": "schemas/brand-package.v1.schema.json",
+      "schema_version": "brand-package.v1",
+      "validator": "scripts/brand_package.py:validate_package"
+    },
+    "documents": {
+      "schema": "schemas/document-type.v1.schema.json",
+      "validator": "scripts/markdown_contract.py:validate_document_type",
+      "types": {
+        "freeform": "document-types/freeform.v1.json",
+        "offer": "document-types/offer.v1.json",
+        "one-pager": "document-types/one-pager.v1.json",
+        "report": "document-types/report.v1.json"
+      }
+    }
+  },
+  "progressive_disclosure": {
+    "rule": "resolve one route, load exactly one primary playbook, then only declared contextual references",
+    "catalog": {
+      "setup-workflow": {"path": "skills/brandkit-setup/references/workflow.md", "role": "primary", "sha256": "1223e24019fc324a387b51cf3540d8ddee84f3b15ee0d1c0fa8a60642c1f6f61"},
+      "interview-workflow": {"path": "skills/brandkit-interview/references/workflow.md", "role": "primary", "sha256": "e809d72940ecf350950cc6f665d5beefc9e8746b14e4afda224c68e22a7e1ed2"},
+      "build-workflow": {"path": "skills/brandkit-build/references/workflow.md", "role": "primary", "sha256": "3844407d1e16aff86cd5327de2ef0c208926f00e7a52592af886993401233800"},
+      "publish-workflow": {"path": "skills/brandkit-publish/references/workflow.md", "role": "primary", "sha256": "da2b58d8350f67853063bd4da953345cfea03ff2e166e53e51ee3630d278f584"},
+      "spacing-workflow": {"path": "skills/brandkit-spacing/references/workflow.md", "role": "primary", "sha256": "4f09965b70731e589b14c1032279e4e61a68e3f99448dffe81243b4798025d5e"},
+      "impeccable-sync-workflow": {"path": "skills/brandkit-impeccable/references/workflow.md", "role": "primary", "sha256": "3e84200c6452e993b6140358fdc691cf770e6232f3f8f1d8716e4be85716cad1"},
+      "pdf-workflow": {"path": "skills/brand-voice-pdf/references/workflow.md", "role": "primary", "sha256": "a32add8b66dedf142f1ab95ce91554b6206b72b2692ad0af7c60ada7b72fe4b2"},
+      "pdf-authoring": {"path": "skills/brand-voice-pdf/references/markdown-authoring.md", "role": "authoring", "sha256": "b4466a437efea6fd36bf42289c902dbd620515c7513e03e2db286623f8b9e4fa"},
+      "brand-package-schema": {"path": "schemas/brand-package.v1.schema.json", "role": "contract", "sha256": "c5128fc1c582f38188a9fe8ccf037e4cb98ec21eb1a2c498d14bb0df59fac475"},
+      "document-type-schema": {"path": "schemas/document-type.v1.schema.json", "role": "contract", "sha256": "713584a5816bce4a5b40e1b0fb46bc8b75bea1854ad8995458fa9727f9388b18"},
+      "markdown-contract": {"path": "markdown-contract.v2.json", "role": "contract", "sha256": "5e54a95b00e8b778384f5cf1bfbcdbe721136e6142b9b31b9e6ffa1fce868ba4"},
+      "markdown-schema": {"path": "schemas/markdown-document.v1.schema.json", "role": "contract", "sha256": "e40ee76a7e818f491ce88265e44cd1b1f4b7d215c573decde3a4d6b1cbdcbbd4"},
+      "spacing-inventory-schema": {"path": "schemas/spacing-inventory.v1.schema.json", "role": "contract", "sha256": "5fee712717241445cc378c15e56e010a42c799ffe191cfe2869c7085e3bc5d3d"},
+      "spacing-proposal-schema": {"path": "schemas/spacing-proposal.v1.schema.json", "role": "contract", "sha256": "7e655425e6b6bea7c8eef27d57637bfd5b507c69636977fa0e42010c47ac7512"},
+      "impeccable-adapter": {"path": "impeccable-adapter.v1.json", "role": "release", "sha256": "89d4f8f3950405774e393ba52c40e90e5bdaeb0f56f3d42c61f66a63fb033272"},
+      "impeccable-product-schema": {"path": "schemas/impeccable-product-input.v1.schema.json", "role": "contract", "sha256": "5779b88cc0b8e03f2b0f8565e1d6fcab6ede1f2f64dbcb43a8007faa25d4b963"}
+    },
+    "routes": {
+      "setup": {"skill": "brandkit-setup", "primary": "setup-workflow", "context": []},
+      "interview": {"skill": "brandkit-interview", "primary": "interview-workflow", "context": []},
+      "build": {"skill": "brandkit-build", "primary": "build-workflow", "context": ["brand-package-schema", "document-type-schema"]},
+      "publish": {"skill": "brandkit-publish", "primary": "publish-workflow", "context": ["markdown-contract", "markdown-schema"]},
+      "spacing": {"skill": "brandkit-spacing", "primary": "spacing-workflow", "context": ["spacing-inventory-schema", "spacing-proposal-schema"]},
+      "impeccable-sync": {"skill": "brandkit-impeccable", "primary": "impeccable-sync-workflow", "context": ["impeccable-adapter", "impeccable-product-schema"]},
+      "pdf": {"skill": "brand-voice-pdf", "primary": "pdf-workflow", "context": ["pdf-authoring"]}
+    },
+    "impeccable": {
+      "release": "impeccable-adapter.v1.json#/adapted_release/marker/version",
+      "command_catalog": "impeccable-adapter.v1.json#/inventory/routes",
+      "reference_catalog": "impeccable-upstream-inventory.v1.json#/references",
+      "context_loader": ".agents/skills/impeccable/scripts/context.mjs",
+      "platforms": ["web", "ios", "android", "adaptive"],
+      "native_guidance": {"ios": "ios.md", "android": "android.md", "adaptive": "adaptive"}
+    },
+    "design_context": {
+      "path": "DESIGN.md",
+      "generator": "scripts/impeccable_adapter.py:design_md",
+      "source_of_truth": "brand-package.v1 shared_visual_tokens",
+      "required_sections": ["Overview", "Source of Truth", "Visual Direction", "Tokens and Roles", "Typography", "Spacing", "Components", "Usage Rules", "Anti-References"]
+    }
   }
 }

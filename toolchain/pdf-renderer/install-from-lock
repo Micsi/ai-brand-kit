@@ -2,6 +2,10 @@
 set -eu
 if [ "$#" -ne 3 ]; then echo "usage: install-from-lock HOME WHEELHOUSE ISSUER_KEY" >&2; exit 64; fi
 home=$1; wheels=$2; key=$3
+# A project-wide PEP 3147 cache prefix leaks the absolute clean-room path into
+# pip RECORD rows.  The immutable install must contain only artifacts below its
+# own root, so neither venv/ensurepip nor pip may inherit that ambient cache.
+unset PYTHONPYCACHEPREFIX
 root=$(CDPATH= cd -- "$(dirname -- "$0")/../.." && pwd -P)
 version=1.2.28
 release="$home/.agents/skill-store/brand-voice-pdf/$version"
@@ -36,7 +40,34 @@ copy_source_fixtures() {
   cp -R "$root/fixtures/pdf-renderer/e2e" "$root/fixtures/pdf-renderer/live-e2e" "$root/fixtures/pdf-renderer/reference-report" "$destination/fixtures/pdf-renderer/"
 }
 mkdir -p "$tmp/scripts" "$runtime/scripts"; cp -R "$root/skills/brand-voice-pdf/." "$tmp/"; cp "$root/scripts/pdf_renderer.py" "$root/scripts/pdf_visual_qa.py" "$root/scripts/brand_voice_pdf.py" "$root/scripts/brand_package.py" "$root/scripts/markdown_contract.py" "$root/scripts/project_brand_tokens.py" "$root/scripts/generate_pdf_e2e_goldens.py" "$root/toolchain/pdf-renderer/render" "$root/toolchain/pdf-renderer/verify-installation" "$root/toolchain/pdf-renderer/rollback" "$tmp/scripts/"; cp -R "$root/schemas" "$root/document-types" "$tmp/"; copy_source_fixtures "$tmp"; cp "$root/renderer-trust.v1.json" "$root/markdown-contract.v1.json" "$root/markdown-contract.v2.json" "$root/markdown-contract-migration.v1.json" "$tmp/"; mkdir -p "$tmp/toolchain"; cp "$root/toolchain/pdf-renderer.production.v1.lock.json" "$root/toolchain/mermaid-svg.v1.lock.json" "$root/toolchain/mermaid-linux-worker.v2.lock.json" "$root/toolchain/graphviz-svg.v1.lock.json" "$tmp/toolchain/"; cp -R "$root/toolchain/pdf-renderer" "$root/toolchain/mermaid-svg" "$root/toolchain/graphviz-svg" "$tmp/toolchain/"
-python3.12 -m venv "$runtime/.venv"; "$runtime/.venv/bin/pip" install --no-index --require-hashes -r "$root/toolchain/pdf-renderer/requirements.lock.txt" --find-links "$wheels"
+python3.12 -m venv "$runtime/.venv"; "$runtime/.venv/bin/pip" install --no-compile --no-index --require-hashes -r "$root/toolchain/pdf-renderer/requirements.lock.txt" --find-links "$wheels"
+python3.12 - "$runtime/.venv/lib/python3.12/site-packages" <<'PY'
+import csv,io,os,pathlib,stat,sys
+
+site=pathlib.Path(sys.argv[1]).resolve(strict=True)
+updates={};recorded=set()
+for record in sorted(site.glob('*.dist-info/RECORD')):
+ rows=[]
+ for row in csv.reader(io.StringIO(record.read_text(encoding='utf-8'))):
+  assert len(row)==3,(record,row)
+  target=(site/row[0]).resolve(strict=False)
+  is_cache=target.suffix=='.pyc' and '__pycache__' in target.parts
+  if not is_cache:
+   rows.append(row);continue
+  target.relative_to(site)
+  st=target.lstat()
+  assert stat.S_ISREG(st.st_mode) and not target.is_symlink(),target
+  recorded.add(target)
+ output=io.StringIO(newline='');csv.writer(output,lineterminator='\n').writerows(rows)
+ updates[record]=output.getvalue()
+actual={path.resolve() for path in site.rglob('*.pyc')}
+assert actual==recorded,(sorted(str(x) for x in actual-recorded),sorted(str(x) for x in recorded-actual))
+for target in sorted(recorded):target.unlink()
+for directory in sorted((p for p in site.rglob('__pycache__') if p.is_dir() and not p.is_symlink()),key=lambda p:len(p.parts),reverse=True):
+ directory.rmdir()
+for record,text in updates.items():
+ stage=record.with_name('.'+record.name+'.canonical');stage.write_text(text,encoding='utf-8');os.replace(stage,record)
+PY
 cp "$root/scripts/pdf_renderer.py" "$root/scripts/pdf_visual_qa.py" "$root/scripts/brand_voice_pdf.py" "$root/scripts/brand_package.py" "$root/scripts/markdown_contract.py" "$root/scripts/project_brand_tokens.py" "$root/scripts/generate_pdf_e2e_goldens.py" "$runtime/scripts/"; cp -R "$root/schemas" "$root/document-types" "$runtime/"; copy_source_fixtures "$runtime"; cp "$root/renderer-trust.v1.json" "$root/markdown-contract.v1.json" "$root/markdown-contract.v2.json" "$root/markdown-contract-migration.v1.json" "$runtime/"; mkdir -p "$runtime/toolchain" "$runtime/skills"; cp -R "$root/skills/brand-voice-pdf" "$runtime/skills/"; cp "$root/toolchain/pdf-renderer.production.v1.lock.json" "$root/toolchain/mermaid-svg.v1.lock.json" "$root/toolchain/mermaid-linux-worker.v2.lock.json" "$root/toolchain/graphviz-svg.v1.lock.json" "$runtime/toolchain/"; cp -R "$root/toolchain/pdf-renderer" "$root/toolchain/mermaid-svg" "$root/toolchain/graphviz-svg" "$runtime/toolchain/"
 python3.12 - "$root" "$tmp" "$runtime" <<'PY'
 import hashlib,json,pathlib,sys

@@ -6,6 +6,12 @@ license: MIT
 
 # BrandKit-Setup
 
+## Routing
+
+| Route | Primäres Playbook |
+|---|---|
+| Readiness prüfen | [`references/workflow.md`](references/workflow.md) |
+
 Owner: Readiness und Scope. Markenentscheidungen gehören `brandkit-interview`,
 Kit-Erzeugung `brandkit-build`, Artefaktproduktion `brandkit-publish`.
 

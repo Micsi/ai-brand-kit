@@ -1,0 +1,58 @@
+=== quarto ===
+1.9.38
+=== node ===
+v22.18.0
+=== google-chrome-stable ===
+Google Chrome for Testing 131.0.6778.204 
+=== /opt/brandkit-mermaid/node_modules/.bin/mmdc ===
+11.9.0
+=== dot ===
+dot - graphviz version 2.43.0 (0)
+=== rsvg-convert ===
+rsvg-convert version 2.52.5
+=== lualatex ===
+This is LuaHBTeX, Version 1.14.0 (TeX Live 2022/dev/Debian)
+
+Execute  'luahbtex --credits'  for credits and version details.
+
+There is NO warranty. Redistribution of this software is covered by
+the terms of the GNU General Public License, version 2 or (at your option)
+any later version. For more information about these matters, see the file
+named COPYING and the LuaTeX source.
+
+LuaTeX is Copyright 2021 Taco Hoekwater and the LuaTeX Team.
+
+=== pdfinfo ===
+pdfinfo version 22.02.0
+Copyright 2005-2022 The Poppler Developers - http://poppler.freedesktop.org
+Copyright 1996-2011 Glyph & Cog, LLC
+=== pdftotext ===
+pdftotext version 22.02.0
+Copyright 2005-2022 The Poppler Developers - http://poppler.freedesktop.org
+Copyright 1996-2011 Glyph & Cog, LLC
+=== pdftoppm ===
+pdftoppm version 22.02.0
+Copyright 2005-2022 The Poppler Developers - http://poppler.freedesktop.org
+Copyright 1996-2011 Glyph & Cog, LLC
+=== qpdf ===
+qpdf version 10.6.3
+Run qpdf --copyright to see copyright and license information.
+=== tesseract ===
+tesseract 4.1.1
+ leptonica-1.82.0
+  libgif 5.1.9 : libjpeg 8d (libjpeg-turbo 2.1.1) : libpng 1.6.37 : libtiff 4.3.0 : zlib 1.2.11 : libwebp 1.2.2 : libopenjp2 2.4.0
+ Found AVX2
+ Found AVX
+ Found FMA
+ Found SSE
+ Found libarchive 3.6.0 zlib/1.2.11 liblzma/5.2.5 bz2lib/1.0.8 liblz4/1.9.3 libzstd/1.4.8
+=== tesseract-langs ===
+List of available languages (1):
+deu
+=== environment ===
+LANG=C
+LC_ALL=C
+SOURCE_DATE_EPOCH=0
+TZ=UTC
+=== uname ===
+Linux 6.8.0-117-generic x86_64

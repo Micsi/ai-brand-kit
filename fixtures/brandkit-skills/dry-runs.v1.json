@@ -1,7 +1,7 @@
 {
   "schema_version": "brandkit-skill-dry-runs.v2",
   "input_artifacts": [
-    {"role":"contract","path":"brandkit-skill-contract.v1.json","sha256":"6ef016bfb90aa07f89d30f8384dd0f885f8693eee51e80f106352d44af314dd6"},
+    {"role":"contract","path":"brandkit-skill-contract.v1.json","sha256":"6ccd6dce06fb94f622f5e796913bccb35b092cfb91096fa418bcb4e2fa180687"},
     {"role":"brand-pin","path":"impeccable-adapter.v1.json","sha256":"89d4f8f3950405774e393ba52c40e90e5bdaeb0f56f3d42c61f66a63fb033272"},
     {"role":"spacing-inventory","path":"fixtures/brandkit-skills/spacing-inventory-ui.valid.json","sha256":"d6dd745c2c2018ace1204a5b621ba356be795a083bfadbce55a40eec2c40e175"},
     {"role":"spacing-inventory","path":"fixtures/brandkit-skills/spacing-inventory-shared.valid.json","sha256":"6b79272ea9b1d79b5b3c77dba2cbde273fdeb2667f3e0ca53112b887877b9ed9"},

@@ -6,6 +6,12 @@ license: MIT
 
 # BrandKit-Spacing
 
+## Routing
+
+| Route | Primäres Playbook |
+|---|---|
+| Spacing inventarisieren oder prüfen | [`references/workflow.md`](references/workflow.md) |
+
 Owner: Spacing-Inventar, primitive Skala, semantische Abstandsrollen und
 Spacing-Audit. Der Skill ist ein optionaler Design-Adapter, kein Schritt der
 Kernsequenz `setup -> interview -> build -> publish`.

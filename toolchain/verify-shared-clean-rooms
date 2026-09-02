@@ -1,0 +1,1257 @@
+#!/usr/bin/env python3
+"""Run the complete shared-toolchain lifecycle in two fresh clean rooms."""
+from __future__ import annotations
+
+import argparse
+import array
+import fcntl
+import hashlib
+import io
+import json
+import os
+import pathlib
+import signal
+import shutil
+import socket
+import stat
+import subprocess
+import tarfile
+import tempfile
+import threading
+import time
+from typing import Callable
+
+import sys
+
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "scripts"))
+from harness_phases import PhaseDAG, PhaseError, PhaseSpec, atomic_json, canonical_digest, validate_event_log
+import shared_toolchain
+
+ROOT = pathlib.Path(__file__).resolve().parents[1]
+LOCK = ROOT / "toolchain/toolchain.lock.json"
+FIXTURES = ROOT / "toolchain/shared-clean-room-fixtures"
+NETWORK_PROFILE = ROOT / "toolchain/shared-network-deny.sb"
+RUNTIME_ROOT = ROOT.parents[1] / ".runtime"
+THIS_FILE = pathlib.Path(__file__).resolve()
+ACTIVE_DAG: PhaseDAG | None = None
+SCAN_SUPERVISOR: "ScanSupervisor | None" = None
+SCAN_SUPERVISORS: dict[str, "ScanSupervisor"] = {}
+PRODUCT_PHASE_PROOFS: dict[str, list[dict]] = {}
+RUN_INPUT_ENVIRONMENT: dict[str, str] = {}
+PROCESS_ENV_KEYS = ("PATH", "PYTHONPATH", "HOME", "TMPDIR", "DOCKER_HOST", "DOCKER_CONTEXT",
+                    "LIMA_HOME", "COLIMA_HOME", "BRANDKIT_DOCKER_PREFIX_JSON", "LANG", "LC_ALL", "TZ",
+                    "SOURCE_DATE_EPOCH", "PYTHONDONTWRITEBYTECODE", "HTTP_PROXY", "HTTPS_PROXY",
+                    "ALL_PROXY", "NO_PROXY")
+PROCESS_ENV_KEYS += (shared_toolchain.RUN_INPUT_ENV, shared_toolchain.RUN_ID_ENV, shared_toolchain.RUN_FDS_ENV)
+PROCESS_ENV_KEYS += (shared_toolchain.SUPERVISOR_ENV,)
+PROCESS_ENV_KEYS += (shared_toolchain.SUPERVISOR_FD_ENV,)
+PROCESS_ENV_KEYS += (shared_toolchain.SUPERVISOR_ROOM_ENV, shared_toolchain.SUPERVISOR_PHASE_ENV,
+                     shared_toolchain.SUPERVISOR_OPERATION_ENV)
+PRODUCT_CODE_INPUTS = tuple(ROOT / path for path in (
+    "scripts/harness_phases.py", "scripts/shared_toolchain.py",
+    "toolchain/verify-shared-clean-rooms", "toolchain/install-from-lock",
+    "toolchain/verify-installation", "toolchain/version-log", "toolchain/rollback", "toolchain/restore",
+    "toolchain/shared-clean-room-fixtures/run-render-smoke",
+    "toolchain/mermaid-svg/install-offline", "toolchain/mermaid-svg/verify-bundle",
+    "toolchain/graphviz-svg/install-offline", "toolchain/graphviz-svg/verify-bundle",
+    "toolchain/pdf-renderer/install-from-lock", "toolchain/pdf-renderer/verify-installation",
+    "toolchain/pdf-renderer/render", "skills/brand-voice-pdf/scripts/run",
+    "toolchain/mermaid-svg/version-log",
+    "toolchain/humanizer-doctor-runtime-adapter.py",
+))
+
+
+class HarnessError(RuntimeError):
+    pass
+
+
+class ScanSupervisor:
+    """In-memory scan ledger reached only through an inherited socket capability."""
+    def __init__(self, run_id: str) -> None:
+        self.run_id = run_id
+        self.server, self.client = socket.socketpair()
+        self._lock = threading.Lock(); self._stop = threading.Event()
+        self._counts: dict[str, int] = {}; self._events: list[dict[str, object]] = []
+        self._snapshots: dict[str, dict] = {}
+        if run_id in SCAN_SUPERVISORS: raise HarnessError("duplicate live scan supervisor")
+        SCAN_SUPERVISORS[run_id] = self
+        self._thread = threading.Thread(target=self._serve, daemon=True); self._thread.start()
+
+    @property
+    def fd(self) -> int: return self.client.fileno()
+
+    def _append(self, event: dict[str, object]) -> str:
+        previous = self._events[-1]["event_digest"] if self._events else "0" * 64
+        value = {**event, "sequence":len(self._events) + 1, "previous_digest":previous}
+        value["event_digest"] = canonical_digest(value); self._events.append(value)
+        return str(value["event_digest"])
+
+    @staticmethod
+    def _read_fd(fd: int) -> bytes:
+        duplicate = os.dup(fd)
+        try:
+            os.lseek(duplicate, 0, os.SEEK_SET); blocks = []
+            while True:
+                block = os.read(duplicate, 1024 * 1024)
+                if not block: break
+                blocks.append(block)
+            return b"".join(blocks)
+        finally: os.close(duplicate)
+
+    @staticmethod
+    def _validate_snapshot_bytes(raw: bytes) -> list[dict]:
+        entries = []; payloads = {}
+        try:
+            with tarfile.open(fileobj=io.BytesIO(raw), mode="r:") as archive:
+                members = archive.getmembers()
+                for member in members:
+                    name = member.name[:-1] if member.isdir() and member.name.endswith("/") else member.name
+                    pure = pathlib.PurePosixPath(name)
+                    if (not name or name != pure.as_posix() or pure.is_absolute() or ".." in pure.parts
+                            or "\\" in name or "//" in member.name or "/./" in member.name
+                            or member.uid != 0 or member.gid != 0 or member.uname != "root"
+                            or member.gname != "root" or member.mtime != 0):
+                        raise HarnessError("installed snapshot USTAR metadata differs")
+                    if member.isfile():
+                        stream = archive.extractfile(member)
+                        if stream is None: raise HarnessError("installed snapshot payload differs")
+                        data = stream.read(); payloads[name] = data
+                        entries.append({"path":name,"type":"file","mode":format(member.mode,"04o"),
+                                        "size":len(data),"sha256":hashlib.sha256(data).hexdigest()})
+                    elif member.isdir():
+                        entries.append({"path":name,"type":"directory","mode":format(member.mode,"04o")})
+                    elif member.issym():
+                        entries.append({"path":name,"type":"symlink","target":member.linkname})
+                    else: raise HarnessError("installed snapshot contains special member")
+        except tarfile.TarError as exc: raise HarnessError("installed snapshot archive differs") from exc
+        canonical, derived = shared_toolchain._installed_tree_ustar(entries, payloads)
+        if canonical != raw:
+            raise HarnessError("installed snapshot is not canonical USTAR")
+        return derived
+
+    def _snapshot_proof(self, root: str, *, validate_bytes: bool = True) -> dict:
+        held = self._snapshots.get(root)
+        if held is None: raise HarnessError("sealed installed snapshot is absent")
+        try: info = os.fstat(held["fd"])
+        except OSError as exc: raise HarnessError("sealed installed snapshot descriptor is closed") from exc
+        proof = held["proof"]
+        if (not stat.S_ISREG(info.st_mode) or info.st_nlink != 0 or info.st_dev != proof["fd_device"]
+                or info.st_ino != proof["fd_inode"] or info.st_size != proof["archive_size"]):
+            raise HarnessError("sealed installed snapshot descriptor identity differs")
+        if validate_bytes:
+            raw = self._read_fd(held["fd"])
+            if hashlib.sha256(raw).hexdigest() != proof["archive_sha256"] or len(raw) != proof["archive_size"]:
+                raise HarnessError("sealed installed snapshot bytes differ")
+            manifest = self._validate_snapshot_bytes(raw)
+            if (canonical_digest(manifest) != proof["member_manifest_digest"]
+                    or len(manifest) != proof["member_count"]
+                    or sum(item["type"] == "file" for item in manifest) != proof["member_files"]
+                    or sum(item.get("size", 0) for item in manifest) != proof["member_bytes"]):
+                raise HarnessError("sealed installed snapshot member manifest differs")
+        return json.loads(json.dumps(proof))
+
+    def _handle(self, request: dict, received_fd: int | None = None) -> tuple[dict, int | None]:
+        if request.pop("schema_version", None) != "brandkit-scan-supervisor-request.v1":
+            raise HarnessError("scan supervisor request schema differs")
+        action = request.pop("action", None)
+        with self._lock:
+            if action == "authorize-scan" and set(request) == {
+                    "root", "physical_root", "room", "phase", "operation"}:
+                root = request["root"]
+                if not canonical_absolute_root(root) or not canonical_absolute_root(request["physical_root"]):
+                    raise HarnessError("scan supervisor root differs")
+                if not all(isinstance(request[name], str) and request[name]
+                           for name in ("room", "phase", "operation")):
+                    raise HarnessError("scan supervisor context differs")
+                ordinal = self._counts.get(root, 0) + 1
+                if ordinal > 3: raise HarnessError("install tree exceeded three supervisor-authorized full scans")
+                self._counts[root] = ordinal
+                event = self._append({"event":"scan", "root":root,
+                    "physical_root":request["physical_root"], "ordinal":ordinal,
+                    "room":request["room"], "phase":request["phase"], "operation":request["operation"]})
+                return {"kind":"live", "supervisor_id":self.run_id, "ordinal":ordinal,
+                        "authorization_digest":event, "completion_digest":"0" * 64,
+                        "room":request["room"], "phase":request["phase"], "operation":request["operation"]}, None
+            if action == "complete-scan" and set(request) == {"root", "ordinal", "authorization_digest",
+                    "proof_digest", "room", "phase", "operation"}:
+                digest_value = request["authorization_digest"]
+                authorized = any(event["event"] == "scan" and event["root"] == request["root"]
+                    and event["ordinal"] == request["ordinal"]
+                    and event["event_digest"] == digest_value for event in self._events)
+                if not authorized or any(event["event"] == "scan-complete" and
+                        event["authorization_digest"] == digest_value for event in self._events):
+                    raise HarnessError("scan completion authorization differs")
+                authorization = next(event for event in self._events if event.get("event_digest") == digest_value)
+                if any(authorization[name] != request[name] for name in ("room", "phase", "operation")):
+                    raise HarnessError("scan completion context differs")
+                completion = self._append({"event":"scan-complete", "root":request["root"],
+                    "ordinal":request["ordinal"], "authorization_digest":digest_value,
+                    "proof_digest":request["proof_digest"], "room":request["room"],
+                    "phase":request["phase"], "operation":request["operation"]})
+                return {"completion_digest":completion}, None
+            if action == "rebind-receipt" and set(request) == {"root", "ordinal", "authorization_digest",
+                    "prior_completion_digest", "proof_digest", "room", "phase", "operation"}:
+                if not all(isinstance(request[name], str) and request[name]
+                           for name in ("room", "phase", "operation")):
+                    raise HarnessError("receipt rebind context differs")
+                prior = next((event for event in self._events
+                    if event.get("event") in {"scan-complete", "receipt-reuse"}
+                    and event.get("event_digest") == request["prior_completion_digest"]
+                    and event.get("authorization_digest") == request["authorization_digest"]
+                    and event.get("root") == request["root"] and event.get("ordinal") == request["ordinal"]
+                    and event.get("proof_digest") == request["proof_digest"]), None)
+                if prior is None: raise HarnessError("receipt rebind prior proof differs")
+                completion = self._append({"event":"receipt-reuse", "root":request["root"],
+                    "ordinal":request["ordinal"], "authorization_digest":request["authorization_digest"],
+                    "prior_completion_digest":request["prior_completion_digest"],
+                    "proof_digest":request["proof_digest"], "room":request["room"],
+                    "phase":request["phase"], "operation":request["operation"]})
+                return {"completion_digest":completion}, None
+            if action == "validate-receipt" and set(request) == {"root", "ordinal", "authorization_digest",
+                    "completion_digest", "proof_digest", "room", "phase", "operation"}:
+                valid = any(event["event"] in {"scan-complete", "receipt-reuse"} and event["root"] == request["root"]
+                    and event["ordinal"] == request["ordinal"]
+                    and event["authorization_digest"] == request["authorization_digest"]
+                    and event["event_digest"] == request["completion_digest"]
+                    and event["proof_digest"] == request["proof_digest"]
+                    and all(event[name] == request[name] for name in ("room", "phase", "operation"))
+                    for event in self._events)
+                return {"valid":valid, "supervisor_id":self.run_id}, None
+            if action == "seal-snapshot" and set(request) == {"root", "ordinal", "authorization_digest",
+                    "completion_digest", "archive_sha256", "archive_size", "member_manifest_digest",
+                    "member_count", "member_files", "member_bytes"}:
+                if received_fd is None or request["root"] in self._snapshots:
+                    raise HarnessError("installed snapshot descriptor differs")
+                completion = next((event for event in self._events if event.get("event") == "scan-complete"
+                    and event.get("root") == request["root"] and event.get("ordinal") == request["ordinal"]
+                    and event.get("authorization_digest") == request["authorization_digest"]
+                    and event.get("event_digest") == request["completion_digest"]), None)
+                if completion is None: raise HarnessError("installed snapshot scan completion differs")
+                owned = os.dup(received_fd); info = os.fstat(owned)
+                raw = self._read_fd(owned)
+                if ((fcntl.fcntl(owned, fcntl.F_GETFL) & os.O_ACCMODE) != os.O_RDONLY
+                        or info.st_nlink != 0 or not stat.S_ISREG(info.st_mode) or len(raw) != request["archive_size"]
+                        or hashlib.sha256(raw).hexdigest() != request["archive_sha256"]):
+                    os.close(owned); raise HarnessError("installed snapshot descriptor bytes differ")
+                manifest = self._validate_snapshot_bytes(raw)
+                if (canonical_digest(manifest) != request["member_manifest_digest"]
+                        or len(manifest) != request["member_count"]
+                        or sum(item["type"] == "file" for item in manifest) != request["member_files"]
+                        or sum(item.get("size", 0) for item in manifest) != request["member_bytes"]):
+                    os.close(owned); raise HarnessError("installed snapshot member manifest differs")
+                proof = {"schema_version":"brandkit-installed-tree-snapshot.v1", "supervisor_id":self.run_id,
+                         "root":request["root"], "ordinal":request["ordinal"], "fd_device":info.st_dev,
+                         "fd_inode":info.st_ino, "archive_sha256":request["archive_sha256"],
+                         "archive_size":request["archive_size"], "member_count":request["member_count"],
+                         "member_files":request["member_files"], "member_bytes":request["member_bytes"],
+                         "member_manifest_digest":request["member_manifest_digest"], "seal_digest":""}
+                event = self._append({"event":"snapshot-seal", "root":request["root"],
+                    "ordinal":request["ordinal"], "completion_digest":request["completion_digest"],
+                    "archive_sha256":proof["archive_sha256"], "archive_size":proof["archive_size"],
+                    "member_manifest_digest":proof["member_manifest_digest"]})
+                proof["seal_digest"] = event; self._snapshots[request["root"]] = {
+                    "fd":owned,"proof":json.loads(json.dumps(proof))}
+                return json.loads(json.dumps(proof)), None
+            if action == "get-snapshot" and set(request) == {"root", "seal_digest"}:
+                proof = self._snapshot_proof(request["root"])
+                if proof["seal_digest"] != request["seal_digest"]: raise HarnessError("snapshot seal proof differs")
+                return proof, self._snapshots[request["root"]]["fd"]
+            raise HarnessError("scan supervisor request differs")
+
+    def _serve(self) -> None:
+        buffer = b""
+        while not self._stop.is_set():
+            try:
+                part, ancdata, _, _ = self.server.recvmsg(1024 * 1024,
+                    socket.CMSG_SPACE(array.array("i").itemsize))
+            except OSError: break
+            if not part: break
+            received_fd = None
+            for level, kind, data in ancdata:
+                if level == socket.SOL_SOCKET and kind == socket.SCM_RIGHTS:
+                    values = array.array("i"); values.frombytes(data[:values.itemsize])
+                    if received_fd is not None or not values: continue
+                    received_fd = values[0]
+            buffer += part
+            while b"\n" in buffer:
+                raw, buffer = buffer.split(b"\n", 1)
+                response_fd = None
+                try:
+                    result, response_fd = self._handle(json.loads(raw), received_fd)
+                    response = {"ok":True, "result":result}
+                except BaseException as exc: response = {"ok":False, "result":{"error":str(exc)}}
+                finally:
+                    if received_fd is not None:
+                        try: os.close(received_fd)
+                        except OSError: pass
+                        received_fd = None
+                try:
+                    encoded = json.dumps(response, sort_keys=True, separators=(",", ":")).encode()+b"\n"
+                    ancillary = [] if response_fd is None else [(socket.SOL_SOCKET, socket.SCM_RIGHTS,
+                        array.array("i", [response_fd]).tobytes())]
+                    self.server.sendmsg([encoded], ancillary)
+                except OSError: return
+
+    def summary(self) -> dict:
+        with self._lock:
+            value = {"schema_version":"brandkit-scan-supervisor-ledger.v1", "run_id":self.run_id,
+                     "counts":dict(sorted(self._counts.items())), "events":list(self._events)}
+            value["ledger_digest"] = canonical_digest(value); return value
+
+    def atomic_product_commit(self, phase_name: str,
+            specs: list[tuple[pathlib.Path, pathlib.Path, pathlib.Path, str, str]],
+            preliminary: tuple[str, int, int],
+            output_builder: Callable[[tuple[str, int, int], list[dict]], tuple[str, int, int]],
+            publish: Callable[[tuple[str, int, int]], tuple[str, int, int]]) -> tuple[str, int, int]:
+        """Commit Phase-PASS from pathless supervisor-owned snapshot descriptors."""
+        commit_digest: str | None = None
+        try:
+            proofs = [_validated_product_tree_receipt(path, expected, live, room, phase_name, operation)
+                      for path, expected, live, room, operation in specs]
+            for proof in proofs:
+                current = self._snapshot_proof(proof["expected_root"])
+                if current != proof["sealed_snapshot"]: raise HarnessError("sealed product snapshot proof differs")
+            contexts = {(proof["room"], proof["phase"], proof["operation"]) for proof in proofs}
+            if len(contexts) != 1: raise HarnessError("atomic product commit contexts differ")
+            room, phase, operation = next(iter(contexts))
+            with self._lock:
+                commit_digest = self._append({"event":"phase-commit", "room":room, "phase":phase,
+                    "operation":operation, "expected_roots":[proof["expected_root"] for proof in proofs],
+                    "live_roots":[proof["live_root"] for proof in proofs],
+                    "proofs_digest":canonical_digest(proofs)})
+            for proof in proofs: proof["commit_digest"] = commit_digest
+            output = output_builder(preliminary, proofs)
+            result = publish(output)
+            PRODUCT_PHASE_PROOFS[phase_name] = proofs
+            print(f"shared-clean-rooms phase={phase_name} status=pass commit={commit_digest[:16]}", flush=True)
+            return result
+        except BaseException as exc:
+            if commit_digest is not None:
+                with self._lock:
+                    self._append({"event":"phase-commit-abort", "phase":phase_name,
+                                  "commit_digest":commit_digest, "error":type(exc).__name__})
+            raise
+        finally:
+            pass
+
+    def close(self) -> None:
+        self._stop.set()
+        for held in self._snapshots.values():
+            try: os.close(held["fd"])
+            except OSError: pass
+        self._snapshots.clear()
+        for channel in (self.client, self.server):
+            try: channel.shutdown(socket.SHUT_RDWR)
+            except OSError: pass
+            channel.close()
+        self._thread.join(timeout=2)
+        SCAN_SUPERVISORS.pop(self.run_id, None)
+
+
+def sha(path: pathlib.Path) -> str:
+    if path.is_symlink() or not path.is_file() or path.lstat().st_nlink != 1:
+        raise HarnessError(f"hashed file is absent, linked, or hardlinked: {path}")
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def process_environment(overrides: dict[str, str] | None = None) -> dict[str, str]:
+    env = {key:os.environ[key] for key in PROCESS_ENV_KEYS if key in os.environ}
+    env.update(RUN_INPUT_ENVIRONMENT)
+    if overrides:
+        unknown = set(overrides) - set(PROCESS_ENV_KEYS)
+        if unknown:
+            raise HarnessError(f"process environment override is outside closed allowlist: {sorted(unknown)}")
+        env.update(overrides)
+    return env
+
+
+def atomic_bytes(path: pathlib.Path, value: bytes) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    if path.parent.is_symlink() or (path.exists() and
+            (path.is_symlink() or not path.is_file() or path.lstat().st_nlink != 1)):
+        raise HarnessError(f"atomic phase output target differs: {path}")
+    descriptor, temporary = tempfile.mkstemp(prefix=f".{path.name}.", dir=path.parent)
+    try:
+        with os.fdopen(descriptor, "wb") as handle:
+            handle.write(value); handle.flush(); os.fsync(handle.fileno())
+        os.replace(temporary, path)
+    except BaseException:
+        try: os.unlink(temporary)
+        except FileNotFoundError: pass
+        raise
+
+
+def closed_files(paths: list[pathlib.Path]) -> tuple[list[dict[str, object]], int, int]:
+    records = []
+    for path in paths:
+        if path.is_symlink() or not path.is_file() or path.lstat().st_nlink != 1:
+            raise HarnessError(f"phase file binding is absent, linked, or non-regular: {path}")
+        info = path.stat()
+        records.append({"path":str(path.resolve()), "mode":stat.S_IMODE(info.st_mode),
+                        "size":info.st_size, "sha256":sha(path)})
+    return records, len(records), sum(int(record["size"]) for record in records)
+
+
+LIVE_RECEIPT_FIELDS = {"schema_version", "root", "tree_digest", "regular_files", "regular_bytes", "entries"}
+
+
+def canonical_absolute_root(value: object) -> bool:
+    if not isinstance(value, str) or not value or "\x00" in value or "\\" in value:
+        return False
+    if value == "/":
+        return str(pathlib.Path(value).resolve(strict=False)) == value
+    if not value.startswith("/") or value.startswith("//") or value.endswith("/"):
+        return False
+    components = value[1:].split("/")
+    if not components or any(component in {"", ".", ".."} for component in components):
+        return False
+    if pathlib.PurePosixPath(value).as_posix() != value:
+        return False
+    try:
+        return str(pathlib.Path(value).resolve(strict=False)) == value
+    except (OSError, RuntimeError):
+        return False
+
+
+def validate_live_tree_receipt(receipt: dict) -> None:
+    if set(receipt) != LIVE_RECEIPT_FIELDS or receipt["schema_version"] != "brandkit-live-tree-receipt.v1":
+        raise HarnessError("live tree receipt fields differ")
+    root = receipt["root"]
+    if (not canonical_absolute_root(root)
+            or not isinstance(receipt["entries"], list) or not receipt["entries"]
+            or type(receipt["regular_files"]) is not int or receipt["regular_files"] < 0
+            or type(receipt["regular_bytes"]) is not int or receipt["regular_bytes"] < 0
+            or not isinstance(receipt["tree_digest"], str) or len(receipt["tree_digest"]) != 64
+            or set(receipt["tree_digest"]) - set("0123456789abcdef")
+            or receipt["tree_digest"] != canonical_digest(receipt["entries"])):
+        raise HarnessError("live tree receipt binding differs")
+
+    entries = receipt["entries"]
+    paths: list[str] = []
+    by_path: dict[str, dict] = {}
+    for entry in entries:
+        if not isinstance(entry, dict) or not isinstance(entry.get("type"), str):
+            raise HarnessError("live tree receipt entry differs")
+        kind = entry["type"]
+        fields = {"directory":{"path", "type", "mode"},
+                  "file":{"path", "type", "mode", "size", "sha256"},
+                  "symlink":{"path", "type", "target"}}.get(kind)
+        if fields is None or set(entry) != fields:
+            raise HarnessError("live tree receipt entry fields differ")
+        raw_path = entry["path"]
+        if not isinstance(raw_path, str) or not raw_path or "\x00" in raw_path or "\\" in raw_path:
+            raise HarnessError("live tree receipt path differs")
+        pure = pathlib.PurePosixPath(raw_path)
+        if (pure.is_absolute() or ".." in pure.parts or raw_path != pure.as_posix()
+                or (raw_path != "." and "." in pure.parts)):
+            raise HarnessError("live tree receipt path is not canonical and relative")
+        if raw_path in by_path:
+            raise HarnessError("live tree receipt contains duplicate path")
+        if kind in {"directory", "file"}:
+            if type(entry["mode"]) is not int or not 0 <= entry["mode"] <= 0o7777:
+                raise HarnessError("live tree receipt mode differs")
+        if kind == "file":
+            if (type(entry["size"]) is not int or entry["size"] < 0
+                    or not isinstance(entry["sha256"], str) or len(entry["sha256"]) != 64
+                    or set(entry["sha256"]) - set("0123456789abcdef")):
+                raise HarnessError("live tree receipt file binding differs")
+        if kind == "symlink":
+            target = entry["target"]
+            if not isinstance(target, str) or not target or "\x00" in target:
+                raise HarnessError("live tree receipt symlink target differs")
+        paths.append(raw_path); by_path[raw_path] = entry
+
+    if entries[0].get("path") != "." or entries[0].get("type") != "directory":
+        raise HarnessError("live tree receipt root entry differs")
+    if paths[1:] != sorted(paths[1:]) or "." in paths[1:]:
+        raise HarnessError("live tree receipt entry order differs")
+    for raw_path in paths[1:]:
+        parent = pathlib.PurePosixPath(raw_path).parent.as_posix()
+        if parent == "":
+            parent = "."
+        if parent not in by_path or by_path[parent]["type"] != "directory":
+            raise HarnessError("live tree receipt parent structure differs")
+
+    files = [entry for entry in entries if entry["type"] == "file"]
+    if (len(files) != receipt["regular_files"]
+            or sum(entry["size"] for entry in files) != receipt["regular_bytes"]):
+        raise HarnessError("live tree receipt counters differ")
+
+
+def live_tree_receipt(root: pathlib.Path) -> dict:
+    """Inventory every material entry of a mutable live root before phase PASS."""
+    if root.is_symlink() or not root.is_dir():
+        raise HarnessError(f"live output root is absent, linked, or not a directory: {root}")
+    resolved = root.resolve(strict=True)
+    entries: list[dict[str, object]] = [{"path":".", "type":"directory",
+                                         "mode":stat.S_IMODE(root.lstat().st_mode)}]
+    files = total = 0
+    for path in sorted(root.rglob("*"), key=lambda item:item.relative_to(root).as_posix()):
+        relative = path.relative_to(root).as_posix()
+        info = path.lstat()
+        if path.is_symlink():
+            entries.append({"path":relative, "type":"symlink", "target":os.readlink(path)})
+        elif path.is_dir():
+            entries.append({"path":relative, "type":"directory", "mode":stat.S_IMODE(info.st_mode)})
+        elif path.is_file():
+            if info.st_nlink != 1:
+                raise HarnessError(f"live output contains hardlinked file: {path}")
+            files += 1; total += info.st_size
+            entries.append({"path":relative, "type":"file", "mode":stat.S_IMODE(info.st_mode),
+                            "size":info.st_size, "sha256":sha(path)})
+        else:
+            raise HarnessError(f"live output contains special file: {path}")
+    receipt = {"schema_version":"brandkit-live-tree-receipt.v1", "root":str(resolved),
+               "tree_digest":canonical_digest(entries), "regular_files":files,
+               "regular_bytes":total, "entries":entries}
+    validate_live_tree_receipt(receipt)
+    return receipt
+
+
+def _validated_product_tree_receipt(path: pathlib.Path, expected_root: pathlib.Path, live_root: pathlib.Path,
+                                    room: str, phase_name: str, operation: str) -> dict:
+    """Bind a product scanner receipt without rereading product file payloads."""
+    if path.is_symlink() or not path.is_file() or path.lstat().st_nlink != 1:
+        raise HarnessError("product tree receipt is absent, linked, or hardlinked")
+    lock, _ = shared_toolchain.validate_lock_structure()
+    raw = json.loads(path.read_text(encoding="utf-8"))
+    expected_text = str(expected_root)
+    if (not canonical_absolute_root(expected_text) or expected_root.is_symlink()
+            or expected_root.resolve(strict=False) != expected_root):
+        raise HarnessError("expected product phase root is not canonical and unaliased")
+    expected_receipt_path = shared_toolchain.tree_receipt_path(expected_root)
+    if path != expected_receipt_path or path.resolve(strict=True) != expected_receipt_path:
+        raise HarnessError("product tree receipt path does not match expected phase root")
+    live_text = str(live_root)
+    if (not canonical_absolute_root(live_text) or live_root.is_symlink()
+            or live_root.resolve(strict=False) != live_root):
+        raise HarnessError("live product phase root is not canonical and unaliased")
+    if not isinstance(room, str) or not room or not isinstance(phase_name, str) or not phase_name:
+        raise HarnessError("product phase context differs")
+    receipt = shared_toolchain.validate_tree_receipt(
+        raw, live_root, lock, operation=operation, receipt_root=expected_root,
+        check_live_identity=False, require_live_capability=False, check_root_binding=False,
+        expected_room=room, expected_phase=phase_name)
+    authorization = receipt["scan_authorization"]
+    supervisor = SCAN_SUPERVISORS.get(authorization["supervisor_id"])
+    if authorization["kind"] != "live" or supervisor is None:
+        raise HarnessError("product receipt lacks its live supervisor instance")
+    confirmed, returned_fd = supervisor._handle({"schema_version":"brandkit-scan-supervisor-request.v1",
+        "action":"validate-receipt", "root":expected_text, "ordinal":authorization["ordinal"],
+        "authorization_digest":authorization["authorization_digest"],
+        "completion_digest":authorization["completion_digest"],
+        "proof_digest":shared_toolchain._scan_proof_digest(receipt),
+        "room":room, "phase":phase_name, "operation":operation})
+    if returned_fd is not None or confirmed != {"valid":True, "supervisor_id":authorization["supervisor_id"]}:
+        raise HarnessError("product receipt supervisor proof differs")
+    if receipt["sealed_snapshot"] is None:
+        raise HarnessError("product receipt lacks a sealed installed snapshot")
+    sealed = supervisor._snapshot_proof(expected_text)
+    if sealed != receipt["sealed_snapshot"]:
+        raise HarnessError("product receipt sealed snapshot differs")
+    counters = receipt["scan_counters"]
+    if counters["reads"] != counters["files"] or counters["entries"] < counters["files"]:
+        raise HarnessError("product tree receipt counters differ")
+    return {"path":str(path.resolve()), "expected_root":expected_text,
+            "live_root":live_text, "room":room, "phase":phase_name, "operation":operation,
+            "root_device":receipt["root_device"], "root_inode":receipt["root_inode"],
+            "identity_digest":receipt["identity_digest"],
+            "receipt_digest":receipt["receipt_digest"], "tree_merkle":receipt["tree_merkle"],
+            "component_merkles":receipt["component_merkles"], "scan_counters":counters,
+            "scan_authorization":receipt["scan_authorization"], "sealed_snapshot":sealed}
+
+
+def process_group_alive(group: int) -> bool:
+    try:
+        os.killpg(group, 0)
+    except ProcessLookupError:
+        return False
+    except PermissionError:
+        return True
+    return True
+
+
+def empty_owned_process_group(group: int, *, term_grace: float = 1.0, kill_grace: float = 2.0) -> bool:
+    """Return whether cleanup was needed; fail if the owned group cannot be proven empty."""
+    leaked = process_group_alive(group)
+    if not leaked:
+        return False
+    try:
+        os.killpg(group, signal.SIGTERM)
+    except ProcessLookupError:
+        return True
+    deadline = time.monotonic() + term_grace
+    while process_group_alive(group) and time.monotonic() < deadline:
+        time.sleep(0.02)
+    if process_group_alive(group):
+        try:
+            os.killpg(group, signal.SIGKILL)
+        except ProcessLookupError:
+            return True
+        deadline = time.monotonic() + kill_grace
+        while process_group_alive(group) and time.monotonic() < deadline:
+            time.sleep(0.02)
+    if process_group_alive(group):
+        raise HarnessError(f"owned process group is not empty after SIGKILL: {group}")
+    return True
+
+
+def phase(name: str, command: list[str], *, timeout: int, env: dict[str, str] | None = None,
+          input_bytes: bytes | None = None, capture: bool = False, expect_failure: bool = False,
+          input_paths: list[pathlib.Path] | None = None,
+          output_paths: list[pathlib.Path] | None = None,
+          output_roots: list[pathlib.Path] | Callable[[], list[pathlib.Path]] | None = None,
+          product_receipts: list[tuple[pathlib.Path, pathlib.Path, pathlib.Path, str, str]] | None = None,
+          write_denied_roots: list[pathlib.Path] | None = None,
+          validator: Callable[[subprocess.CompletedProcess], None] | None = None,
+          instrument: bool = True, stdout_path: pathlib.Path | None = None) -> subprocess.CompletedProcess:
+    result: subprocess.CompletedProcess | None = None
+    input_records, bound_input_files, bound_input_bytes = closed_files(input_paths or [])
+    if env is None:
+        effective_env = process_environment()
+    else:
+        unknown = set(env) - set(PROCESS_ENV_KEYS)
+        if unknown:
+            raise HarnessError(f"phase environment is outside closed allowlist: {sorted(unknown)}")
+        effective_env = dict(env)
+    receipt_specs = list(product_receipts or [])
+    if receipt_specs:
+        rooms = {spec[3] for spec in receipt_specs}; operations = {spec[4] for spec in receipt_specs}
+        if len(rooms) != 1 or len(operations) != 1:
+            raise HarnessError("phase product receipt contexts differ")
+        effective_env[shared_toolchain.SUPERVISOR_ROOM_ENV] = next(iter(rooms))
+        effective_env[shared_toolchain.SUPERVISOR_PHASE_ENV] = name
+        effective_env[shared_toolchain.SUPERVISOR_OPERATION_ENV] = next(iter(operations))
+
+    def invoke() -> tuple[str, int, int]:
+        nonlocal result
+        started = time.monotonic()
+        print(f"shared-clean-rooms phase={name} status=start timeout={timeout}s", flush=True)
+        fd_map = json.loads(effective_env.get(shared_toolchain.RUN_FDS_ENV, "{}"))
+        if not isinstance(fd_map, dict) or not all(type(value) is int and value >= 0 for value in fd_map.values()):
+            raise HarnessError("phase run-input FD map differs")
+        capability_fds = set(fd_map.values())
+        if shared_toolchain.SUPERVISOR_FD_ENV in effective_env:
+            capability_fds.add(int(effective_env[shared_toolchain.SUPERVISOR_FD_ENV]))
+        effective_command = list(command)
+        if write_denied_roots:
+            clauses = []
+            for denied in write_denied_roots:
+                resolved = denied.resolve(strict=True)
+                escaped = str(resolved).replace("\\", "\\\\").replace('"', '\\"')
+                clauses.append(f'(deny file-write* (subpath "{escaped}"))')
+            profile = "(version 1)(allow default)" + "".join(clauses)
+            effective_command = ["/usr/bin/sandbox-exec", "-p", profile, *effective_command]
+        process = subprocess.Popen(effective_command, env=effective_env, start_new_session=True,
+                                   pass_fds=tuple(sorted(capability_fds)),
+                                   stdin=subprocess.PIPE if input_bytes is not None else None,
+                                   stdout=subprocess.PIPE if capture else None,
+                                   stderr=subprocess.PIPE if capture else None)
+        try:
+            stdout, stderr = process.communicate(input=input_bytes, timeout=timeout)
+        except subprocess.TimeoutExpired as exc:
+            try:
+                os.killpg(process.pid, signal.SIGTERM)
+            except ProcessLookupError:
+                pass
+            try:
+                stdout, stderr = process.communicate(timeout=1)
+            except subprocess.TimeoutExpired:
+                stdout = stderr = None
+            cleanup_error: BaseException | None = None
+            try:
+                empty_owned_process_group(process.pid, term_grace=0.2)
+            except BaseException as error:
+                cleanup_error = error
+            if process.poll() is None:
+                process.kill()
+            final_stdout, final_stderr = process.communicate()
+            stdout = final_stdout if stdout is None else stdout
+            stderr = final_stderr if stderr is None else stderr
+            if cleanup_error is not None:
+                raise cleanup_error
+            if process_group_alive(process.pid):
+                raise HarnessError(f"timed-out process group remains populated: {name}")
+            raise HarnessError(f"phase timed out after {timeout}s: {name}") from exc
+        leaked = empty_owned_process_group(process.pid)
+        result = subprocess.CompletedProcess(command, process.returncode, stdout, stderr)
+        if leaked:
+            raise HarnessError(f"phase left descendants after parent exit: {name}")
+        passed = result.returncode != 0 if expect_failure else result.returncode == 0
+        if not passed:
+            tail = (result.stderr or b"").decode(errors="replace")[-4000:]
+            raise HarnessError(f"phase failed: {name}: exit={result.returncode}: {tail}")
+        if validator is not None:
+            validator(result)
+        if stdout_path is not None:
+            if not capture or result.stdout is None:
+                raise HarnessError("stdout_path requires captured stdout")
+            atomic_bytes(stdout_path, result.stdout)
+        elapsed = time.monotonic() - started
+        child_status = "child-pass" if receipt_specs else "pass"
+        print(f"shared-clean-rooms phase={name} status={child_status} elapsed={elapsed:.2f}s", flush=True)
+        output = (result.stdout or b"") + (result.stderr or b"")
+        material_outputs = list(output_paths or []) + ([stdout_path] if stdout_path is not None else [])
+        output_records, output_files, output_file_bytes = closed_files(material_outputs)
+        roots = output_roots() if callable(output_roots) else list(output_roots or [])
+        resolved_roots = [root.resolve(strict=True) for root in roots]
+        if len(set(resolved_roots)) != len(resolved_roots):
+            raise HarnessError(f"duplicate live output root: {name}")
+        for index, left in enumerate(resolved_roots):
+            for right in resolved_roots[index + 1:]:
+                if left.is_relative_to(right) or right.is_relative_to(left):
+                    raise HarnessError(f"overlapping live output roots: {name}")
+        for path in material_outputs:
+            if any(path.resolve(strict=True).is_relative_to(root) for root in resolved_roots):
+                raise HarnessError(f"phase output is counted both directly and through a live root: {path}")
+        live_receipts = [live_tree_receipt(root) for root in roots]
+        digest = canonical_digest({"returncode": result.returncode,
+                                   "stdout_sha256": hashlib.sha256(result.stdout or b"").hexdigest(),
+                                   "stderr_sha256": hashlib.sha256(result.stderr or b"").hexdigest(),
+                                   "files":output_records, "live_roots":live_receipts})
+        return (digest, int(bool(output)) + output_files + sum(item["regular_files"] for item in live_receipts),
+                len(output) + output_file_bytes + sum(item["regular_bytes"] for item in live_receipts))
+
+    def build_committed_output(preliminary: tuple[str, int, int], proofs: list[dict]) -> tuple[str, int, int]:
+        proof_files = sum(item["scan_counters"]["files"] for item in proofs)
+        proof_bytes = sum(item["scan_counters"]["bytes"] for item in proofs)
+        return (canonical_digest({"preliminary_output_digest":preliminary[0], "committed_product_proofs":proofs}),
+                preliminary[1] + proof_files, preliminary[2] + proof_bytes)
+
+    def product_supervisor() -> ScanSupervisor:
+        identifiers = set()
+        for path, *_ in receipt_specs:
+            value = json.loads(path.read_text(encoding="utf-8"))
+            identifiers.add(value.get("supervisor_id"))
+        if len(identifiers) != 1 or next(iter(identifiers)) not in SCAN_SUPERVISORS:
+            raise HarnessError("phase product receipts lack one live supervisor")
+        return SCAN_SUPERVISORS[next(iter(identifiers))]
+
+    if ACTIVE_DAG is None or not instrument:
+        preliminary = invoke()
+        if receipt_specs:
+            product_supervisor().atomic_product_commit(name, receipt_specs, preliminary,
+                build_committed_output, lambda output:output)
+    else:
+        code_paths = list(PRODUCT_CODE_INPUTS)
+        for token in command:
+            candidate = pathlib.Path(token)
+            try:
+                resolved = candidate.resolve(strict=True)
+                resolved.relative_to(ROOT)
+            except (OSError, ValueError):
+                continue
+            if resolved.is_file() and not resolved.is_symlink():
+                code_paths.append(resolved)
+        commit = (lambda preliminary, publish: product_supervisor().atomic_product_commit(
+            name, receipt_specs, preliminary, build_committed_output, publish)) if receipt_specs else None
+        ACTIVE_DAG.run(name, invoke, inputs={"command": command, "timeout": timeout,
+                                             "stdin_sha256": hashlib.sha256(input_bytes or b"").hexdigest(),
+                                             "input_files":input_records,
+                                             "input_file_count":bound_input_files,
+                                             "input_file_bytes":bound_input_bytes,
+                                             "effective_environment":effective_env,
+                                             "product_receipts":[{"path":str(path),
+                                                 "expected_root":str(expected_root), "live_root":str(live_root),
+                                                 "room":room, "phase":name, "operation":operation}
+                                                for path,expected_root,live_root,room,operation in receipt_specs],
+                                             "expect_failure": expect_failure}, code_paths=code_paths,
+                       atomic_commit=commit)
+    assert result is not None
+    return result
+
+
+def lifecycle_specs() -> list[PhaseSpec]:
+    specs = [PhaseSpec("run-preflight"), PhaseSpec("oci-inspect", ("run-preflight",)),
+             PhaseSpec("fixture-bundle", ("oci-inspect",), resumable=True)]
+    for label in ("A", "B"):
+        host = f"{label}-host-network-deny"; install = f"{label}-install"; verify = f"{label}-verify"
+        render = f"{label}-render-output"; version = f"{label}-version-log"; rollback = f"{label}-rollback"
+        restore = f"{label}-restore"; restored = f"{label}-restore-verify"
+        specs.extend((PhaseSpec(host, ("fixture-bundle",)), PhaseSpec(install, (host,)),
+                      PhaseSpec(verify, (install,)), PhaseSpec(render, (verify, "fixture-bundle"), resumable=True),
+                      PhaseSpec(version, (render,)), PhaseSpec(rollback, (version,)),
+                      PhaseSpec(restore, (rollback,)), PhaseSpec(restored, (restore,))))
+    specs.append(PhaseSpec("compare", ("A-restore-verify", "B-restore-verify")))
+    return specs
+
+
+def docker_prefix() -> list[str]:
+    raw = os.environ.get("BRANDKIT_DOCKER_PREFIX_JSON", '["docker"]')
+    value = json.loads(raw)
+    if not isinstance(value, list) or not value or not all(isinstance(item, str) and item for item in value):
+        raise HarnessError("BRANDKIT_DOCKER_PREFIX_JSON must be a non-empty JSON string array")
+    return value
+
+
+def fixture_tar() -> bytes:
+    source = {path.name: path for path in FIXTURES.iterdir() if path.is_file()}
+    source["mermaid-config.json"] = ROOT / "toolchain/mermaid-svg/MERMAID_CONFIG.json"
+    stream = io.BytesIO()
+    with tarfile.open(fileobj=stream, mode="w") as archive:
+        for name, path in sorted(source.items()):
+            info = archive.gettarinfo(str(path), arcname=name)
+            info.uid = info.gid = 0
+            info.uname = info.gname = "root"
+            info.mtime = 0
+            with path.open("rb") as handle:
+                archive.addfile(info, handle)
+    return stream.getvalue()
+
+
+def fixture_paths() -> list[pathlib.Path]:
+    return sorted((path for path in FIXTURES.iterdir() if path.is_file()), key=str) + [
+        ROOT / "toolchain/mermaid-svg/MERMAID_CONFIG.json"
+    ]
+
+
+def immutable_product_phase(name: str, build: Callable[[pathlib.Path], None], *, inputs: dict) -> pathlib.Path:
+    if ACTIVE_DAG is None:
+        raise HarnessError("immutable product phase requires active DAG")
+    return ACTIVE_DAG.run_immutable(name, build, inputs=inputs, code_paths=PRODUCT_CODE_INPUTS)
+
+
+def materialize_fixture_bundle() -> pathlib.Path:
+    if ACTIVE_DAG is None:
+        raise HarnessError("fixture bundle requires active product DAG")
+    records, files, total = closed_files(fixture_paths())
+    def build(destination: pathlib.Path) -> None:
+        (destination / "fixtures.tar").write_bytes(fixture_tar())
+    return immutable_product_phase(
+        "fixture-bundle", build,
+        inputs={"fixture_files":records, "input_file_count":files, "input_file_bytes":total},
+    )
+
+
+def extract_output(raw: bytes, destination: pathlib.Path) -> None:
+    destination.mkdir(parents=True, exist_ok=True)
+    if destination.is_symlink() or any(destination.iterdir()):
+        raise HarnessError("docker output destination must be an empty regular directory")
+    with tarfile.open(fileobj=io.BytesIO(raw)) as archive:
+        seen: set[pathlib.PurePosixPath] = set()
+        members = archive.getmembers()
+        if not members:
+            raise HarnessError("empty docker output archive")
+        if len(members) > 10_000 or sum(member.size for member in members) > 512 * 1024 * 1024:
+            raise HarnessError("docker output archive exceeds closed limits")
+        for member in members:
+            pure = pathlib.PurePosixPath(member.name)
+            if (pure.is_absolute() or not pure.parts or ".." in pure.parts or pure in seen
+                    or not (member.isdir() or member.isfile())):
+                raise HarnessError(f"unsafe docker output member: {member.name}")
+            seen.add(pure)
+        for member in members:
+            target = destination.joinpath(*pathlib.PurePosixPath(member.name).parts)
+            if member.isdir():
+                target.mkdir(parents=True, exist_ok=True)
+                continue
+            target.parent.mkdir(parents=True, exist_ok=True)
+            source = archive.extractfile(member)
+            if source is None:
+                raise HarnessError(f"unreadable docker output member: {member.name}")
+            with source, target.open("xb") as handle:
+                shutil.copyfileobj(source, handle)
+
+
+def inspect_image(docker: list[str], lock: dict) -> str:
+    image_id: list[str] = []
+    def validate(result: subprocess.CompletedProcess) -> None:
+        fields = result.stdout.decode().strip().split()
+        expected = [lock["execution"]["container_digest"], "amd64", "linux"]
+        if fields != expected:
+            raise HarnessError(f"actual OCI identity differs: {fields!r} != {expected!r}")
+        image_id.append(fields[0])
+    result = phase("oci-inspect", docker + ["image", "inspect", lock["execution"]["container_image"],
+                   "--format", "{{.Id}} {{.Architecture}} {{.Os}}"], timeout=60, capture=True,
+                   input_paths=[LOCK], validator=validate)
+    assert result.stdout is not None and len(image_id) == 1
+    return image_id[0]
+
+
+def render_room(label: str, docker: list[str], lock: dict, image_id: str,
+                fixture_bundle: pathlib.Path) -> pathlib.Path:
+    if ACTIVE_DAG is None:
+        raise HarnessError("render output requires active product DAG")
+    fixture_archive = fixture_bundle / "fixtures.tar"
+    fixture_record, files, total = closed_files([fixture_archive])
+    docker_env = process_environment()
+
+    def build(destination: pathlib.Path) -> None:
+        name = f"brandkit-toolchain-{os.getpid()}-{label.lower()}"
+        container: str | None = None
+        create = phase(f"{label}-render-create", docker + ["create", "--name", name, "--network", "none",
+            "--cap-add", "SYS_ADMIN", lock["execution"]["container_image"], "sh", "-lc",
+            "chown -R 1000:1000 /work && exec setpriv --reuid=1000 --regid=1000 --clear-groups sh /work/run-render-smoke"],
+            timeout=60, capture=True, env=docker_env, instrument=False)
+        container = create.stdout.decode().strip()
+        try:
+            phase(f"{label}-render-copy-input", docker + ["cp", "-", f"{container}:/work"], timeout=120,
+                  input_bytes=fixture_archive.read_bytes(), capture=True, env=docker_env, instrument=False)
+            phase(f"{label}-render-execute", docker + ["start", "--attach", container], timeout=900,
+                  env=docker_env, instrument=False)
+            def inspect_validator(result: subprocess.CompletedProcess) -> None:
+                if result.stdout.decode().strip().split() != [image_id, "none"]:
+                    raise HarnessError(f"{label} container identity/network differs")
+            phase(f"{label}-render-inspect", docker + ["inspect", container, "--format",
+                  "{{.Image}} {{.HostConfig.NetworkMode}}"], timeout=60, capture=True, env=docker_env,
+                  validator=inspect_validator, instrument=False)
+            raw = phase(f"{label}-render-copy-output", docker + ["cp", f"{container}:/work/out", "-"],
+                        timeout=120, capture=True, env=docker_env, instrument=False).stdout
+            extract_output(raw, destination)
+            inner = destination / "out/container-version-log.json"
+            payload = json.loads(inner.read_text(encoding="utf-8"))
+            envelope = {"schema_version":"brandkit-container-runtime-envelope.v1", "image_id":image_id,
+                        "network_mode":"none", "container_log_sha256":sha(inner), "container_log":payload}
+            atomic_json(destination / "container-runtime.json", envelope)
+            output_hashes(destination)
+        finally:
+            if container:
+                phase(f"{label}-render-remove", docker + ["rm", "-f", container], timeout=60,
+                      capture=True, env=docker_env, instrument=False)
+
+    return immutable_product_phase(
+        f"{label}-render-output", build,
+        inputs={"image_id":image_id, "fixture":fixture_record, "input_file_count":files,
+                "input_file_bytes":total, "docker_prefix":docker, "effective_environment":docker_env},
+    )
+
+
+def host_network_probe(room: pathlib.Path, env: dict[str, str]) -> None:
+    artifact = room / "local-artifact"
+    artifact.write_text("local-ok\n", encoding="utf-8")
+    code = '''
+import pathlib,socket,sys,threading
+p=pathlib.Path(sys.argv[1]); assert p.read_text()=="local-ok\\n"
+server=socket.socket();server.bind(("127.0.0.1",0));server.listen();port=server.getsockname()[1]
+t=threading.Thread(target=lambda:server.accept()[0].close());t.start();client=socket.create_connection(("127.0.0.1",port),3);client.close();t.join(3);server.close()
+try: socket.getaddrinfo("example.com",443)
+except socket.gaierror: pass
+else: raise SystemExit("external DNS unexpectedly succeeded")
+try: socket.create_connection(("1.1.1.1",443),3)
+except OSError: pass
+else: raise SystemExit("external TCP unexpectedly succeeded")
+print("host-network-deny: pass")
+'''
+    phase(f"{room.name}-host-network-deny", ["/usr/bin/sandbox-exec", "-f", str(NETWORK_PROFILE),
+          "/opt/homebrew/opt/python@3.12/bin/python3.12", "-c", code, str(artifact)], timeout=30, env=env,
+          input_paths=[NETWORK_PROFILE, artifact])
+
+
+def rollback_output_roots(root: pathlib.Path) -> list[pathlib.Path]:
+    marker = root / "rollback.json"
+    if marker.is_symlink() or not marker.is_file() or marker.lstat().st_nlink != 1:
+        raise HarnessError("rollback marker is absent, linked, or hardlinked")
+    payload = json.loads(marker.read_text(encoding="utf-8"))
+    fields = {"schema_version", "rolled_back_release", "quarantine", "quarantine_device",
+              "quarantine_inode", "lock_sha256", "tree_receipt_digest", "tree_merkle",
+              "identity_digest"}
+    if set(payload) != fields or payload["schema_version"] != "brandkit-toolchain-rollback.v2":
+        raise HarnessError("rollback marker fields differ")
+    quarantine = pathlib.Path(payload["quarantine"]).resolve(strict=True)
+    if quarantine.parent != root.resolve().parent or quarantine == root.resolve():
+        raise HarnessError("rollback quarantine output is outside the installation parent")
+    return [root, quarantine]
+
+
+def lifecycle(label: str, base: pathlib.Path, docker: list[str], lock: dict, image_id: str,
+              fixture_bundle: pathlib.Path) -> tuple[pathlib.Path, pathlib.Path]:
+    room = base / label
+    room.mkdir()
+    install = room / "install"
+    env = process_environment({"LANG":"C", "LC_ALL":"C", "TZ":"UTC", "SOURCE_DATE_EPOCH":"0",
+           "PYTHONDONTWRITEBYTECODE":"1", "HTTP_PROXY":"http://127.0.0.1:9",
+           "HTTPS_PROXY":"http://127.0.0.1:9", "ALL_PROXY":"http://127.0.0.1:9",
+           "NO_PROXY":"localhost,127.0.0.1"})
+    host_network_probe(room, env)
+    prefix = ["/usr/bin/sandbox-exec", "-f", str(NETWORK_PROFILE)]
+    receipt = shared_toolchain.tree_receipt_path(install)
+    phase(f"{label}-install", prefix + [str(ROOT/"toolchain/install-from-lock"), "--root", str(install)],
+          timeout=5400, env=env, input_paths=[LOCK, NETWORK_PROFILE],
+          product_receipts=[(receipt, install, install, label, "install")])
+    phase(f"{label}-verify", prefix + [str(ROOT/"toolchain/verify-installation"), "--root", str(install)],
+          timeout=1800, env=env, input_paths=[LOCK, NETWORK_PROFILE, install/"installation.json"],
+          product_receipts=[(receipt, install, install, label, "verify")], write_denied_roots=[install])
+    render_output = render_room(label, docker, lock, image_id, fixture_bundle)
+    runtime_log = render_output / "container-runtime.json"
+    phase(f"{label}-version-log", prefix + [str(ROOT/"toolchain/version-log"), "--root", str(install),
+          "--container-log", str(runtime_log)], timeout=1800, env=env, capture=True,
+          input_paths=[LOCK, NETWORK_PROFILE, install/"installation.json", runtime_log],
+          stdout_path=room/"version-log.json",
+          product_receipts=[(receipt, install, install, label, "version-log")],
+          write_denied_roots=[install])
+    quarantine = install.with_name(install.name + ".rolled-back-" + sha(install/"installation.json")[:16])
+    phase(f"{label}-rollback", [str(ROOT/"toolchain/rollback"), "--root", str(install),
+          "--verification-log", str(room/"version-log.json")], timeout=1800, env=env,
+          input_paths=[LOCK, install/"installation.json", room/"version-log.json"],
+          output_paths=[install/"rollback.json", receipt],
+          product_receipts=[(receipt, install, quarantine, label, "rollback")])
+    phase(f"{label}-restore", [sys.executable, str(ROOT/"scripts/shared_toolchain.py"),
+          "restore-sealed", "--root", str(install)], timeout=3600, env=env,
+          input_paths=[LOCK, install/"rollback.json"],
+          product_receipts=[(receipt, install, install, label, "restore")])
+    phase(f"{label}-restore-verify", prefix + [str(ROOT/"toolchain/verify-installation"), "--root", str(install)],
+          timeout=1800, env=env, input_paths=[LOCK, NETWORK_PROFILE, install/"installation.json"],
+          product_receipts=[(receipt, install, install, label, "verify")], write_denied_roots=[install])
+    return room, render_output
+
+
+def output_hashes(render_root: pathlib.Path) -> dict[str, str]:
+    base = render_root / "out"
+    names = ("mermaid.svg", "graphviz.svg", "rich.html", "rich-a.pdf", "gallery/page-1.png", "ocr.txt", "container-version-log.json")
+    return {name:sha(base/name) for name in names}
+
+
+def validate_scan_ledger(ledger: object, run_id: str) -> dict:
+    if not isinstance(ledger, dict) or set(ledger) != {
+            "schema_version", "run_id", "counts", "events", "ledger_digest"}:
+        raise HarnessError("scan ledger fields differ")
+    unsigned = {key:value for key,value in ledger.items() if key != "ledger_digest"}
+    if (ledger["schema_version"] != "brandkit-scan-supervisor-ledger.v1" or ledger["run_id"] != run_id
+            or canonical_digest(unsigned) != ledger["ledger_digest"]
+            or not isinstance(ledger["counts"], dict) or not isinstance(ledger["events"], list)):
+        raise HarnessError("scan ledger binding differs")
+    counts: dict[str, int] = {}; authorizations: dict[str, dict] = {}; completions: set[str] = set()
+    proof_events: set[str] = set()
+    phase_commits: set[str] = set(); aborted_commits: set[str] = set()
+    previous = "0" * 64
+    for sequence, event in enumerate(ledger["events"], 1):
+        if not isinstance(event, dict): raise HarnessError("scan ledger event differs")
+        kind = event.get("event")
+        expected = ({"event", "root", "physical_root", "ordinal", "room", "phase", "operation",
+                     "sequence", "previous_digest", "event_digest"}
+                    if kind == "scan" else
+                    {"event", "root", "ordinal", "authorization_digest", "proof_digest",
+                     "room", "phase", "operation", "sequence", "previous_digest", "event_digest"}
+                    if kind == "scan-complete" else
+                    {"event", "root", "ordinal", "authorization_digest", "prior_completion_digest",
+                     "proof_digest", "room", "phase", "operation", "sequence", "previous_digest",
+                     "event_digest"} if kind == "receipt-reuse" else
+                    {"event", "root", "ordinal", "completion_digest", "archive_sha256", "archive_size",
+                     "member_manifest_digest", "sequence", "previous_digest", "event_digest"}
+                    if kind == "snapshot-seal" else
+                    {"event", "room", "phase", "operation", "expected_roots", "live_roots",
+                     "proofs_digest", "sequence", "previous_digest", "event_digest"}
+                    if kind == "phase-commit" else
+                    {"event", "phase", "commit_digest", "error", "sequence", "previous_digest",
+                     "event_digest"} if kind == "phase-commit-abort" else None)
+        if expected is None or set(event) != expected:
+            raise HarnessError("scan ledger event fields differ")
+        unsigned_event = {key:value for key,value in event.items() if key != "event_digest"}
+        if (event["sequence"] != sequence or event["previous_digest"] != previous
+                or canonical_digest(unsigned_event) != event["event_digest"]):
+            raise HarnessError("scan ledger event chain differs")
+        if kind not in {"phase-commit", "phase-commit-abort"} and (not canonical_absolute_root(event["root"])
+                or type(event["ordinal"]) is not int or not 1 <= event["ordinal"] <= 3):
+            raise HarnessError("scan ledger root/ordinal differs")
+        if kind == "scan":
+            if not canonical_absolute_root(event["physical_root"]):
+                raise HarnessError("scan ledger physical root differs")
+            expected_ordinal = counts.get(event["root"], 0) + 1
+            if event["ordinal"] != expected_ordinal: raise HarnessError("scan ledger ordinal differs")
+            counts[event["root"]] = expected_ordinal; authorizations[event["event_digest"]] = event
+        elif kind == "scan-complete":
+            authorization = authorizations.get(event["authorization_digest"])
+            if (authorization is None or event["authorization_digest"] in completions
+                    or authorization["root"] != event["root"] or authorization["ordinal"] != event["ordinal"]):
+                raise HarnessError("scan ledger completion differs")
+            if any(authorization[name] != event[name] for name in ("room", "phase", "operation")):
+                raise HarnessError("scan ledger completion context differs")
+            if len(event["proof_digest"]) != 64 or set(event["proof_digest"]) - set("0123456789abcdef"):
+                raise HarnessError("scan ledger proof digest differs")
+            completions.add(event["authorization_digest"])
+            proof_events.add(event["event_digest"])
+        elif kind == "receipt-reuse":
+            authorization = authorizations.get(event["authorization_digest"])
+            if (authorization is None or event["prior_completion_digest"] not in proof_events
+                    or authorization["root"] != event["root"] or authorization["ordinal"] != event["ordinal"]):
+                raise HarnessError("scan ledger receipt reuse differs")
+            prior = next(item for item in ledger["events"] if item.get("event_digest") == event["prior_completion_digest"])
+            if prior["proof_digest"] != event["proof_digest"]:
+                raise HarnessError("scan ledger receipt reuse proof differs")
+            proof_events.add(event["event_digest"])
+        elif kind == "snapshot-seal":
+            if (event["completion_digest"] not in proof_events or type(event["archive_size"]) is not int
+                    or event["archive_size"] <= 0 or len(event["archive_sha256"]) != 64
+                    or len(event["member_manifest_digest"]) != 64):
+                raise HarnessError("scan ledger snapshot seal differs")
+        elif kind == "phase-commit":
+            if (not event["expected_roots"] or len(event["expected_roots"]) != len(event["live_roots"])
+                    or any(not canonical_absolute_root(root) for root in
+                           [*event["expected_roots"], *event["live_roots"]])
+                    or len(event["proofs_digest"]) != 64
+                    or set(event["proofs_digest"]) - set("0123456789abcdef")):
+                raise HarnessError("scan ledger phase commit differs")
+            phase_commits.add(event["event_digest"])
+        else:
+            if (event["commit_digest"] not in phase_commits or event["commit_digest"] in aborted_commits
+                    or not isinstance(event["phase"], str) or not event["phase"]
+                    or not isinstance(event["error"], str) or not event["error"]):
+                raise HarnessError("scan ledger phase abort differs")
+            aborted_commits.add(event["commit_digest"])
+        previous = event["event_digest"]
+    if counts != ledger["counts"] or set(authorizations) != completions or aborted_commits:
+        raise HarnessError("scan ledger counts/completions differ")
+    return ledger
+
+
+def validate_summary(path: pathlib.Path, closure: dict) -> dict:
+    if path.is_symlink() or not path.is_file() or path.lstat().st_nlink != 1:
+        raise HarnessError("run summary is absent, linked, or hardlinked")
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    fields = {"schema_version", "status", "image_id", "network", "fresh_release", "resumed", "run_id",
+              "rooms", "render_objects", "hashes", "event_log_sha256", "event_log_size", "event_count",
+              "run_closure_digest", "run_inputs_path", "run_inputs_receipt_digest"}
+    fields |= {"scan_ledger", "scan_ledger_digest", "product_phase_proofs"}
+    if set(payload) != fields or payload["schema_version"] != "brandkit-shared-clean-rooms.v1" or payload["status"] != "pass":
+        raise HarnessError("run summary fields differ")
+    if (payload["run_id"] != closure["run_id"] or payload["event_log_sha256"] != closure["event_log_sha256"]
+            or payload["event_log_size"] != closure["event_log_size"]
+            or payload["event_count"] != closure["event_count"]
+            or payload["run_closure_digest"] != closure["closure_digest"]):
+        raise HarnessError("run summary event closure differs")
+    ledger = validate_scan_ledger(payload["scan_ledger"], payload["run_id"])
+    if ledger["ledger_digest"] != payload["scan_ledger_digest"]:
+        raise HarnessError("run summary scan ledger differs")
+    if SCAN_SUPERVISOR is not None and SCAN_SUPERVISOR.run_id == payload["run_id"]:
+        if SCAN_SUPERVISOR.summary() != ledger:
+            raise HarnessError("run summary does not match the live supervisor ledger")
+    proofs = payload["product_phase_proofs"]
+    if not isinstance(proofs, dict): raise HarnessError("run summary product proofs differ")
+    proof_fields = {"path", "expected_root", "live_root", "room", "phase", "operation",
+                    "root_device", "root_inode", "receipt_digest", "tree_merkle",
+                    "identity_digest", "commit_digest", "component_merkles", "scan_counters",
+                    "scan_authorization", "sealed_snapshot"}
+    for phase_name, records in proofs.items():
+        if (not isinstance(phase_name, str) or not isinstance(records, list) or not records
+                or any(not isinstance(record, dict) or set(record) != proof_fields
+                       or record["phase"] != phase_name
+                       or not canonical_absolute_root(record["expected_root"])
+                       or not canonical_absolute_root(record["live_root"])
+                       or type(record["root_device"]) is not int or type(record["root_inode"]) is not int
+                       for record in records)):
+            raise HarnessError("run summary product proof binding differs")
+    if SCAN_SUPERVISOR is not None and SCAN_SUPERVISOR.run_id == payload["run_id"]:
+        if proofs != PRODUCT_PHASE_PROOFS:
+            raise HarnessError("run summary product proofs differ from live phase commits")
+    live_log = validate_event_log(
+        pathlib.Path(closure["event_log_path"]), expected_run_id=closure["run_id"],
+        expected_phases=set(closure["phase_receipts"]),
+    )
+    if (live_log["sha256"] != closure["event_log_sha256"] or live_log["size"] != closure["event_log_size"]
+            or live_log["events"] != closure["event_count"]
+            or live_log["phase_receipts"] != closure["phase_receipts"]):
+        raise HarnessError("run summary live event log differs")
+    if (payload["network"] != "deny-all-with-loopback" or not isinstance(payload["fresh_release"], bool)
+            or not isinstance(payload["resumed"], bool) or len(payload["rooms"]) != 2
+            or len(payload["render_objects"]) != 2):
+        raise HarnessError("run summary execution binding differs")
+    structure, _ = shared_toolchain.validate_lock_structure()
+    _, run_inputs = shared_toolchain.load_run_inputs(
+        structure, pathlib.Path(payload["run_inputs_path"]), expected_run_id=payload["run_id"])
+    if run_inputs["receipt_digest"] != payload["run_inputs_receipt_digest"]:
+        raise HarnessError("run summary input receipt differs")
+    renders = [pathlib.Path(value) for value in payload["render_objects"]]
+    actual = [output_hashes(render) for render in renders]
+    if actual[0] != actual[1] or payload["hashes"] != actual[0]:
+        raise HarnessError("run summary material output differs")
+    return payload
+
+
+def main() -> None:
+    global ACTIVE_DAG, RUN_INPUT_ENVIRONMENT, SCAN_SUPERVISOR, PRODUCT_PHASE_PROOFS
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--runtime-root", required=True)
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument("--resume", action="store_true", help="reuse only valid immutable content-addressed phase outputs")
+    mode.add_argument("--fresh-release", action="store_true", help="forbid all resume receipts")
+    args = parser.parse_args()
+    requested_base = pathlib.Path(args.runtime_root)
+    if requested_base.is_symlink():
+        raise HarnessError("--runtime-root must not be a symlink")
+    base = requested_base.resolve()
+    relative_base = base.relative_to(RUNTIME_ROOT.resolve())
+    if not relative_base.parts:
+        raise HarnessError("--runtime-root must be a child of the project runtime root")
+    if base.exists() and not args.resume:
+        raise HarnessError("--runtime-root must be absent unless --resume is selected")
+    base.mkdir(parents=True, exist_ok=args.resume)
+    environment = process_environment()
+    ACTIVE_DAG = PhaseDAG(base, lifecycle_specs(), resume=args.resume,
+                          fresh_release=args.fresh_release, environment=environment)
+    PRODUCT_PHASE_PROOFS = {}
+    SCAN_SUPERVISOR = ScanSupervisor(ACTIVE_DAG.run_id)
+    lock, _ = shared_toolchain.validate_lock_structure()
+    inputs_parent = base / "run-inputs"; inputs_parent.mkdir(mode=0o700, exist_ok=True)
+    if inputs_parent.is_symlink() or inputs_parent.resolve(strict=True) != inputs_parent:
+        raise HarnessError("run input parent is linked or aliased")
+    inputs_root = inputs_parent / ACTIVE_DAG.run_id
+    run_inputs: dict = {}
+    def preflight_action() -> tuple[str, int, int]:
+        nonlocal run_inputs
+        observed_reads: dict[str, int] = {}
+        run_inputs = shared_toolchain.preflight_run_inputs(
+            lock, inputs_root, ACTIVE_DAG.run_id, full_read_counter=observed_reads)
+        if observed_reads != run_inputs["full_read_counts"]:
+            raise HarnessError("run preflight full-read counters differ")
+        artifacts = run_inputs["artifacts"]
+        return (run_inputs["receipt_digest"], sum(item["files"] for item in artifacts.values()),
+                sum(item["bytes"] for item in artifacts.values()))
+    ACTIVE_DAG.run("run-preflight", preflight_action,
+                   inputs={"lock_sha256":sha(LOCK)}, code_paths=PRODUCT_CODE_INPUTS)
+    receipt_path = inputs_root / "run-inputs.json"
+    RUN_INPUT_ENVIRONMENT = {shared_toolchain.RUN_INPUT_ENV:str(receipt_path),
+                             shared_toolchain.RUN_ID_ENV:ACTIVE_DAG.run_id,
+                             shared_toolchain.SUPERVISOR_ENV:ACTIVE_DAG.run_id,
+                             shared_toolchain.SUPERVISOR_FD_ENV:str(SCAN_SUPERVISOR.fd),
+                             shared_toolchain.RUN_FDS_ENV:json.dumps(
+                                 shared_toolchain.HELD_RUN_INPUT_FDS[ACTIVE_DAG.run_id],
+                                 sort_keys=True, separators=(",", ":"))}
+    execution_base = base / "runs/current"
+    if execution_base.exists() or execution_base.is_symlink():
+        if not args.resume or execution_base.is_symlink() or not execution_base.is_dir():
+            raise HarnessError("current execution root differs")
+        history = base / "runs/history"
+        history.mkdir(parents=True, exist_ok=True)
+        if history.is_symlink():
+            raise HarnessError("execution history is linked")
+        os.replace(execution_base, history / f"before-{ACTIVE_DAG.run_id}")
+    execution_base.mkdir(parents=True)
+    docker = docker_prefix()
+    image_id = inspect_image(docker, lock)
+    fixtures = materialize_fixture_bundle()
+    lifecycles = [lifecycle(label, execution_base, docker, lock, image_id, fixtures) for label in ("A", "B")]
+    rooms = [item[0] for item in lifecycles]
+    renders = [item[1] for item in lifecycles]
+    hashes: list[dict[str, str]] = []
+    def compare() -> tuple[str, int, int]:
+        nonlocal hashes
+        hashes = [output_hashes(render) for render in renders]
+        if hashes[0] != hashes[1]:
+            raise HarnessError(f"A/B normative bytes differ: {hashes}")
+        return canonical_digest(hashes[0]), len(hashes[0]), 32 * len(hashes[0])
+    ACTIVE_DAG.run("compare", compare,
+                   inputs={"A":ACTIVE_DAG.completed["A-render-output"],
+                           "B":ACTIVE_DAG.completed["B-render-output"]}, code_paths=PRODUCT_CODE_INPUTS)
+    closure = ACTIVE_DAG.finalize()
+    scan_ledger = SCAN_SUPERVISOR.summary()
+    summary = {"schema_version":"brandkit-shared-clean-rooms.v1", "status":"pass", "image_id":image_id,
+               "network":"deny-all-with-loopback", "fresh_release":args.fresh_release,
+               "resumed":args.resume, "run_id":ACTIVE_DAG.run_id,
+               "rooms":[str(room) for room in rooms], "render_objects":[str(path) for path in renders],
+               "hashes":hashes[0], "event_log_sha256":closure["event_log_sha256"],
+               "event_log_size":closure["event_log_size"], "event_count":closure["event_count"],
+               "run_closure_digest":closure["closure_digest"], "run_inputs_path":str(receipt_path),
+               "run_inputs_receipt_digest":run_inputs["receipt_digest"],
+               "scan_ledger":scan_ledger, "scan_ledger_digest":scan_ledger["ledger_digest"],
+               "product_phase_proofs":PRODUCT_PHASE_PROOFS}
+    atomic_json(execution_base/"summary.json", summary)
+    validate_summary(execution_base/"summary.json", closure)
+    print(json.dumps(summary, sort_keys=True, separators=(",", ":")))
+    SCAN_SUPERVISOR.close()
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except (HarnessError, PhaseError, OSError, ValueError, subprocess.SubprocessError) as exc:
+        raise SystemExit(f"shared clean rooms: {exc}")

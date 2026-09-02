@@ -6,6 +6,12 @@ license: MIT
 
 # BrandKit publizieren
 
+## Routing
+
+| Route | Primäres Playbook |
+|---|---|
+| Artefakt publizieren | [`references/workflow.md`](references/workflow.md) |
+
 Owner: mutable Projektinhalte orchestrieren, rendern und abnehmen. Das Brand-Paket bleibt read-only. UI-Design gehört ausschließlich dem `brandkit-impeccable`-Adapter.
 
 Claude, Codex und Hermes rufen denselben `brandkit-publish`-Skill auf. Das Humanizer-Ausführungsprofil bleibt davon getrennt: Als LLM-Provider ist ausschließlich Claude Code 2.1.223 mit seinem geschlossenen Envelope-Vertrag unterstützt; Codex CLI ist für diesen Humanizer-Release nicht unterstützt und wird fail-closed abgewiesen.
