@@ -1,35 +1,925 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema", "$id": "brandkit-skill-contract.v1.schema.json", "type": "object", "additionalProperties": false,
-  "required": ["schema_version", "sequence", "skills", "optional_adapters", "routing", "todo_policy", "legal_policy", "humanizer_policy", "impeccable_policy", "public_contracts", "progressive_disclosure"],
-  "properties": {
-    "schema_version": {"const": "brandkit-skill-contract.v1"}, "sequence": {"const": ["brandkit-setup", "brandkit-interview", "brandkit-build", "brandkit-publish"]},
-    "skills": {"type": "object", "additionalProperties": false, "required": ["brandkit-setup", "brandkit-interview", "brandkit-build", "brandkit-publish"], "properties": {"brandkit-setup": {"$ref": "#/$defs/skill"}, "brandkit-interview": {"$ref": "#/$defs/skill"}, "brandkit-build": {"$ref": "#/$defs/skill"}, "brandkit-publish": {"$ref": "#/$defs/skill"}}},
-    "optional_adapters": {"type": "object", "additionalProperties": false, "required": ["brandkit-spacing"], "properties": {"brandkit-spacing": {"$ref": "#/$defs/adapter"}}},
-    "routing": {"type": "object", "additionalProperties": false, "required": ["spacing-audit-or-token-role", "general-ui-redesign", "brand-package-generation", "pdf-publication-or-layout", "design-md-generation-or-validation"], "properties": {"spacing-audit-or-token-role": {"type": "string"}, "general-ui-redesign": {"type": "string"}, "brand-package-generation": {"type": "string"}, "pdf-publication-or-layout": {"type": "string"}, "design-md-generation-or-validation": {"type": "string"}}},
-    "todo_policy": {"type": "object", "additionalProperties": false, "required": ["allowed_locations", "required_forms", "publication_blocks_any_todo"], "properties": {"allowed_locations": {"$ref": "#/$defs/strings"}, "required_forms": {"$ref": "#/$defs/strings"}, "publication_blocks_any_todo": {"type": "boolean"}}},
-    "legal_policy": {"type": "object", "additionalProperties": false, "required": ["accepted_basis", "fallback", "publication_without_review"], "properties": {"accepted_basis": {"type": "string"}, "fallback": {"type": "string"}, "publication_without_review": {"type": "boolean"}}},
-    "humanizer_policy": {"type": "object", "additionalProperties": false, "required": ["applicability", "scope", "runner", "passes", "protected", "old_hash_semantics", "pattern_catalog_contract", "model_call_contract", "provenance_contract", "required_evidence", "null_edit_allowed"], "properties": {"applicability": {"type": "string"}, "scope": {"type": "string"}, "runner": {"type": "string"}, "passes": {"type": "string"}, "protected": {"$ref": "#/$defs/strings"}, "old_hash_semantics": {"type": "string"}, "pattern_catalog_contract": {"type": "string"}, "model_call_contract": {"type": "string"}, "provenance_contract": {"type": "string"}, "required_evidence": {"$ref": "#/$defs/strings"}, "null_edit_allowed": {"type": "boolean"}}},
-    "impeccable_policy": {"type": "object", "additionalProperties": false, "required": ["adapter", "handoff", "required_outputs_before_route", "parallel_design_instructions"], "properties": {"adapter": {"type": "string"}, "handoff": {"$ref": "#/$defs/strings"}, "required_outputs_before_route": {"$ref": "#/$defs/strings"}, "parallel_design_instructions": {"type": "boolean"}}},
-    "public_contracts": {"type": "object", "additionalProperties": false, "required": ["cli", "python", "brand_package", "documents"], "properties": {
-      "cli": {"type": "object", "additionalProperties": false, "required": ["scripts/brand_package.py", "scripts/brand_voice_pdf.py", "scripts/markdown_contract.py", "scripts/materialize_brandkit_instructions.py"], "properties": {"scripts/brand_package.py": {"$ref": "#/$defs/cli"}, "scripts/brand_voice_pdf.py": {"$ref": "#/$defs/cli"}, "scripts/markdown_contract.py": {"$ref": "#/$defs/cli"}, "scripts/materialize_brandkit_instructions.py": {"$ref": "#/$defs/cli"}}},
-      "python": {"type": "object", "additionalProperties": false, "required": ["scripts/brand_package.py", "scripts/brand_voice_pdf.py", "scripts/markdown_contract.py", "scripts/materialize_brandkit_instructions.py"], "properties": {"scripts/brand_package.py": {"$ref": "#/$defs/symbols"}, "scripts/brand_voice_pdf.py": {"$ref": "#/$defs/symbols"}, "scripts/markdown_contract.py": {"$ref": "#/$defs/symbols"}, "scripts/materialize_brandkit_instructions.py": {"$ref": "#/$defs/symbols"}}},
-      "brand_package": {"$ref": "#/$defs/schemaBinding"},
-      "documents": {"type": "object", "additionalProperties": false, "required": ["schema", "validator", "types"], "properties": {"schema": {"type": "string"}, "validator": {"$ref": "#/$defs/pythonLocator"}, "types": {"type": "object", "additionalProperties": false, "required": ["freeform", "offer", "one-pager", "report"], "properties": {"freeform": {"type": "string"}, "offer": {"type": "string"}, "one-pager": {"type": "string"}, "report": {"type": "string"}}}}}
-    }},
-    "progressive_disclosure": {"type": "object", "additionalProperties": false, "required": ["rule", "catalog", "routes", "impeccable", "design_context"], "properties": {
-      "rule": {"type": "string"}, "catalog": {"type": "object", "minProperties": 16, "additionalProperties": {"$ref": "#/$defs/catalogEntry"}},
-      "routes": {"type": "object", "additionalProperties": false, "required": ["setup", "interview", "build", "publish", "spacing", "impeccable-sync", "pdf"], "properties": {"setup": {"$ref": "#/$defs/route"}, "interview": {"$ref": "#/$defs/route"}, "build": {"$ref": "#/$defs/route"}, "publish": {"$ref": "#/$defs/route"}, "spacing": {"$ref": "#/$defs/route"}, "impeccable-sync": {"$ref": "#/$defs/route"}, "pdf": {"$ref": "#/$defs/route"}}},
-      "impeccable": {"type": "object", "additionalProperties": false, "required": ["release", "command_catalog", "reference_catalog", "context_loader", "platforms", "native_guidance"], "properties": {"release": {"type": "string"}, "command_catalog": {"type": "string"}, "reference_catalog": {"type": "string"}, "context_loader": {"type": "string"}, "platforms": {"const": ["web", "ios", "android", "adaptive"]}, "native_guidance": {"type": "object", "additionalProperties": false, "required": ["ios", "android", "adaptive"], "properties": {"ios": {"const": "ios.md"}, "android": {"const": "android.md"}, "adaptive": {"const": "adaptive"}}}}},
-      "design_context": {"type": "object", "additionalProperties": false, "required": ["path", "generator", "source_of_truth", "required_sections"], "properties": {"path": {"const": "DESIGN.md"}, "generator": {"$ref": "#/$defs/pythonLocator"}, "source_of_truth": {"const": "brand-package.v1 shared_visual_tokens"}, "required_sections": {"type": "array", "minItems": 9, "uniqueItems": true, "items": {"type": "string"}}}}
-    }}
-  },
   "$defs": {
-    "strings": {"type": "array", "uniqueItems": true, "items": {"type": "string"}}, "symbols": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"}},
-    "skill": {"type": "object", "additionalProperties": false, "required": ["owner", "inputs", "outputs", "gate", "fails_on"], "properties": {"owner": {"type": "string"}, "inputs": {"$ref": "#/$defs/strings"}, "outputs": {"$ref": "#/$defs/strings"}, "gate": {"type": "string"}, "fails_on": {"$ref": "#/$defs/strings"}}},
-    "adapter": {"type": "object", "additionalProperties": false, "required": ["owner", "inputs", "outputs", "mutates", "read_only", "gate", "fails_on"], "properties": {"owner": {"type": "string"}, "inputs": {"$ref": "#/$defs/strings"}, "outputs": {"$ref": "#/$defs/strings"}, "mutates": {"$ref": "#/$defs/strings"}, "read_only": {"$ref": "#/$defs/strings"}, "gate": {"type": "string"}, "fails_on": {"$ref": "#/$defs/strings"}}},
-    "pythonLocator": {"type": "string", "pattern": "^scripts/[a-z0-9_]+\\.py:[A-Za-z_][A-Za-z0-9_]*$"}, "cli": {"type": "object", "additionalProperties": false, "required": ["commands", "options"], "properties": {"commands": {"type": "array", "uniqueItems": true, "items": {"type": "string"}}, "options": {"type": "array", "uniqueItems": true, "items": {"type": "string"}}}},
-    "schemaBinding": {"type": "object", "additionalProperties": false, "required": ["schema", "schema_version", "validator"], "properties": {"schema": {"type": "string"}, "schema_version": {"type": "string"}, "validator": {"$ref": "#/$defs/pythonLocator"}}},
-    "catalogEntry": {"type": "object", "additionalProperties": false, "required": ["path", "role", "sha256"], "properties": {"path": {"type": "string"}, "role": {"enum": ["primary", "authoring", "contract", "release"]}, "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}},
-    "route": {"type": "object", "additionalProperties": false, "required": ["skill", "primary", "context"], "properties": {"skill": {"type": "string"}, "primary": {"type": "string"}, "context": {"type": "array", "uniqueItems": true, "items": {"type": "string"}}}}
-  }
+    "adapter": {
+      "additionalProperties": false,
+      "properties": {
+        "fails_on": {
+          "$ref": "#/$defs/strings"
+        },
+        "gate": {
+          "type": "string"
+        },
+        "inputs": {
+          "$ref": "#/$defs/strings"
+        },
+        "mutates": {
+          "$ref": "#/$defs/strings"
+        },
+        "outputs": {
+          "$ref": "#/$defs/strings"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "read_only": {
+          "$ref": "#/$defs/strings"
+        }
+      },
+      "required": [
+        "owner",
+        "inputs",
+        "outputs",
+        "mutates",
+        "read_only",
+        "gate",
+        "fails_on"
+      ],
+      "type": "object"
+    },
+    "catalogEntry": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "role": {
+          "enum": [
+            "primary",
+            "authoring",
+            "contract",
+            "release",
+            "discovery"
+          ]
+        },
+        "sha256": {
+          "$ref": "#/$defs/hash"
+        }
+      },
+      "required": [
+        "path",
+        "role",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "cli": {
+      "additionalProperties": false,
+      "properties": {
+        "commands": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "options": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "commands",
+        "options"
+      ],
+      "type": "object"
+    },
+    "hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "pinnedFile": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "pattern": "^skills/(engineering|productivity)/[a-z0-9-]+/[A-Za-z0-9._/-]+$",
+          "type": "string"
+        },
+        "sha256": {
+          "$ref": "#/$defs/hash"
+        },
+        "size": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "path",
+        "size",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "pythonLocator": {
+      "pattern": "^scripts/[a-z0-9_]+\\.py:[A-Za-z_][A-Za-z0-9_]*$",
+      "type": "string"
+    },
+    "route": {
+      "additionalProperties": false,
+      "properties": {
+        "context": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "primary": {
+          "type": "string"
+        },
+        "skill": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "skill",
+        "primary",
+        "context"
+      ],
+      "type": "object"
+    },
+    "schemaBinding": {
+      "additionalProperties": false,
+      "properties": {
+        "schema": {
+          "type": "string"
+        },
+        "schema_version": {
+          "type": "string"
+        },
+        "validator": {
+          "$ref": "#/$defs/pythonLocator"
+        }
+      },
+      "required": [
+        "schema",
+        "schema_version",
+        "validator"
+      ],
+      "type": "object"
+    },
+    "skill": {
+      "additionalProperties": false,
+      "properties": {
+        "fails_on": {
+          "$ref": "#/$defs/strings"
+        },
+        "gate": {
+          "type": "string"
+        },
+        "inputs": {
+          "$ref": "#/$defs/strings"
+        },
+        "outputs": {
+          "$ref": "#/$defs/strings"
+        },
+        "owner": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "owner",
+        "inputs",
+        "outputs",
+        "gate",
+        "fails_on"
+      ],
+      "type": "object"
+    },
+    "strings": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "symbols": {
+      "items": {
+        "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array",
+      "uniqueItems": true
+    }
+  },
+  "$id": "brandkit-skill-contract.v1.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "humanizer_policy": {
+      "additionalProperties": false,
+      "properties": {
+        "applicability": {
+          "type": "string"
+        },
+        "model_call_contract": {
+          "type": "string"
+        },
+        "null_edit_allowed": {
+          "type": "boolean"
+        },
+        "old_hash_semantics": {
+          "type": "string"
+        },
+        "passes": {
+          "type": "string"
+        },
+        "pattern_catalog_contract": {
+          "type": "string"
+        },
+        "protected": {
+          "$ref": "#/$defs/strings"
+        },
+        "provenance_contract": {
+          "type": "string"
+        },
+        "required_evidence": {
+          "$ref": "#/$defs/strings"
+        },
+        "runner": {
+          "type": "string"
+        },
+        "scope": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "applicability",
+        "scope",
+        "runner",
+        "passes",
+        "protected",
+        "old_hash_semantics",
+        "pattern_catalog_contract",
+        "model_call_contract",
+        "provenance_contract",
+        "required_evidence",
+        "null_edit_allowed"
+      ],
+      "type": "object"
+    },
+    "impeccable_policy": {
+      "additionalProperties": false,
+      "properties": {
+        "adapter": {
+          "type": "string"
+        },
+        "handoff": {
+          "$ref": "#/$defs/strings"
+        },
+        "parallel_design_instructions": {
+          "type": "boolean"
+        },
+        "required_outputs_before_route": {
+          "$ref": "#/$defs/strings"
+        }
+      },
+      "required": [
+        "adapter",
+        "handoff",
+        "required_outputs_before_route",
+        "parallel_design_instructions"
+      ],
+      "type": "object"
+    },
+    "legal_policy": {
+      "additionalProperties": false,
+      "properties": {
+        "accepted_basis": {
+          "type": "string"
+        },
+        "fallback": {
+          "type": "string"
+        },
+        "publication_without_review": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "accepted_basis",
+        "fallback",
+        "publication_without_review"
+      ],
+      "type": "object"
+    },
+    "optional_adapters": {
+      "additionalProperties": false,
+      "properties": {
+        "brandkit-affinity": {
+          "$ref": "#/$defs/adapter"
+        },
+        "brandkit-spacing": {
+          "$ref": "#/$defs/adapter"
+        }
+      },
+      "required": [
+        "brandkit-affinity",
+        "brandkit-spacing"
+      ],
+      "type": "object"
+    },
+    "optional_discovery": {
+      "additionalProperties": false,
+      "properties": {
+        "grill-with-docs": {
+          "additionalProperties": false,
+          "properties": {
+            "accepted_handoff": {
+              "const": "owner-confirmed decisions and classified source pointers only"
+            },
+            "activation": {
+              "const": "brandkit-interview-explicit"
+            },
+            "bundle": {
+              "additionalProperties": false,
+              "properties": {
+                "content_sha256": {
+                  "$ref": "#/$defs/hash"
+                },
+                "derivation": {
+                  "const": "sha256(canonical-json-lf(members sorted by path))"
+                },
+                "members": {
+                  "items": {
+                    "$ref": "#/$defs/pinnedFile"
+                  },
+                  "maxItems": 8,
+                  "minItems": 8,
+                  "type": "array"
+                }
+              },
+              "required": [
+                "derivation",
+                "content_sha256",
+                "members"
+              ],
+              "type": "object"
+            },
+            "canonical_subtrees": {
+              "additionalProperties": false,
+              "properties": {
+                "domain-modeling": {
+                  "const": "skills/engineering/domain-modeling"
+                },
+                "grill-with-docs": {
+                  "const": "skills/engineering/grill-with-docs"
+                },
+                "grilling": {
+                  "const": "skills/productivity/grilling"
+                }
+              },
+              "required": [
+                "grill-with-docs",
+                "grilling",
+                "domain-modeling"
+              ],
+              "type": "object"
+            },
+            "checker": {
+              "const": "scripts/brandkit_discovery.py"
+            },
+            "confirmation": {
+              "const": "explicit-chat-approval-before-internal-confirm"
+            },
+            "fallback": {
+              "const": "brandkit-interview-native"
+            },
+            "handoff_schema": {
+              "const": "schemas/brandkit-discovery-handoff.v1.schema.json"
+            },
+            "invocation": {
+              "const": "$brandkit-interview"
+            },
+            "minimum_answer_turns": {
+              "const": 2
+            },
+            "orchestration": {
+              "const": [
+                "grilling",
+                "domain-modeling"
+              ]
+            },
+            "owner_receipt_schema": {
+              "const": "schemas/brandkit-discovery-owner-receipt.v1.schema.json"
+            },
+            "progress_authentication": {
+              "const": "derived-subkey HMAC-SHA256 project+run predecessor chain with external non-resettable head ledger"
+            },
+            "progress_location": {
+              "const": ".brandkit/work/<run-id>/interview-progress.md"
+            },
+            "receipt_location": {
+              "const": ".brandkit/owner-receipts/<run-id>.json"
+            },
+            "receipt_progress_binding": {
+              "const": "chain-id+current-head+turn"
+            },
+            "repository": {
+              "const": "github:mattpocock/skills"
+            },
+            "retained_artifacts": {
+              "const": [
+                "CONTEXT.md",
+                "docs/adr/*.md",
+                "sources/*"
+              ]
+            },
+            "review_location": {
+              "const": ".brandkit/work/<run-id>/review.md"
+            },
+            "revision": {
+              "pattern": "^[0-9a-f]{40}$"
+            },
+            "workspace": {
+              "const": ".brandkit/work/<run-id>/discovery"
+            },
+            "wrapper_policy": {
+              "const": "reference-only-never-invoke"
+            }
+          },
+          "required": [
+            "activation",
+            "invocation",
+            "wrapper_policy",
+            "orchestration",
+            "repository",
+            "revision",
+            "workspace",
+            "fallback",
+            "handoff_schema",
+            "owner_receipt_schema",
+            "checker",
+            "canonical_subtrees",
+            "bundle",
+            "accepted_handoff",
+            "retained_artifacts",
+            "receipt_location",
+            "progress_location",
+            "review_location",
+            "confirmation",
+            "minimum_answer_turns",
+            "progress_authentication",
+            "receipt_progress_binding"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "grill-with-docs"
+      ],
+      "type": "object"
+    },
+    "progressive_disclosure": {
+      "additionalProperties": false,
+      "properties": {
+        "catalog": {
+          "additionalProperties": {
+            "$ref": "#/$defs/catalogEntry"
+          },
+          "minProperties": 16,
+          "type": "object"
+        },
+        "design_context": {
+          "additionalProperties": false,
+          "properties": {
+            "generator": {
+              "$ref": "#/$defs/pythonLocator"
+            },
+            "path": {
+              "const": "DESIGN.md"
+            },
+            "required_sections": {
+              "items": {
+                "type": "string"
+              },
+              "minItems": 9,
+              "type": "array",
+              "uniqueItems": true
+            },
+            "source_of_truth": {
+              "const": "brand-package.v1 shared_visual_tokens"
+            }
+          },
+          "required": [
+            "path",
+            "generator",
+            "source_of_truth",
+            "required_sections"
+          ],
+          "type": "object"
+        },
+        "impeccable": {
+          "additionalProperties": false,
+          "properties": {
+            "command_catalog": {
+              "type": "string"
+            },
+            "context_loader": {
+              "type": "string"
+            },
+            "native_guidance": {
+              "additionalProperties": false,
+              "properties": {
+                "adaptive": {
+                  "const": "adaptive"
+                },
+                "android": {
+                  "const": "android.md"
+                },
+                "ios": {
+                  "const": "ios.md"
+                }
+              },
+              "required": [
+                "ios",
+                "android",
+                "adaptive"
+              ],
+              "type": "object"
+            },
+            "platforms": {
+              "const": [
+                "web",
+                "ios",
+                "android",
+                "adaptive"
+              ]
+            },
+            "reference_catalog": {
+              "type": "string"
+            },
+            "release": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "release",
+            "command_catalog",
+            "reference_catalog",
+            "context_loader",
+            "platforms",
+            "native_guidance"
+          ],
+          "type": "object"
+        },
+        "routes": {
+          "additionalProperties": false,
+          "properties": {
+            "activate": {
+              "$ref": "#/$defs/route"
+            },
+            "affinity": {
+              "$ref": "#/$defs/route"
+            },
+            "build": {
+              "$ref": "#/$defs/route"
+            },
+            "impeccable-sync": {
+              "$ref": "#/$defs/route"
+            },
+            "interview": {
+              "$ref": "#/$defs/route"
+            },
+            "pdf": {
+              "$ref": "#/$defs/route"
+            },
+            "publish": {
+              "$ref": "#/$defs/route"
+            },
+            "setup": {
+              "$ref": "#/$defs/route"
+            },
+            "spacing": {
+              "$ref": "#/$defs/route"
+            },
+            "visual-decisions": {
+              "$ref": "#/$defs/route"
+            }
+          },
+          "required": [
+            "setup",
+            "interview",
+            "visual-decisions",
+            "affinity",
+            "build",
+            "publish",
+            "spacing",
+            "impeccable-sync",
+            "pdf",
+            "activate"
+          ],
+          "type": "object"
+        },
+        "rule": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "rule",
+        "catalog",
+        "routes",
+        "impeccable",
+        "design_context"
+      ],
+      "type": "object"
+    },
+    "public_contracts": {
+      "additionalProperties": false,
+      "properties": {
+        "brand_package": {
+          "$ref": "#/$defs/schemaBinding"
+        },
+        "cli": {
+          "additionalProperties": false,
+          "properties": {
+            "scripts/brand_package.py": {
+              "$ref": "#/$defs/cli"
+            },
+            "scripts/brand_voice_pdf.py": {
+              "$ref": "#/$defs/cli"
+            },
+            "scripts/brandkit_discovery.py": {
+              "$ref": "#/$defs/cli"
+            },
+            "scripts/brandkit_visual_decisions.py": {
+              "$ref": "#/$defs/cli"
+            },
+            "scripts/markdown_contract.py": {
+              "$ref": "#/$defs/cli"
+            },
+            "scripts/materialize_brandkit_instructions.py": {
+              "$ref": "#/$defs/cli"
+            },
+            "scripts/validate_visual_decision_sources.py": {
+              "$ref": "#/$defs/cli"
+            }
+          },
+          "required": [
+            "scripts/brand_package.py",
+            "scripts/brand_voice_pdf.py",
+            "scripts/markdown_contract.py",
+            "scripts/materialize_brandkit_instructions.py",
+            "scripts/brandkit_discovery.py",
+            "scripts/brandkit_visual_decisions.py",
+            "scripts/validate_visual_decision_sources.py"
+          ],
+          "type": "object"
+        },
+        "documents": {
+          "additionalProperties": false,
+          "properties": {
+            "schema": {
+              "type": "string"
+            },
+            "types": {
+              "additionalProperties": false,
+              "properties": {
+                "freeform": {
+                  "type": "string"
+                },
+                "offer": {
+                  "type": "string"
+                },
+                "one-pager": {
+                  "type": "string"
+                },
+                "report": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "freeform",
+                "offer",
+                "one-pager",
+                "report"
+              ],
+              "type": "object"
+            },
+            "validator": {
+              "$ref": "#/$defs/pythonLocator"
+            }
+          },
+          "required": [
+            "schema",
+            "validator",
+            "types"
+          ],
+          "type": "object"
+        },
+        "python": {
+          "additionalProperties": false,
+          "properties": {
+            "scripts/brand_package.py": {
+              "$ref": "#/$defs/symbols"
+            },
+            "scripts/brand_voice_pdf.py": {
+              "$ref": "#/$defs/symbols"
+            },
+            "scripts/brandkit_discovery.py": {
+              "$ref": "#/$defs/symbols"
+            },
+            "scripts/brandkit_visual_decisions.py": {
+              "$ref": "#/$defs/symbols"
+            },
+            "scripts/markdown_contract.py": {
+              "$ref": "#/$defs/symbols"
+            },
+            "scripts/materialize_brandkit_instructions.py": {
+              "$ref": "#/$defs/symbols"
+            },
+            "scripts/validate_visual_decision_sources.py": {
+              "$ref": "#/$defs/symbols"
+            }
+          },
+          "required": [
+            "scripts/brand_package.py",
+            "scripts/brand_voice_pdf.py",
+            "scripts/markdown_contract.py",
+            "scripts/materialize_brandkit_instructions.py",
+            "scripts/brandkit_discovery.py",
+            "scripts/brandkit_visual_decisions.py",
+            "scripts/validate_visual_decision_sources.py"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "cli",
+        "python",
+        "brand_package",
+        "documents"
+      ],
+      "type": "object"
+    },
+    "routing": {
+      "additionalProperties": false,
+      "properties": {
+        "affinity-vector-or-logo-work": {
+          "const": "brandkit-affinity"
+        },
+        "brand-package-generation": {
+          "type": "string"
+        },
+        "design-md-generation-or-validation": {
+          "type": "string"
+        },
+        "general-ui-redesign": {
+          "type": "string"
+        },
+        "pdf-publication-or-layout": {
+          "type": "string"
+        },
+        "spacing-audit-or-token-role": {
+          "type": "string"
+        },
+        "visual-brand-candidates": {
+          "const": "brandkit-visual-decisions"
+        }
+      },
+      "required": [
+        "affinity-vector-or-logo-work",
+        "spacing-audit-or-token-role",
+        "general-ui-redesign",
+        "brand-package-generation",
+        "pdf-publication-or-layout",
+        "design-md-generation-or-validation",
+        "visual-brand-candidates"
+      ],
+      "type": "object"
+    },
+    "schema_version": {
+      "const": "brandkit-skill-contract.v1"
+    },
+    "sequence": {
+      "const": [
+        "brandkit-setup",
+        "brandkit-interview",
+        "brandkit-visual-decisions",
+        "brandkit-build",
+        "brandkit-publish"
+      ]
+    },
+    "skills": {
+      "additionalProperties": false,
+      "properties": {
+        "brandkit-build": {
+          "$ref": "#/$defs/skill"
+        },
+        "brandkit-interview": {
+          "$ref": "#/$defs/skill"
+        },
+        "brandkit-publish": {
+          "$ref": "#/$defs/skill"
+        },
+        "brandkit-setup": {
+          "$ref": "#/$defs/skill"
+        },
+        "brandkit-visual-decisions": {
+          "$ref": "#/$defs/skill"
+        }
+      },
+      "required": [
+        "brandkit-setup",
+        "brandkit-interview",
+        "brandkit-visual-decisions",
+        "brandkit-build",
+        "brandkit-publish"
+      ],
+      "type": "object"
+    },
+    "todo_policy": {
+      "additionalProperties": false,
+      "properties": {
+        "allowed_locations": {
+          "$ref": "#/$defs/strings"
+        },
+        "publication_blocks_any_todo": {
+          "type": "boolean"
+        },
+        "required_forms": {
+          "$ref": "#/$defs/strings"
+        }
+      },
+      "required": [
+        "allowed_locations",
+        "required_forms",
+        "publication_blocks_any_todo"
+      ],
+      "type": "object"
+    },
+    "visual_decisions": {
+      "additionalProperties": false,
+      "properties": {
+        "build_gate": {
+          "type": "string"
+        },
+        "confirmation_return": {
+          "type": "string"
+        },
+        "domain_states": {
+          "const": [
+            "confirmed",
+            "open",
+            "not-applicable"
+          ]
+        },
+        "domains": {
+          "const": [
+            "color",
+            "typography",
+            "code-font",
+            "logo",
+            "lockup"
+          ]
+        },
+        "impeccable_prebuild": {
+          "const": "run-local pinned resolver only; extract forbidden"
+        },
+        "operations": {
+          "const": [
+            "capture",
+            "prepare-visual-confirmation",
+            "consume-visual-decisions"
+          ]
+        },
+        "outcomes": {
+          "const": [
+            "not-applicable",
+            "candidates-ready",
+            "partial",
+            "blocked"
+          ]
+        }
+      },
+      "required": [
+        "domains",
+        "domain_states",
+        "outcomes",
+        "operations",
+        "confirmation_return",
+        "build_gate",
+        "impeccable_prebuild"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema_version",
+    "sequence",
+    "skills",
+    "visual_decisions",
+    "optional_adapters",
+    "optional_discovery",
+    "routing",
+    "todo_policy",
+    "legal_policy",
+    "humanizer_policy",
+    "impeccable_policy",
+    "public_contracts",
+    "progressive_disclosure"
+  ],
+  "type": "object"
 }

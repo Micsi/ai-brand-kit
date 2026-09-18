@@ -31,25 +31,36 @@ ROOT = Path(__file__).resolve().parents[1]
 CONTRACT = ROOT / "brandkit-skill-contract.v1.json"
 FIXTURES = ROOT / "fixtures/brandkit-skills/dry-runs.v1.json"
 COLLISION_FIXTURES = ROOT / "fixtures/brandkit-skills/collision-dry-runs.v1.json"
-CORE_SEQUENCE = ["brandkit-setup", "brandkit-interview", "brandkit-build", "brandkit-publish"]
+CORE_SEQUENCE = ["brandkit-setup", "brandkit-interview", "brandkit-visual-decisions", "brandkit-build", "brandkit-publish"]
 CONTRACT_SKILLS = [*CORE_SEQUENCE, "brandkit-spacing"]
-CANONICAL_SKILLS = [*CONTRACT_SKILLS, "brandkit-impeccable", "brand-voice-pdf"]
+CANONICAL_SKILLS = [*CONTRACT_SKILLS, "brandkit-activate", "brandkit-affinity", "brandkit-impeccable", "brand-voice-pdf"]
 IMPECCABLE_COMMANDS = ["craft", "shape", "init", "document", "extract", "critique", "audit", "polish", "bolder", "quieter", "distill", "harden", "onboard", "animate", "colorize", "typeset", "layout", "delight", "overdrive", "clarify", "adapt", "optimize", "live"]
 IMPECCABLE_SOURCE = Path(os.environ.get(
     "BRANDKIT_IMPECCABLE_SOURCE",
     "/Volumes/Daten/Projekte/BrandKit/external-sources/impeccable/.agents/skills/impeccable",
 ))
 RELEASE_MANIFEST = "skill-contract-release.v1.json"
+AFFINITY_TOOLCHAIN_MEMBERS = {
+    "toolchain/affinity-codex/affinity-codex-bridge.mjs",
+    "toolchain/affinity-codex/smoke-test.mjs",
+    "toolchain/affinity-codex/LICENSE.upstream",
+    "toolchain/affinity-codex/UPSTREAM.json",
+    "toolchain/affinity-codex/codex-project",
+}
 DESIGN_ROUTES = {
+    "affinity-vector-or-logo-work": "brandkit-affinity",
     "spacing-audit-or-token-role": "brandkit-spacing",
     "general-ui-redesign": "brandkit-impeccable -> impeccable",
     "brand-package-generation": "brandkit-build",
     "pdf-publication-or-layout": "brand-voice-pdf -> brandkit-publish",
     "design-md-generation-or-validation": "brandkit-impeccable",
+    "visual-brand-candidates": "brandkit-visual-decisions",
 }
 
 SPACING_INVENTORY_SCHEMA = "schemas/spacing-inventory.v1.schema.json"
 SPACING_PROPOSAL_SCHEMA = "schemas/spacing-proposal.v1.schema.json"
+DISCOVERY_HANDOFF_SCHEMA = "schemas/brandkit-discovery-handoff.v1.schema.json"
+DISCOVERY_HANDOFF_FIXTURE = "fixtures/brandkit-skills/discovery-handoff.valid.json"
 
 
 class GenericSmoothingError(ValueError):
@@ -146,11 +157,19 @@ def _python_surface(path: Path) -> tuple[set[str], set[str], set[str]]:
     }
     commands: set[str] = set()
     options: set[str] = set()
+    loop_commands: dict[str, set[str]] = {}
+    for node in ast.walk(tree):
+        if isinstance(node, ast.For) and isinstance(node.target, ast.Name) and isinstance(node.iter, (ast.Tuple, ast.List)):
+            values = {item.value for item in node.iter.elts if isinstance(item, ast.Constant) and isinstance(item.value, str)}
+            if len(values) == len(node.iter.elts):
+                loop_commands[node.target.id] = values
     for node in ast.walk(tree):
         if not isinstance(node, ast.Call) or not isinstance(node.func, ast.Attribute):
             continue
         if node.func.attr == "add_parser" and node.args and isinstance(node.args[0], ast.Constant) and isinstance(node.args[0].value, str):
             commands.add(node.args[0].value)
+        if node.func.attr == "add_parser" and node.args and isinstance(node.args[0], ast.Name):
+            commands.update(loop_commands.get(node.args[0].id, set()))
         if node.func.attr == "add_argument" and node.args and isinstance(node.args[0], ast.Constant) and node.args[0].value == "command":
             for keyword in node.keywords:
                 if keyword.arg == "choices" and isinstance(keyword.value, (ast.Tuple, ast.List)):
@@ -503,6 +522,38 @@ def validate_public_contracts(root: Path, contract: dict[str, Any]) -> list[str]
     return errors
 
 
+def validate_optional_discovery(root: Path, contract: dict[str, Any]) -> list[str]:
+    errors: list[str] = []
+    discovery = contract["optional_discovery"]["grill-with-docs"]
+    if (discovery["activation"] != "brandkit-interview-explicit" or discovery["invocation"] != "$brandkit-interview"
+            or discovery["wrapper_policy"] != "reference-only-never-invoke"
+            or discovery["orchestration"] != ["grilling", "domain-modeling"]
+            or discovery["progress_location"] != ".brandkit/work/<run-id>/interview-progress.md"
+            or discovery["minimum_answer_turns"] != 2
+            or discovery["progress_authentication"] != "derived-subkey HMAC-SHA256 project+run predecessor chain with external non-resettable head ledger"
+            or discovery["receipt_progress_binding"] != "chain-id+current-head+turn"
+            or discovery["review_location"] != ".brandkit/work/<run-id>/review.md"
+            or discovery["confirmation"] != "explicit-chat-approval-before-internal-confirm"):
+        errors.append("optional discovery orchestration identity/order drifted")
+    fixture = load(root / DISCOVERY_HANDOFF_FIXTURE)
+    jsonschema.Draft202012Validator(load(root / discovery["handoff_schema"])).validate(fixture)
+    members = discovery["bundle"]["members"]
+    digest = _import_locator(root, "scripts/brandkit_discovery.py:bundle_digest")(members)
+    if digest != discovery["bundle"]["content_sha256"] or [item["path"] for item in members] != sorted(item["path"] for item in members):
+        errors.append("optional discovery bundle derivation/member order drifted")
+    setup = (root / "skills/brandkit-setup/SKILL.md").read_text(encoding="utf-8")
+    interview = (root / "skills/brandkit-interview/SKILL.md").read_text(encoding="utf-8")
+    if "installiere nichts" not in setup or "rufe keinen der" not in setup:
+        errors.append("brandkit-setup does not preserve read-only optional discovery")
+    if ("Rufe\n   `grill-with-docs` nie auf" not in interview
+            or "Bleibe über beliebig\n   viele Turns in `grilling`" not in interview
+            or "Diese Entscheidungen bestätigen?" not in interview
+            or "Handoff ausschließlich intern" not in interview
+            or "$brandkit-interview" not in interview or "vollständigen nativen Elf-Achsen-Pfad" not in interview):
+        errors.append("brandkit-interview orchestration/wrapper/fallback contract drifted")
+    return errors
+
+
 def validate_progressive_disclosure(root: Path, contract: dict[str, Any]) -> list[str]:
     errors: list[str] = []
     routes = contract["progressive_disclosure"]["routes"]
@@ -513,9 +564,17 @@ def validate_progressive_disclosure(root: Path, contract: dict[str, Any]) -> lis
         role, relative = item["role"], item["path"]
         role_path_ok = (
             (role == "primary" and re.fullmatch(r"skills/[^/]+/references/[^/]+\.md", relative))
-            or (role == "authoring" and relative == "skills/brand-voice-pdf/references/markdown-authoring.md")
-            or (role == "contract" and (relative.startswith("schemas/") and relative.endswith(".json") or relative == "markdown-contract.v2.json"))
+            or (role == "authoring" and relative in {
+                "skills/brand-voice-pdf/references/markdown-authoring.md",
+                "skills/brandkit-affinity/references/vector-workflow.md",
+            })
+            # The two contract documents that live at the repository root rather
+            # than under schemas/: a JSON Schema decides a document's shape, these
+            # two decide its content, and both are named literally so the role
+            # stays a closed list instead of "any .json at the root".
+            or (role == "contract" and (relative.startswith("schemas/") and relative.endswith(".json") or relative in {"markdown-contract.v2.json", "visual-decision-sources.v1.json"}))
             or (role == "release" and relative == "impeccable-adapter.v1.json")
+            or (role == "discovery" and relative == "skills/brandkit-interview/references/grill-with-docs-handoff.md")
         )
         if not role_path_ok:
             errors.append(f"{item_id}: catalog role/path combination is forbidden")
@@ -698,7 +757,7 @@ def _verify_part1_snapshot(snapshot: Path, payload: dict[str, Any], owner_key: P
     _PART1_PASS_CACHE.add(cache_key)
 
 
-def validate_release_manifest(root: Path, *, expected_attestation_sha256: str | None = None, attestation_path: Path | None = None, owner_key: Path | None = None, part1_snapshot: Path | None = None) -> list[str]:
+def validate_release_manifest(root: Path, *, expected_attestation_sha256: str | None = None, attestation_path: Path | None = None, owner_key: Path | None = None, part1_snapshot: Path | None = None, evidence_path: Path | None = None) -> list[str]:
     errors: list[str] = []
     try:
         document = load(root / RELEASE_MANIFEST)
@@ -730,6 +789,7 @@ def validate_release_manifest(root: Path, *, expected_attestation_sha256: str | 
             "schemas/brandkit-skill-request.v1.schema.json", "schemas/brandkit-skill-result.v1.schema.json",
             "scripts/validate_brandkit_skills.py", "scripts/impeccable_adapter.py",
             "fixtures/brandkit-skills/dry-runs.v1.json", "fixtures/brandkit-skills/collision-dry-runs.v1.json",
+            DISCOVERY_HANDOFF_FIXTURE,
             "impeccable-adapter.v1.json", "impeccable-upstream-inventory.v1.json",
         }
         public = contract["public_contracts"]
@@ -738,6 +798,7 @@ def validate_release_manifest(root: Path, *, expected_attestation_sha256: str | 
         required.update(public["documents"]["types"].values())
         required.update(item["path"] for item in contract["progressive_disclosure"]["catalog"].values())
         required.update(f"skills/{name}/SKILL.md" for name in CANONICAL_SKILLS)
+        required.update(AFFINITY_TOOLCHAIN_MEMBERS)
         if seen != required:
             errors.append(f"skill-contract release inventory differs from canonical catalogs: missing={sorted(required-seen)} extra={sorted(seen-required)}")
         expected_attestation_sha256 = expected_attestation_sha256 or os.environ.get("BRANDKIT_SKILL_RELEASE_ATTESTATION_SHA256")
@@ -754,8 +815,18 @@ def validate_release_manifest(root: Path, *, expected_attestation_sha256: str | 
                 errors.append("external release attestation is not closed")
             else:
                 payload = envelope["payload"]
-                if set(payload) != {"release_manifest_sha256","inventory_sha256","part1_root_sha256","part1_signature_sha256","part1_bootstrap_sha256","part1_snapshot_sha256","part1_pass"}:
-                    errors.append("external release attestation payload is not closed")
+                # ``evidence_sha256`` gehoert in den SIGNIERTEN Rumpf: eine Evidence,
+                # die an nichts haengt, laesst sich nach dem Urteil austauschen, ohne
+                # dass es auffaellt - genau das ist geschehen.  Gebunden bricht ein
+                # spaeterer Austausch die Signatur.  Die Evidence nennt ihrerseits
+                # NICHT den Digest dieser Attestation, sonst haetten beide Hashes
+                # einander zur Voraussetzung; ein Verweis auf den DATEINAMEN ist
+                # unbedenklich, weil er sich mit dem Inhalt nicht aendert.
+                required_payload = {"release_manifest_sha256","inventory_sha256","evidence_sha256","part1_root_sha256","part1_signature_sha256","part1_bootstrap_sha256","part1_snapshot_sha256","part1_pass"}
+                if set(payload) != required_payload:
+                    errors.append("external release attestation payload is not closed: "
+                                  f"missing={sorted(required_payload - set(payload))} "
+                                  f"extra={sorted(set(payload) - required_payload)}")
                 key = owner_key.read_bytes()
                 signed = {"schema_version":envelope["schema_version"], "issuer":envelope["issuer"], "payload":payload}
                 canonical = (json.dumps(signed, sort_keys=True, separators=(",", ":"), ensure_ascii=False) + "\n").encode()
@@ -765,6 +836,13 @@ def validate_release_manifest(root: Path, *, expected_attestation_sha256: str | 
                     errors.append("release manifest differs from external attestation")
                 if payload["inventory_sha256"] != sha256(root / "impeccable-upstream-inventory.v1.json"):
                     errors.append("release inventory differs from external attestation")
+                evidence = evidence_path or (Path(os.environ["BRANDKIT_RELEASE_EVIDENCE"]) if os.environ.get("BRANDKIT_RELEASE_EVIDENCE") else None)
+                if evidence is None:
+                    errors.append("external release evidence is required")
+                elif not evidence.is_file():
+                    errors.append("external release evidence is missing")
+                elif payload.get("evidence_sha256") != sha256(evidence):
+                    errors.append("release evidence differs from external attestation")
                 part1_root = Path("/Volumes/Daten/Projekte/BrandKit/quality-loop/evidence/base-part1-trust-f5-evidence-root.json")
                 part1_signature = Path("/Volumes/Daten/Projekte/BrandKit/quality-loop/evidence/base-part1-trust-f5-evidence-signature.json")
                 bootstrap = Path("/Volumes/Daten/Projekte/BrandKit/quality-loop/trusted-verifiers/brandkit-candidate-trust-v1.py")
@@ -1272,21 +1350,35 @@ def execute_request(request: dict[str, Any], root: Path = ROOT, raw_request_sha2
         if any(value not in ("observed", "fallback") for value in state.get("required_capabilities", [])): blockers.append("required_capability_without_fallback")
         decision = "blocked" if blockers else ("pass-with-fallback" if state.get("optional_renderer") == "fallback" else "pass")
     elif skill == "brandkit-interview":
-        if set(state) != {"owner", "axes", "conflicts", "legal_claims"}: blockers.append("state-contract-mismatch")
-        if state.get("owner") != "confirmed": blockers.append("missing_owner")
-        if "normative" in state.get("conflicts", []): blockers.append("normative_brand_conflict")
-        if any(value != "official-source" for value in state.get("legal_claims", [])): blockers.append("unsupported_legal_claim")
-        if not state.get("axes") or "unknown" in state.get("axes", []): blockers.append("required_axes_unaccounted")
-        decision = "blocked" if blockers else ("pass-with-todo" if "open" in state["axes"] else "pass")
+        operation = state.get("operation")
+        if operation in {"prepare-visual-confirmation", "consume-visual-decisions"}:
+            # The generic contract runner validates routing only. The discovery
+            # CLI owns descriptor-safe reads, the external owner key and HMAC.
+            blockers.append("secure-discovery-cli-required")
+            decision = "blocked"
+        else:
+            if set(state) != {"owner", "axes", "conflicts", "legal_claims"}: blockers.append("state-contract-mismatch")
+            if state.get("owner") != "confirmed": blockers.append("missing_owner")
+            if "normative" in state.get("conflicts", []): blockers.append("normative_brand_conflict")
+            if any(value != "official-source" for value in state.get("legal_claims", [])): blockers.append("unsupported_legal_claim")
+            if not state.get("axes") or "unknown" in state.get("axes", []): blockers.append("required_axes_unaccounted")
+            decision = "blocked" if blockers else ("pass-with-todo" if "open" in state["axes"] else "pass")
+    elif skill == "brandkit-visual-decisions":
+        expected_keys = {"operation", "visual_brief", "affinity_observation", "candidate_bundle", "candidate_review", "required_domains"}
+        if set(state) != expected_keys or state.get("operation") != "review-candidates": blockers.append("state-contract-mismatch")
+        if not state.get("required_domains"): blockers.append("no-open-visual-domains")
+        decision = "blocked" if blockers else "pass-with-todo"
     elif skill == "brandkit-build":
-        expected_keys = {"provenance", "conflicts", "asset_rights", "brand_pin", "instruction_sources", "claude_bridge", "hermes_context"}
+        expected_keys = {"provenance", "conflicts", "asset_rights", "brand_pin", "instruction_sources", "claude_bridge", "hermes_context", "visual_decisions"}
         if set(state) != expected_keys: blockers.append("state-contract-mismatch")
         if not state.get("provenance") or any(value != "complete" for value in state.get("provenance", [])): blockers.append("missing_provenance")
         if "normative" in state.get("conflicts", []): blockers.append("normative_brand_conflict")
         if any(value != "verified" for value in state.get("asset_rights", [])): blockers.append("unresolved_asset_rights")
         if state.get("brand_pin") != "verified": blockers.append("missing_brand_pin")
         if state.get("instruction_sources") != ["AGENTS.md"] or state.get("claude_bridge") != "CLAUDE.md -> AGENTS.md" or state.get("hermes_context") != "cwd/AGENTS.md": blockers.append("instruction_copy")
-        decision = "blocked" if blockers else "package-ready"
+        visual = state.get("visual_decisions")
+        if visual in {"missing", "stale", "unknown"}: blockers.append("visual_decisions_not_consumable")
+        decision = "blocked" if blockers else ("package-draft-only" if visual == "required-open" else "package-ready")
     elif skill == "brandkit-spacing":
         expected_keys = {"brand_pin", "target_medium", "target_scope", "inventory_artifact", "proposal_artifact", "normative_sources", "requested_output"}
         if set(state) != expected_keys: blockers.append("state-contract-mismatch")
@@ -1360,6 +1452,14 @@ def execute_request(request: dict[str, Any], root: Path = ROOT, raw_request_sha2
             "assignment_count": len(entries), "token_count": token_count, "exception_count": exception_count,
             "findings": sorted(set(blockers)), "handoff": handoff,
         }
+    if skill == "brandkit-visual-decisions":
+        result["visual_decision_result"] = {
+            "schema_version": "brandkit-visual-decision-result.v1",
+            "outcome": "blocked" if blockers else "candidates-ready",
+            "domains": sorted(state.get("required_domains", [])),
+            "normative": False,
+            "next_operation": "brandkit-interview:prepare-visual-confirmation" if not blockers else "resolve-blockers",
+        }
     jsonschema.Draft202012Validator(result_schema).validate(result)
     return result
 
@@ -1367,6 +1467,14 @@ def execute_request(request: dict[str, Any], root: Path = ROOT, raw_request_sha2
 def validate(root: Path = ROOT, **trust: Any) -> list[str]:
     errors: list[str] = []
     try:
+        source_validator_path = root / "scripts/validate_visual_decision_sources.py"
+        source_spec = importlib.util.spec_from_file_location("brandkit_visual_source_validator", source_validator_path)
+        if source_spec is None or source_spec.loader is None:
+            errors.append("visual-decision source validator cannot be loaded")
+        else:
+            source_module = importlib.util.module_from_spec(source_spec)
+            source_spec.loader.exec_module(source_module)
+            errors.extend(source_module.validate_visual_decision_sources(root))
         errors.extend(validate_release_manifest(root, **trust))
         contract = load(root / CONTRACT.name)
         jsonschema.Draft202012Validator(load(root / "schemas/brandkit-skill-contract.v1.schema.json")).validate(contract)
@@ -1384,9 +1492,21 @@ def validate(root: Path = ROOT, **trust: Any) -> list[str]:
         }
         if spacing != expected_spacing:
             errors.append("brandkit-spacing optional adapter contract drifted")
+        affinity = contract.get("optional_adapters", {}).get("brandkit-affinity", {})
+        expected_affinity = {
+            "owner": "affinity-vector-authoring-and-evidence",
+            "inputs": ["visual_brief", "project_root", "run_id", "affinity_server_observation", "optional_mutation_receipt"],
+            "outputs": ["read_only_capability_observation", "staged_vector_artifact", "export_inventory", "mutation_evidence"],
+            "mutates": [".brandkit/work/<run-id>/visual-decisions/staging/<document-id>"],
+            "read_only": ["brand-raw.md", "visual-brief", "owner-source-assets", "brand-package.v1"],
+            "gate": "a live loopback Affinity MCP server is observed; every mutation is explicitly authorized, receipt-bound and confined to run-local staging",
+            "fails_on": ["affinity_unavailable", "affinity_identity_ambiguous", "missing_mutation_receipt", "receipt_scope_mismatch", "non_staging_write", "unverified_export"],
+        }
+        if affinity != expected_affinity:
+            errors.append("brandkit-affinity optional adapter contract drifted")
         if contract.get("routing") != DESIGN_ROUTES:
             errors.append("design-skill routing contract drifted")
-        for name in CONTRACT_SKILLS:
+        for name in [*CONTRACT_SKILLS, "brandkit-affinity"]:
             folder = root / "skills" / name
             skill_files: list[Path] = []
             for current, directories, files in os.walk(folder, followlinks=False):
@@ -1438,6 +1558,7 @@ def validate(root: Path = ROOT, **trust: Any) -> list[str]:
         if re.search(r"4\.1\.1\+fcd7622\.brandkit\d+", readme): errors.append("README contains a stale copied adapter release literal")
         if "impeccable-adapter.v1.json#/adapted_release/marker/version" not in readme: errors.append("README does not derive adapter release from canonical contract")
         errors.extend(validate_public_contracts(root, contract))
+        errors.extend(validate_optional_discovery(root, contract))
         errors.extend(validate_progressive_disclosure(root, contract))
     except (OSError, ValueError, json.JSONDecodeError, yaml.YAMLError, jsonschema.ValidationError) as exc:
         errors.append(str(exc))
@@ -1480,6 +1601,12 @@ def route_design_request(request: str) -> str | None:
     ui = bool(words & {"ui", "web", "dashboard", "komponente", "komponenten", "layout"}) or "dashboard-ui" in text
     if "design.md" in text:
         return "brandkit-impeccable"
+    visual_choice = bool(words & {"kandidaten", "kandidat", "farbpalette", "farbpaletten", "schriftkandidaten", "logo-kandidaten", "logoentwuerfe"})
+    if visual_choice and words & {"waehle", "auswahl", "vergleiche", "pruefe", "entscheide", "zeige"}:
+        return "brandkit-visual-decisions"
+    affinity_work = bool(words & {"affinity", "vektor", "vektoren", "logo", "lockup", "favicon"})
+    if affinity_work and words & {"erstelle", "erzeuge", "bearbeite", "optimiere", "exportiere", "pruefe"}:
+        return "brandkit-affinity"
     if "pdf" in words or "pdf-layout" in words or ("bericht" in words and "publiziere" in words):
         return "brand-voice-pdf -> brandkit-publish"
     if ("brand-paket" in words or "brand-package" in words or "markenpaket" in words) and words & {"erzeuge", "baue", "versioniere", "neuer", "neue", "token"}:
@@ -1585,6 +1712,7 @@ def main() -> int:
     parser.add_argument("--request", type=Path)
     parser.add_argument("--result", type=Path)
     parser.add_argument("--release-attestation", type=Path)
+    parser.add_argument("--release-evidence", type=Path)
     parser.add_argument("--expected-release-attestation-sha256")
     parser.add_argument("--owner-key", type=Path)
     parser.add_argument("--part1-snapshot", type=Path)
@@ -1625,6 +1753,7 @@ def main() -> int:
         args.root,
         expected_attestation_sha256=args.expected_release_attestation_sha256,
         attestation_path=args.release_attestation,
+        evidence_path=args.release_evidence,
         owner_key=args.owner_key,
         part1_snapshot=args.part1_snapshot,
     )

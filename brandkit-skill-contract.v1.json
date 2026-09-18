@@ -1,166 +1,953 @@
 {
-  "schema_version": "brandkit-skill-contract.v1",
-  "sequence": ["brandkit-setup", "brandkit-interview", "brandkit-build", "brandkit-publish"],
-  "skills": {
-    "brandkit-setup": {
-      "owner": "readiness-and-scope",
-      "inputs": ["requested_outputs", "project_root", "supplied_sources"],
-      "outputs": ["setup-readiness.md"],
-      "gate": "required capabilities have observed evidence or accepted fallback",
-      "fails_on": ["missing_write_target", "ambiguous_project_root", "required_capability_without_fallback"]
-    },
-    "brandkit-interview": {
-      "owner": "brand-source-capture",
-      "inputs": ["setup-readiness.md", "owner_answers", "supplied_sources"],
-      "outputs": ["brand-raw.md", "conflict_register", "open_item_register"],
-      "gate": "required axes are sourced, explicitly open, or not applicable and no normative conflict remains",
-      "fails_on": ["missing_owner", "normative_brand_conflict", "unsupported_legal_claim"]
-    },
-    "brandkit-build": {
-      "owner": "normative-brand-package",
-      "inputs": ["brand-raw.md", "source_pointers", "setup-readiness.md"],
-      "outputs": ["brand-package.v1", "AGENTS.md", "CLAUDE.md -> AGENTS.md", "Hermes cwd/AGENTS.md"],
-      "gate": "package validates and every normative value has provenance",
-      "fails_on": ["missing_provenance", "normative_brand_conflict", "unresolved_asset_rights", "missing_brand_pin", "instruction_copy"]
-    },
-    "brandkit-publish": {
-      "owner": "project-artifact-production",
-      "inputs": ["brand_pin", "approved_content", "document_type", "target_medium", "review_evidence", "humanizer_applicability=required"],
-      "outputs": ["artifact", "qa_report", "fact_ledger", "humanizer_evidence"],
-      "gate": "brand, facts, rights, contracts, renderer and visual review pass with no open-work marker",
-      "fails_on": ["missing_brand_pin", "missing_fact", "legal_review_todo", "unsupported_legal_claim", "protected_fact_mutation", "brand_conflict", "unresolved_asset_rights", "markdown_contract_failure", "missing_or_rejected_humanizer_evidence", "generic_smoothing", "improper_impeccable_handoff", "open_todo", "renderer_evidence_failure", "visual_review_failure"]
-    }
+  "humanizer_policy": {
+    "applicability": "required",
+    "model_call_contract": "Claude Code 2.1.223 only: closed full raw result envelope including usage/modelUsage/permission fields; Codex CLI 0.144.3 is unsupported and fail-closed as the pinned release's LLM provider; every raw call byte hash is bound in report.json and BrandKit provenance",
+    "null_edit_allowed": true,
+    "old_hash_semantics": "validates the addressed baseline segment; replacement bytes may and normally do hash differently",
+    "passes": "Pass 0 triage; Pass 1 evidence/artifacts; confirmed-cluster Passes 2-4; Pass 5 self-audit",
+    "pattern_catalog_contract": "pinned references/patterns.md revision/hash plus the exact canonical ids 1..72; aliases, duplicates and malformed or unknown ids fail",
+    "protected": [
+      "frontmatter",
+      "facts",
+      "links",
+      "quotes",
+      "code",
+      "tables",
+      "callouts",
+      "ids",
+      "structure"
+    ],
+    "provenance_contract": "BrandKit-derived brandkit-provenance.json is regenerated from canonical UTF-8/LF original and result raw bytes, confirmed edits and exact Unicode-codepoint spans; its raw before/after hashes equal manifest, lint and report bindings",
+    "required_evidence": [
+      "original.md",
+      "preflight.json",
+      "audit-call.json",
+      "audit-ledger.json",
+      "confirmed-ledger.json",
+      "edits.json",
+      "rewrite-call.json|null-edit",
+      "evidence-ledger.json",
+      "evidence-report.json",
+      "changes.diff",
+      "brandkit-provenance.json",
+      "report.json",
+      "result.md|rejected.md"
+    ],
+    "runner": "scripts/humanizer_two_pass.py --file <file> --out-dir <empty-dir>",
+    "scope": "mutable single-line prose segments from the markdown contract"
   },
-  "optional_adapters": {
-    "brandkit-spacing": {
-      "owner": "spacing-tokens-roles-and-audit",
-      "inputs": ["brand_pin", "target_medium", "target_scope", "hashed_spacing_inventory"],
-      "outputs": ["closed_spacing_result", "unconfirmed_spacing_token_proposal", "validated_spacing_roles", "spacing_audit_findings", "ui_patch_handoff"],
-      "mutates": [],
-      "read_only": ["brand-package.v1", "shared_visual_tokens.spacing", "pdf.tokens", "document-type-layout", "DESIGN.md"],
-      "gate": "one pinned brand and one medium namespace resolve; every inventory entry maps to exactly one token or evidenced exception",
-      "fails_on": ["missing_brand_pin", "ambiguous_target_medium", "normative_spacing_conflict", "unknown_spacing_provenance", "medium_namespace_collision", "forbidden_spacing_mutation"]
-    }
-  },
-  "routing": {
-    "spacing-audit-or-token-role": "brandkit-spacing",
-    "general-ui-redesign": "brandkit-impeccable -> impeccable",
-    "brand-package-generation": "brandkit-build",
-    "pdf-publication-or-layout": "brand-voice-pdf -> brandkit-publish",
-    "design-md-generation-or-validation": "brandkit-impeccable"
-  },
-  "todo_policy": {
-    "allowed_locations": ["brand-raw.md", ".brandkit/work"],
-    "required_forms": ["TODO(owner)", "TODO(legal-review)"],
-    "publication_blocks_any_todo": true
+  "impeccable_policy": {
+    "adapter": "brandkit-impeccable",
+    "handoff": [
+      "brand_pin",
+      ".brandkit/impeccable-product.json"
+    ],
+    "parallel_design_instructions": false,
+    "required_outputs_before_route": [
+      "PRODUCT.md",
+      "DESIGN.md"
+    ]
   },
   "legal_policy": {
     "accepted_basis": "official source supplied by the user",
     "fallback": "TODO(legal-review)",
     "publication_without_review": false
   },
-  "humanizer_policy": {
-    "applicability": "required",
-    "scope": "mutable single-line prose segments from the markdown contract",
-    "runner": "scripts/humanizer_two_pass.py --file <file> --out-dir <empty-dir>",
-    "passes": "Pass 0 triage; Pass 1 evidence/artifacts; confirmed-cluster Passes 2-4; Pass 5 self-audit",
-    "protected": ["frontmatter", "facts", "links", "quotes", "code", "tables", "callouts", "ids", "structure"],
-    "old_hash_semantics": "validates the addressed baseline segment; replacement bytes may and normally do hash differently",
-    "pattern_catalog_contract": "pinned references/patterns.md revision/hash plus the exact canonical ids 1..72; aliases, duplicates and malformed or unknown ids fail",
-    "model_call_contract": "Claude Code 2.1.223 only: closed full raw result envelope including usage/modelUsage/permission fields; Codex CLI 0.144.3 is unsupported and fail-closed as the pinned release's LLM provider; every raw call byte hash is bound in report.json and BrandKit provenance",
-    "provenance_contract": "BrandKit-derived brandkit-provenance.json is regenerated from canonical UTF-8/LF original and result raw bytes, confirmed edits and exact Unicode-codepoint spans; its raw before/after hashes equal manifest, lint and report bindings",
-    "required_evidence": ["original.md", "preflight.json", "audit-call.json", "audit-ledger.json", "confirmed-ledger.json", "edits.json", "rewrite-call.json|null-edit", "evidence-ledger.json", "evidence-report.json", "changes.diff", "brandkit-provenance.json", "report.json", "result.md|rejected.md"],
-    "null_edit_allowed": true
+  "optional_adapters": {
+    "brandkit-affinity": {
+      "fails_on": [
+        "affinity_unavailable",
+        "affinity_identity_ambiguous",
+        "missing_mutation_receipt",
+        "receipt_scope_mismatch",
+        "non_staging_write",
+        "unverified_export"
+      ],
+      "gate": "a live loopback Affinity MCP server is observed; every mutation is explicitly authorized, receipt-bound and confined to run-local staging",
+      "inputs": [
+        "visual_brief",
+        "project_root",
+        "run_id",
+        "affinity_server_observation",
+        "optional_mutation_receipt"
+      ],
+      "mutates": [
+        ".brandkit/work/<run-id>/visual-decisions/staging/<document-id>"
+      ],
+      "outputs": [
+        "read_only_capability_observation",
+        "staged_vector_artifact",
+        "export_inventory",
+        "mutation_evidence"
+      ],
+      "owner": "affinity-vector-authoring-and-evidence",
+      "read_only": [
+        "brand-raw.md",
+        "visual-brief",
+        "owner-source-assets",
+        "brand-package.v1"
+      ]
+    },
+    "brandkit-spacing": {
+      "fails_on": [
+        "missing_brand_pin",
+        "ambiguous_target_medium",
+        "normative_spacing_conflict",
+        "unknown_spacing_provenance",
+        "medium_namespace_collision",
+        "forbidden_spacing_mutation"
+      ],
+      "gate": "one pinned brand and one medium namespace resolve; every inventory entry maps to exactly one token or evidenced exception",
+      "inputs": [
+        "brand_pin",
+        "target_medium",
+        "target_scope",
+        "hashed_spacing_inventory"
+      ],
+      "mutates": [],
+      "outputs": [
+        "closed_spacing_result",
+        "unconfirmed_spacing_token_proposal",
+        "validated_spacing_roles",
+        "spacing_audit_findings",
+        "ui_patch_handoff"
+      ],
+      "owner": "spacing-tokens-roles-and-audit",
+      "read_only": [
+        "brand-package.v1",
+        "shared_visual_tokens.spacing",
+        "pdf.tokens",
+        "document-type-layout",
+        "DESIGN.md"
+      ]
+    }
   },
-  "impeccable_policy": {
-    "adapter": "brandkit-impeccable",
-    "handoff": ["brand_pin", ".brandkit/impeccable-product.json"],
-    "required_outputs_before_route": ["PRODUCT.md", "DESIGN.md"],
-    "parallel_design_instructions": false
+  "optional_discovery": {
+    "grill-with-docs": {
+      "accepted_handoff": "owner-confirmed decisions and classified source pointers only",
+      "activation": "brandkit-interview-explicit",
+      "bundle": {
+        "content_sha256": "5fe71a6580750616471dec221f32928eefdc351eea950565afa0aa4e15ef88b7",
+        "derivation": "sha256(canonical-json-lf(members sorted by path))",
+        "members": [
+          {
+            "path": "skills/engineering/domain-modeling/ADR-FORMAT.md",
+            "sha256": "944c92aa790e8fbdc9199640b170979abb8a34ba8d0fe18c2a01a63bce140ca0",
+            "size": 2733
+          },
+          {
+            "path": "skills/engineering/domain-modeling/CONTEXT-FORMAT.md",
+            "sha256": "17ab16ce783e4d2801ee52fd9acdf550cbf44de65ae76797a93943bbedf22a13",
+            "size": 2290
+          },
+          {
+            "path": "skills/engineering/domain-modeling/SKILL.md",
+            "sha256": "327a2b50620e2fd70abc6893cd6965e76b20f8d0adb0dc2c8d5eb3845efb643e",
+            "size": 3331
+          },
+          {
+            "path": "skills/engineering/domain-modeling/agents/openai.yaml",
+            "sha256": "f6bf2aa996c6e6f53fdd0708e18a0d16a56aed8322cca59fedbe3c0d2c75f06b",
+            "size": 101
+          },
+          {
+            "path": "skills/engineering/grill-with-docs/SKILL.md",
+            "sha256": "7de372c13488f1ee96cc11cd8907b56b6809cc93eef776eeddd37de6b6cbe3fe",
+            "size": 247
+          },
+          {
+            "path": "skills/engineering/grill-with-docs/agents/openai.yaml",
+            "sha256": "94cd0ab161fb468a836349f5ed482ba58ce8e709a05c57ce533d739dbd35cca9",
+            "size": 145
+          },
+          {
+            "path": "skills/productivity/grilling/SKILL.md",
+            "sha256": "10ff989e7498b23b5acb49d5048f11dcd906757d2f79c5cdf8a00001381296f2",
+            "size": 1987
+          },
+          {
+            "path": "skills/productivity/grilling/agents/openai.yaml",
+            "sha256": "1411d7df7d99b7e621a1ff8283c8133cc2464be63d064e52d8ce169c6800ee9b",
+            "size": 113
+          }
+        ]
+      },
+      "canonical_subtrees": {
+        "domain-modeling": "skills/engineering/domain-modeling",
+        "grill-with-docs": "skills/engineering/grill-with-docs",
+        "grilling": "skills/productivity/grilling"
+      },
+      "checker": "scripts/brandkit_discovery.py",
+      "confirmation": "explicit-chat-approval-before-internal-confirm",
+      "fallback": "brandkit-interview-native",
+      "handoff_schema": "schemas/brandkit-discovery-handoff.v1.schema.json",
+      "invocation": "$brandkit-interview",
+      "minimum_answer_turns": 2,
+      "orchestration": [
+        "grilling",
+        "domain-modeling"
+      ],
+      "owner_receipt_schema": "schemas/brandkit-discovery-owner-receipt.v1.schema.json",
+      "progress_authentication": "derived-subkey HMAC-SHA256 project+run predecessor chain with external non-resettable head ledger",
+      "progress_location": ".brandkit/work/<run-id>/interview-progress.md",
+      "receipt_location": ".brandkit/owner-receipts/<run-id>.json",
+      "receipt_progress_binding": "chain-id+current-head+turn",
+      "repository": "github:mattpocock/skills",
+      "retained_artifacts": [
+        "CONTEXT.md",
+        "docs/adr/*.md",
+        "sources/*"
+      ],
+      "review_location": ".brandkit/work/<run-id>/review.md",
+      "revision": "6654f6b60cd9d5be8b54c6fafe44346dabeb3b76",
+      "workspace": ".brandkit/work/<run-id>/discovery",
+      "wrapper_policy": "reference-only-never-invoke"
+    }
   },
-  "public_contracts": {
-    "cli": {
-      "scripts/brand_package.py": {
-        "commands": ["materialize", "migrate", "pin", "resolve", "rollback", "validate"],
-        "options": ["--brand-id", "--create-roots", "--destination", "--engine-version", "--index", "--legacy", "--package", "--project", "--run-id", "--version", "package"]
+  "progressive_disclosure": {
+    "catalog": {
+      "activate-workflow": {
+        "path": "skills/brandkit-activate/references/workflow.md",
+        "role": "primary",
+        "sha256": "fb3daf7773f088b7960e90bdf114211584d227ebc06c61fc34fa1c688ccd309d"
       },
-      "scripts/brand_voice_pdf.py": {
-        "commands": ["prepare", "publish"],
-        "options": ["--asset-root", "--brand-id", "--draft", "--issuer-key", "--mermaid-cas", "--model", "--owner-approval", "--owner-key", "--print-workflow-lock", "--project", "--provider", "--run-id", "--timeout", "--workflow-lock", "command"]
+      "affinity-mutation-receipt-schema": {
+        "path": "schemas/brandkit-affinity-mutation-receipt.v1.schema.json",
+        "role": "contract",
+        "sha256": "759a8ae7930f02b24ae8e73a29a16ec95ae528e1b82d2ec9d89c8bde9ee070df"
       },
-      "scripts/markdown_contract.py": {
-        "commands": ["validate", "validate-contracts"],
-        "options": ["--asset-root", "--ast-json", "--document-type", "--humanizer-baseline", "--issuer-key", "--publication", "--render-result", "document"]
+      "affinity-observation-schema": {
+        "path": "schemas/brandkit-affinity-observation.v1.schema.json",
+        "role": "contract",
+        "sha256": "f3fe974ce401ce83376e7e64a7302f3ec6351dc40b6125eb3cf5f71899c7b791"
       },
-      "scripts/materialize_brandkit_instructions.py": {
-        "commands": [],
-        "options": ["--agents-source", "--project-root"]
+      "affinity-setup-workflow": {
+        "path": "skills/brandkit-affinity/references/setup-and-probe.md",
+        "role": "primary",
+        "sha256": "0753096a5051cba52f0c768e79ce465dedce449a7ab0fe40e222cb3db01e5361"
+      },
+      "affinity-vector-workflow": {
+        "path": "skills/brandkit-affinity/references/vector-workflow.md",
+        "role": "authoring",
+        "sha256": "ef637df3de6ff49cd9a632da5fd9ce85a4bc291bda946ae3d00cd66876b6cf45"
+      },
+      "brand-package-schema": {
+        "path": "schemas/brand-package.v1.schema.json",
+        "role": "contract",
+        "sha256": "c5128fc1c582f38188a9fe8ccf037e4cb98ec21eb1a2c498d14bb0df59fac475"
+      },
+      "build-workflow": {
+        "path": "skills/brandkit-build/references/workflow.md",
+        "role": "primary",
+        "sha256": "192ddf55794bd46a1044d67d49053464acd4357dec99d7e0a3383fe6eba49055"
+      },
+      "discovery-handoff-schema": {
+        "path": "schemas/brandkit-discovery-handoff.v1.schema.json",
+        "role": "contract",
+        "sha256": "dc03e647b5d3cfa2710b028c524a926ab53601cfa635b53e8191baf791fc1331"
+      },
+      "discovery-owner-receipt-schema": {
+        "path": "schemas/brandkit-discovery-owner-receipt.v1.schema.json",
+        "role": "contract",
+        "sha256": "bd383392a8ba4891146f632bf03d007c651666156b2e2d9a8de399dd1ced3fd2"
+      },
+      "document-type-schema": {
+        "path": "schemas/document-type.v1.schema.json",
+        "role": "contract",
+        "sha256": "713584a5816bce4a5b40e1b0fb46bc8b75bea1854ad8995458fa9727f9388b18"
+      },
+      "impeccable-adapter": {
+        "path": "impeccable-adapter.v1.json",
+        "role": "release",
+        "sha256": "89d4f8f3950405774e393ba52c40e90e5bdaeb0f56f3d42c61f66a63fb033272"
+      },
+      "impeccable-product-schema": {
+        "path": "schemas/impeccable-product-input.v1.schema.json",
+        "role": "contract",
+        "sha256": "5779b88cc0b8e03f2b0f8565e1d6fcab6ede1f2f64dbcb43a8007faa25d4b963"
+      },
+      "impeccable-sync-workflow": {
+        "path": "skills/brandkit-impeccable/references/workflow.md",
+        "role": "primary",
+        "sha256": "963a7aaedb5cb83ff4b7c3bdd8bfcc40343ae6bfe954736d20130018feed1628"
+      },
+      "interview-discovery-handoff": {
+        "path": "skills/brandkit-interview/references/grill-with-docs-handoff.md",
+        "role": "discovery",
+        "sha256": "e0cac9e9ed20229695b4e7f44de9f1a742c612e672037695b89646d9cfe951ef"
+      },
+      "interview-workflow": {
+        "path": "skills/brandkit-interview/references/workflow.md",
+        "role": "primary",
+        "sha256": "6e2022b886a3d0d199c771cdcfe252e78dba37c7fca3044a8c31e4acd7ebb9d1"
+      },
+      "markdown-contract": {
+        "path": "markdown-contract.v2.json",
+        "role": "contract",
+        "sha256": "5e54a95b00e8b778384f5cf1bfbcdbe721136e6142b9b31b9e6ffa1fce868ba4"
+      },
+      "markdown-schema": {
+        "path": "schemas/markdown-document.v1.schema.json",
+        "role": "contract",
+        "sha256": "e40ee76a7e818f491ce88265e44cd1b1f4b7d215c573decde3a4d6b1cbdcbbd4"
+      },
+      "pdf-authoring": {
+        "path": "skills/brand-voice-pdf/references/markdown-authoring.md",
+        "role": "authoring",
+        "sha256": "b4466a437efea6fd36bf42289c902dbd620515c7513e03e2db286623f8b9e4fa"
+      },
+      "pdf-workflow": {
+        "path": "skills/brand-voice-pdf/references/workflow.md",
+        "role": "primary",
+        "sha256": "a32add8b66dedf142f1ab95ce91554b6206b72b2692ad0af7c60ada7b72fe4b2"
+      },
+      "publish-workflow": {
+        "path": "skills/brandkit-publish/references/workflow.md",
+        "role": "primary",
+        "sha256": "da2b58d8350f67853063bd4da953345cfea03ff2e166e53e51ee3630d278f584"
+      },
+      "setup-workflow": {
+        "path": "skills/brandkit-setup/references/workflow.md",
+        "role": "primary",
+        "sha256": "55a045b8e92843f6d72ec13179ee0ece62bb99eca56d5619a3b7c2efc9ef867c"
+      },
+      "spacing-inventory-schema": {
+        "path": "schemas/spacing-inventory.v1.schema.json",
+        "role": "contract",
+        "sha256": "5fee712717241445cc378c15e56e010a42c799ffe191cfe2869c7085e3bc5d3d"
+      },
+      "spacing-proposal-schema": {
+        "path": "schemas/spacing-proposal.v1.schema.json",
+        "role": "contract",
+        "sha256": "7e655425e6b6bea7c8eef27d57637bfd5b507c69636977fa0e42010c47ac7512"
+      },
+      "spacing-workflow": {
+        "path": "skills/brandkit-spacing/references/workflow.md",
+        "role": "primary",
+        "sha256": "4f09965b70731e589b14c1032279e4e61a68e3f99448dffe81243b4798025d5e"
+      },
+      "visual-brief-schema": {
+        "path": "schemas/brandkit-visual-brief.v1.schema.json",
+        "role": "contract",
+        "sha256": "ed4b5e2b8b28a8458ff4de9fa3814658989fb69c71d30035ab6b819449bb6dc1"
+      },
+      "visual-candidate-set-schema": {
+        "path": "schemas/brandkit-visual-candidate-set.v1.schema.json",
+        "role": "contract",
+        "sha256": "c89e66a49a754355c01e516bedb31cf0aa3e4eb220ec1cb7027c2fafed2503bd"
+      },
+      "visual-decisions-workflow": {
+        "path": "skills/brandkit-visual-decisions/references/workflow.md",
+        "role": "primary",
+        "sha256": "6421f4365bbad6c0cc70ecd2aedb99f9952142903e12a0934397e02eab5a678b"
+      },
+      "visual-reputation-schema": {
+        "path": "schemas/reputation-evidence.v1.schema.json",
+        "role": "contract",
+        "sha256": "f232ab6798884018e124e2370e343385a597f45e435f405880bd634493823843"
+      },
+      "visual-source-contract": {
+        "path": "visual-decision-sources.v1.json",
+        "role": "contract",
+        "sha256": "af0823f0accdcdfbcdcfb80358b22a67a29a842392140eeceb7ca9db67ffac90"
+      },
+      "visual-source-schema": {
+        "path": "schemas/visual-decision-sources.v1.schema.json",
+        "role": "contract",
+        "sha256": "1a5a8e0bacc97092ad128e2b895ed970fc7ab0401f7694c4656892749917238e"
       }
     },
-    "python": {
-      "scripts/brand_package.py": ["ContractError", "atomic_bytes", "atomic_symlink", "canonical", "compatible", "copy_release", "current_state_target", "ensure_state_aliases", "git_root", "journal_binding", "load_json", "make_lock", "materialize", "migrate", "pin_project", "read_closed_activation", "read_state", "resolve", "rollback", "safe_dir", "safe_package_file", "sha256_file", "sha_bytes", "state_identity", "tree_hash", "validate_bound_state", "validate_lock_object", "validate_package", "validate_schema", "validate_svg", "validate_woff2", "write_state"],
-      "scripts/brand_voice_pdf.py": ["PublicationSnapshot", "WorkflowError", "atomic_publication_commit", "canonical", "expected_binding", "humanizer_release", "make_audit", "mutable_segments", "prepare", "publication_snapshot", "publish", "run", "sha", "signed_run", "verify_global_installation", "verify_owner_approval", "verify_signed_run", "verify_workflow_lock", "workflow_preflight", "write_json"],
-      "scripts/markdown_contract.py": ["ContractError", "Parser", "UniqueLoader", "canonical_json", "create_humanizer_baseline", "load_base_types", "load_json", "publication_gate", "rewrite_humanizer", "run_validate", "serialize_ast", "sha", "stable_read", "validate_ast_document", "validate_document_type", "validate_figure_registry", "validate_graphviz_text", "validate_graphviz_v1", "validate_image_bytes", "validate_mermaid_text", "validate_mermaid_toolchain", "validate_mermaid_v1", "validate_production_renderer_trust", "validate_schema", "verify_humanizer_baseline", "verify_humanizer_roundtrip"],
-      "scripts/materialize_brandkit_instructions.py": ["materialize"]
+    "design_context": {
+      "generator": "scripts/impeccable_adapter.py:design_md",
+      "path": "DESIGN.md",
+      "required_sections": [
+        "Overview",
+        "Source of Truth",
+        "Visual Direction",
+        "Tokens and Roles",
+        "Typography",
+        "Spacing",
+        "Components",
+        "Usage Rules",
+        "Anti-References"
+      ],
+      "source_of_truth": "brand-package.v1 shared_visual_tokens"
     },
+    "impeccable": {
+      "command_catalog": "impeccable-adapter.v1.json#/inventory/routes",
+      "context_loader": ".agents/skills/impeccable/scripts/context.mjs",
+      "native_guidance": {
+        "adaptive": "adaptive",
+        "android": "android.md",
+        "ios": "ios.md"
+      },
+      "platforms": [
+        "web",
+        "ios",
+        "android",
+        "adaptive"
+      ],
+      "reference_catalog": "impeccable-upstream-inventory.v1.json#/references",
+      "release": "impeccable-adapter.v1.json#/adapted_release/marker/version"
+    },
+    "routes": {
+      "activate": {
+        "context": [],
+        "primary": "activate-workflow",
+        "skill": "brandkit-activate"
+      },
+      "affinity": {
+        "context": [
+          "affinity-vector-workflow",
+          "affinity-observation-schema",
+          "affinity-mutation-receipt-schema"
+        ],
+        "primary": "affinity-setup-workflow",
+        "skill": "brandkit-affinity"
+      },
+      "build": {
+        "context": [
+          "brand-package-schema",
+          "document-type-schema"
+        ],
+        "primary": "build-workflow",
+        "skill": "brandkit-build"
+      },
+      "impeccable-sync": {
+        "context": [
+          "impeccable-adapter",
+          "impeccable-product-schema"
+        ],
+        "primary": "impeccable-sync-workflow",
+        "skill": "brandkit-impeccable"
+      },
+      "interview": {
+        "context": [
+          "interview-discovery-handoff",
+          "discovery-handoff-schema",
+          "discovery-owner-receipt-schema"
+        ],
+        "primary": "interview-workflow",
+        "skill": "brandkit-interview"
+      },
+      "pdf": {
+        "context": [
+          "pdf-authoring"
+        ],
+        "primary": "pdf-workflow",
+        "skill": "brand-voice-pdf"
+      },
+      "publish": {
+        "context": [
+          "markdown-contract",
+          "markdown-schema"
+        ],
+        "primary": "publish-workflow",
+        "skill": "brandkit-publish"
+      },
+      "setup": {
+        "context": [
+          "interview-discovery-handoff"
+        ],
+        "primary": "setup-workflow",
+        "skill": "brandkit-setup"
+      },
+      "spacing": {
+        "context": [
+          "spacing-inventory-schema",
+          "spacing-proposal-schema"
+        ],
+        "primary": "spacing-workflow",
+        "skill": "brandkit-spacing"
+      },
+      "visual-decisions": {
+        "context": [
+          "visual-brief-schema",
+          "visual-candidate-set-schema",
+          "visual-source-contract",
+          "visual-source-schema",
+          "visual-reputation-schema",
+          "discovery-owner-receipt-schema"
+        ],
+        "primary": "visual-decisions-workflow",
+        "skill": "brandkit-visual-decisions"
+      }
+    },
+    "rule": "resolve one route, load exactly one primary playbook, then only declared contextual references"
+  },
+  "public_contracts": {
     "brand_package": {
       "schema": "schemas/brand-package.v1.schema.json",
       "schema_version": "brand-package.v1",
       "validator": "scripts/brand_package.py:validate_package"
     },
+    "cli": {
+      "scripts/brand_package.py": {
+        "commands": [
+          "materialize",
+          "migrate",
+          "pin",
+          "resolve",
+          "rollback",
+          "validate"
+        ],
+        "options": [
+          "--brand-id",
+          "--create-roots",
+          "--destination",
+          "--engine-version",
+          "--index",
+          "--legacy",
+          "--package",
+          "--project",
+          "--run-id",
+          "--version",
+          "package"
+        ]
+      },
+      "scripts/brand_voice_pdf.py": {
+        "commands": [
+          "prepare",
+          "publish"
+        ],
+        "options": [
+          "--asset-root",
+          "--brand-id",
+          "--draft",
+          "--issuer-key",
+          "--mermaid-cas",
+          "--model",
+          "--owner-approval",
+          "--owner-key",
+          "--print-workflow-lock",
+          "--project",
+          "--provider",
+          "--run-id",
+          "--timeout",
+          "--workflow-lock",
+          "command"
+        ]
+      },
+      "scripts/brandkit_discovery.py": {
+        "commands": [
+          "check-bundle",
+          "confirm",
+          "consume",
+          "prepare",
+          "prepare-visual-confirmation",
+          "progress",
+          "render-review"
+        ],
+        "options": [
+          "--affinity-auth",
+          "--answer-sha256",
+          "--bundle-root",
+          "--confirmation-id",
+          "--confirmation-statement",
+          "--covered-axis",
+          "--explicit-open-axis",
+          "--handoff",
+          "--issuer",
+          "--open-axis",
+          "--owner-key",
+          "--owner-receipt",
+          "--project-root",
+          "--receipt",
+          "--review",
+          "--run-id",
+          "--sidecar-root",
+          "--state",
+          "--ttl"
+        ]
+      },
+      "scripts/brandkit_visual_decisions.py": {
+        "commands": [
+          "render-playground",
+          "render-sheet",
+          "validate",
+          "validate-bundle"
+        ],
+        "options": [
+          "--affinity-observation",
+          "--kind",
+          "--now",
+          "--path",
+          "--project",
+          "--root",
+          "--run-id"
+        ]
+      },
+      "scripts/markdown_contract.py": {
+        "commands": [
+          "validate",
+          "validate-contracts"
+        ],
+        "options": [
+          "--asset-root",
+          "--ast-json",
+          "--document-type",
+          "--humanizer-baseline",
+          "--issuer-key",
+          "--publication",
+          "--render-result",
+          "document"
+        ]
+      },
+      "scripts/materialize_brandkit_instructions.py": {
+        "commands": [],
+        "options": [
+          "--agents-source",
+          "--project-root"
+        ]
+      },
+      "scripts/validate_visual_decision_sources.py": {
+        "commands": [],
+        "options": [
+          "--root",
+          "--sidecar-root"
+        ]
+      }
+    },
     "documents": {
       "schema": "schemas/document-type.v1.schema.json",
-      "validator": "scripts/markdown_contract.py:validate_document_type",
       "types": {
         "freeform": "document-types/freeform.v1.json",
         "offer": "document-types/offer.v1.json",
         "one-pager": "document-types/one-pager.v1.json",
         "report": "document-types/report.v1.json"
-      }
+      },
+      "validator": "scripts/markdown_contract.py:validate_document_type"
+    },
+    "python": {
+      "scripts/brand_package.py": [
+        "ContractError",
+        "atomic_bytes",
+        "atomic_symlink",
+        "canonical",
+        "compatible",
+        "copy_release",
+        "current_state_target",
+        "ensure_state_aliases",
+        "git_root",
+        "journal_binding",
+        "load_json",
+        "make_lock",
+        "materialize",
+        "migrate",
+        "pin_project",
+        "read_closed_activation",
+        "read_state",
+        "resolve",
+        "rollback",
+        "safe_dir",
+        "safe_package_file",
+        "sha256_file",
+        "sha_bytes",
+        "state_identity",
+        "tree_hash",
+        "validate_bound_state",
+        "validate_lock_object",
+        "validate_package",
+        "validate_schema",
+        "validate_svg",
+        "validate_woff2",
+        "write_state"
+      ],
+      "scripts/brand_voice_pdf.py": [
+        "PublicationSnapshot",
+        "WorkflowError",
+        "atomic_publication_commit",
+        "canonical",
+        "expected_binding",
+        "humanizer_release",
+        "make_audit",
+        "mutable_segments",
+        "prepare",
+        "publication_snapshot",
+        "publish",
+        "run",
+        "sha",
+        "signed_run",
+        "verify_global_installation",
+        "verify_owner_approval",
+        "verify_signed_run",
+        "verify_workflow_lock",
+        "workflow_preflight",
+        "write_json"
+      ],
+      "scripts/brandkit_discovery.py": [
+        "DiscoveryError",
+        "bundle_digest",
+        "canonical",
+        "handoff_snapshot",
+        "initialize_progress",
+        "load_contract",
+        "load_json_bytes",
+        "make_owner_receipt",
+        "meaningful_markdown",
+        "prepare_orchestration",
+        "prepare_visual_confirmation",
+        "progress_markdown",
+        "read_owner_key",
+        "read_progress",
+        "render_review",
+        "review_markdown",
+        "secure_read",
+        "verified_review",
+        "verify_bundle_checkout",
+        "verify_owner_receipt",
+        "verify_project_activation",
+        "visual_brand_raw_block",
+        "write_owner_receipt",
+        "write_progress"
+      ],
+      "scripts/brandkit_visual_decisions.py": [
+        "VisualDecisionError",
+        "ascii_blank",
+        "ascii_lower",
+        "ascii_split",
+        "ascii_strip",
+        "candidate_context_sha256",
+        "canonical_json",
+        "color_contrast_report",
+        "confined_regular",
+        "contrast_ratio",
+        "exact_project_root",
+        "extract_font_metadata",
+        "is_sha256",
+        "load_json",
+        "load_json_bytes",
+        "load_replay_ledger",
+        "persist_replay_ledger",
+        "project_identity",
+        "protected_run_inventory",
+        "relative_luminance",
+        "render_playground",
+        "render_sheet",
+        "require_sha256",
+        "secure_read",
+        "sha256_bytes",
+        "validate_affinity_mutation_receipt",
+        "validate_affinity_observation",
+        "validate_brief",
+        "validate_bundle",
+        "validate_candidate_set",
+        "validate_color_report",
+        "validate_font_report",
+        "validate_logo_report",
+        "validate_playground_manifest",
+        "validate_schema",
+        "validate_sheet_manifest",
+        "validate_source_contract",
+        "verify_bundle",
+        "visual_workspace"
+      ],
+      "scripts/markdown_contract.py": [
+        "ContractError",
+        "Parser",
+        "UniqueLoader",
+        "canonical_json",
+        "create_humanizer_baseline",
+        "load_base_types",
+        "load_json",
+        "publication_gate",
+        "rewrite_humanizer",
+        "run_validate",
+        "serialize_ast",
+        "sha",
+        "stable_read",
+        "validate_ast_document",
+        "validate_document_type",
+        "validate_figure_registry",
+        "validate_graphviz_text",
+        "validate_graphviz_v1",
+        "validate_image_bytes",
+        "validate_mermaid_text",
+        "validate_mermaid_toolchain",
+        "validate_mermaid_v1",
+        "validate_production_renderer_trust",
+        "validate_schema",
+        "verify_humanizer_baseline",
+        "verify_humanizer_roundtrip"
+      ],
+      "scripts/materialize_brandkit_instructions.py": [
+        "materialize"
+      ],
+      "scripts/validate_visual_decision_sources.py": [
+        "validate_visual_decision_sources"
+      ]
     }
   },
-  "progressive_disclosure": {
-    "rule": "resolve one route, load exactly one primary playbook, then only declared contextual references",
-    "catalog": {
-      "setup-workflow": {"path": "skills/brandkit-setup/references/workflow.md", "role": "primary", "sha256": "1223e24019fc324a387b51cf3540d8ddee84f3b15ee0d1c0fa8a60642c1f6f61"},
-      "interview-workflow": {"path": "skills/brandkit-interview/references/workflow.md", "role": "primary", "sha256": "e809d72940ecf350950cc6f665d5beefc9e8746b14e4afda224c68e22a7e1ed2"},
-      "build-workflow": {"path": "skills/brandkit-build/references/workflow.md", "role": "primary", "sha256": "3844407d1e16aff86cd5327de2ef0c208926f00e7a52592af886993401233800"},
-      "publish-workflow": {"path": "skills/brandkit-publish/references/workflow.md", "role": "primary", "sha256": "da2b58d8350f67853063bd4da953345cfea03ff2e166e53e51ee3630d278f584"},
-      "spacing-workflow": {"path": "skills/brandkit-spacing/references/workflow.md", "role": "primary", "sha256": "4f09965b70731e589b14c1032279e4e61a68e3f99448dffe81243b4798025d5e"},
-      "impeccable-sync-workflow": {"path": "skills/brandkit-impeccable/references/workflow.md", "role": "primary", "sha256": "3e84200c6452e993b6140358fdc691cf770e6232f3f8f1d8716e4be85716cad1"},
-      "pdf-workflow": {"path": "skills/brand-voice-pdf/references/workflow.md", "role": "primary", "sha256": "a32add8b66dedf142f1ab95ce91554b6206b72b2692ad0af7c60ada7b72fe4b2"},
-      "pdf-authoring": {"path": "skills/brand-voice-pdf/references/markdown-authoring.md", "role": "authoring", "sha256": "b4466a437efea6fd36bf42289c902dbd620515c7513e03e2db286623f8b9e4fa"},
-      "brand-package-schema": {"path": "schemas/brand-package.v1.schema.json", "role": "contract", "sha256": "c5128fc1c582f38188a9fe8ccf037e4cb98ec21eb1a2c498d14bb0df59fac475"},
-      "document-type-schema": {"path": "schemas/document-type.v1.schema.json", "role": "contract", "sha256": "713584a5816bce4a5b40e1b0fb46bc8b75bea1854ad8995458fa9727f9388b18"},
-      "markdown-contract": {"path": "markdown-contract.v2.json", "role": "contract", "sha256": "5e54a95b00e8b778384f5cf1bfbcdbe721136e6142b9b31b9e6ffa1fce868ba4"},
-      "markdown-schema": {"path": "schemas/markdown-document.v1.schema.json", "role": "contract", "sha256": "e40ee76a7e818f491ce88265e44cd1b1f4b7d215c573decde3a4d6b1cbdcbbd4"},
-      "spacing-inventory-schema": {"path": "schemas/spacing-inventory.v1.schema.json", "role": "contract", "sha256": "5fee712717241445cc378c15e56e010a42c799ffe191cfe2869c7085e3bc5d3d"},
-      "spacing-proposal-schema": {"path": "schemas/spacing-proposal.v1.schema.json", "role": "contract", "sha256": "7e655425e6b6bea7c8eef27d57637bfd5b507c69636977fa0e42010c47ac7512"},
-      "impeccable-adapter": {"path": "impeccable-adapter.v1.json", "role": "release", "sha256": "89d4f8f3950405774e393ba52c40e90e5bdaeb0f56f3d42c61f66a63fb033272"},
-      "impeccable-product-schema": {"path": "schemas/impeccable-product-input.v1.schema.json", "role": "contract", "sha256": "5779b88cc0b8e03f2b0f8565e1d6fcab6ede1f2f64dbcb43a8007faa25d4b963"}
+  "routing": {
+    "affinity-vector-or-logo-work": "brandkit-affinity",
+    "brand-package-generation": "brandkit-build",
+    "design-md-generation-or-validation": "brandkit-impeccable",
+    "general-ui-redesign": "brandkit-impeccable -> impeccable",
+    "pdf-publication-or-layout": "brand-voice-pdf -> brandkit-publish",
+    "spacing-audit-or-token-role": "brandkit-spacing",
+    "visual-brand-candidates": "brandkit-visual-decisions"
+  },
+  "schema_version": "brandkit-skill-contract.v1",
+  "sequence": [
+    "brandkit-setup",
+    "brandkit-interview",
+    "brandkit-visual-decisions",
+    "brandkit-build",
+    "brandkit-publish"
+  ],
+  "skills": {
+    "brandkit-build": {
+      "fails_on": [
+        "missing_provenance",
+        "normative_brand_conflict",
+        "unresolved_asset_rights",
+        "missing_brand_pin",
+        "instruction_copy"
+      ],
+      "gate": "package validates and every normative value has provenance",
+      "inputs": [
+        "brand-raw.md",
+        "source_pointers",
+        "setup-readiness.md"
+      ],
+      "outputs": [
+        "brand-package.v1",
+        "AGENTS.md",
+        "CLAUDE.md -> AGENTS.md",
+        "Hermes cwd/AGENTS.md"
+      ],
+      "owner": "normative-brand-package"
     },
-    "routes": {
-      "setup": {"skill": "brandkit-setup", "primary": "setup-workflow", "context": []},
-      "interview": {"skill": "brandkit-interview", "primary": "interview-workflow", "context": []},
-      "build": {"skill": "brandkit-build", "primary": "build-workflow", "context": ["brand-package-schema", "document-type-schema"]},
-      "publish": {"skill": "brandkit-publish", "primary": "publish-workflow", "context": ["markdown-contract", "markdown-schema"]},
-      "spacing": {"skill": "brandkit-spacing", "primary": "spacing-workflow", "context": ["spacing-inventory-schema", "spacing-proposal-schema"]},
-      "impeccable-sync": {"skill": "brandkit-impeccable", "primary": "impeccable-sync-workflow", "context": ["impeccable-adapter", "impeccable-product-schema"]},
-      "pdf": {"skill": "brand-voice-pdf", "primary": "pdf-workflow", "context": ["pdf-authoring"]}
+    "brandkit-interview": {
+      "fails_on": [
+        "missing_owner",
+        "normative_brand_conflict",
+        "unsupported_legal_claim"
+      ],
+      "gate": "required axes are sourced, explicitly open, or not applicable and no normative conflict remains",
+      "inputs": [
+        "setup-readiness.md",
+        "owner_answers",
+        "supplied_sources"
+      ],
+      "outputs": [
+        "brand-raw.md",
+        "conflict_register",
+        "open_item_register"
+      ],
+      "owner": "brand-source-capture"
     },
-    "impeccable": {
-      "release": "impeccable-adapter.v1.json#/adapted_release/marker/version",
-      "command_catalog": "impeccable-adapter.v1.json#/inventory/routes",
-      "reference_catalog": "impeccable-upstream-inventory.v1.json#/references",
-      "context_loader": ".agents/skills/impeccable/scripts/context.mjs",
-      "platforms": ["web", "ios", "android", "adaptive"],
-      "native_guidance": {"ios": "ios.md", "android": "android.md", "adaptive": "adaptive"}
+    "brandkit-publish": {
+      "fails_on": [
+        "missing_brand_pin",
+        "missing_fact",
+        "legal_review_todo",
+        "unsupported_legal_claim",
+        "protected_fact_mutation",
+        "brand_conflict",
+        "unresolved_asset_rights",
+        "markdown_contract_failure",
+        "missing_or_rejected_humanizer_evidence",
+        "generic_smoothing",
+        "improper_impeccable_handoff",
+        "open_todo",
+        "renderer_evidence_failure",
+        "visual_review_failure"
+      ],
+      "gate": "brand, facts, rights, contracts, renderer and visual review pass with no open-work marker",
+      "inputs": [
+        "brand_pin",
+        "approved_content",
+        "document_type",
+        "target_medium",
+        "review_evidence",
+        "humanizer_applicability=required"
+      ],
+      "outputs": [
+        "artifact",
+        "qa_report",
+        "fact_ledger",
+        "humanizer_evidence"
+      ],
+      "owner": "project-artifact-production"
     },
-    "design_context": {
-      "path": "DESIGN.md",
-      "generator": "scripts/impeccable_adapter.py:design_md",
-      "source_of_truth": "brand-package.v1 shared_visual_tokens",
-      "required_sections": ["Overview", "Source of Truth", "Visual Direction", "Tokens and Roles", "Typography", "Spacing", "Components", "Usage Rules", "Anti-References"]
+    "brandkit-setup": {
+      "fails_on": [
+        "missing_write_target",
+        "ambiguous_project_root",
+        "required_capability_without_fallback"
+      ],
+      "gate": "required capabilities have observed evidence or accepted fallback",
+      "inputs": [
+        "requested_outputs",
+        "project_root",
+        "supplied_sources"
+      ],
+      "outputs": [
+        "setup-readiness.md"
+      ],
+      "owner": "readiness-and-scope"
+    },
+    "brandkit-visual-decisions": {
+      "fails_on": [
+        "stale_visual_brief",
+        "unverified_candidate",
+        "missing_rights",
+        "forbidden_affinity_fallback",
+        "global_impeccable_prebuild"
+      ],
+      "gate": "open visual domains are skipped, candidate-ready, partial, or blocked from verified run-local evidence",
+      "inputs": [
+        "brand-raw.md",
+        "visual-brief",
+        "source-review",
+        "affinity-observation"
+      ],
+      "outputs": [
+        "candidate-bundle",
+        "unselected-candidate-review",
+        "visual-evidence"
+      ],
+      "owner": "non-normative-visual-candidates"
     }
+  },
+  "todo_policy": {
+    "allowed_locations": [
+      "brand-raw.md",
+      ".brandkit/work"
+    ],
+    "publication_blocks_any_todo": true,
+    "required_forms": [
+      "TODO(owner)",
+      "TODO(legal-review)"
+    ]
+  },
+  "visual_decisions": {
+    "build_gate": "required open visual domain => package-draft-only; package-ready requires byte-identical consumed visual block or no open visual domain",
+    "confirmation_return": "brandkit-visual-decisions:review-candidates -> owner-selection-chat -> brandkit-interview:prepare-visual-confirmation -> owner-review -> confirm -> brandkit-interview:consume-visual-decisions -> brandkit-build",
+    "domain_states": [
+      "confirmed",
+      "open",
+      "not-applicable"
+    ],
+    "domains": [
+      "color",
+      "typography",
+      "code-font",
+      "logo",
+      "lockup"
+    ],
+    "impeccable_prebuild": "run-local pinned resolver only; extract forbidden",
+    "operations": [
+      "capture",
+      "prepare-visual-confirmation",
+      "consume-visual-decisions"
+    ],
+    "outcomes": [
+      "not-applicable",
+      "candidates-ready",
+      "partial",
+      "blocked"
+    ]
   }
 }

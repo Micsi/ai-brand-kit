@@ -1,49 +1,807 @@
 {
-  "schema_version": "brandkit-skill-dry-runs.v2",
-  "input_artifacts": [
-    {"role":"contract","path":"brandkit-skill-contract.v1.json","sha256":"6ccd6dce06fb94f622f5e796913bccb35b092cfb91096fa418bcb4e2fa180687"},
-    {"role":"brand-pin","path":"impeccable-adapter.v1.json","sha256":"89d4f8f3950405774e393ba52c40e90e5bdaeb0f56f3d42c61f66a63fb033272"},
-    {"role":"spacing-inventory","path":"fixtures/brandkit-skills/spacing-inventory-ui.valid.json","sha256":"d6dd745c2c2018ace1204a5b621ba356be795a083bfadbce55a40eec2c40e175"},
-    {"role":"spacing-inventory","path":"fixtures/brandkit-skills/spacing-inventory-shared.valid.json","sha256":"6b79272ea9b1d79b5b3c77dba2cbde273fdeb2667f3e0ca53112b887877b9ed9"},
-    {"role":"spacing-proposal","path":"fixtures/brandkit-skills/spacing-proposal.valid.json","sha256":"1104949e6ee824469ae39a2ab8d0a381f4d895bafdfa484ddaf8c8660e0d7b3f"}
-  ],
   "cases": [
-    {"request_id":"setup-positive","skill":"brandkit-setup","state":{"write_target":"observed","project_roots":["fixture-project"],"required_capabilities":["observed"],"optional_renderer":"observed"},"expected":"pass"},
-    {"request_id":"setup-optional-renderer-missing","skill":"brandkit-setup","state":{"write_target":"observed","project_roots":["fixture-project"],"required_capabilities":["observed"],"optional_renderer":"fallback"},"expected":"pass-with-fallback"},
-    {"request_id":"setup-missing-write-target","skill":"brandkit-setup","state":{"write_target":"missing","project_roots":["fixture-project"],"required_capabilities":["observed"],"optional_renderer":"observed"},"expected":"blocked"},
-    {"request_id":"setup-ambiguous-project-root","skill":"brandkit-setup","state":{"write_target":"observed","project_roots":["a","b"],"required_capabilities":["observed"],"optional_renderer":"observed"},"expected":"blocked"},
-    {"request_id":"setup-required-capability-without-fallback","skill":"brandkit-setup","state":{"write_target":"observed","project_roots":["fixture-project"],"required_capabilities":["missing"],"optional_renderer":"observed"},"expected":"blocked"},
-    {"request_id":"interview-positive","skill":"brandkit-interview","state":{"owner":"confirmed","axes":["sourced","not-applicable"],"conflicts":["resolved"],"legal_claims":["official-source"]},"expected":"pass"},
-    {"request_id":"interview-open-axis","skill":"brandkit-interview","state":{"owner":"confirmed","axes":["sourced","open"],"conflicts":[],"legal_claims":[]},"expected":"pass-with-todo"},
-    {"request_id":"interview-missing-owner","skill":"brandkit-interview","state":{"owner":"missing","axes":["sourced"],"conflicts":[],"legal_claims":[]},"expected":"blocked"},
-    {"request_id":"interview-conflicting-brand","skill":"brandkit-interview","state":{"owner":"confirmed","axes":["sourced"],"conflicts":["normative"],"legal_claims":[]},"expected":"blocked"},
-    {"request_id":"r1-interview-unsupported-legal-claim","skill":"brandkit-interview","state":{"owner":"confirmed","axes":["sourced"],"conflicts":[],"legal_claims":["unsupported"]},"expected":"blocked"},
-    {"request_id":"build-positive","skill":"brandkit-build","state":{"provenance":["complete"],"conflicts":[],"asset_rights":["verified"],"brand_pin":"verified","instruction_sources":["AGENTS.md"],"claude_bridge":"CLAUDE.md -> AGENTS.md","hermes_context":"cwd/AGENTS.md"},"expected":"package-ready"},
-    {"request_id":"build-missing-provenance","skill":"brandkit-build","state":{"provenance":["missing"],"conflicts":[],"asset_rights":["verified"],"brand_pin":"verified","instruction_sources":["AGENTS.md"],"claude_bridge":"CLAUDE.md -> AGENTS.md","hermes_context":"cwd/AGENTS.md"},"expected":"blocked"},
-    {"request_id":"build-normative-conflict","skill":"brandkit-build","state":{"provenance":["complete"],"conflicts":["normative"],"asset_rights":["verified"],"brand_pin":"verified","instruction_sources":["AGENTS.md"],"claude_bridge":"CLAUDE.md -> AGENTS.md","hermes_context":"cwd/AGENTS.md"},"expected":"blocked"},
-    {"request_id":"build-unresolved-asset-rights","skill":"brandkit-build","state":{"provenance":["complete"],"conflicts":[],"asset_rights":["unresolved"],"brand_pin":"verified","instruction_sources":["AGENTS.md"],"claude_bridge":"CLAUDE.md -> AGENTS.md","hermes_context":"cwd/AGENTS.md"},"expected":"blocked"},
-    {"request_id":"build-missing-brand-pin","skill":"brandkit-build","state":{"provenance":["complete"],"conflicts":[],"asset_rights":["verified"],"brand_pin":"missing","instruction_sources":["AGENTS.md"],"claude_bridge":"CLAUDE.md -> AGENTS.md","hermes_context":"cwd/AGENTS.md"},"expected":"blocked"},
-    {"request_id":"r1-build-provider-duplicates","skill":"brandkit-build","state":{"provenance":["complete"],"conflicts":[],"asset_rights":["verified"],"brand_pin":"verified","instruction_sources":["AGENTS.md","HERMES.md"],"claude_bridge":"copy","hermes_context":".hermes.md"},"expected":"blocked"},
-    {"request_id":"spacing-audit-positive","skill":"brandkit-spacing","state":{"brand_pin":"verified","target_medium":"ui","target_scope":"src/components","inventory_artifact":{"path":"fixtures/brandkit-skills/spacing-inventory-ui.valid.json","sha256":"d6dd745c2c2018ace1204a5b621ba356be795a083bfadbce55a40eec2c40e175"},"proposal_artifact":null,"normative_sources":["pinned-brand-package"],"requested_output":"audit-result"},"expected":"pass"},
-    {"request_id":"spacing-proposal-todo","skill":"brandkit-spacing","state":{"brand_pin":"verified","target_medium":"shared","target_scope":"brand-package proposal","inventory_artifact":{"path":"fixtures/brandkit-skills/spacing-inventory-shared.valid.json","sha256":"6b79272ea9b1d79b5b3c77dba2cbde273fdeb2667f3e0ca53112b887877b9ed9"},"proposal_artifact":{"path":"fixtures/brandkit-skills/spacing-proposal.valid.json","sha256":"1104949e6ee824469ae39a2ab8d0a381f4d895bafdfa484ddaf8c8660e0d7b3f"},"normative_sources":["unconfirmed-proposal"],"requested_output":"unconfirmed-token-proposal"},"expected":"pass-with-todo"},
-    {"request_id":"spacing-missing-brand-pin","skill":"brandkit-spacing","state":{"brand_pin":"missing","target_medium":"ui","target_scope":"src/components","inventory_artifact":{"path":"fixtures/brandkit-skills/spacing-inventory-ui.valid.json","sha256":"d6dd745c2c2018ace1204a5b621ba356be795a083bfadbce55a40eec2c40e175"},"proposal_artifact":null,"normative_sources":["pinned-brand-package"],"requested_output":"audit-result"},"expected":"blocked"},
-    {"request_id":"spacing-conflicting-sources","skill":"brandkit-spacing","state":{"brand_pin":"verified","target_medium":"ui","target_scope":"src/components","inventory_artifact":{"path":"fixtures/brandkit-skills/spacing-inventory-ui.valid.json","sha256":"d6dd745c2c2018ace1204a5b621ba356be795a083bfadbce55a40eec2c40e175"},"proposal_artifact":null,"normative_sources":["pinned-brand-package","conflicting"],"requested_output":"audit-result"},"expected":"blocked"},
-    {"request_id":"spacing-forbidden-pdf-mutation","skill":"brandkit-spacing","state":{"brand_pin":"verified","target_medium":"pdf","target_scope":"src/components","inventory_artifact":{"path":"fixtures/brandkit-skills/spacing-inventory-ui.valid.json","sha256":"d6dd745c2c2018ace1204a5b621ba356be795a083bfadbce55a40eec2c40e175"},"proposal_artifact":null,"normative_sources":["pinned-brand-package"],"requested_output":"ui-patch-handoff"},"expected":"blocked"},
-    {"request_id":"spacing-forbidden-direct-mutation","skill":"brandkit-spacing","state":{"brand_pin":"verified","target_medium":"ui","target_scope":"src/components","inventory_artifact":{"path":"fixtures/brandkit-skills/spacing-inventory-ui.valid.json","sha256":"d6dd745c2c2018ace1204a5b621ba356be795a083bfadbce55a40eec2c40e175"},"proposal_artifact":null,"normative_sources":["pinned-brand-package"],"requested_output":"unknown"},"expected":"blocked"},
-    {"request_id":"publish-positive","skill":"brandkit-publish","state":{"brand_pin":"verified","facts":["verified"],"todos":[],"rights":"verified","legal_claims":["official-source"],"brand_conflicts":[],"markdown_contract":"verified","humanizer_applicability":"required","humanizer_evidence":"fixtures/brandkit-skills/humanizer-evidence.valid.json","impeccable_handoff":"adapter-green","renderer":"verified","visual_review":"verified"},"expected":"publish"},
-    {"request_id":"publish-missing-brand-pin","skill":"brandkit-publish","state":{"brand_pin":"missing","facts":["verified"],"todos":[],"rights":"verified","legal_claims":[],"brand_conflicts":[],"markdown_contract":"verified","humanizer_applicability":"required","humanizer_evidence":"fixtures/brandkit-skills/humanizer-evidence.valid.json","impeccable_handoff":"not-applicable","renderer":"verified","visual_review":"verified"},"expected":"blocked"},
-    {"request_id":"publish-missing-price","skill":"brandkit-publish","state":{"brand_pin":"verified","facts":["missing"],"todos":[],"rights":"verified","legal_claims":[],"brand_conflicts":[],"markdown_contract":"verified","humanizer_applicability":"required","humanizer_evidence":"fixtures/brandkit-skills/humanizer-evidence.valid.json","impeccable_handoff":"not-applicable","renderer":"verified","visual_review":"verified"},"expected":"blocked"},
-    {"request_id":"publish-legal-todo","skill":"brandkit-publish","state":{"brand_pin":"verified","facts":["verified"],"todos":["TODO(legal-review)"],"rights":"verified","legal_claims":[],"brand_conflicts":[],"markdown_contract":"verified","humanizer_applicability":"required","humanizer_evidence":"fixtures/brandkit-skills/humanizer-evidence.valid.json","impeccable_handoff":"not-applicable","renderer":"verified","visual_review":"verified"},"expected":"blocked"},
-    {"request_id":"publish-protected-fact-mutation","skill":"brandkit-publish","state":{"brand_pin":"verified","facts":["mutated"],"todos":[],"rights":"verified","legal_claims":[],"brand_conflicts":[],"markdown_contract":"verified","humanizer_applicability":"required","humanizer_evidence":"fixtures/brandkit-skills/humanizer-evidence.valid.json","impeccable_handoff":"not-applicable","renderer":"verified","visual_review":"verified"},"expected":"blocked"},
-    {"request_id":"publish-markdown-contract-failure","skill":"brandkit-publish","state":{"brand_pin":"verified","facts":["verified"],"todos":[],"rights":"verified","legal_claims":[],"brand_conflicts":[],"markdown_contract":"failed","humanizer_applicability":"required","humanizer_evidence":"fixtures/brandkit-skills/humanizer-evidence.valid.json","impeccable_handoff":"not-applicable","renderer":"verified","visual_review":"verified"},"expected":"blocked"},
-    {"request_id":"publish-open-todo","skill":"brandkit-publish","state":{"brand_pin":"verified","facts":["verified"],"todos":["nested.metadata.TODO"],"rights":"verified","legal_claims":[],"brand_conflicts":[],"markdown_contract":"verified","humanizer_applicability":"required","humanizer_evidence":"fixtures/brandkit-skills/humanizer-evidence.valid.json","impeccable_handoff":"not-applicable","renderer":"verified","visual_review":"verified"},"expected":"blocked"},
-    {"request_id":"publish-renderer-failure","skill":"brandkit-publish","state":{"brand_pin":"verified","facts":["verified"],"todos":[],"rights":"verified","legal_claims":[],"brand_conflicts":[],"markdown_contract":"verified","humanizer_applicability":"required","humanizer_evidence":"fixtures/brandkit-skills/humanizer-evidence.valid.json","impeccable_handoff":"not-applicable","renderer":"failed","visual_review":"verified"},"expected":"blocked"},
-    {"request_id":"publish-visual-review-failure","skill":"brandkit-publish","state":{"brand_pin":"verified","facts":["verified"],"todos":[],"rights":"verified","legal_claims":[],"brand_conflicts":[],"markdown_contract":"verified","humanizer_applicability":"required","humanizer_evidence":"fixtures/brandkit-skills/humanizer-evidence.valid.json","impeccable_handoff":"not-applicable","renderer":"verified","visual_review":"failed"},"expected":"blocked"},
-    {"request_id":"r1-publish-rights-false","skill":"brandkit-publish","state":{"brand_pin":"verified","facts":["verified"],"todos":[],"rights":"failed","legal_claims":[],"brand_conflicts":[],"markdown_contract":"verified","humanizer_applicability":"required","humanizer_evidence":"fixtures/brandkit-skills/humanizer-evidence.valid.json","impeccable_handoff":"not-applicable","renderer":"verified","visual_review":"verified"},"expected":"blocked"},
-    {"request_id":"r1-publish-humanizer-evidence-false","skill":"brandkit-publish","state":{"brand_pin":"verified","facts":["verified"],"todos":[],"rights":"verified","legal_claims":[],"brand_conflicts":[],"markdown_contract":"verified","humanizer_applicability":"required","humanizer_evidence":"missing.json","impeccable_handoff":"not-applicable","renderer":"verified","visual_review":"verified"},"expected":"blocked"},
-    {"request_id":"r1-publish-generic-smoothing","skill":"brandkit-publish","state":{"brand_pin":"verified","facts":["verified"],"todos":[],"rights":"verified","legal_claims":[],"brand_conflicts":[],"markdown_contract":"verified","humanizer_applicability":"required","humanizer_evidence":"fixtures/brandkit-skills/humanizer-evidence.generic-smoothing.json","impeccable_handoff":"not-applicable","renderer":"verified","visual_review":"verified"},"expected":"blocked"},
-    {"request_id":"r1-publish-parallel-ui-instructions","skill":"brandkit-publish","state":{"brand_pin":"verified","facts":["verified"],"todos":[],"rights":"verified","legal_claims":[],"brand_conflicts":[],"markdown_contract":"verified","humanizer_applicability":"required","humanizer_evidence":"fixtures/brandkit-skills/humanizer-evidence.valid.json","impeccable_handoff":"parallel-ui-instructions","renderer":"verified","visual_review":"verified"},"expected":"blocked"},
-    {"request_id":"r1-publish-legal-without-official-source","skill":"brandkit-publish","state":{"brand_pin":"verified","facts":["verified"],"todos":[],"rights":"verified","legal_claims":["unsupported"],"brand_conflicts":[],"markdown_contract":"verified","humanizer_applicability":"required","humanizer_evidence":"fixtures/brandkit-skills/humanizer-evidence.valid.json","impeccable_handoff":"not-applicable","renderer":"verified","visual_review":"verified"},"expected":"blocked"},
-    {"request_id":"r1-publish-brand-conflict","skill":"brandkit-publish","state":{"brand_pin":"verified","facts":["verified"],"todos":[],"rights":"verified","legal_claims":[],"brand_conflicts":["normative"],"markdown_contract":"verified","humanizer_applicability":"required","humanizer_evidence":"fixtures/brandkit-skills/humanizer-evidence.valid.json","impeccable_handoff":"not-applicable","renderer":"verified","visual_review":"verified"},"expected":"blocked"}
-  ]
+    {
+      "expected": "pass",
+      "request_id": "setup-positive",
+      "skill": "brandkit-setup",
+      "state": {
+        "optional_renderer": "observed",
+        "project_roots": [
+          "fixture-project"
+        ],
+        "required_capabilities": [
+          "observed"
+        ],
+        "write_target": "observed"
+      }
+    },
+    {
+      "expected": "pass-with-fallback",
+      "request_id": "setup-optional-renderer-missing",
+      "skill": "brandkit-setup",
+      "state": {
+        "optional_renderer": "fallback",
+        "project_roots": [
+          "fixture-project"
+        ],
+        "required_capabilities": [
+          "observed"
+        ],
+        "write_target": "observed"
+      }
+    },
+    {
+      "expected": "blocked",
+      "request_id": "setup-missing-write-target",
+      "skill": "brandkit-setup",
+      "state": {
+        "optional_renderer": "observed",
+        "project_roots": [
+          "fixture-project"
+        ],
+        "required_capabilities": [
+          "observed"
+        ],
+        "write_target": "missing"
+      }
+    },
+    {
+      "expected": "blocked",
+      "request_id": "setup-ambiguous-project-root",
+      "skill": "brandkit-setup",
+      "state": {
+        "optional_renderer": "observed",
+        "project_roots": [
+          "a",
+          "b"
+        ],
+        "required_capabilities": [
+          "observed"
+        ],
+        "write_target": "observed"
+      }
+    },
+    {
+      "expected": "blocked",
+      "request_id": "setup-required-capability-without-fallback",
+      "skill": "brandkit-setup",
+      "state": {
+        "optional_renderer": "observed",
+        "project_roots": [
+          "fixture-project"
+        ],
+        "required_capabilities": [
+          "missing"
+        ],
+        "write_target": "observed"
+      }
+    },
+    {
+      "expected": "pass",
+      "request_id": "interview-positive",
+      "skill": "brandkit-interview",
+      "state": {
+        "axes": [
+          "sourced",
+          "not-applicable"
+        ],
+        "conflicts": [
+          "resolved"
+        ],
+        "legal_claims": [
+          "official-source"
+        ],
+        "owner": "confirmed"
+      }
+    },
+    {
+      "expected": "pass-with-todo",
+      "request_id": "interview-open-axis",
+      "skill": "brandkit-interview",
+      "state": {
+        "axes": [
+          "sourced",
+          "open"
+        ],
+        "conflicts": [],
+        "legal_claims": [],
+        "owner": "confirmed"
+      }
+    },
+    {
+      "expected": "blocked",
+      "request_id": "interview-missing-owner",
+      "skill": "brandkit-interview",
+      "state": {
+        "axes": [
+          "sourced"
+        ],
+        "conflicts": [],
+        "legal_claims": [],
+        "owner": "missing"
+      }
+    },
+    {
+      "expected": "blocked",
+      "request_id": "interview-conflicting-brand",
+      "skill": "brandkit-interview",
+      "state": {
+        "axes": [
+          "sourced"
+        ],
+        "conflicts": [
+          "normative"
+        ],
+        "legal_claims": [],
+        "owner": "confirmed"
+      }
+    },
+    {
+      "expected": "blocked",
+      "request_id": "r1-interview-unsupported-legal-claim",
+      "skill": "brandkit-interview",
+      "state": {
+        "axes": [
+          "sourced"
+        ],
+        "conflicts": [],
+        "legal_claims": [
+          "unsupported"
+        ],
+        "owner": "confirmed"
+      }
+    },
+    {
+      "expected": "pass-with-todo",
+      "request_id": "visual-candidates-ready",
+      "skill": "brandkit-visual-decisions",
+      "state": {
+        "affinity_observation": {
+          "path": "brandkit-skill-contract.v1.json",
+          "sha256": "53b4c237d243501215c075be436f92a5a4cf27451079718cad7359b37c6dba61",
+          "size": 24763
+        },
+        "candidate_bundle": {
+          "path": "brandkit-skill-contract.v1.json",
+          "sha256": "53b4c237d243501215c075be436f92a5a4cf27451079718cad7359b37c6dba61",
+          "size": 24763
+        },
+        "candidate_review": {
+          "path": "brandkit-skill-contract.v1.json",
+          "sha256": "53b4c237d243501215c075be436f92a5a4cf27451079718cad7359b37c6dba61",
+          "size": 24763
+        },
+        "operation": "review-candidates",
+        "required_domains": [
+          "color"
+        ],
+        "visual_brief": {
+          "path": "brandkit-skill-contract.v1.json",
+          "sha256": "53b4c237d243501215c075be436f92a5a4cf27451079718cad7359b37c6dba61",
+          "size": 24763
+        }
+      }
+    },
+    {
+      "expected": "package-ready",
+      "request_id": "build-positive",
+      "skill": "brandkit-build",
+      "state": {
+        "asset_rights": [
+          "verified"
+        ],
+        "brand_pin": "verified",
+        "claude_bridge": "CLAUDE.md -> AGENTS.md",
+        "conflicts": [],
+        "hermes_context": "cwd/AGENTS.md",
+        "instruction_sources": [
+          "AGENTS.md"
+        ],
+        "provenance": [
+          "complete"
+        ],
+        "visual_decisions": "no-open-domains"
+      }
+    },
+    {
+      "expected": "package-draft-only",
+      "request_id": "build-required-visual-open",
+      "skill": "brandkit-build",
+      "state": {
+        "asset_rights": [
+          "verified"
+        ],
+        "brand_pin": "verified",
+        "claude_bridge": "CLAUDE.md -> AGENTS.md",
+        "conflicts": [],
+        "hermes_context": "cwd/AGENTS.md",
+        "instruction_sources": [
+          "AGENTS.md"
+        ],
+        "provenance": [
+          "complete"
+        ],
+        "visual_decisions": "required-open"
+      }
+    },
+    {
+      "expected": "blocked",
+      "request_id": "build-missing-provenance",
+      "skill": "brandkit-build",
+      "state": {
+        "asset_rights": [
+          "verified"
+        ],
+        "brand_pin": "verified",
+        "claude_bridge": "CLAUDE.md -> AGENTS.md",
+        "conflicts": [],
+        "hermes_context": "cwd/AGENTS.md",
+        "instruction_sources": [
+          "AGENTS.md"
+        ],
+        "provenance": [
+          "missing"
+        ],
+        "visual_decisions": "no-open-domains"
+      }
+    },
+    {
+      "expected": "blocked",
+      "request_id": "build-normative-conflict",
+      "skill": "brandkit-build",
+      "state": {
+        "asset_rights": [
+          "verified"
+        ],
+        "brand_pin": "verified",
+        "claude_bridge": "CLAUDE.md -> AGENTS.md",
+        "conflicts": [
+          "normative"
+        ],
+        "hermes_context": "cwd/AGENTS.md",
+        "instruction_sources": [
+          "AGENTS.md"
+        ],
+        "provenance": [
+          "complete"
+        ],
+        "visual_decisions": "no-open-domains"
+      }
+    },
+    {
+      "expected": "blocked",
+      "request_id": "build-unresolved-asset-rights",
+      "skill": "brandkit-build",
+      "state": {
+        "asset_rights": [
+          "unresolved"
+        ],
+        "brand_pin": "verified",
+        "claude_bridge": "CLAUDE.md -> AGENTS.md",
+        "conflicts": [],
+        "hermes_context": "cwd/AGENTS.md",
+        "instruction_sources": [
+          "AGENTS.md"
+        ],
+        "provenance": [
+          "complete"
+        ],
+        "visual_decisions": "no-open-domains"
+      }
+    },
+    {
+      "expected": "blocked",
+      "request_id": "build-missing-brand-pin",
+      "skill": "brandkit-build",
+      "state": {
+        "asset_rights": [
+          "verified"
+        ],
+        "brand_pin": "missing",
+        "claude_bridge": "CLAUDE.md -> AGENTS.md",
+        "conflicts": [],
+        "hermes_context": "cwd/AGENTS.md",
+        "instruction_sources": [
+          "AGENTS.md"
+        ],
+        "provenance": [
+          "complete"
+        ],
+        "visual_decisions": "no-open-domains"
+      }
+    },
+    {
+      "expected": "blocked",
+      "request_id": "r1-build-provider-duplicates",
+      "skill": "brandkit-build",
+      "state": {
+        "asset_rights": [
+          "verified"
+        ],
+        "brand_pin": "verified",
+        "claude_bridge": "copy",
+        "conflicts": [],
+        "hermes_context": ".hermes.md",
+        "instruction_sources": [
+          "AGENTS.md",
+          "HERMES.md"
+        ],
+        "provenance": [
+          "complete"
+        ],
+        "visual_decisions": "no-open-domains"
+      }
+    },
+    {
+      "expected": "pass",
+      "request_id": "spacing-audit-positive",
+      "skill": "brandkit-spacing",
+      "state": {
+        "brand_pin": "verified",
+        "inventory_artifact": {
+          "path": "fixtures/brandkit-skills/spacing-inventory-ui.valid.json",
+          "sha256": "d6dd745c2c2018ace1204a5b621ba356be795a083bfadbce55a40eec2c40e175"
+        },
+        "normative_sources": [
+          "pinned-brand-package"
+        ],
+        "proposal_artifact": null,
+        "requested_output": "audit-result",
+        "target_medium": "ui",
+        "target_scope": "src/components"
+      }
+    },
+    {
+      "expected": "pass-with-todo",
+      "request_id": "spacing-proposal-todo",
+      "skill": "brandkit-spacing",
+      "state": {
+        "brand_pin": "verified",
+        "inventory_artifact": {
+          "path": "fixtures/brandkit-skills/spacing-inventory-shared.valid.json",
+          "sha256": "6b79272ea9b1d79b5b3c77dba2cbde273fdeb2667f3e0ca53112b887877b9ed9"
+        },
+        "normative_sources": [
+          "unconfirmed-proposal"
+        ],
+        "proposal_artifact": {
+          "path": "fixtures/brandkit-skills/spacing-proposal.valid.json",
+          "sha256": "1104949e6ee824469ae39a2ab8d0a381f4d895bafdfa484ddaf8c8660e0d7b3f"
+        },
+        "requested_output": "unconfirmed-token-proposal",
+        "target_medium": "shared",
+        "target_scope": "brand-package proposal"
+      }
+    },
+    {
+      "expected": "blocked",
+      "request_id": "spacing-missing-brand-pin",
+      "skill": "brandkit-spacing",
+      "state": {
+        "brand_pin": "missing",
+        "inventory_artifact": {
+          "path": "fixtures/brandkit-skills/spacing-inventory-ui.valid.json",
+          "sha256": "d6dd745c2c2018ace1204a5b621ba356be795a083bfadbce55a40eec2c40e175"
+        },
+        "normative_sources": [
+          "pinned-brand-package"
+        ],
+        "proposal_artifact": null,
+        "requested_output": "audit-result",
+        "target_medium": "ui",
+        "target_scope": "src/components"
+      }
+    },
+    {
+      "expected": "blocked",
+      "request_id": "spacing-conflicting-sources",
+      "skill": "brandkit-spacing",
+      "state": {
+        "brand_pin": "verified",
+        "inventory_artifact": {
+          "path": "fixtures/brandkit-skills/spacing-inventory-ui.valid.json",
+          "sha256": "d6dd745c2c2018ace1204a5b621ba356be795a083bfadbce55a40eec2c40e175"
+        },
+        "normative_sources": [
+          "pinned-brand-package",
+          "conflicting"
+        ],
+        "proposal_artifact": null,
+        "requested_output": "audit-result",
+        "target_medium": "ui",
+        "target_scope": "src/components"
+      }
+    },
+    {
+      "expected": "blocked",
+      "request_id": "spacing-forbidden-pdf-mutation",
+      "skill": "brandkit-spacing",
+      "state": {
+        "brand_pin": "verified",
+        "inventory_artifact": {
+          "path": "fixtures/brandkit-skills/spacing-inventory-ui.valid.json",
+          "sha256": "d6dd745c2c2018ace1204a5b621ba356be795a083bfadbce55a40eec2c40e175"
+        },
+        "normative_sources": [
+          "pinned-brand-package"
+        ],
+        "proposal_artifact": null,
+        "requested_output": "ui-patch-handoff",
+        "target_medium": "pdf",
+        "target_scope": "src/components"
+      }
+    },
+    {
+      "expected": "blocked",
+      "request_id": "spacing-forbidden-direct-mutation",
+      "skill": "brandkit-spacing",
+      "state": {
+        "brand_pin": "verified",
+        "inventory_artifact": {
+          "path": "fixtures/brandkit-skills/spacing-inventory-ui.valid.json",
+          "sha256": "d6dd745c2c2018ace1204a5b621ba356be795a083bfadbce55a40eec2c40e175"
+        },
+        "normative_sources": [
+          "pinned-brand-package"
+        ],
+        "proposal_artifact": null,
+        "requested_output": "unknown",
+        "target_medium": "ui",
+        "target_scope": "src/components"
+      }
+    },
+    {
+      "expected": "publish",
+      "request_id": "publish-positive",
+      "skill": "brandkit-publish",
+      "state": {
+        "brand_conflicts": [],
+        "brand_pin": "verified",
+        "facts": [
+          "verified"
+        ],
+        "humanizer_applicability": "required",
+        "humanizer_evidence": "fixtures/brandkit-skills/humanizer-evidence.valid.json",
+        "impeccable_handoff": "adapter-green",
+        "legal_claims": [
+          "official-source"
+        ],
+        "markdown_contract": "verified",
+        "renderer": "verified",
+        "rights": "verified",
+        "todos": [],
+        "visual_review": "verified"
+      }
+    },
+    {
+      "expected": "blocked",
+      "request_id": "publish-missing-brand-pin",
+      "skill": "brandkit-publish",
+      "state": {
+        "brand_conflicts": [],
+        "brand_pin": "missing",
+        "facts": [
+          "verified"
+        ],
+        "humanizer_applicability": "required",
+        "humanizer_evidence": "fixtures/brandkit-skills/humanizer-evidence.valid.json",
+        "impeccable_handoff": "not-applicable",
+        "legal_claims": [],
+        "markdown_contract": "verified",
+        "renderer": "verified",
+        "rights": "verified",
+        "todos": [],
+        "visual_review": "verified"
+      }
+    },
+    {
+      "expected": "blocked",
+      "request_id": "publish-missing-price",
+      "skill": "brandkit-publish",
+      "state": {
+        "brand_conflicts": [],
+        "brand_pin": "verified",
+        "facts": [
+          "missing"
+        ],
+        "humanizer_applicability": "required",
+        "humanizer_evidence": "fixtures/brandkit-skills/humanizer-evidence.valid.json",
+        "impeccable_handoff": "not-applicable",
+        "legal_claims": [],
+        "markdown_contract": "verified",
+        "renderer": "verified",
+        "rights": "verified",
+        "todos": [],
+        "visual_review": "verified"
+      }
+    },
+    {
+      "expected": "blocked",
+      "request_id": "publish-legal-todo",
+      "skill": "brandkit-publish",
+      "state": {
+        "brand_conflicts": [],
+        "brand_pin": "verified",
+        "facts": [
+          "verified"
+        ],
+        "humanizer_applicability": "required",
+        "humanizer_evidence": "fixtures/brandkit-skills/humanizer-evidence.valid.json",
+        "impeccable_handoff": "not-applicable",
+        "legal_claims": [],
+        "markdown_contract": "verified",
+        "renderer": "verified",
+        "rights": "verified",
+        "todos": [
+          "TODO(legal-review)"
+        ],
+        "visual_review": "verified"
+      }
+    },
+    {
+      "expected": "blocked",
+      "request_id": "publish-protected-fact-mutation",
+      "skill": "brandkit-publish",
+      "state": {
+        "brand_conflicts": [],
+        "brand_pin": "verified",
+        "facts": [
+          "mutated"
+        ],
+        "humanizer_applicability": "required",
+        "humanizer_evidence": "fixtures/brandkit-skills/humanizer-evidence.valid.json",
+        "impeccable_handoff": "not-applicable",
+        "legal_claims": [],
+        "markdown_contract": "verified",
+        "renderer": "verified",
+        "rights": "verified",
+        "todos": [],
+        "visual_review": "verified"
+      }
+    },
+    {
+      "expected": "blocked",
+      "request_id": "publish-markdown-contract-failure",
+      "skill": "brandkit-publish",
+      "state": {
+        "brand_conflicts": [],
+        "brand_pin": "verified",
+        "facts": [
+          "verified"
+        ],
+        "humanizer_applicability": "required",
+        "humanizer_evidence": "fixtures/brandkit-skills/humanizer-evidence.valid.json",
+        "impeccable_handoff": "not-applicable",
+        "legal_claims": [],
+        "markdown_contract": "failed",
+        "renderer": "verified",
+        "rights": "verified",
+        "todos": [],
+        "visual_review": "verified"
+      }
+    },
+    {
+      "expected": "blocked",
+      "request_id": "publish-open-todo",
+      "skill": "brandkit-publish",
+      "state": {
+        "brand_conflicts": [],
+        "brand_pin": "verified",
+        "facts": [
+          "verified"
+        ],
+        "humanizer_applicability": "required",
+        "humanizer_evidence": "fixtures/brandkit-skills/humanizer-evidence.valid.json",
+        "impeccable_handoff": "not-applicable",
+        "legal_claims": [],
+        "markdown_contract": "verified",
+        "renderer": "verified",
+        "rights": "verified",
+        "todos": [
+          "nested.metadata.TODO"
+        ],
+        "visual_review": "verified"
+      }
+    },
+    {
+      "expected": "blocked",
+      "request_id": "publish-renderer-failure",
+      "skill": "brandkit-publish",
+      "state": {
+        "brand_conflicts": [],
+        "brand_pin": "verified",
+        "facts": [
+          "verified"
+        ],
+        "humanizer_applicability": "required",
+        "humanizer_evidence": "fixtures/brandkit-skills/humanizer-evidence.valid.json",
+        "impeccable_handoff": "not-applicable",
+        "legal_claims": [],
+        "markdown_contract": "verified",
+        "renderer": "failed",
+        "rights": "verified",
+        "todos": [],
+        "visual_review": "verified"
+      }
+    },
+    {
+      "expected": "blocked",
+      "request_id": "publish-visual-review-failure",
+      "skill": "brandkit-publish",
+      "state": {
+        "brand_conflicts": [],
+        "brand_pin": "verified",
+        "facts": [
+          "verified"
+        ],
+        "humanizer_applicability": "required",
+        "humanizer_evidence": "fixtures/brandkit-skills/humanizer-evidence.valid.json",
+        "impeccable_handoff": "not-applicable",
+        "legal_claims": [],
+        "markdown_contract": "verified",
+        "renderer": "verified",
+        "rights": "verified",
+        "todos": [],
+        "visual_review": "failed"
+      }
+    },
+    {
+      "expected": "blocked",
+      "request_id": "r1-publish-rights-false",
+      "skill": "brandkit-publish",
+      "state": {
+        "brand_conflicts": [],
+        "brand_pin": "verified",
+        "facts": [
+          "verified"
+        ],
+        "humanizer_applicability": "required",
+        "humanizer_evidence": "fixtures/brandkit-skills/humanizer-evidence.valid.json",
+        "impeccable_handoff": "not-applicable",
+        "legal_claims": [],
+        "markdown_contract": "verified",
+        "renderer": "verified",
+        "rights": "failed",
+        "todos": [],
+        "visual_review": "verified"
+      }
+    },
+    {
+      "expected": "blocked",
+      "request_id": "r1-publish-humanizer-evidence-false",
+      "skill": "brandkit-publish",
+      "state": {
+        "brand_conflicts": [],
+        "brand_pin": "verified",
+        "facts": [
+          "verified"
+        ],
+        "humanizer_applicability": "required",
+        "humanizer_evidence": "missing.json",
+        "impeccable_handoff": "not-applicable",
+        "legal_claims": [],
+        "markdown_contract": "verified",
+        "renderer": "verified",
+        "rights": "verified",
+        "todos": [],
+        "visual_review": "verified"
+      }
+    },
+    {
+      "expected": "blocked",
+      "request_id": "r1-publish-generic-smoothing",
+      "skill": "brandkit-publish",
+      "state": {
+        "brand_conflicts": [],
+        "brand_pin": "verified",
+        "facts": [
+          "verified"
+        ],
+        "humanizer_applicability": "required",
+        "humanizer_evidence": "fixtures/brandkit-skills/humanizer-evidence.generic-smoothing.json",
+        "impeccable_handoff": "not-applicable",
+        "legal_claims": [],
+        "markdown_contract": "verified",
+        "renderer": "verified",
+        "rights": "verified",
+        "todos": [],
+        "visual_review": "verified"
+      }
+    },
+    {
+      "expected": "blocked",
+      "request_id": "r1-publish-parallel-ui-instructions",
+      "skill": "brandkit-publish",
+      "state": {
+        "brand_conflicts": [],
+        "brand_pin": "verified",
+        "facts": [
+          "verified"
+        ],
+        "humanizer_applicability": "required",
+        "humanizer_evidence": "fixtures/brandkit-skills/humanizer-evidence.valid.json",
+        "impeccable_handoff": "parallel-ui-instructions",
+        "legal_claims": [],
+        "markdown_contract": "verified",
+        "renderer": "verified",
+        "rights": "verified",
+        "todos": [],
+        "visual_review": "verified"
+      }
+    },
+    {
+      "expected": "blocked",
+      "request_id": "r1-publish-legal-without-official-source",
+      "skill": "brandkit-publish",
+      "state": {
+        "brand_conflicts": [],
+        "brand_pin": "verified",
+        "facts": [
+          "verified"
+        ],
+        "humanizer_applicability": "required",
+        "humanizer_evidence": "fixtures/brandkit-skills/humanizer-evidence.valid.json",
+        "impeccable_handoff": "not-applicable",
+        "legal_claims": [
+          "unsupported"
+        ],
+        "markdown_contract": "verified",
+        "renderer": "verified",
+        "rights": "verified",
+        "todos": [],
+        "visual_review": "verified"
+      }
+    },
+    {
+      "expected": "blocked",
+      "request_id": "r1-publish-brand-conflict",
+      "skill": "brandkit-publish",
+      "state": {
+        "brand_conflicts": [
+          "normative"
+        ],
+        "brand_pin": "verified",
+        "facts": [
+          "verified"
+        ],
+        "humanizer_applicability": "required",
+        "humanizer_evidence": "fixtures/brandkit-skills/humanizer-evidence.valid.json",
+        "impeccable_handoff": "not-applicable",
+        "legal_claims": [],
+        "markdown_contract": "verified",
+        "renderer": "verified",
+        "rights": "verified",
+        "todos": [],
+        "visual_review": "verified"
+      }
+    }
+  ],
+  "input_artifacts": [
+    {
+      "path": "brandkit-skill-contract.v1.json",
+      "role": "contract",
+      "sha256": "fc4c200595a45d479d38487e3c836f300a8fc7e9b03ab3fd28e95cbec4599c72"
+    },
+    {
+      "path": "impeccable-adapter.v1.json",
+      "role": "brand-pin",
+      "sha256": "89d4f8f3950405774e393ba52c40e90e5bdaeb0f56f3d42c61f66a63fb033272"
+    },
+    {
+      "path": "fixtures/brandkit-skills/spacing-inventory-ui.valid.json",
+      "role": "spacing-inventory",
+      "sha256": "d6dd745c2c2018ace1204a5b621ba356be795a083bfadbce55a40eec2c40e175"
+    },
+    {
+      "path": "fixtures/brandkit-skills/spacing-inventory-shared.valid.json",
+      "role": "spacing-inventory",
+      "sha256": "6b79272ea9b1d79b5b3c77dba2cbde273fdeb2667f3e0ca53112b887877b9ed9"
+    },
+    {
+      "path": "fixtures/brandkit-skills/spacing-proposal.valid.json",
+      "role": "spacing-proposal",
+      "sha256": "1104949e6ee824469ae39a2ab8d0a381f4d895bafdfa484ddaf8c8660e0d7b3f"
+    }
+  ],
+  "schema_version": "brandkit-skill-dry-runs.v2"
 }

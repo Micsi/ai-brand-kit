@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import os
+import re
 import shutil
 import stat
 import subprocess
@@ -105,14 +106,56 @@ def _reserve_path(parent: Path, name: str) -> Path:
     return path
 
 
+def _parse_hermes_version(text: str) -> tuple[int, int, int] | None:
+    """Die erste ``vMAJOR.MINOR.PATCH``-Angabe eines Versionstextes.
+
+    Gelesen wird die Zahl, nicht die Zeichenkette: Ein Vergleich per Teilstring
+    kann ``v0.20.5`` nicht von ``v0.20.50`` unterscheiden und ordnet gar nichts.
+    """
+    found = re.search(r"\bv(\d+)\.(\d+)\.(\d+)\b", text)
+    if not found:
+        return None
+    return (int(found.group(1)), int(found.group(2)), int(found.group(3)))
+
+
 def _verify_hermes_installation() -> None:
+    """Die installierte Hermes-Fassung muss die Prompt-Auswahl tragen können.
+
+    Geprüft wird eine MINDESTVERSION innerhalb derselben Hauptversion, nicht
+    Zeichengleichheit mit einem eingefrorenen Commit. Der frühere Vergleich
+    (``f"v{HERMES_VERSION}" not in version_text or HERMES_REVISION not in
+    version_text``) sperrte jede neuere Fassung aus - gemessen an v0.20.6, die
+    ``build_context_files_prompt`` unverändert bereitstellt und die vorgeschlagene
+    ``AGENTS.md`` korrekt auswählt. Ein Werkzeug, das sich bei jedem Patch des
+    überprüften Programms selbst aussperrt, prüft nicht mehr, es blockiert nur.
+
+    Was die Strenge trägt, bleibt: Eine ältere Fassung wird abgewiesen, weil ihre
+    Prioritätskette nicht zugesichert ist, und eine fremde Hauptversion ebenso,
+    weil dort mit brechenden Änderungen zu rechnen ist. Die eigentliche Zusage
+    wird ohnehin nicht aus der Versionsnummer abgeleitet, sondern in
+    ``_verify_effective_prompt`` am echten ``prompt_builder`` gemessen: Dort muss
+    die vorgeschlagene Datei im effektiven Prompt wirklich auftauchen.
+
+    Die beobachtete Revision wird weiterhin gelesen, aber als Angabe geführt und
+    nicht als Bedingung - sie gehört in die Fehlermeldung, damit eine
+    Abweichung nachvollziehbar bleibt.
+    """
     binary = shutil.which("hermes")
     if not binary:
         raise ValueError("installed Hermes executable is unavailable")
     version = subprocess.run([binary, "--version"], text=True, capture_output=True, env=_clean_git_environment())
     version_text = version.stdout + version.stderr
-    if version.returncode or f"v{HERMES_VERSION}" not in version_text or HERMES_REVISION not in version_text:
-        raise ValueError("installed Hermes is not exact v0.20.5/upstream 1bbb6e5b")
+    if version.returncode:
+        raise ValueError("installed Hermes does not report its version")
+    observed = _parse_hermes_version(version_text)
+    minimum = _parse_hermes_version(f"v{HERMES_VERSION}")
+    if observed is None or minimum is None:
+        raise ValueError(f"installed Hermes reports no readable version: {version_text.strip()!r}")
+    if observed[0] != minimum[0] or observed < minimum:
+        raise ValueError(
+            f"installed Hermes {observed[0]}.{observed[1]}.{observed[2]} is outside the supported range "
+            f"(>= {HERMES_VERSION}, same major); reference upstream {HERMES_REVISION}"
+        )
     if not HERMES_PYTHON.is_file() or not (HERMES_ROOT / "agent/prompt_builder.py").is_file():
         raise ValueError("installed Hermes prompt_builder is unavailable")
 

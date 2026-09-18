@@ -183,9 +183,32 @@ def validate_package(package: Path) -> tuple[dict[str, Any], Path, str]:
     if actual != declared: raise ContractError(f"package file set differs from manifest: extra={sorted(actual-declared)} missing={sorted(declared-actual)}")
     return doc, root, tree_hash(root)
 
+def _marks_project_root(path: Path) -> bool:
+    """Whether this directory is already the anchor of a project."""
+    return (path / ".git").exists() or (path / ".brandkit").exists()
+
 def git_root(path: Path) -> Path:
+    """The project root every write path is confined to.
+
+    The name is pinned in ``public_contracts.python`` and kept; what it checks
+    is no longer a repository. The old rule asked whether ``.git`` existed and
+    then used the directory for two things only: the boundary ``safe_dir``
+    confines every write to, and the source of the project hash. Git supplied
+    neither - a plain directory anchors both just as well - yet a project
+    without version control, a subdirectory of a monorepo and a pure delivery
+    directory could not use a brand package at all. ``exact_project_root`` in
+    the visual-decisions core has done without the condition for longer.
+
+    What the old rule did supply in passing is kept, with its real reason: a
+    subdirectory of an anchored project must not pin state of its own, or one
+    tree ends up with two activations. So an existing mark below an anchored
+    parent is refused - by the project mark, not by a repository.
+    """
     resolved = path.resolve(strict=True)
-    if not (resolved / ".git").exists(): raise ContractError(f"project must be the exact Git root: {resolved}")
+    if _marks_project_root(resolved): return resolved
+    anchored = next((parent for parent in resolved.parents if _marks_project_root(parent)), None)
+    if anchored is not None:
+        raise ContractError(f"project root is already anchored at {anchored}, not at {resolved}")
     return resolved
 
 def safe_dir(root: Path, relative: str) -> Path:
@@ -203,7 +226,7 @@ def safe_dir(root: Path, relative: str) -> Path:
             mode = cursor.lstat().st_mode
             if stat.S_ISLNK(mode) or not stat.S_ISDIR(mode): raise ContractError(f"unsafe newly-created component: {cursor}")
         real = cursor.resolve(strict=True)
-        if root != real and root not in real.parents: raise ContractError(f"write path escapes Git root: {cursor}")
+        if root != real and root not in real.parents: raise ContractError(f"write path escapes project root: {cursor}")
     return cursor
 
 def atomic_bytes(root: Path, relative: str, data: bytes) -> None:

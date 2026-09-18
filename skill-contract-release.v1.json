@@ -1,46 +1,270 @@
 {
-  "schema_version": "brandkit-skill-contract-release.v1",
   "baseline_head": "d65179442ca2e4c14dd2636bcb3511ca326d893f",
   "members": [
-    {"path":"brandkit-skill-contract.v1.json","sha256":"6ccd6dce06fb94f622f5e796913bccb35b092cfb91096fa418bcb4e2fa180687"},
-    {"path":"schemas/brandkit-skill-contract.v1.schema.json","sha256":"96de2738a38d834efd00873a1378b1edd7fa10b069b6b5ccf955cce84458a142"},
-    {"path":"schemas/brandkit-skill-request.v1.schema.json","sha256":"32a1e824c3d1f3c728347e52231257aa8893e412c5ba6942898b6d37d2c96c90"},
-    {"path":"schemas/brandkit-skill-result.v1.schema.json","sha256":"9c3bddabce490f267d5d428cda5867dab7e34e749d098567348790b27ef4ec9a"},
-    {"path":"schemas/brand-package.v1.schema.json","sha256":"c5128fc1c582f38188a9fe8ccf037e4cb98ec21eb1a2c498d14bb0df59fac475"},
-    {"path":"schemas/document-type.v1.schema.json","sha256":"713584a5816bce4a5b40e1b0fb46bc8b75bea1854ad8995458fa9727f9388b18"},
-    {"path":"schemas/impeccable-product-input.v1.schema.json","sha256":"5779b88cc0b8e03f2b0f8565e1d6fcab6ede1f2f64dbcb43a8007faa25d4b963"},
-    {"path":"schemas/markdown-document.v1.schema.json","sha256":"e40ee76a7e818f491ce88265e44cd1b1f4b7d215c573decde3a4d6b1cbdcbbd4"},
-    {"path":"schemas/spacing-inventory.v1.schema.json","sha256":"5fee712717241445cc378c15e56e010a42c799ffe191cfe2869c7085e3bc5d3d"},
-    {"path":"schemas/spacing-proposal.v1.schema.json","sha256":"7e655425e6b6bea7c8eef27d57637bfd5b507c69636977fa0e42010c47ac7512"},
-    {"path":"markdown-contract.v2.json","sha256":"5e54a95b00e8b778384f5cf1bfbcdbe721136e6142b9b31b9e6ffa1fce868ba4"},
-    {"path":"document-types/freeform.v1.json","sha256":"c8cb2b480680b9cf749080e333fa7d04f1a3a8bca3a062d8e0b09d249d3ad0a9"},
-    {"path":"document-types/offer.v1.json","sha256":"76e0a4540e40f24a7e3398c39bb91115fc98b425be58dad4cb39166aef6ef618"},
-    {"path":"document-types/one-pager.v1.json","sha256":"79194b4224106b7c275cc5cbfb7f1dd6584777ed68a137a5ab597fc2eb3dc71a"},
-    {"path":"document-types/report.v1.json","sha256":"3856f2e86321ef4842813a781f6e6204ded898597a5a83eff9e09f93082c5fe5"},
-    {"path":"scripts/brand_package.py","sha256":"18cf212059dd9865d04abad5252b7b5778e776e8b3f80d63b43f7934773ee7ec"},
-    {"path":"scripts/brand_voice_pdf.py","sha256":"bca7c5029441d4570365a0fb467143fb65ab28f065845a687eac9c13745e3a19"},
-    {"path":"scripts/markdown_contract.py","sha256":"9244ec5d756ce47c0b7f2002e73521257df937db81712e5861c7b67e636aa8ec"},
-    {"path":"scripts/materialize_brandkit_instructions.py","sha256":"1b3f9015cb8d037b167778d5ce250dc321b0af8b9ab4f98f5e46f3f9b4a0d989"},
-    {"path":"scripts/impeccable_adapter.py","sha256":"fdd7782c272501f31f70b27968550af8694d3220df24c1db659417f579659e5f"},
-    {"path":"scripts/validate_brandkit_skills.py","sha256":"c7b08a8d801bdb3f1f50b2bb12d58f65aee6e6bc1aa865166c73a794b6f3eb7c"},
-    {"path":"fixtures/brandkit-skills/dry-runs.v1.json","sha256":"56495d1fb50d1295a55442564571da5c8fcbc94a573cedca05ea1dba04d34b5e"},
-    {"path":"fixtures/brandkit-skills/collision-dry-runs.v1.json","sha256":"a32955d440b4f29565de0208f6eb9bca49e39ba3a0681113d9c86820ec109b74"},
-    {"path":"impeccable-adapter.v1.json","sha256":"89d4f8f3950405774e393ba52c40e90e5bdaeb0f56f3d42c61f66a63fb033272"},
-    {"path":"impeccable-upstream-inventory.v1.json","sha256":"46342eb6594dc33e252a42cb8f02775d83ecf7f91153b56e3ca2ae8fb58bd70d"},
-    {"path":"skills/brand-voice-pdf/SKILL.md","sha256":"ed3d0336ad61822c4689661f6765fd03251d6a53dc0ed7120189be7984c71c75"},
-    {"path":"skills/brandkit-build/SKILL.md","sha256":"f8198017602d81cc5a35bf9e0fa65a76e8666c4447ba64b9e7b0cd4795d6e828"},
-    {"path":"skills/brandkit-impeccable/SKILL.md","sha256":"1b3d8e5408f7b44b0498cd26f0df2d3aa6821e6d77a3af7edaf7506af02d8cca"},
-    {"path":"skills/brandkit-interview/SKILL.md","sha256":"c85fcdc00233bd6e2a890517942a53b36812474dca1e1b403293b5ad33b0fe37"},
-    {"path":"skills/brandkit-publish/SKILL.md","sha256":"52c0d12f98b5c5c5b609b9d4a299275adb8377630588ba54c3aa26fac90c6b9d"},
-    {"path":"skills/brandkit-setup/SKILL.md","sha256":"bfc482d8fbb8d8eba8f3d4ba98fa1e3a702c20f8d81d939edd39d61447d8270e"},
-    {"path":"skills/brandkit-spacing/SKILL.md","sha256":"8cf0c1072e92bb522d81f869d25b636c49c89af41ad5226dae67d08d312a7658"},
-    {"path":"skills/brand-voice-pdf/references/markdown-authoring.md","sha256":"b4466a437efea6fd36bf42289c902dbd620515c7513e03e2db286623f8b9e4fa"},
-    {"path":"skills/brand-voice-pdf/references/workflow.md","sha256":"a32add8b66dedf142f1ab95ce91554b6206b72b2692ad0af7c60ada7b72fe4b2"},
-    {"path":"skills/brandkit-build/references/workflow.md","sha256":"3844407d1e16aff86cd5327de2ef0c208926f00e7a52592af886993401233800"},
-    {"path":"skills/brandkit-impeccable/references/workflow.md","sha256":"3e84200c6452e993b6140358fdc691cf770e6232f3f8f1d8716e4be85716cad1"},
-    {"path":"skills/brandkit-interview/references/workflow.md","sha256":"e809d72940ecf350950cc6f665d5beefc9e8746b14e4afda224c68e22a7e1ed2"},
-    {"path":"skills/brandkit-publish/references/workflow.md","sha256":"da2b58d8350f67853063bd4da953345cfea03ff2e166e53e51ee3630d278f584"},
-    {"path":"skills/brandkit-setup/references/workflow.md","sha256":"1223e24019fc324a387b51cf3540d8ddee84f3b15ee0d1c0fa8a60642c1f6f61"},
-    {"path":"skills/brandkit-spacing/references/workflow.md","sha256":"4f09965b70731e589b14c1032279e4e61a68e3f99448dffe81243b4798025d5e"}
-  ]
+    {
+      "path": "brandkit-skill-contract.v1.json",
+      "sha256": "fc4c200595a45d479d38487e3c836f300a8fc7e9b03ab3fd28e95cbec4599c72"
+    },
+    {
+      "path": "schemas/brandkit-skill-contract.v1.schema.json",
+      "sha256": "77f3b5b50722f016cb45315a9159fc57e5bfa1c87fbd7a6172447f86c0420d57"
+    },
+    {
+      "path": "schemas/brandkit-affinity-observation.v1.schema.json",
+      "sha256": "f3fe974ce401ce83376e7e64a7302f3ec6351dc40b6125eb3cf5f71899c7b791"
+    },
+    {
+      "path": "schemas/brandkit-affinity-mutation-receipt.v1.schema.json",
+      "sha256": "759a8ae7930f02b24ae8e73a29a16ec95ae528e1b82d2ec9d89c8bde9ee070df"
+    },
+    {
+      "path": "schemas/brandkit-discovery-handoff.v1.schema.json",
+      "sha256": "dc03e647b5d3cfa2710b028c524a926ab53601cfa635b53e8191baf791fc1331"
+    },
+    {
+      "path": "schemas/brandkit-discovery-owner-receipt.v1.schema.json",
+      "sha256": "bd383392a8ba4891146f632bf03d007c651666156b2e2d9a8de399dd1ced3fd2"
+    },
+    {
+      "path": "schemas/brandkit-skill-request.v1.schema.json",
+      "sha256": "b9dcd79c15cc863d869404c9b3ac045753a0e4577fc2273cfffbb32a2b52b95d"
+    },
+    {
+      "path": "schemas/brandkit-skill-result.v1.schema.json",
+      "sha256": "cb58202295205b6bad66e0bd5a321c2470fd351756000a48fc8c9bac504511ed"
+    },
+    {
+      "path": "schemas/brand-package.v1.schema.json",
+      "sha256": "c5128fc1c582f38188a9fe8ccf037e4cb98ec21eb1a2c498d14bb0df59fac475"
+    },
+    {
+      "path": "schemas/document-type.v1.schema.json",
+      "sha256": "713584a5816bce4a5b40e1b0fb46bc8b75bea1854ad8995458fa9727f9388b18"
+    },
+    {
+      "path": "schemas/impeccable-product-input.v1.schema.json",
+      "sha256": "5779b88cc0b8e03f2b0f8565e1d6fcab6ede1f2f64dbcb43a8007faa25d4b963"
+    },
+    {
+      "path": "schemas/markdown-document.v1.schema.json",
+      "sha256": "e40ee76a7e818f491ce88265e44cd1b1f4b7d215c573decde3a4d6b1cbdcbbd4"
+    },
+    {
+      "path": "schemas/spacing-inventory.v1.schema.json",
+      "sha256": "5fee712717241445cc378c15e56e010a42c799ffe191cfe2869c7085e3bc5d3d"
+    },
+    {
+      "path": "schemas/spacing-proposal.v1.schema.json",
+      "sha256": "7e655425e6b6bea7c8eef27d57637bfd5b507c69636977fa0e42010c47ac7512"
+    },
+    {
+      "path": "markdown-contract.v2.json",
+      "sha256": "5e54a95b00e8b778384f5cf1bfbcdbe721136e6142b9b31b9e6ffa1fce868ba4"
+    },
+    {
+      "path": "document-types/freeform.v1.json",
+      "sha256": "c8cb2b480680b9cf749080e333fa7d04f1a3a8bca3a062d8e0b09d249d3ad0a9"
+    },
+    {
+      "path": "document-types/offer.v1.json",
+      "sha256": "76e0a4540e40f24a7e3398c39bb91115fc98b425be58dad4cb39166aef6ef618"
+    },
+    {
+      "path": "document-types/one-pager.v1.json",
+      "sha256": "79194b4224106b7c275cc5cbfb7f1dd6584777ed68a137a5ab597fc2eb3dc71a"
+    },
+    {
+      "path": "document-types/report.v1.json",
+      "sha256": "3856f2e86321ef4842813a781f6e6204ded898597a5a83eff9e09f93082c5fe5"
+    },
+    {
+      "path": "scripts/brand_package.py",
+      "sha256": "9ebc674f1586f9684f2b717062d58e7f803990997cf7dce7111503a7e7453238"
+    },
+    {
+      "path": "scripts/brandkit_discovery.py",
+      "sha256": "372359cbe1134a6aaf66ab291fb62183d5b084d997dd1fa563a13136406d2c0e"
+    },
+    {
+      "path": "scripts/brand_voice_pdf.py",
+      "sha256": "bca7c5029441d4570365a0fb467143fb65ab28f065845a687eac9c13745e3a19"
+    },
+    {
+      "path": "scripts/markdown_contract.py",
+      "sha256": "9244ec5d756ce47c0b7f2002e73521257df937db81712e5861c7b67e636aa8ec"
+    },
+    {
+      "path": "scripts/materialize_brandkit_instructions.py",
+      "sha256": "7bca38a7bbed0bf0feb67f7404dcc1817682cca55d031a59e4f7034ff017da77"
+    },
+    {
+      "path": "scripts/impeccable_adapter.py",
+      "sha256": "fdd7782c272501f31f70b27968550af8694d3220df24c1db659417f579659e5f"
+    },
+    {
+      "path": "scripts/validate_brandkit_skills.py",
+      "sha256": "0af8dbac501f4e084693815f43a411af95edf0b07170b352f0f5475bae857cbb"
+    },
+    {
+      "path": "fixtures/brandkit-skills/dry-runs.v1.json",
+      "sha256": "749743ba27aac48bfa32fcde5589bd4b8b590c8a5144a1ed367f92b815468040"
+    },
+    {
+      "path": "fixtures/brandkit-skills/discovery-handoff.valid.json",
+      "sha256": "5fd3876bb9f854d8fc1d930749a87a946c500217d383692e951edb10b5065f05"
+    },
+    {
+      "path": "fixtures/brandkit-skills/collision-dry-runs.v1.json",
+      "sha256": "f682f551cad7fd370a3048391e39f73309e2ecaac7ac04b3d8bbdae7d1ca7969"
+    },
+    {
+      "path": "impeccable-adapter.v1.json",
+      "sha256": "89d4f8f3950405774e393ba52c40e90e5bdaeb0f56f3d42c61f66a63fb033272"
+    },
+    {
+      "path": "impeccable-upstream-inventory.v1.json",
+      "sha256": "46342eb6594dc33e252a42cb8f02775d83ecf7f91153b56e3ca2ae8fb58bd70d"
+    },
+    {
+      "path": "skills/brand-voice-pdf/SKILL.md",
+      "sha256": "ed3d0336ad61822c4689661f6765fd03251d6a53dc0ed7120189be7984c71c75"
+    },
+    {
+      "path": "skills/brandkit-affinity/SKILL.md",
+      "sha256": "01f2b567963db6b791cfd6559a95f9dced4e6ecdbd258638650dca001d10df78"
+    },
+    {
+      "path": "skills/brandkit-build/SKILL.md",
+      "sha256": "316ce25fc0ba6d043ff382ee3fe5c43e4ab463a547d3109f0d0f64fee1dd1130"
+    },
+    {
+      "path": "skills/brandkit-impeccable/SKILL.md",
+      "sha256": "898e1373126aba96074538605aa8015a760477fc8b712a79d533323dc1d0f590"
+    },
+    {
+      "path": "skills/brandkit-interview/SKILL.md",
+      "sha256": "485f91896829af4f41cb1b543bd875d7a9110a4eadc9e861194bed99623fd9dd"
+    },
+    {
+      "path": "skills/brandkit-publish/SKILL.md",
+      "sha256": "52c0d12f98b5c5c5b609b9d4a299275adb8377630588ba54c3aa26fac90c6b9d"
+    },
+    {
+      "path": "skills/brandkit-setup/SKILL.md",
+      "sha256": "a65cb2effc683e0340b62f91cd2e32cd65b957ddbe8143641e196f0b4d913658"
+    },
+    {
+      "path": "skills/brandkit-spacing/SKILL.md",
+      "sha256": "8cf0c1072e92bb522d81f869d25b636c49c89af41ad5226dae67d08d312a7658"
+    },
+    {
+      "path": "skills/brand-voice-pdf/references/markdown-authoring.md",
+      "sha256": "b4466a437efea6fd36bf42289c902dbd620515c7513e03e2db286623f8b9e4fa"
+    },
+    {
+      "path": "skills/brand-voice-pdf/references/workflow.md",
+      "sha256": "a32add8b66dedf142f1ab95ce91554b6206b72b2692ad0af7c60ada7b72fe4b2"
+    },
+    {
+      "path": "skills/brandkit-build/references/workflow.md",
+      "sha256": "192ddf55794bd46a1044d67d49053464acd4357dec99d7e0a3383fe6eba49055"
+    },
+    {
+      "path": "skills/brandkit-impeccable/references/workflow.md",
+      "sha256": "963a7aaedb5cb83ff4b7c3bdd8bfcc40343ae6bfe954736d20130018feed1628"
+    },
+    {
+      "path": "skills/brandkit-interview/references/workflow.md",
+      "sha256": "6e2022b886a3d0d199c771cdcfe252e78dba37c7fca3044a8c31e4acd7ebb9d1"
+    },
+    {
+      "path": "skills/brandkit-interview/references/grill-with-docs-handoff.md",
+      "sha256": "e0cac9e9ed20229695b4e7f44de9f1a742c612e672037695b89646d9cfe951ef"
+    },
+    {
+      "path": "skills/brandkit-publish/references/workflow.md",
+      "sha256": "da2b58d8350f67853063bd4da953345cfea03ff2e166e53e51ee3630d278f584"
+    },
+    {
+      "path": "skills/brandkit-setup/references/workflow.md",
+      "sha256": "55a045b8e92843f6d72ec13179ee0ece62bb99eca56d5619a3b7c2efc9ef867c"
+    },
+    {
+      "path": "skills/brandkit-spacing/references/workflow.md",
+      "sha256": "4f09965b70731e589b14c1032279e4e61a68e3f99448dffe81243b4798025d5e"
+    },
+    {
+      "path": "schemas/brandkit-visual-brief.v1.schema.json",
+      "sha256": "ed4b5e2b8b28a8458ff4de9fa3814658989fb69c71d30035ab6b819449bb6dc1"
+    },
+    {
+      "path": "schemas/brandkit-visual-candidate-set.v1.schema.json",
+      "sha256": "c89e66a49a754355c01e516bedb31cf0aa3e4eb220ec1cb7027c2fafed2503bd"
+    },
+    {
+      "path": "schemas/reputation-evidence.v1.schema.json",
+      "sha256": "f232ab6798884018e124e2370e343385a597f45e435f405880bd634493823843"
+    },
+    {
+      "path": "schemas/visual-decision-sources.v1.schema.json",
+      "sha256": "1a5a8e0bacc97092ad128e2b895ed970fc7ab0401f7694c4656892749917238e"
+    },
+    {
+      "path": "scripts/brandkit_visual_decisions.py",
+      "sha256": "cae4567845fa9318c9ba669ec4c64da83b19edfc799586d68807b9512daece7a"
+    },
+    {
+      "path": "scripts/validate_visual_decision_sources.py",
+      "sha256": "52308d190055b9bb939b22e1a781e466beb87f94e0543cb7300bdf32441acfca"
+    },
+    {
+      "path": "skills/brandkit-visual-decisions/SKILL.md",
+      "sha256": "f707ea44a0f2be76116a0f2e2edd888dbfdb697695c956557b21f91b8590e481"
+    },
+    {
+      "path": "skills/brandkit-visual-decisions/references/workflow.md",
+      "sha256": "6421f4365bbad6c0cc70ecd2aedb99f9952142903e12a0934397e02eab5a678b"
+    },
+    {
+      "path": "skills/brandkit-affinity/references/setup-and-probe.md",
+      "sha256": "0753096a5051cba52f0c768e79ce465dedce449a7ab0fe40e222cb3db01e5361"
+    },
+    {
+      "path": "skills/brandkit-affinity/references/vector-workflow.md",
+      "sha256": "ef637df3de6ff49cd9a632da5fd9ce85a4bc291bda946ae3d00cd66876b6cf45"
+    },
+    {
+      "path": "toolchain/affinity-codex/affinity-codex-bridge.mjs",
+      "sha256": "7c2affcf303b12f6f063cfcc4e1d10fcc86d067f9326f08c61326fae64606cc4"
+    },
+    {
+      "path": "toolchain/affinity-codex/smoke-test.mjs",
+      "sha256": "6fdc27efd799814a2b007fe20fc30096e2ba3c12d647ee0991e870d51d1eb0d6"
+    },
+    {
+      "path": "toolchain/affinity-codex/LICENSE.upstream",
+      "sha256": "1e273a8b10c67988cfb2c5155d92b485ebf2bee91589b043aeac512472a7a01a"
+    },
+    {
+      "path": "toolchain/affinity-codex/UPSTREAM.json",
+      "sha256": "fb66c0010075a8d0153fcf85f02e51dd93d12bbdec2a0db266cd23adf87a8e38"
+    },
+    {
+      "path": "toolchain/affinity-codex/codex-project",
+      "sha256": "f2a1b3c990606129fd369464f7a20053b04667296f960f9ae7a1a80fc4fe24d6"
+    },
+    {
+      "path": "visual-decision-sources.v1.json",
+      "sha256": "af0823f0accdcdfbcdcfb80358b22a67a29a842392140eeceb7ca9db67ffac90"
+    },
+    {
+      "path": "skills/brandkit-activate/SKILL.md",
+      "sha256": "fc277cb1b3893635fc4fb0a9817fdf40add2475fac382f853f61ab05c8e9372d"
+    },
+    {
+      "path": "skills/brandkit-activate/references/workflow.md",
+      "sha256": "fb3daf7773f088b7960e90bdf114211584d227ebc06c61fc34fa1c688ccd309d"
+    }
+  ],
+  "schema_version": "brandkit-skill-contract-release.v1"
 }

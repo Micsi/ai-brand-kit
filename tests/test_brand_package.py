@@ -20,6 +20,8 @@ class BrandPackageTests(unittest.TestCase):
   return r
  def project(self,name):
   p=self.base/name;p.mkdir();subprocess.run(["git","init","-q",str(p)],check=True);return p
+ def plain_project(self,name):
+  p=self.base/name;p.mkdir();return p
  def package(self,name="package",brand="neutral-fixture",version="1.0.0"):
   p=self.base/name;shutil.copytree(FIXTURE,p);m=json.loads((p/"brand-package.json").read_text());m["brand_id"]=brand;m["version"]=version;(p/"brand-package.json").write_text(json.dumps(m,indent=2)+"\n");return p
  def manifest(self,p):return json.loads((p/"brand-package.json").read_text())
@@ -50,6 +52,40 @@ class BrandPackageTests(unittest.TestCase):
   idx=json.loads(INDEX.read_text());self.assertEqual({"brand_id","version","content_sha256","immutable_release_locator"},set(idx["entries"][0]))
   font=(a/"assets/fonts/neutral.woff2").read_bytes();self.assertEqual(b"wOF2",font[:4]);self.assertEqual(len(font),int.from_bytes(font[8:12],"big"))
   rights=json.loads((a/"rights/neutral-font.rights.json").read_text());self.assertEqual(("open-license","OFL-1.1"),(rights["status"],rights["license_id"]));self.assertRegex(rights["source_revision"],r"^[0-9a-f]{40}$");self.assertRegex(rights["license_evidence_sha256"],r"^[0-9a-f]{64}$")
+
+ def test_a_project_without_version_control_can_pin_resolve_and_roll_back(self):
+  """Die Wurzel ist der Anker, nicht das Repository.
+
+  ``git_root`` fragte nur, ob ``.git`` existiert, und benutzte das Verzeichnis
+  danach ausschliesslich als Grenze fuer ``safe_dir`` und als Quelle des
+  Projekthashs. Git leistete dabei nichts, was ein beliebiges Wurzelverzeichnis
+  nicht auch leistet - aber ein Projekt ohne Versionskontrolle, ein
+  Unterverzeichnis eines Monorepos und ein reines Auslieferungsverzeichnis
+  konnten kein Brand-Paket nutzen. Der Kern der visuellen Entscheidungen kommt
+  mit ``exact_project_root`` schon laenger ohne diese Bedingung aus.
+  """
+  plain=self.plain_project("no-vcs");self.assertFalse((plain/".git").exists())
+  self.pin(plain,FIXTURE)
+  self.assertTrue((plain/".brandkit/current").is_symlink())
+  resolution=self.resolve(plain)
+  self.assertEqual("project-activation",resolution["source"])
+  self.assertEqual(str(plain.resolve()),resolution["project_root"])
+  new=self.package("no-vcs-next","neutral-fixture","1.1.0");self.pin(plain,new)
+  self.cli("rollback","--project",plain)
+  self.assertEqual("1.0.0",json.loads((plain/".brandkit/project.json").read_text())["brand"]["version"])
+
+ def test_marked_root_is_required_so_a_subdirectory_cannot_pin_its_own_state(self):
+  """Eine bereits gepinnte Wurzel bleibt die Wurzel.
+
+  Ohne Bedingung wuerde jedes Unterverzeichnis sein eigenes ``.brandkit``
+  anlegen; zwei Pins im selben Baum sind genau das, was die alte
+  Git-Bedingung nebenbei verhindert hat. Die Ablehnung bleibt, ihr Grund ist
+  jetzt die vorhandene Projektmarke statt eines Repositoriums.
+  """
+  plain=self.plain_project("marked");self.pin(plain,FIXTURE)
+  child=plain/"paket";child.mkdir()
+  self.cli("pin","--project",child,"--package",FIXTURE,"--engine-version","1.0.0",ok=False)
+  self.assertFalse((child/".brandkit").exists())
 
  def test_woff2_magic_and_structure_fail_closed(self):
   for mutation in ("magic","length","directory"):
