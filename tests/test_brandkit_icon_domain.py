@@ -177,9 +177,8 @@ def icon_svg(file_id: str, body: str, *, stroke_width: str = "2", view_box: str 
 HEIZUNG = '<path d="M6 4v16M12 4v16M18 4v16"/><line x1="4" y1="20" x2="20" y2="20"/>'
 
 
-class IconReportTests(unittest.TestCase):
-    """brandkit-icon-report.v1: objective checks recomputed from the file,
-    human reviews per target size and per operating mode."""
+class IconReportFixture(unittest.TestCase):
+    """Builders only; the tests live in the subclasses."""
 
     def setUp(self) -> None:
         temp = tempfile.TemporaryDirectory(); self.addCleanup(temp.cleanup)
@@ -213,6 +212,12 @@ class IconReportTests(unittest.TestCase):
 
     def validate(self, report: dict) -> None:
         visual.validate_icon_report(report, self.root, self.observation, project_root=self.project, run_id="run-a", now=fixtures.NOW)
+
+
+
+class IconReportTests(IconReportFixture):
+    """brandkit-icon-report.v1: objective checks recomputed from the file,
+    human reviews per target size and per operating mode."""
 
     def test_a_first_icon_in_its_own_style_is_reviewable(self) -> None:
         self.validate(self.report())
@@ -310,6 +315,52 @@ class IconReportTests(unittest.TestCase):
                 report["build_rules"].update(rules)
                 with self.assertRaisesRegex(visual.VisualDecisionError, message):
                     self.validate(report)
+
+
+class IconReceiptTests(IconReportFixture):
+    """Each Affinity-authored variant file stands under its own receipt."""
+
+    def setUp(self) -> None:
+        super().setUp()
+        secrets = tempfile.TemporaryDirectory(); self.addCleanup(secrets.cleanup)
+        self.bundle = fixtures.affinity_bundle(self.project, self.root, Path(secrets.name).resolve())
+        self.observation = self.bundle["observation"]
+
+    def authored(self, file_id: str) -> dict:
+        variant = self.variant(file_id, HEIZUNG)
+        raw = (self.root / f"{file_id}.svg").read_bytes()
+        variant["asset"] = fixtures.write(self.root / "staging/logo-doc" / f"{file_id}.svg", raw)
+        variant["asset"]["path"] = f"staging/logo-doc/{file_id}.svg"
+        variant["creation_origin"] = "affinity-mcp"
+        return variant
+
+    def receipt(self, variant: dict, *, operation: str = "create-icon-variant", output: dict | None = None) -> dict:
+        body = {name: value for name, value in next(iter(self.bundle["documents"].values())).items() if name != "hmac_sha256"}
+        body.update(operation=operation, outputs=[output or {"candidate_id": variant["id"], **variant["asset"]}],
+                    nonce=hashlib.sha256(("icon-" + variant["id"]).encode()).hexdigest())
+        body["hmac_sha256"] = hmac.new(self.bundle["operation_key"], visual.canonical_json(body), hashlib.sha256).hexdigest()
+        return body
+
+    def check(self, variant: dict, receipts: dict) -> None:
+        report = self.report({"icon_id": "heizung", "axis": None, "variants": [variant],
+                              "human_reviews": {"brand-fit": "required", "quality-benchmark": "required"}})
+        visual.validate_icon_report(report, self.root, self.observation, receipts, project_root=self.project, run_id="run-a",
+                                    key=self.bundle["key"], replay_nonces=set(), now=fixtures.NOW)
+
+    def test_an_authored_variant_is_accepted_under_its_own_receipt(self) -> None:
+        variant = self.authored("heizung-standard")
+        self.check(variant, {"heizung-standard": self.receipt(variant)})
+
+    def test_an_authored_variant_without_its_own_receipt_is_refused(self) -> None:
+        variant = self.authored("heizung-standard")
+        other = {"candidate_id": "heizung-standard", "path": "staging/logo-doc/mark-a.svg",
+                 "sha256": visual.sha256_bytes((self.root / "staging/logo-doc/mark-a.svg").read_bytes())}
+        cases = {"no receipt": ({}, "receipt"),
+                 "a logo operation": ({"heizung-standard": self.receipt(variant, operation="create-logo-variant")}, "operation"),
+                 "a receipt for another file": ({"heizung-standard": self.receipt(variant, output=other)}, "does not bind")}
+        for name, (receipts, message) in cases.items():
+            with self.subTest(name), self.assertRaisesRegex(visual.VisualDecisionError, message):
+                self.check(variant, receipts)
 
 
 class LogoRefusesIconOperationTests(unittest.TestCase):

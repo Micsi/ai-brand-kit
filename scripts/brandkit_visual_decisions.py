@@ -1732,6 +1732,9 @@ def _require_icon_build_rules(checks: dict[str, Any], rules: dict[str, Any], lab
 
 def validate_icon_report(report: dict[str, Any], root: Path, observation: dict[str, Any], mutation_receipts: dict[str, dict[str, Any]] | None = None, *, project_root: Path | None = None, run_id: str | None = None, key: bytes | None = None, replay_nonces: set[str] | None = None, now: int | None = None) -> None:
     validate_schema(report, "icon")
+    validate_affinity_observation(observation, root, project_root=project_root, run_id=run_id, now=now)
+    if report["affinity_observation_sha256"] != sha256_bytes(canonical_json(observation)):
+        raise VisualDecisionError("icon report does not bind the Affinity observation")
     # ADR 0005/0007: the benchmark and the owner-facing judgement follow the
     # operating mode - blind test and distinctness in a supplement, brand fit
     # and the quality reference in an own style.
@@ -1760,6 +1763,18 @@ def validate_icon_report(report: dict[str, Any], root: Path, observation: dict[s
             if "fail" in reviews.values():
                 raise VisualDecisionError(f"icon is not review-eligible: {label}")
         for variant in icon["variants"]:
+            if variant["creation_origin"] == "affinity-mcp":
+                # One receipt per variant file: create-icon-variant writes exactly one.
+                if observation["status"] != "available":
+                    raise VisualDecisionError("Affinity-authored icon conflicts with unavailable observation")
+                receipt = (mutation_receipts or {}).get(variant["id"])
+                if receipt is None or project_root is None or run_id is None or key is None or replay_nonces is None or now is None:
+                    raise VisualDecisionError(f"each Affinity-authored icon variant requires its own complete mutation receipt: {variant['id']}")
+                validate_affinity_mutation_receipt(receipt, observation, root, project_root=project_root, run_id=run_id, key=key, replay_nonces=replay_nonces, now=now)
+                if receipt["operation"] != "create-icon-variant":
+                    raise VisualDecisionError(f"Affinity receipt operation is not create-icon-variant: {variant['id']}")
+                if receipt["outputs"] != [{"candidate_id": variant["id"], **variant["asset"]}]:
+                    raise VisualDecisionError(f"Affinity receipt output does not bind its icon variant: {variant['id']}")
             data = _verify_bound_file(root, variant["asset"], f"icon {variant['id']}")
             checks = _icon_static_checks(data, f"icon {variant['id']}", variant["id"])
             if variant["objective_checks"] != checks:
