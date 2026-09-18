@@ -34,8 +34,22 @@ class OutlineIconTests(unittest.TestCase):
         self.assertAlmostEqual((192 * 192 - 160 * 160) / 65536, frame["ink_share"], places=6)
         # The equal-rectangle estimate is exact for a bar, close for a frame.
         self.assertAlmostEqual(16.0, frame["stroke"], delta=0.5)
+        # Phosphor equals: two separate bars wound in opposite directions are
+        # both ink - a hole is a contour inside another, not a sense of rotation.
+        equals = measure.measure_outline_icon(outline("M0,64H256V80H0Z M0,176V192H256V176Z"), "equals")
+        self.assertAlmostEqual(2 * 256 * 16 / 65536, equals["ink_share"], places=6)
+        self.assertAlmostEqual(16.0, equals["stroke"], delta=0.5)
         shifted = measure.measure_outline_icon(outline("M0,0.5H256V16.5H0Z"), "shifted")
         self.assertAlmostEqual(0.0, shifted["on_grid_share"], places=6)
+
+
+class CompactInkTests(unittest.TestCase):
+    def test_a_dot_has_ink_but_no_stroke(self) -> None:
+        # Phosphor cell-signal-none: a capsule no rectangle of equal area and
+        # perimeter exists for, so its stroke is undefined - not its ink.
+        dot = measure.measure_outline_icon(outline("M48,192v8a8,8,0,0,1-16,0v-8a8,8,0,0,1,16,0Z"), "dot")
+        self.assertIsNone(dot["stroke"])
+        self.assertAlmostEqual((16 * 8 + 3.14159265 * 64) / 65536, dot["ink_share"], places=4)
 
 
 class ReferenceTests(unittest.TestCase):
@@ -62,6 +76,19 @@ class ReferenceTests(unittest.TestCase):
         self.assertEqual(20, result["n"])
         self.assertEqual({"median": 14.0, "min": 12.0, "max": 16.0}, {k: round(result["rules"]["stroke"][k], 6) for k in ("median", "min", "max")})
         self.assertEqual({"median": 256, "min": 256, "max": 256}, {k: result["rules"]["grid"][k] for k in ("median", "min", "max")})
+
+    def test_the_dispersion_includes_the_quartiles(self) -> None:
+        # Outliers such as solid fills make min/max say little; quartiles say it.
+        stroke = measure.measure_reference(self.root, self.pin([12] * 5 + [14] * 5 + [16] * 5 + [18] * 5))["rules"]["stroke"]
+        self.assertEqual((13.5, 16.5), (round(stroke["q1"], 6), round(stroke["q3"], 6)))
+
+    def test_icons_without_a_stroke_are_counted_not_averaged(self) -> None:
+        pin = self.pin([16] * 20)
+        dot = self.root / "dot.svg"; dot.write_bytes(outline("M48,192v8a8,8,0,0,1-16,0v-8a8,8,0,0,1,16,0Z"))
+        pin["files"].append({"path": "dot.svg", "sha256": measure.sha256_file(dot)})
+        result = measure.measure_reference(self.root, pin)
+        self.assertEqual((21, 20, 1), (result["n"], result["rules"]["stroke"]["n"], result["stroke_undefined"]))
+        self.assertEqual(21, result["rules"]["ink_share"]["n"])
 
     def test_fewer_than_twenty_icons_are_no_measurement(self) -> None:
         with self.assertRaisesRegex(measure.MeasurementError, "at least 20"):
