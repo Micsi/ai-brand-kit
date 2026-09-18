@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "brandkit-icon-report.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "candidate_set_sha256", "affinity_observation_sha256", "operating_mode", "benchmark", "target_sizes_px", "build_rules", "confirmed_set", "icons", "objective_status", "human_review_status"],
+  "properties": {
+    "schema_version": {"const": "brandkit-icon-report.v1"},
+    "candidate_set_sha256": {"$ref": "#/$defs/hash"},
+    "affinity_observation_sha256": {"$ref": "#/$defs/hash"},
+    "operating_mode": {"enum": ["ergaenzung", "eigenstil"]},
+    "benchmark": {
+      "type": "object", "additionalProperties": false, "required": ["name", "role", "source"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "role": {"enum": ["style-reference", "quality-reference"]},
+        "source": {"$ref": "#/$defs/file"}
+      }
+    },
+    "target_sizes_px": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "integer", "minimum": 8, "maximum": 512}},
+    "build_rules": {
+      "type": "object", "additionalProperties": false,
+      "required": ["grid_units", "stroke_width", "stroke_linecap", "stroke_linejoin", "color_count", "source"],
+      "properties": {
+        "grid_units": {"type": "integer", "minimum": 8, "maximum": 1024},
+        "stroke_width": {"type": "number", "exclusiveMinimum": 0},
+        "stroke_linecap": {"enum": ["butt", "round", "square"]},
+        "stroke_linejoin": {"enum": ["miter", "round", "bevel"]},
+        "color_count": {"type": "integer", "minimum": 1},
+        "source": {"$ref": "#/$defs/file"}
+      }
+    },
+    "confirmed_set": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false, "required": ["id", "asset"],
+        "properties": {"id": {"$ref": "#/$defs/id"}, "asset": {"$ref": "#/$defs/file"}}
+      }
+    },
+    "icons": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false, "required": ["icon_id", "axis", "variants", "human_reviews"],
+        "properties": {
+          "icon_id": {"$ref": "#/$defs/id"},
+          "axis": {"oneOf": [{"$ref": "#/$defs/id"}, {"type": "null"}]},
+          "variants": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/variant"}},
+          "human_reviews": {"$ref": "#/$defs/reviews"}
+        }
+      }
+    },
+    "objective_status": {"const": "pass"},
+    "human_review_status": {"const": "required"}
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]{0,62}$"},
+    "hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "review": {"enum": ["required", "pass", "fail"]},
+    "reviews": {"type": "object", "minProperties": 1, "additionalProperties": {"$ref": "#/$defs/review"}},
+    "file": {
+      "type": "object", "additionalProperties": false, "required": ["path", "sha256"],
+      "properties": {"path": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._/-]*$"}, "sha256": {"$ref": "#/$defs/hash"}}
+    },
+    "variant": {
+      "type": "object", "additionalProperties": false,
+      "required": ["value", "id", "asset", "creation_origin", "objective_checks", "human_reviews"],
+      "properties": {
+        "value": {"$ref": "#/$defs/id"},
+        "id": {"$ref": "#/$defs/id"},
+        "asset": {"$ref": "#/$defs/file"},
+        "creation_origin": {"enum": ["owner-supplied", "affinity-mcp"]},
+        "objective_checks": {
+          "type": "object", "additionalProperties": false,
+          "required": ["view_box", "color_count", "monochrome_static", "grid_aligned", "stroke_widths", "stroke_linecaps", "stroke_linejoins", "canonical_svg_sha256"],
+          "properties": {
+            "view_box": {"type": "string", "minLength": 7},
+            "color_count": {"type": "integer", "minimum": 0},
+            "monochrome_static": {"const": true},
+            "grid_aligned": {"const": true},
+            "stroke_widths": {"type": "array", "items": {"type": "number"}},
+            "stroke_linecaps": {"type": "array", "items": {"type": "string"}},
+            "stroke_linejoins": {"type": "array", "items": {"type": "string"}},
+            "canonical_svg_sha256": {"$ref": "#/$defs/hash"}
+          }
+        },
+        "human_reviews": {"$ref": "#/$defs/reviews"}
+      }
+    }
+  }
+}

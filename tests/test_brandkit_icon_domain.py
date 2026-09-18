@@ -165,6 +165,94 @@ class IconSheetTests(unittest.TestCase):
                 visual.render_sheet(project, "run-a", now)
 
 
+RULES = {"grid_units": 24, "stroke_width": 2, "stroke_linecap": "round", "stroke_linejoin": "round", "color_count": 1}
+
+
+def icon_svg(file_id: str, body: str, *, stroke_width: str = "2", view_box: str = "0 0 24 24") -> bytes:
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="{view_box}" fill="none" stroke="currentColor" '
+            f'stroke-width="{stroke_width}" stroke-linecap="round" stroke-linejoin="round">'
+            f'<title>{file_id}</title>{body}</svg>').encode()
+
+
+HEIZUNG = '<path d="M6 4v16M12 4v16M18 4v16"/><line x1="4" y1="20" x2="20" y2="20"/>'
+
+
+class IconReportTests(unittest.TestCase):
+    """brandkit-icon-report.v1: objective checks recomputed from the file,
+    human reviews per target size and per operating mode."""
+
+    def setUp(self) -> None:
+        temp = tempfile.TemporaryDirectory(); self.addCleanup(temp.cleanup)
+        self.project = Path(temp.name).resolve()
+        self.root = visual.visual_workspace(self.project, "run-a", create=True)
+        self.observation = fixtures.unavailable(self.project, "run-a")
+
+    def variant(self, file_id: str, body: str, **svg) -> dict:
+        raw = icon_svg(file_id, body, **svg)
+        asset = fixtures.write(self.root / f"{file_id}.svg", raw)
+        # Hand-written for the known drawing; only the canonical digest is
+        # taken from the existing, separately tested logo SVG check.
+        checks = {"view_box": "0 0 24 24", "color_count": 1, "monochrome_static": True, "grid_aligned": True,
+                  "stroke_widths": [2], "stroke_linecaps": ["round"], "stroke_linejoins": ["round"],
+                  "canonical_svg_sha256": visual._svg_static_checks(raw, file_id, file_id)["canonical_svg_sha256"]}
+        return {"value": file_id.split("-", 1)[1], "id": file_id, "asset": asset, "creation_origin": "owner-supplied",
+                "objective_checks": checks,
+                "human_reviews": {"size-24": "required", "optical-weight": "required", "set-consistency": "required"}}
+
+    def report(self, *icons: dict) -> dict:
+        source = fixtures.write(self.root / "rules-source.md", "Owner-Bestaetigung der Bauregeln")
+        return {"schema_version": "brandkit-icon-report.v1", "candidate_set_sha256": "a" * 64,
+                "affinity_observation_sha256": visual.sha256_bytes(visual.canonical_json(self.observation)),
+                "operating_mode": "eigenstil",
+                "benchmark": {"name": "Fixture Quality Set", "role": "quality-reference", "source": source},
+                "target_sizes_px": [24], "build_rules": {**RULES, "source": source}, "confirmed_set": [],
+                "icons": list(icons) or [{"icon_id": "heizung", "axis": None,
+                                          "variants": [self.variant("heizung-standard", HEIZUNG)],
+                                          "human_reviews": {"brand-fit": "required", "quality-benchmark": "required"}}],
+                "objective_status": "pass", "human_review_status": "required"}
+
+    def validate(self, report: dict) -> None:
+        visual.validate_icon_report(report, self.root, self.observation, project_root=self.project, run_id="run-a", now=fixtures.NOW)
+
+    def test_a_first_icon_in_its_own_style_is_reviewable(self) -> None:
+        self.validate(self.report())
+
+    def test_claimed_objective_checks_must_be_what_the_file_measures(self) -> None:
+        report = self.report()
+        report["icons"][0]["variants"][0]["objective_checks"]["stroke_widths"] = [1.5]
+        with self.assertRaisesRegex(visual.VisualDecisionError, "objective checks differ"):
+            self.validate(report)
+        report = self.report()
+        (self.root / "heizung-standard.svg").write_bytes(icon_svg("heizung-standard", HEIZUNG + '<line x1="4" y1="4" x2="20" y2="4"/>'))
+        with self.assertRaises(visual.VisualDecisionError):
+            self.validate(report)
+
+    def test_a_violated_build_rule_prevents_release(self) -> None:
+        """ADR 0006: a build-rule violation blocks and is not discussed."""
+        cases = {
+            "coordinate off the grid": ('<line x1="4.5" y1="4" x2="20" y2="4"/>', {}, {}, "grid"),
+            "stroke width differs from the rule": (HEIZUNG, {"stroke_width": "1.5"}, {}, "stroke width"),
+            "an own colour beside currentColor": (HEIZUNG + '<line x1="4" y1="4" x2="20" y2="4" stroke="#AE1C23"/>', {}, {}, "monochrome"),
+            "a canvas other than the grid": (HEIZUNG, {"view_box": "0 0 32 32"}, {}, "grid"),
+            "a transform nobody can measure": ('<g transform="translate(0.5)">' + HEIZUNG + "</g>", {}, {}, "transform"),
+            "linecap differs from the rule": (HEIZUNG, {}, {"stroke_linecap": "square"}, "linecap"),
+        }
+        for name, (body, svg, rules, message) in cases.items():
+            with self.subTest(name):
+                raw = icon_svg("heizung-standard", body, **svg)
+                variant = self.variant("heizung-standard", HEIZUNG)
+                variant["asset"] = fixtures.write(self.root / "heizung-standard.svg", raw)
+                try:
+                    variant["objective_checks"] = visual._icon_static_checks(raw, "icon", "heizung-standard")
+                except visual.VisualDecisionError as refused:
+                    self.assertRegex(str(refused), message); continue
+                report = self.report({"icon_id": "heizung", "axis": None, "variants": [variant],
+                                      "human_reviews": {"brand-fit": "required", "quality-benchmark": "required"}})
+                report["build_rules"].update(rules)
+                with self.assertRaisesRegex(visual.VisualDecisionError, message):
+                    self.validate(report)
+
+
 class LogoRefusesIconOperationTests(unittest.TestCase):
     """A receipt that created an icon variant never authorises a logo candidate."""
 

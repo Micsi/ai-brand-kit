@@ -161,6 +161,7 @@ SCHEMAS = {
     "color": "brandkit-color-contrast-report.v1.schema.json",
     "font": "brandkit-font-candidate-report.v1.schema.json",
     "logo": "brandkit-logo-test-report.v1.schema.json",
+    "icon": "brandkit-icon-report.v1.schema.json",
     "sheet": "brandkit-visual-sheet-manifest.v1.schema.json",
     "playground": "brandkit-visual-playground-manifest.v1.schema.json",
     "affinity-observation": "brandkit-affinity-observation.v1.schema.json",
@@ -1684,6 +1685,54 @@ def validate_logo_report(report: dict[str, Any], root: Path, observation: dict[s
     if report["objective_status"] != "pass":
         raise VisualDecisionError("logo objective status is not derived pass")
 
+
+_ICON_GEOMETRY = {"d", "points", "x", "y", "x1", "x2", "y1", "y2", "cx", "cy", "r", "rx", "ry", "width", "height"}
+
+
+def _icon_static_checks(data: bytes, label: str, asset_id: str) -> dict[str, Any]:
+    """The logo SVG checks plus what an icon set is judged on: grid and stroke."""
+    base = _svg_static_checks(data, label, asset_id)
+    root = ET.fromstring(data.decode("utf-8"))
+    widths: set[float] = set(); caps: set[str] = set(); joins: set[str] = set(); geometry: list[float] = []
+    for element in root.iter():
+        for attribute, value in element.attrib.items():
+            name = attribute.split("}")[-1]
+            if name in {"transform", "gradientTransform"}:
+                # A transform moves every coordinate off the grid it was checked on.
+                raise VisualDecisionError(f"{label} carries a transform the grid check cannot measure")
+            if name == "stroke-width": widths.add(float(value))
+            elif name == "stroke-linecap": caps.add(ascii_lower(value))
+            elif name == "stroke-linejoin": joins.add(ascii_lower(value))
+            elif name in _ICON_GEOMETRY and element is not root:
+                geometry.extend(float(item) for item in re.findall(r"-?(?:[0-9]+(?:\.[0-9]+)?|\.[0-9]+)", value))
+    return {"view_box": base["view_box"], "color_count": base["color_count"], "monochrome_static": base["monochrome_static"],
+            "grid_aligned": all(value == int(value) for value in geometry),
+            "stroke_widths": sorted(widths), "stroke_linecaps": sorted(caps), "stroke_linejoins": sorted(joins),
+            "canonical_svg_sha256": base["canonical_svg_sha256"]}
+
+
+def _require_icon_build_rules(checks: dict[str, Any], rules: dict[str, Any], label: str) -> None:
+    """ADR 0006: a build-rule violation prevents release and is not discussed."""
+    grid = rules["grid_units"]
+    if checks["view_box"] != f"0 0 {grid} {grid}" or not checks["grid_aligned"]:
+        raise VisualDecisionError(f"icon leaves the {grid}-unit grid: {label}")
+    if checks["stroke_widths"] != [rules["stroke_width"]]:
+        raise VisualDecisionError(f"icon stroke width differs from the build rule: {label}")
+    if checks["stroke_linecaps"] != [rules["stroke_linecap"]] or checks["stroke_linejoins"] != [rules["stroke_linejoin"]]:
+        raise VisualDecisionError(f"icon stroke linecap/linejoin differs from the build rule: {label}")
+    if checks["color_count"] != rules["color_count"]:
+        raise VisualDecisionError(f"icon colour count differs from the build rule: {label}")
+
+
+def validate_icon_report(report: dict[str, Any], root: Path, observation: dict[str, Any], mutation_receipts: dict[str, dict[str, Any]] | None = None, *, project_root: Path | None = None, run_id: str | None = None, key: bytes | None = None, replay_nonces: set[str] | None = None, now: int | None = None) -> None:
+    validate_schema(report, "icon")
+    for icon in report["icons"]:
+        for variant in icon["variants"]:
+            data = _verify_bound_file(root, variant["asset"], f"icon {variant['id']}")
+            checks = _icon_static_checks(data, f"icon {variant['id']}", variant["id"])
+            if variant["objective_checks"] != checks:
+                raise VisualDecisionError(f"icon objective checks differ: {variant['id']}")
+            _require_icon_build_rules(checks, report["build_rules"], variant["id"])
 
 def _field_name_tokens(key: str) -> set[str]:
     """Every token a JSON field name spells, under both folds.
