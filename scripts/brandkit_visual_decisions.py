@@ -1692,7 +1692,9 @@ _ICON_GEOMETRY = {"d", "points", "x", "y", "x1", "x2", "y1", "y2", "cx", "cy", "
 def _icon_static_checks(data: bytes, label: str, asset_id: str) -> dict[str, Any]:
     """The logo SVG checks plus what an icon set is judged on: grid and stroke."""
     base = _svg_static_checks(data, label, asset_id)
-    root = ET.fromstring(data.decode("utf-8"))
+    # The bytes, not a second decode: _svg_static_checks has bound and checked
+    # the encoding already, and the decode sites of this module are counted.
+    root = ET.fromstring(data)
     widths: set[float] = set(); caps: set[str] = set(); joins: set[str] = set(); geometry: list[float] = []
     for element in root.iter():
         for attribute, value in element.attrib.items():
