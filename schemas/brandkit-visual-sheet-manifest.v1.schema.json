@@ -1,0 +1,6 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema", "$id": "brandkit-visual-sheet-manifest.v1.schema.json", "type": "object", "additionalProperties": false,
+  "required": ["schema_version", "brief_sha256", "candidate_set_sha256", "affinity_observation_sha256", "files", "viewports", "offline", "interactive_controls", "preselection", "normative", "human_review_status"],
+  "properties": {"schema_version": {"const": "brandkit-visual-sheet-manifest.v1"}, "brief_sha256": {"$ref": "#/$defs/hash"}, "candidate_set_sha256": {"$ref": "#/$defs/hash"}, "affinity_observation_sha256": {"$ref": "#/$defs/hash"}, "files": {"type": "array", "minItems": 2, "items": {"$ref": "#/$defs/file"}}, "viewports": {"const": [320, 768, 1440]}, "offline": {"const": true}, "interactive_controls": {"const": false}, "preselection": {"const": false}, "normative": {"const": false}, "human_review_status": {"const": "required"}},
+  "$defs": {"hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "file": {"type": "object", "additionalProperties": false, "required": ["path", "sha256"], "properties": {"path": {"type": "string", "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[A-Za-z0-9._/-]+$"}, "sha256": {"$ref": "#/$defs/hash"}}}}
+}

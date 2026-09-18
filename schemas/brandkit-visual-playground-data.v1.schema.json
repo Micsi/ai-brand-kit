@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "brandkit-visual-playground-data.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "candidate_set_sha256", "locale", "normative", "content", "reference_palette", "faces", "axes", "blocked", "open_without_candidates", "recommendations"],
+  "properties": {
+    "schema_version": {"const": "brandkit-visual-playground-data.v1"},
+    "candidate_set_sha256": {"$ref": "#/$defs/hash"},
+    "locale": {"const": "de-DE"},
+    "normative": {"const": false},
+    "content": {"$ref": "#/$defs/content"},
+    "reference_palette": {"$ref": "#/$defs/roles"},
+    "faces": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["asset_sha256", "classification", "weights", "weight_axis", "weights_set", "ascent", "descent", "x_height", "x_heights", "units_per_em", "x_height_source", "size_rem"], "properties": {"asset_sha256": {"$ref": "#/$defs/hash"}, "classification": {"enum": ["serif", "sans", "mono"]}, "weights": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"type": "integer", "minimum": 1, "maximum": 1000}}, "weight_axis": {"type": "boolean"}, "weights_set": {"type": "array", "minItems": 1, "maxItems": 8, "uniqueItems": true, "items": {"type": "integer", "minimum": 1, "maximum": 1000}}, "ascent": {"type": "integer", "minimum": 1}, "descent": {"type": "integer"}, "x_height": {"type": "integer", "minimum": 1}, "x_heights": {"type": "object", "minProperties": 1, "propertyNames": {"pattern": "^[1-9][0-9]{0,3}$"}, "additionalProperties": {"type": "integer", "minimum": 1}}, "units_per_em": {"type": "integer", "minimum": 1}, "x_height_source": {"enum": ["os2-sxheight", "glyph-x"]}, "size_rem": {"type": "string", "pattern": "^[0-9]+(\\.[0-9]{1,4})?$"}}}},
+    "axes": {"type": "array", "maxItems": 5, "items": {"oneOf": [
+      {"type": "object", "additionalProperties": false, "required": ["domain", "candidates"], "properties": {"domain": {"const": "color"}, "candidates": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/colorCandidate"}}}},
+      {"type": "object", "additionalProperties": false, "required": ["domain", "candidates"], "properties": {"domain": {"const": "typography"}, "candidates": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/typographyCandidate"}}}},
+      {"type": "object", "additionalProperties": false, "required": ["domain", "candidates"], "properties": {"domain": {"const": "code-font"}, "candidates": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/codeCandidate"}}}},
+      {"type": "object", "additionalProperties": false, "required": ["domain", "candidates"], "properties": {"domain": {"enum": ["logo", "lockup"]}, "candidates": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/logoCandidate"}}}}
+    ]}},
+    "blocked": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["domain", "candidate_id"], "properties": {"domain": {"$ref": "#/$defs/domain"}, "candidate_id": {"$ref": "#/$defs/id"}}}},
+    "open_without_candidates": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/domain"}},
+    "recommendations": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["kind", "candidate_id", "rationale"], "properties": {"kind": {"$ref": "#/$defs/domain"}, "candidate_id": {"$ref": "#/$defs/id"}, "rationale": {"type": "string", "minLength": 1}}}}
+  },
+  "$defs": {
+    "hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]{0,62}$"},
+    "domain": {"enum": ["color", "typography", "code-font", "logo", "lockup"]},
+    "text": {"type": "string", "minLength": 1},
+    "texts": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/text"}},
+    "codepoints": {"type": "array", "uniqueItems": true, "items": {"type": "string", "pattern": "^U\\+[0-9A-F]{4,6}$"}},
+    "numerals": {"type": "array", "uniqueItems": true, "items": {"enum": ["lnum", "onum", "pnum", "tnum", "zero"]}},
+    "roles": {"type": "object", "required": ["canvas", "surface", "surface-strong", "text", "text-muted", "border", "primary", "on-primary", "secondary", "on-secondary", "accent", "on-accent", "success", "on-success", "warning", "on-warning", "danger", "on-danger", "focus"], "propertyNames": {"enum": ["canvas", "surface", "surface-strong", "text", "text-muted", "border", "primary", "on-primary", "secondary", "on-secondary", "accent", "on-accent", "success", "on-success", "warning", "on-warning", "danger", "on-danger", "focus"]}, "additionalProperties": {"type": "string", "pattern": "^#[0-9A-Fa-f]{6}$"}},
+    "content": {"type": "object", "additionalProperties": false,
+      "required": ["heading", "subheading", "paragraphs", "list", "table_head", "table_rows", "quote", "action_primary", "action_secondary", "action_focus", "notice_label", "notice", "error_label", "error", "kpi_value", "kpi_label", "code"],
+      "properties": {"heading": {"$ref": "#/$defs/text"}, "subheading": {"$ref": "#/$defs/text"}, "paragraphs": {"$ref": "#/$defs/texts"}, "list": {"$ref": "#/$defs/texts"}, "table_head": {"$ref": "#/$defs/texts"}, "table_rows": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/texts"}}, "quote": {"$ref": "#/$defs/text"}, "action_primary": {"$ref": "#/$defs/text"}, "action_secondary": {"$ref": "#/$defs/text"}, "action_focus": {"$ref": "#/$defs/text"}, "notice_label": {"$ref": "#/$defs/text"}, "notice": {"$ref": "#/$defs/text"}, "error_label": {"$ref": "#/$defs/text"}, "error": {"$ref": "#/$defs/text"}, "kpi_value": {"$ref": "#/$defs/text"}, "kpi_label": {"$ref": "#/$defs/text"}, "code": {"$ref": "#/$defs/text"}}},
+    "font": {"type": "object", "additionalProperties": false, "required": ["font_id", "family", "face", "missing", "numerals"], "properties": {"font_id": {"$ref": "#/$defs/id"}, "family": {"$ref": "#/$defs/text"}, "face": {"type": "integer", "minimum": 0}, "missing": {"$ref": "#/$defs/codepoints"}, "numerals": {"$ref": "#/$defs/numerals"}}},
+    "monoFont": {"type": "object", "additionalProperties": false, "required": ["font_id", "family", "face", "missing", "numerals", "ligatures"], "properties": {"font_id": {"$ref": "#/$defs/id"}, "family": {"$ref": "#/$defs/text"}, "face": {"type": "integer", "minimum": 0}, "missing": {"$ref": "#/$defs/codepoints"}, "ligatures": {"type": "array", "uniqueItems": true, "items": {"enum": ["calt", "liga"]}}, "numerals": {"$ref": "#/$defs/numerals"}}},
+    "colorCandidate": {"type": "object", "additionalProperties": false, "required": ["id", "label", "roles", "tests"], "properties": {"id": {"$ref": "#/$defs/id"}, "label": {"type": "string"}, "roles": {"$ref": "#/$defs/roles"},
+      "tests": {"type": "array", "minItems": 13, "maxItems": 13, "items": {"type": "object", "additionalProperties": false, "required": ["foreground_role", "background_role", "usage", "minimum_ratio", "ratio_display", "passed"], "properties": {"foreground_role": {"type": "string"}, "background_role": {"type": "string"}, "usage": {"enum": ["normal-text", "large-text", "non-text"]}, "minimum_ratio": {"enum": [3.0, 4.5]}, "ratio_display": {"type": "string", "pattern": "^[0-9]+\\.[0-9]{2}:1$"}, "passed": {"type": "boolean"}}}}}},
+    "typographyCandidate": {"type": "object", "additionalProperties": false, "required": ["id", "label", "sans", "serif"], "properties": {"id": {"$ref": "#/$defs/id"}, "label": {"type": "string"}, "sans": {"$ref": "#/$defs/font"}, "serif": {"$ref": "#/$defs/font"}}},
+    "codeCandidate": {"type": "object", "additionalProperties": false, "required": ["id", "label", "mono"], "properties": {"id": {"$ref": "#/$defs/id"}, "label": {"type": "string"}, "mono": {"$ref": "#/$defs/monoFont"}}},
+    "logoCandidate": {"type": "object", "additionalProperties": false, "required": ["id", "label", "items"], "properties": {"id": {"$ref": "#/$defs/id"}, "label": {"type": "string"}, "items": {"type": "array", "minItems": 1, "items": {"type": "object", "additionalProperties": false, "required": ["variant", "asset_sha256"], "properties": {"variant": {"enum": ["mark", "lockup-horizontal", "lockup-stacked", "favicon"]}, "asset_sha256": {"$ref": "#/$defs/hash"}}}}}}
+  }
+}

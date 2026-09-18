@@ -1,0 +1,13 @@
+{
+  "schema_version": "reputation-evidence.v1",
+  "source_url": "https://github.com/pbakaus/impeccable",
+  "registrable_domain": "github.com",
+  "publisher_identity": "GitHub, Inc.",
+  "publisher_family": "github",
+  "source_kind": "repository-metadata",
+  "retrieved_at": "2026-09-03",
+  "locator": "repository header and public repository metadata",
+  "observed_claim": "The public repository showed 65197 stars, 4013 forks, active issue and pull-request surfaces, and an Apache-2.0 license.",
+  "sentiment": "positive",
+  "scope": "reputation-only-not-security-approval"
+}

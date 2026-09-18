@@ -82,6 +82,7 @@ def atomic_json(path: pathlib.Path, value: dict) -> None:
     if path.exists():
         require_single_link_file(path, "phase JSON target")
     descriptor, temporary = tempfile.mkstemp(prefix=f".{path.name}.", dir=path.parent)
+    replaced = False
     try:
         with os.fdopen(descriptor, "w", encoding="utf-8") as handle:
             json.dump(value, handle, sort_keys=True, separators=(",", ":"))
@@ -89,7 +90,20 @@ def atomic_json(path: pathlib.Path, value: dict) -> None:
             handle.flush()
             os.fsync(handle.fileno())
         os.replace(temporary, path)
+        replaced = True
+        directory = os.open(path.parent, os.O_RDONLY | os.O_DIRECTORY)
+        try:
+            os.fsync(directory)
+        finally:
+            os.close(directory)
     except BaseException:
+        if replaced:
+            # A failed parent-directory sync is not a completed commit.  Do
+            # not leave the merely visible rename available to resume logic.
+            try:
+                path.unlink()
+            except FileNotFoundError:
+                pass
         try:
             os.unlink(temporary)
         except FileNotFoundError:
@@ -112,21 +126,50 @@ class EventLog:
         self.path = path
         self.run_id = run_id
         ensure_directory(path.parent)
+        if path.exists():
+            require_single_link_file(path, "phase event log")
+        self.descriptor = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_APPEND | getattr(os, "O_CLOEXEC", 0), 0o600)
+        info = os.fstat(self.descriptor)
+        actual = require_single_link_file(path, "phase event log")
+        if info.st_nlink != 1 or (info.st_dev, info.st_ino) != (actual.st_dev, actual.st_ino):
+            os.close(self.descriptor)
+            raise PhaseError("phase event log descriptor identity differs")
+        self.synced_size = 0
+        self.closed = False
+
+    def _verify_descriptor(self) -> os.stat_result:
+        if self.closed:
+            raise PhaseError("phase event log is closed")
+        descriptor_info = os.fstat(self.descriptor)
+        path_info = require_single_link_file(self.path, "phase event log")
+        if descriptor_info.st_nlink != 1 or (descriptor_info.st_dev, descriptor_info.st_ino) != (path_info.st_dev, path_info.st_ino):
+            raise PhaseError("phase event log descriptor identity changed")
+        return descriptor_info
 
     def append(self, value: dict) -> None:
         event = {"schema_version": "brandkit-harness-phase-event.v1", "run_id": self.run_id,
                  "timestamp_ns": time.time_ns(), **value}
         raw = (json.dumps(event, sort_keys=True, separators=(",", ":")) + "\n").encode()
-        if self.path.exists():
-            require_single_link_file(self.path, "phase event log")
-        descriptor = os.open(self.path, os.O_WRONLY | os.O_CREAT | os.O_APPEND, 0o600)
-        try:
-            written = os.write(descriptor, raw)
-            if written != len(raw):
-                raise PhaseError("short atomic JSONL event write")
-            os.fsync(descriptor)
-        finally:
-            os.close(descriptor)
+        self._verify_descriptor()
+        written = os.write(self.descriptor, raw)
+        if written != len(raw):
+            raise PhaseError("short atomic JSONL event write")
+
+    def sync(self) -> int:
+        """Durably commit all appended events before a phase/run commit."""
+        info = self._verify_descriptor()
+        sync = getattr(os, "fdatasync", os.fsync)
+        sync(self.descriptor)
+        committed = os.fstat(self.descriptor)
+        if (committed.st_dev, committed.st_ino) != (info.st_dev, info.st_ino) or committed.st_size < self.synced_size:
+            raise PhaseError("phase event log changed during sync")
+        self.synced_size = committed.st_size
+        return self.synced_size
+
+    def close(self) -> None:
+        if not self.closed:
+            os.close(self.descriptor)
+            self.closed = True
 
 
 EVENT_FIELDS = {"schema_version", "run_id", "timestamp_ns", "event", "phase", "predecessors",
@@ -249,6 +292,10 @@ class PhaseDAG:
             self._validate_history()
         self.events = EventLog(self.root / "events" / f"{self.run_id}.jsonl", self.run_id)
         self.completed: dict[str, str] = {}
+        # Immutable receipts are only useful as resume authority once their
+        # run has a durable, matching event-log closure.  Keep new receipts in
+        # memory until finalize() establishes that durability boundary.
+        self.pending_receipts: dict[str, tuple[pathlib.Path, dict]] = {}
 
     def _validate_history(self) -> None:
         events_dir = self.root / "events"
@@ -305,17 +352,28 @@ class PhaseDAG:
     def finalize(self) -> dict:
         if set(self.completed) != set(self.specs):
             raise PhaseError("cannot finalize incomplete phase DAG")
-        result = validate_event_log(self.events.path, expected_run_id=self.run_id,
-                                    expected_phases=set(self.specs))
-        if result["phase_receipts"] != self.completed:
-            raise PhaseError("event log receipts differ from live DAG")
-        unsigned = {"schema_version":"brandkit-harness-run-closure.v1", "run_id":self.run_id,
-                    "event_log_sha256":result["sha256"], "event_log_size":result["size"],
-                    "event_count":result["events"], "phase_receipts":result["phase_receipts"]}
-        closure = {**unsigned, "closure_digest":canonical_digest(unsigned)}
-        closure_path = self.root / "closures" / f"{self.run_id}.json"
-        atomic_json(closure_path, closure)
-        require_single_link_file(closure_path, "phase run closure")
+        try:
+            # This is the authoritative run commit boundary: events first,
+            # then resumable phase receipts, and the run closure last.  A
+            # crash at either earlier boundary leaves no closed history and
+            # therefore fails closed on the next --resume.
+            self.events.sync()
+            result = validate_event_log(self.events.path, expected_run_id=self.run_id,
+                                        expected_phases=set(self.specs))
+            if result["phase_receipts"] != self.completed:
+                raise PhaseError("event log receipts differ from live DAG")
+            for name in sorted(self.pending_receipts):
+                path, receipt = self.pending_receipts[name]
+                atomic_json(path, receipt)
+            unsigned = {"schema_version":"brandkit-harness-run-closure.v1", "run_id":self.run_id,
+                        "event_log_sha256":result["sha256"], "event_log_size":result["size"],
+                        "event_count":result["events"], "phase_receipts":result["phase_receipts"]}
+            closure = {**unsigned, "closure_digest":canonical_digest(unsigned)}
+            closure_path = self.root / "closures" / f"{self.run_id}.json"
+            atomic_json(closure_path, closure)
+            require_single_link_file(closure_path, "phase run closure")
+        finally:
+            self.events.close()
         return {**closure, "event_log_path":str(self.events.path), "closure_path":str(closure_path)}
 
     def _bindings(self, name: str, inputs: dict, code_paths: Iterable[pathlib.Path]) -> tuple[dict, str, str, int, int]:
@@ -363,7 +421,9 @@ class PhaseDAG:
         predecessors, input_digest, code, input_files, input_bytes = self._bindings(name, inputs, code_paths)
         self._event("start", name, predecessors, input_digest, code, input_files, input_bytes)
         started = time.monotonic()
+        terminal_event_appended = False
         def publish(output: tuple[str, int, int]) -> tuple[str, int, int]:
+            nonlocal terminal_event_appended
             output_digest, output_files, output_bytes = output
             if (not valid_digest(output_digest) or not isinstance(output_files, int) or output_files < 0
                     or not isinstance(output_bytes, int) or output_bytes < 0):
@@ -372,10 +432,11 @@ class PhaseDAG:
                                         "code_fingerprint": code, "environment_digest": self.environment_digest,
                                         "output_digest": output_digest, "output_files": output_files,
                                         "output_bytes": output_bytes})
-            self.completed[name] = receipt
             self._event("end", name, predecessors, input_digest, code, input_files, input_bytes,
                         output_digest=output_digest, output_files=output_files, output_bytes=output_bytes,
                         wall_seconds=time.monotonic() - started, receipt_digest=receipt, detail="pass")
+            terminal_event_appended = True
+            self.completed[name] = receipt
             return output
 
         try:
@@ -383,8 +444,14 @@ class PhaseDAG:
             return (atomic_commit(preliminary, publish) if atomic_commit is not None else publish(preliminary))
         except BaseException as exc:
             self.completed.pop(name, None)
-            self._event("end", name, predecessors, input_digest, code, input_files, input_bytes,
-                        wall_seconds=time.monotonic() - started, detail=f"error:{type(exc).__name__}")
+            try:
+                if not terminal_event_appended:
+                    self._event("end", name, predecessors, input_digest, code, input_files, input_bytes,
+                                wall_seconds=time.monotonic() - started, detail=f"error:{type(exc).__name__}")
+                self.events.sync()
+            except BaseException as log_exc:
+                exc.add_note(f"phase error-event commit failed: {type(log_exc).__name__}: {log_exc}")
+            self.events.close()
             raise
 
     def run_immutable(self, name: str, build: Callable[[pathlib.Path], None], *, inputs: dict,
@@ -395,6 +462,7 @@ class PhaseDAG:
         predecessors, input_digest, code, input_files, input_bytes = self._bindings(name, inputs, code_paths)
         self._event("start", name, predecessors, input_digest, code, input_files, input_bytes)
         started = time.monotonic()
+        terminal_event_appended = False
         receipt_path = self.root / "receipts" / f"{name}.json"
         if self.resume and not self.fresh_release and receipt_path.is_file() and not receipt_path.is_symlink():
             try:
@@ -418,11 +486,12 @@ class PhaseDAG:
                 if (digest != receipt["output_digest"] or files != receipt["output_files"]
                         or total != receipt["output_bytes"] or canonical_digest(unsigned) != receipt["receipt_digest"]):
                     raise PhaseError("resume receipt output differs")
-                self.completed[name] = receipt["receipt_digest"]
                 self._event("end", name, predecessors, input_digest, code, input_files, input_bytes,
                             output_digest=digest, output_files=files, output_bytes=total,
                             wall_seconds=time.monotonic() - started, receipt_digest=receipt["receipt_digest"],
                             detail="resumed")
+                terminal_event_appended = True
+                self.completed[name] = receipt["receipt_digest"]
                 return object_path
             except (OSError, ValueError, KeyError, TypeError, PhaseError) as exc:
                 self._event("invalidate", name, predecessors, input_digest, code, input_files, input_bytes,
@@ -462,15 +531,22 @@ class PhaseDAG:
                         "environment_digest": self.environment_digest, "output_digest": output_digest,
                         "output_files": output_files, "output_bytes": output_bytes, "object_path": str(object_path)}
             receipt = {**unsigned, "receipt_digest": canonical_digest(unsigned)}
-            atomic_json(receipt_path, receipt)
-            self.completed[name] = receipt["receipt_digest"]
             self._event("end", name, predecessors, input_digest, code, input_files, input_bytes,
                         output_digest=output_digest, output_files=output_files, output_bytes=output_bytes,
                         wall_seconds=time.monotonic() - started, receipt_digest=receipt["receipt_digest"], detail="pass")
+            terminal_event_appended = True
+            self.pending_receipts[name] = (receipt_path, receipt)
+            self.completed[name] = receipt["receipt_digest"]
             return object_path
         except BaseException as exc:
             if staging.exists():
                 remove_tree(staging)
-            self._event("end", name, predecessors, input_digest, code, input_files, input_bytes,
-                        wall_seconds=time.monotonic() - started, detail=f"error:{type(exc).__name__}")
+            try:
+                if not terminal_event_appended:
+                    self._event("end", name, predecessors, input_digest, code, input_files, input_bytes,
+                                wall_seconds=time.monotonic() - started, detail=f"error:{type(exc).__name__}")
+                self.events.sync()
+            except BaseException as log_exc:
+                exc.add_note(f"phase error-event commit failed: {type(log_exc).__name__}: {log_exc}")
+            self.events.close()
             raise

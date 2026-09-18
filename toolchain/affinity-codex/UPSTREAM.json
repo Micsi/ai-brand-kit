@@ -1,0 +1,11 @@
+{
+  "schema_version": "brandkit-affinity-codex-upstream.v1",
+  "repository": "https://github.com/bolloplayer/affinity-mcp-setup.git",
+  "commit": "c5097f49fafc47a55855f45b3cb7ac273a34f992",
+  "source_path": "bridge/affinity-codex-bridge.mjs",
+  "source_sha256": "7c2affcf303b12f6f063cfcc4e1d10fcc86d067f9326f08c61326fae64606cc4",
+  "license": "MIT",
+  "upstream_license_sha256": "faee45e3a6d72cb5a20cad2849d388b887b2123eb1f5a690d8a09142c05e2390",
+  "vendored_license_sha256": "1e273a8b10c67988cfb2c5155d92b485ebf2bee91589b043aeac512472a7a01a",
+  "adaptation": "The bridge is vendored byte-identically. The MIT text has one normalized trailing newline; the project launcher supplies the observed loopback URL."
+}

@@ -7,7 +7,7 @@
   "properties": {
     "schema_version": {"const": "brandkit-skill-request.v1"},
     "request_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]+$"},
-    "skill": {"enum": ["brandkit-setup", "brandkit-interview", "brandkit-build", "brandkit-spacing", "brandkit-publish"]},
+    "skill": {"enum": ["brandkit-setup", "brandkit-interview", "brandkit-visual-decisions", "brandkit-build", "brandkit-spacing", "brandkit-publish"]},
     "input_artifacts": {
       "type": "array", "minItems": 1,
       "items": {"type": "object", "additionalProperties": false, "required": ["role", "path", "sha256"], "properties": {
@@ -24,11 +24,49 @@
         "conflicts": {"type": "array", "items": {"enum": ["resolved", "normative", "unknown"]}},
         "legal_claims": {"type": "array", "items": {"enum": ["official-source", "todo-legal-review", "unsupported", "unknown"]}}
       }},
-      {"type": "object", "additionalProperties": false, "required": ["provenance", "conflicts", "asset_rights", "brand_pin", "instruction_sources", "claude_bridge", "hermes_context"], "properties": {
+      {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["operation", "brand_raw_preimage", "candidate_bundle", "candidate_review", "owner_selection"],
+        "properties": {
+          "operation": {"const": "prepare-visual-confirmation"},
+          "brand_raw_preimage": {"$ref": "#/$defs/fileSize"},
+          "candidate_bundle": {"$ref": "#/$defs/fileSize"},
+          "candidate_review": {"$ref": "#/$defs/fileSize"},
+          "owner_selection": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["selection_id", "chat_statement", "choices"],
+            "properties": {
+              "selection_id": {"$ref": "#/$defs/id"},
+              "chat_statement": {"$ref": "#/$defs/fileSize"},
+              "choices": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "oneOf": [
+                    {"type": "object", "additionalProperties": false, "required": ["domain", "outcome", "candidate_id"], "properties": {"domain": {"$ref": "#/$defs/visualDomain"}, "outcome": {"const": "candidate"}, "candidate_id": {"$ref": "#/$defs/id"}}},
+                    {"type": "object", "additionalProperties": false, "required": ["domain", "outcome"], "properties": {"domain": {"$ref": "#/$defs/visualDomain"}, "outcome": {"enum": ["open", "not-applicable"]}}}
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      {"type": "object", "additionalProperties": false, "required": ["operation", "brand_raw_preimage", "visual_handoff", "owner_receipt", "candidate_bundle"], "properties": {
+        "operation": {"const": "consume-visual-decisions"}, "brand_raw_preimage": {"$ref": "#/$defs/fileSize"}, "visual_handoff": {"$ref": "#/$defs/fileSize"}, "owner_receipt": {"$ref": "#/$defs/fileSize"}, "candidate_bundle": {"$ref": "#/$defs/fileSize"}
+      }},
+      {"type": "object", "additionalProperties": false, "required": ["operation", "visual_brief", "affinity_observation", "candidate_bundle", "candidate_review", "required_domains"], "properties": {
+        "operation": {"const": "review-candidates"}, "visual_brief": {"$ref": "#/$defs/fileSize"}, "affinity_observation": {"$ref": "#/$defs/fileSize"}, "candidate_bundle": {"$ref": "#/$defs/fileSize"}, "candidate_review": {"$ref": "#/$defs/fileSize"}, "required_domains": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/visualDomain"}}
+      }},
+      {"type": "object", "additionalProperties": false, "required": ["provenance", "conflicts", "asset_rights", "brand_pin", "instruction_sources", "claude_bridge", "hermes_context", "visual_decisions"], "properties": {
         "provenance": {"type": "array", "items": {"enum": ["complete", "missing", "unknown"]}}, "conflicts": {"type": "array", "items": {"enum": ["resolved", "normative", "unknown"]}},
         "asset_rights": {"type": "array", "items": {"enum": ["verified", "unresolved", "unknown"]}}, "brand_pin": {"enum": ["verified", "missing", "unknown"]},
         "instruction_sources": {"type": "array", "items": {"type": "string"}}, "claude_bridge": {"enum": ["CLAUDE.md -> AGENTS.md", "copy", "missing", "unknown"]},
-        "hermes_context": {"enum": ["cwd/AGENTS.md", ".hermes.md", "skill-discovery", "missing", "unknown"]}
+        "hermes_context": {"enum": ["cwd/AGENTS.md", ".hermes.md", "skill-discovery", "missing", "unknown"]},
+        "visual_decisions": {"enum": ["byte-identical-consumed", "no-open-domains", "required-open", "missing", "stale", "unknown"]}
       }},
       {"type": "object", "additionalProperties": false, "required": ["brand_pin", "target_medium", "target_scope", "inventory_artifact", "proposal_artifact", "normative_sources", "requested_output"], "properties": {
         "brand_pin": {"enum": ["verified", "missing", "unknown"]},
@@ -57,5 +95,10 @@
         "renderer": {"enum": ["verified", "failed", "unknown"]}, "visual_review": {"enum": ["verified", "failed", "unknown"]}
       }}
     ]}
+  },
+  "$defs": {
+    "hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]{0,62}$"},
+    "visualDomain": {"enum": ["color", "typography", "code-font", "logo", "lockup"]},
+    "fileSize": {"type": "object", "additionalProperties": false, "required": ["path", "size", "sha256"], "properties": {"path": {"type": "string", "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[A-Za-z0-9._/-]+$"}, "size": {"type": "integer", "minimum": 0}, "sha256": {"$ref": "#/$defs/hash"}}}
   }
 }

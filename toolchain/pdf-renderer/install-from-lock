@@ -40,7 +40,7 @@ copy_source_fixtures() {
   cp -R "$root/fixtures/pdf-renderer/e2e" "$root/fixtures/pdf-renderer/live-e2e" "$root/fixtures/pdf-renderer/reference-report" "$destination/fixtures/pdf-renderer/"
 }
 mkdir -p "$tmp/scripts" "$runtime/scripts"; cp -R "$root/skills/brand-voice-pdf/." "$tmp/"; cp "$root/scripts/pdf_renderer.py" "$root/scripts/pdf_visual_qa.py" "$root/scripts/brand_voice_pdf.py" "$root/scripts/brand_package.py" "$root/scripts/markdown_contract.py" "$root/scripts/project_brand_tokens.py" "$root/scripts/generate_pdf_e2e_goldens.py" "$root/toolchain/pdf-renderer/render" "$root/toolchain/pdf-renderer/verify-installation" "$root/toolchain/pdf-renderer/rollback" "$tmp/scripts/"; cp -R "$root/schemas" "$root/document-types" "$tmp/"; copy_source_fixtures "$tmp"; cp "$root/renderer-trust.v1.json" "$root/markdown-contract.v1.json" "$root/markdown-contract.v2.json" "$root/markdown-contract-migration.v1.json" "$tmp/"; mkdir -p "$tmp/toolchain"; cp "$root/toolchain/pdf-renderer.production.v1.lock.json" "$root/toolchain/mermaid-svg.v1.lock.json" "$root/toolchain/mermaid-linux-worker.v2.lock.json" "$root/toolchain/graphviz-svg.v1.lock.json" "$tmp/toolchain/"; cp -R "$root/toolchain/pdf-renderer" "$root/toolchain/mermaid-svg" "$root/toolchain/graphviz-svg" "$tmp/toolchain/"
-python3.12 -m venv "$runtime/.venv"; "$runtime/.venv/bin/pip" install --no-compile --no-index --require-hashes -r "$root/toolchain/pdf-renderer/requirements.lock.txt" --find-links "$wheels"
+python3.12 -m venv --copies "$runtime/.venv"; "$runtime/.venv/bin/pip" install --no-compile --no-index --require-hashes -r "$root/toolchain/pdf-renderer/requirements.lock.txt" --find-links "$wheels"
 python3.12 - "$runtime/.venv/lib/python3.12/site-packages" <<'PY'
 import csv,io,os,pathlib,stat,sys
 
@@ -96,6 +96,7 @@ chmod +x "$tmp/scripts/run" "$tmp/scripts/render" "$tmp/scripts/verify-installat
 find "$tmp" "$runtime" -type d -exec chmod 555 {} +
 find "$tmp" "$runtime" -type f -exec chmod 444 {} +
 chmod 555 "$tmp/scripts/run" "$tmp/scripts/render" "$tmp/scripts/verify-installation" "$tmp/scripts/rollback" "$runtime/toolchain/pdf-renderer/render" "$runtime/toolchain/pdf-renderer/verify-installation" "$runtime/toolchain/pdf-renderer/rollback" "$runtime/toolchain/mermaid-svg/render-offline" "$runtime/toolchain/mermaid-svg/render-linux-worker" "$runtime/toolchain/mermaid-svg/linux_worker.py" "$runtime/toolchain/mermaid-svg/linux-worker-entrypoint" "$runtime/toolchain/mermaid-svg/install-offline" "$runtime/toolchain/mermaid-svg/verify-bundle" "$runtime/toolchain/mermaid-svg/verify-clean-rooms" "$runtime/toolchain/mermaid-svg/version-log" "$runtime/toolchain/graphviz-svg/render-offline" "$runtime/toolchain/graphviz-svg/install-offline" "$runtime/toolchain/graphviz-svg/verify-bundle" "$runtime/toolchain/graphviz-svg/verify-clean-rooms"
+chmod 555 "$runtime/.venv/bin/python" "$runtime/.venv/bin/python3" "$runtime/.venv/bin/python3.12"
 mv "$tmp" "$release"
 python3.12 - "$home" "$version" "$key" <<'PY'
 import hashlib,hmac,json,os,pathlib,stat,sys

@@ -147,6 +147,7 @@ separate Auswahl und Pin.
 |---|---|---|---|
 | `brandkit-setup` | vorhanden | global | providerneutrale Fähigkeitsprüfung |
 | `brandkit-interview` | vorhanden | global | allgemeiner Interview-Workflow; erzeugte Markendaten bleiben im Zielprojekt |
+| `brandkit-visual-decisions` | vorhanden | global | nichtnormative, geprüfte visuelle Kandidaten zwischen Interview und Build |
 | `brandkit-build` | vorhanden | global | allgemeine Build-/Validierungsengine; konsumiert eine explizite Marke |
 | `brandkit-spacing` | vorhanden | global | read-only Engine für gehashte Spacing-Inventur, Token-/Ausnahme-Zuordnung und Rollenbefunde; UI-Mutation bleibt bei Impeccable |
 | `brandkit-publish` | vorhanden | global | allgemeine Ausgabepipeline; Outputs bleiben projektlokal |

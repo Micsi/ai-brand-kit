@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "brandkit-color-contrast-report.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "candidate_set_sha256", "candidate_id", "algorithm", "roles", "tests", "status_communication", "objective_status", "human_review_status"],
+  "properties": {
+    "schema_version": {"const": "brandkit-color-contrast-report.v1"},
+    "candidate_set_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "candidate_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]{0,62}$"},
+    "algorithm": {"const": "WCAG-2.x-sRGB-relative-luminance"},
+    "roles": {"type": "object", "minProperties": 19, "maxProperties": 19, "propertyNames": {"enum": ["canvas", "surface", "surface-strong", "text", "text-muted", "border", "primary", "on-primary", "secondary", "on-secondary", "accent", "on-accent", "success", "on-success", "warning", "on-warning", "danger", "on-danger", "focus"]}, "additionalProperties": {"type": "string", "pattern": "^#[0-9A-Fa-f]{6}$"}},
+    "tests": {"type": "array", "minItems": 13, "maxItems": 13, "items": {"type": "object", "additionalProperties": false, "required": ["foreground_role", "background_role", "usage", "minimum_ratio", "ratio", "ratio_display", "passed"], "properties": {"foreground_role": {"type": "string"}, "background_role": {"type": "string"}, "usage": {"enum": ["normal-text", "large-text", "non-text"]}, "minimum_ratio": {"enum": [3.0, 4.5]}, "ratio": {"type": "number", "minimum": 1, "maximum": 21}, "ratio_display": {"type": "string", "pattern": "^[0-9]+\\.[0-9]{2}:1$"}, "passed": {"type": "boolean"}}}},
+    "status_communication": {"type": "object", "additionalProperties": false, "required": ["color_only", "non_color_cues"], "properties": {"color_only": {"const": false}, "non_color_cues": {"type": "array", "minItems": 2, "uniqueItems": true, "items": {"enum": ["text", "icon", "shape", "pattern", "label"]}}}},
+    "objective_status": {"enum": ["pass", "fail"]},
+    "human_review_status": {"const": "required"}
+  }
+}

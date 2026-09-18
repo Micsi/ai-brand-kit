@@ -1,0 +1,19 @@
+{
+  "schema_version": "brandkit-discovery-handoff.v1",
+  "run_id": "ci-pilot",
+  "workspace": ".brandkit/work/ci-pilot/discovery",
+  "sources": [
+    {"id": "owner-answer-2", "classification": "owner-supplied", "file": ".brandkit/work/ci-pilot/discovery/sources/owner-answer-2.txt"}
+  ],
+  "decisions": [
+    {"id": "brand-character", "value": "editorial and precise", "source_ids": ["owner-answer-2"]}
+  ],
+  "recommendations": [
+    {"id": "suggested-accent", "text": "Consider a warm accent."}
+  ],
+  "files": [
+    {"path": ".brandkit/work/ci-pilot/discovery/CONTEXT.md", "role": "context", "size": 51, "sha256": "3c2b0c15b8a90605557e0cd7b9bda98c4f26a60d211bfb8c2e07eeb9e0569d34"},
+    {"path": ".brandkit/work/ci-pilot/discovery/docs/adr/0001-brand-structure.md", "role": "adr", "size": 34, "sha256": "9fba70e0bc56d2a5420753a2f5a91f098d897af0c3204440fe0311f9d6b1e3d5"},
+    {"path": ".brandkit/work/ci-pilot/discovery/sources/owner-answer-2.txt", "role": "source", "size": 34, "sha256": "936433e40a71654aa1e562adbb1ac9b734dc8ff1b9f35534755d74c7144f6cde"}
+  ]
+}

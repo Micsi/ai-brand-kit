@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "brandkit-visual-playground-manifest.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "generator", "brief_sha256", "candidate_set_sha256", "affinity_observation_sha256", "files", "offline", "interactive_controls", "persistence", "preselection", "normative", "confirmation_artifact"],
+  "properties": {
+    "schema_version": {"const": "brandkit-visual-playground-manifest.v1"},
+    "generator": {"const": "<!--brandkit-visual-playground-->"},
+    "brief_sha256": {"$ref": "#/$defs/hash"},
+    "candidate_set_sha256": {"$ref": "#/$defs/hash"},
+    "affinity_observation_sha256": {"$ref": "#/$defs/hash"},
+    "files": {"type": "array", "minItems": 4, "items": {"$ref": "#/$defs/file"}},
+    "offline": {"const": true},
+    "interactive_controls": {"const": true},
+    "persistence": {"const": "none"},
+    "preselection": {"const": false},
+    "normative": {"const": false},
+    "confirmation_artifact": {"const": false}
+  },
+  "$defs": {
+    "hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "file": {"type": "object", "additionalProperties": false, "required": ["path", "sha256"], "properties": {"path": {"type": "string", "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[A-Za-z0-9._/-]+$"}, "sha256": {"$ref": "#/$defs/hash"}}}
+  }
+}

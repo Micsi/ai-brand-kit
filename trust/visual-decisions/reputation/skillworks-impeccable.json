@@ -1,0 +1,13 @@
+{
+  "schema_version": "reputation-evidence.v1",
+  "source_url": "https://skillworks.kynth.studio/marketplaces/pbakaus/impeccable/impeccable",
+  "registrable_domain": "kynth.studio",
+  "publisher_identity": "SkillWorks by Kynth Studio",
+  "publisher_family": "kynth-studio",
+  "source_kind": "independent-marketplace-review",
+  "retrieved_at": "2026-09-03",
+  "locator": "Impeccable marketplace review summary",
+  "observed_claim": "The independent marketplace review scored the package 80 out of 100 and reported it as loadable.",
+  "sentiment": "positive",
+  "scope": "reputation-only-not-security-approval"
+}

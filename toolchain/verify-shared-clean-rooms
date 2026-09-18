@@ -48,8 +48,8 @@ PROCESS_ENV_KEYS += (shared_toolchain.SUPERVISOR_FD_ENV,)
 PROCESS_ENV_KEYS += (shared_toolchain.SUPERVISOR_ROOM_ENV, shared_toolchain.SUPERVISOR_PHASE_ENV,
                      shared_toolchain.SUPERVISOR_OPERATION_ENV)
 PRODUCT_CODE_INPUTS = tuple(ROOT / path for path in (
-    "scripts/harness_phases.py", "scripts/shared_toolchain.py",
-    "toolchain/verify-shared-clean-rooms", "toolchain/install-from-lock",
+    "scripts/harness_phases.py", "scripts/shared_toolchain.py", "scripts/runtime_archives.py",
+    "toolchain/verify-shared-clean-rooms", "toolchain/install-from-lock", "toolchain/build-runtime-archives",
     "toolchain/verify-installation", "toolchain/version-log", "toolchain/rollback", "toolchain/restore",
     "toolchain/shared-clean-room-fixtures/run-render-smoke",
     "toolchain/mermaid-svg/install-offline", "toolchain/mermaid-svg/verify-bundle",

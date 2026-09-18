@@ -15,7 +15,7 @@
     {"path":"toolchain/mermaid-svg/build-runtime","sha256":"8830e96ef685d4d2741cedc2062c3d62ef70d0a8eee63d30ee24cbad20592c4b"},
     {"path":"toolchain/mermaid-svg/install-offline","sha256":"bbcc845426f901ae7d12fdc42953e759f8e7359c7dfa9601f1e8c42aaf10b6ee"},
     {"path":"toolchain/mermaid-svg/render-offline","sha256":"955817cfe8a30661f01f02a506ecaa5d64db5e3066b09a7e224aac9142fd6dba"},
-    {"path":"toolchain/mermaid-svg/runtime.py","sha256":"123365d8640ce4aeb3a8258721e7dd9f8cff64a83a220d7e2fd7d63ab6129f8d"},
+    {"path":"toolchain/mermaid-svg/runtime.py","sha256":"78ebbc66dbed1e646e77c99085aa9fc786df85819cf405f1d3d56348bdae7a01"},
     {"path":"toolchain/mermaid-svg/verify-clean-rooms","sha256":"80435620526fc8fe9f81115a447ed42407bf4a296a95df10458893e349d56eef"},
     {"path":"toolchain/mermaid-svg/verify-bundle","sha256":"9e28f5b9f33d0341bde5528a11511bc211cceb19ef07ab91c272a85d795bb01f"},
     {"path":"toolchain/mermaid-svg/version-log","sha256":"a01a4491b9f31a4f84d795a1c5f1e2ac8a7a46e2f726889fcbfe6bc62e38668b"}

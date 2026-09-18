@@ -68,15 +68,33 @@
       "activation": "model-invoked",
       "brand_content_allowed": false
     },
-    {
-      "name": "brandkit-interview",
+  {
+    "name": "brandkit-interview",
       "lifecycle": "existing",
       "scope": "global",
       "kind": "engine",
       "source": "skills/brandkit-interview",
       "activation": "model-invoked",
-      "brand_content_allowed": false
-    },
+    "brand_content_allowed": false
+  },
+  {
+    "name": "brandkit-visual-decisions",
+    "lifecycle": "existing",
+    "scope": "global",
+    "kind": "engine",
+    "source": "skills/brandkit-visual-decisions",
+    "activation": "model-invoked",
+    "brand_content_allowed": false
+  },
+  {
+    "name": "brandkit-affinity",
+    "lifecycle": "existing",
+    "scope": "global",
+    "kind": "engine",
+    "source": "skills/brandkit-affinity",
+    "activation": "model-invoked",
+    "brand_content_allowed": false
+  },
     {
       "name": "brandkit-build",
       "lifecycle": "existing",

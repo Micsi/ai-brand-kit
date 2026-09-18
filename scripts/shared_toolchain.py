@@ -71,7 +71,7 @@ def regular_under_root(relative: str, label: str) -> pathlib.Path:
 
 def validate_lock_structure(path: pathlib.Path = LOCK_PATH) -> tuple[dict, dict[str, dict]]:
     lock = load(path)
-    closed(lock, {"schema_version", "release", "execution", "environment", "components", "artifacts", "bindings", "transforms", "normative", "commands"}, "shared lock")
+    closed(lock, {"schema_version", "release", "execution", "environment", "components", "artifacts", "runtime_archives", "bindings", "transforms", "normative", "commands"}, "shared lock")
     if lock["schema_version"] != "brandkit-toolchain-lock.v1":
         raise ToolchainError("shared lock schema identity differs")
     closed(lock["release"], {"id", "source_revision"}, "release")
@@ -168,7 +168,7 @@ def validate_lock_structure(path: pathlib.Path = LOCK_PATH) -> tuple[dict, dict[
         closed(record, {"path", "sha256"}, f"fixture {index}")
         if sha(regular_under_root(record["path"], f"fixture {index}")) != digest(record["sha256"], f"fixture {index}"):
             raise ToolchainError(f"fixture binding differs: {index}")
-    if set(lock["commands"]) != {"implementation", "install", "verify", "version_log", "rollback", "restore", "clean_rooms"}:
+    if set(lock["commands"]) != {"implementation", "install", "verify", "version_log", "rollback", "restore", "clean_rooms", "runtime_builder"}:
         raise ToolchainError("canonical command set differs")
     for name, record in lock["commands"].items():
         closed(record, {"path", "sha256"}, f"command {name}")
@@ -177,12 +177,14 @@ def validate_lock_structure(path: pathlib.Path = LOCK_PATH) -> tuple[dict, dict[
             raise ToolchainError(f"command hash differs: {name}")
     # External stores are schema-bound here but deliberately not opened. Their
     # bytes are consumed exactly once by the run preflight below.
-    expected_artifacts = {"humanizer_source", "humanizer_wheelhouse", "pdf_wheelhouse", "pdf_issuer_key", "mermaid_bundle", "graphviz_bundle", "normative_render_oci", "node_linux", "chrome_linux", "qemu_runtime"}
+    expected_artifacts = {"humanizer_source", "humanizer_wheelhouse", "pdf_wheelhouse", "pdf_issuer_key", "mermaid_bundle", "graphviz_bundle", "normative_render_oci", "node_linux", "chrome_linux", "qemu_runtime", "runtime_humanizer", "runtime_pdf_home", "runtime_mermaid", "runtime_graphviz"}
     expected_kinds = {"humanizer_source":"git-archive-tar", "humanizer_wheelhouse":"content-addressed-directory",
         "pdf_wheelhouse":"content-addressed-directory", "pdf_issuer_key":"sha256-bound-secret-file",
         "mermaid_bundle":"content-addressed-directory", "graphviz_bundle":"content-addressed-directory",
         "normative_render_oci":"docker-save-archive", "node_linux":"official-archive",
-        "chrome_linux":"official-archive", "qemu_runtime":"content-addressed-directory"}
+        "chrome_linux":"official-archive", "qemu_runtime":"content-addressed-directory",
+        "runtime_humanizer":"canonical-runtime-archive", "runtime_pdf_home":"canonical-runtime-archive",
+        "runtime_mermaid":"canonical-runtime-archive", "runtime_graphviz":"canonical-runtime-archive"}
     if set(lock["artifacts"]) != expected_artifacts:
         raise ToolchainError("artifact set is not closed")
     for name, record in lock["artifacts"].items():
@@ -199,6 +201,34 @@ def validate_lock_structure(path: pathlib.Path = LOCK_PATH) -> tuple[dict, dict[
             if not manifest.is_absolute() or manifest.parent != artifact:
                 raise ToolchainError(f"artifact manifest path binding differs: {name}")
             digest(record["manifest_sha256"], f"{name} manifest")
+    runtime_fields = {"schema_version", "component", "relocation_token", "format", "source_digest", "package_digest",
+                      "transform_digest", "archive_sha256", "archive_size", "manifest_sha256",
+                      "entries", "files", "bytes"}
+    if set(lock["runtime_archives"]) != {"humanizer", "pdf-home", "mermaid", "graphviz"}:
+        raise ToolchainError("runtime archive set is not closed")
+    for component, record in lock["runtime_archives"].items():
+        closed(record, runtime_fields, f"runtime archive {component}")
+        if record["schema_version"] != "brandkit-runtime-archive.v1" or record["component"] != component:
+            raise ToolchainError(f"runtime archive identity differs: {component}")
+        expected_token = f"/__BRANDKIT_RUNTIME_ROOT__/{component}" if component in {"humanizer", "pdf-home"} else None
+        if record["relocation_token"] != expected_token:
+            raise ToolchainError(f"runtime archive relocation token differs: {component}")
+        if record["format"] not in {"ustar", "pax"}:
+            raise ToolchainError(f"runtime archive format differs: {component}")
+        artifact = lock["artifacts"]["runtime_" + component.replace("-", "_")]
+        if record["archive_sha256"] != artifact["sha256"]:
+            raise ToolchainError(f"runtime archive top-lock binding differs: {component}")
+        digest(record["manifest_sha256"], f"runtime archive manifest {component}")
+        for field in ("archive_size", "entries", "files", "bytes"):
+            if type(record[field]) is not int or record[field] < 0:
+                raise ToolchainError(f"runtime archive counter differs: {component}/{field}")
+    # Lazy import avoids a module cycle; this is schema/cross-lock validation
+    # only and deliberately does not open external runtime bytes.
+    import runtime_archives
+    for component, record in lock["runtime_archives"].items():
+        expected = runtime_archives.bindings(lock, component)
+        if any(record[field] != expected[field] for field in expected):
+            raise ToolchainError(f"runtime archive source/package/transform binding differs: {component}")
     return lock, components
 
 
@@ -820,8 +850,8 @@ def verify_closed_artifact_directory(root: pathlib.Path, manifest_path: pathlib.
 
 
 CONSUMED_RUN_ARTIFACTS = (
-    "humanizer_source", "humanizer_wheelhouse", "pdf_wheelhouse",
-    "pdf_issuer_key", "mermaid_bundle", "graphviz_bundle",
+    "runtime_humanizer", "runtime_pdf_home", "runtime_mermaid",
+    "runtime_graphviz", "pdf_issuer_key",
 )
 RUN_INPUT_ENV = "BRANDKIT_TOOLCHAIN_RUN_INPUTS"
 RUN_ID_ENV = "BRANDKIT_TOOLCHAIN_RUN_ID"
@@ -1311,8 +1341,13 @@ def validate_lock(path: pathlib.Path = LOCK_PATH) -> tuple[dict, dict[str, dict]
             raise ToolchainError("run inputs require the canonical shared lock")
         lock, _ = load_run_inputs(lock, pathlib.Path(receipt_path), expected_run_id=os.environ.get(RUN_ID_ENV))
         return lock, components
+    import runtime_archives
     for name, record in lock["artifacts"].items():
-        verify_artifact_record(record, name)
+        if name.startswith("runtime_"):
+            component = name.removeprefix("runtime_").replace("_", "-")
+            runtime_archives.inspect_archive(pathlib.Path(record["path"]), lock["runtime_archives"][component])
+        else:
+            verify_artifact_record(record, name)
     return lock, components
 
 
@@ -1406,7 +1441,7 @@ def sanitize_installed_records(root: pathlib.Path) -> None:
     site_packages = root / ".venv/lib/python3.12/site-packages"
     if site_packages.is_symlink() or not site_packages.is_dir():
         raise ToolchainError("Humanizer site-packages root is absent or linked")
-    record_paths = sorted(site_packages.glob("*.dist-info/RECORD"))
+    record_paths = sorted(site_packages.rglob("*.dist-info/RECORD"))
 
     def sanitize_record(record_path: pathlib.Path) -> tuple[pathlib.Path, str]:
         rows = []
@@ -1423,6 +1458,13 @@ def sanitize_installed_records(root: pathlib.Path) -> None:
                 if row[1:] != ["", ""]:
                     raise ToolchainError(f"installed RECORD self row is not empty: {record_path}")
                 rows.append([row[0], "", ""])
+                continue
+            vendored_wheel_launcher = (
+                record_path.relative_to(site_packages).as_posix()
+                == "setuptools/_vendor/wheel-0.46.3.dist-info/RECORD"
+                and row == ["bin/wheel", "sha256=OLjFs9G7MQ-f_mhuW2aLGpngsyphW_v5FIoyN88Hfk0", "339"]
+                and not referenced.exists())
+            if vendored_wheel_launcher:
                 continue
             if referenced.is_symlink() or not referenced.is_file():
                 raise ToolchainError(f"installed RECORD target is absent or linked: {record_path}: {row[0]}")
@@ -1449,7 +1491,7 @@ def remove_internal_venv_bytecode(root: pathlib.Path) -> None:
     """Remove only complete, RECORD-owned bytecode from the relocatable venv."""
     root = root.resolve(strict=True)
     site_packages = root / ".venv/lib/python3.12/site-packages"
-    record_paths = sorted(site_packages.glob("*.dist-info/RECORD"))
+    record_paths = sorted(site_packages.rglob("*.dist-info/RECORD"))
     updates = {}; recorded = set()
     for record in record_paths:
         rows = []
@@ -1529,7 +1571,9 @@ def relocate_humanizer_install(root: pathlib.Path, previous_root: pathlib.Path,
             rows.append(row)
         output = io.StringIO(newline=""); csv.writer(output, lineterminator="\n").writerows(rows)
         mode = stat.S_IMODE(record.stat().st_mode)
-        record.chmod(mode | stat.S_IWUSR); record.write_text(output.getvalue(), encoding="utf-8"); record.chmod(mode)
+        record_bytes = output.getvalue().encode()
+        record.chmod(mode | stat.S_IWUSR); record.write_bytes(record_bytes); record.chmod(mode)
+        relocated_payloads[record.resolve()] = record_bytes
     # The one mandatory post-move scan_tree() call proves text, binary and
     # symlink stale-root absence; do not perform another broad search here.
 
@@ -1550,7 +1594,7 @@ def build_humanizer(destination: pathlib.Path, lock: dict, source: pathlib.Path,
     human_lock = load(ROOT / "toolchain/humanizer-de/toolchain.lock.json")
     if content_hash(destination) != human_lock["skill"]["content_sha256"]:
         raise ToolchainError("Humanizer transformed content hash differs")
-    run([lock["bindings"]["python_executable"], "-m", "venv", str(destination / ".venv")], phase="humanizer-venv")
+    run([lock["bindings"]["python_executable"], "-m", "venv", "--copies", str(destination / ".venv")], phase="humanizer-venv")
     python = destination / ".venv/bin/python"
     wheels = sorted(wheelhouse.glob("*.whl"))
     if len(wheels) != human_lock["python"]["runtime_distribution_count"]:
@@ -1728,7 +1772,9 @@ def relocate_pdf_install(pdf_home: pathlib.Path, previous_home: pathlib.Path,
         output = io.StringIO(newline="")
         csv.writer(output, lineterminator="\n").writerows(rows)
         mode = stat.S_IMODE(record.stat().st_mode)
-        record.chmod(mode | stat.S_IWUSR); record.write_text(output.getvalue(), encoding="utf-8"); record.chmod(mode)
+        record_bytes = output.getvalue().encode()
+        record.chmod(mode | stat.S_IWUSR); record.write_bytes(record_bytes); record.chmod(mode)
+        relocated_payloads[record.resolve()] = record_bytes
 
     def raw_inventory(root: pathlib.Path) -> list[dict]:
         if root.is_symlink() or not root.is_dir():
@@ -1868,26 +1914,26 @@ def install(args: argparse.Namespace) -> None:
     try:
         consumer_inputs = stage / ".run-inputs" if snapshots is None else None
         materialized = install_artifact_inputs(lock, snapshots, consumer_inputs)
-        (stage / "humanizer").mkdir()
-        build_humanizer(stage / "humanizer", lock, materialized["humanizer_source"], materialized["humanizer_wheelhouse"])
-        run([str(ROOT / "toolchain/mermaid-svg/install-offline"), str(stage / "mermaid"), str(materialized["mermaid_bundle"])], phase="mermaid-install", timeout=2400)
-        run([str(ROOT / "toolchain/graphviz-svg/install-offline"), str(stage / "graphviz"), str(materialized["graphviz_bundle"])], phase="graphviz-install", timeout=600)
-        env = {**os.environ, "PYTHONDONTWRITEBYTECODE": "1"}
-        run([str(ROOT / "toolchain/pdf-renderer/install-from-lock"), str(stage / "pdf-home"), str(materialized["pdf_wheelhouse"]), str(materialized["pdf_issuer_key"])], env, phase="pdf-install", timeout=1200)
+        import runtime_archives
+        runtime_archives.materialize("humanizer", materialized["runtime_humanizer"],
+            lock["runtime_archives"]["humanizer"], stage/"humanizer", root/"humanizer")
+        runtime_archives.materialize("mermaid", materialized["runtime_mermaid"],
+            lock["runtime_archives"]["mermaid"], stage/"mermaid", root/"mermaid")
+        runtime_archives.materialize("graphviz", materialized["runtime_graphviz"],
+            lock["runtime_archives"]["graphviz"], stage/"graphviz", root/"graphviz")
+        runtime_archives.materialize("pdf-home", materialized["runtime_pdf_home"],
+            lock["runtime_archives"]["pdf-home"], stage/"pdf-home", root/"pdf-home",
+            key=materialized["pdf_issuer_key"])
         if consumer_inputs is not None:
             remove_snapshot(consumer_inputs)
         write_state(stage, state_payload(stage, lock))
         if os.environ.get("BRANDKIT_TOOLCHAIN_FAIL_AFTER_VERIFY") == "1":
             raise ToolchainError("injected failure after verification")
-        previous_humanizer = stage / "humanizer"
-        previous_pdf_home = stage / "pdf-home"
+        previous_humanizer = pathlib.Path("/__BRANDKIT_RUNTIME_ROOT__/humanizer")
+        previous_pdf_home = pathlib.Path("/__BRANDKIT_RUNTIME_ROOT__/pdf-home")
         # Produce every byte for the final logical paths while the unpublished
         # stage is still disposable.  The publish operation below is the only
         # post-proof mutation of the tree and performs no content rewrite.
-        relocate_humanizer_install(stage / "humanizer", previous_humanizer,
-                                   root / "humanizer")
-        relocate_pdf_install(stage / "pdf-home", previous_pdf_home,
-                             root / "pdf-home")
         names = tuple(sorted(lock["normative"]["installed_inventory"]))
         prepublish = scan_tree(stage, stale_roots=(previous_humanizer, previous_pdf_home),
                                component_names=names, logical_root=root)
@@ -1999,17 +2045,23 @@ def version_log(args: argparse.Namespace) -> None:
     pdf_py = root / "pdf-home/.agents/runtime-store/brandkit-pdf-renderer/1.2.28/.venv/bin/python"
     human_release = load(root / "humanizer/.venv/brandkit-release.json")
     pdf_activation = load(root / "pdf-home/.agents/activation-state/brand-voice-pdf.json")["payload"]
-    version_inputs = None
-    if os.environ.get(RUN_INPUT_ENV):
-        version_inputs = root.parent / f".{root.name}.version-inputs-{os.getpid()}"
-        mermaid_bundle = install_artifact_inputs(lock, None, version_inputs)["mermaid_bundle"]
-    else:
-        mermaid_bundle = pathlib.Path(lock["artifacts"]["mermaid_bundle"]["path"])
-    try:
-        mermaid = json.loads(subprocess.check_output(
-            readonly_command(root, [ROOT / "toolchain/mermaid-svg/version-log", root / "mermaid", mermaid_bundle]), text=True))
-    finally:
-        if version_inputs is not None: remove_snapshot(version_inputs)
+    mermaid_root = root / "mermaid"
+    mermaid_node = mermaid_root / "node/node-v22.18.0-darwin-arm64/bin/node"
+    mermaid_npm = mermaid_root / "node/node-v22.18.0-darwin-arm64/bin/npm"
+    mermaid_chrome = mermaid_root / "browser/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing"
+    mermaid = {
+        "schema_version":"mermaid-version-log.v1",
+        "bundle_tree_sha256":lock["artifacts"]["mermaid_bundle"]["sha256"],
+        "lock_sha256":lock["components"]["mermaid"]["sha256"],
+        "node_executable_sha256":sha(mermaid_node),
+        "node_version":subprocess.check_output(readonly_command(root, [mermaid_node, "--version"]), text=True).strip(),
+        "npm_version":subprocess.check_output(readonly_command(root, [mermaid_npm, "--version"]), text=True,
+            env={**os.environ, "PATH":f"{mermaid_node.parent}:/usr/bin:/bin"}).strip(),
+        "mermaid_cli_version":subprocess.check_output(readonly_command(root, [mermaid_root/"node_modules/.bin/mmdc", "--version"]), text=True,
+            env={**os.environ, "PATH":f"{mermaid_node.parent}:/usr/bin:/bin"}).strip(),
+        "browser_executable_sha256":sha(mermaid_chrome),
+        "browser_version":subprocess.check_output(readonly_command(root, [mermaid_chrome, "--version"]), text=True).strip(),
+    }
     graphviz_package = load(root / "graphviz/viz/package.json")
     graphviz_backend = sha(root / "graphviz/viz/lib/backend.js")
     container = validate_container_log(pathlib.Path(args.container_log).resolve(strict=True), lock)

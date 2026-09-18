@@ -52,9 +52,36 @@ class ProcessGroupInspectionTests(unittest.TestCase):
         states = [runtime.PROCESS_GROUP_EXISTS, runtime.PROCESS_GROUP_EXISTS, runtime.PROCESS_GROUP_EXISTS,
                   runtime.PROCESS_GROUP_EMPTY, runtime.PROCESS_GROUP_EMPTY]
         with patch.object(runtime, "process_group_state", side_effect=states), patch.object(runtime.os, "killpg") as killpg:
-            self.assertEqual((True, True), runtime.terminate_group(41, proc, grace=0))
+            self.assertEqual((True, True), runtime.terminate_group(41, proc, grace=0, kill_grace=0))
         self.assertEqual([call(41, runtime.signal.SIGTERM), call(41, runtime.signal.SIGKILL)], killpg.call_args_list)
         proc.wait.assert_called_once_with(timeout=0)
+
+    def test_killed_chrome_descendants_get_a_distinct_bounded_reap_window(self) -> None:
+        proc = Mock()
+        states = iter((
+            runtime.PROCESS_GROUP_EXISTS,  # initial probe
+            runtime.PROCESS_GROUP_EXISTS,  # after the zero-length TERM grace
+            runtime.PROCESS_GROUP_EXISTS,  # SIGKILL decision
+            runtime.PROCESS_GROUP_EXISTS,  # first post-kill membership check
+            runtime.PROCESS_GROUP_EMPTY,   # launchd has reaped the descendants
+            runtime.PROCESS_GROUP_EMPTY,   # final authoritative check
+        ))
+        with patch.object(runtime, "process_group_state", side_effect=lambda _pgid: next(states)), \
+             patch.object(runtime.os, "killpg") as killpg:
+            self.assertEqual((True, True), runtime.terminate_group(41, proc, grace=0, kill_grace=0.1))
+        self.assertEqual([call(41, runtime.signal.SIGTERM), call(41, runtime.signal.SIGKILL)], killpg.call_args_list)
+        proc.wait.assert_called_once_with(timeout=0.1)
+
+    def test_kill_grace_expiry_rejects_existing_or_unknown_group(self) -> None:
+        for final_state in (runtime.PROCESS_GROUP_EXISTS, runtime.PROCESS_GROUP_UNKNOWN):
+            with self.subTest(final_state=final_state):
+                proc = Mock()
+                with patch.object(runtime, "process_group_state", return_value=final_state), \
+                     patch.object(runtime.os, "killpg") as killpg:
+                    with self.assertRaisesRegex(runtime.RuntimeFailure, f"cleanup not proven \\({final_state}\\)"):
+                        runtime.terminate_group(41, proc, grace=0, kill_grace=0)
+                self.assertEqual([call(41, runtime.signal.SIGTERM), call(41, runtime.signal.SIGKILL)], killpg.call_args_list)
+                proc.wait.assert_called_once_with(timeout=0)
 
     def test_term_eperm_is_a_cleanup_failure_not_absence(self) -> None:
         proc = Mock()
@@ -154,6 +181,18 @@ class ProcessPhasePrimaryErrorTests(unittest.TestCase):
 
 
 class LegacyBrowserIsolationTests(unittest.TestCase):
+    def test_cold_chrome_budget_is_finite_and_profile_probe_is_bounded(self) -> None:
+        self.assertEqual(300.0, runtime.PHASE_TIMEOUTS["chrome"])
+        with tempfile.TemporaryDirectory(dir="/Volumes/Daten/Projekte/BrandKit/.runtime/tmp") as temporary:
+            profile = Path(temporary)
+            (profile / "DevToolsActivePort").write_text("9222\n/devtools/browser/id\n")
+            for index in range(80):
+                (profile / f"entry-{index:02d}").write_bytes(b"")
+            probe = runtime.chrome_profile_probe([f"--user-data-dir={profile}"])
+        self.assertEqual("present", probe["state"])
+        self.assertEqual("9222\n/devtools/browser/id\n", probe["devtools_active_port"])
+        self.assertEqual(64, len(probe["top_level_entries"]))
+
     def test_profiles_are_explicit_unique_and_sandbox_disable_flags_are_rejected(self) -> None:
         base = {"executablePath": "./browser/chrome", "headless": True, "pipe": True,
                 "args": ["--disable-background-networking"]}

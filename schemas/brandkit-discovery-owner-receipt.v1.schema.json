@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "brandkit-discovery-owner-receipt.v1.schema.json",
+  "type": "object", "additionalProperties": false,
+  "required": ["schema_version", "issuer", "handoff_kind", "handoff_id", "key_id", "project_realpath_sha256", "run_id", "handoff_sha256", "review_sha256", "progress_chain_id", "progress_head_sha256", "progress_turn", "confirmation_id", "confirmation_statement", "decisions", "source_inventory", "artifact_inventory", "nonce", "issued_at", "expires_at", "algorithm", "hmac_sha256"],
+  "properties": {
+    "schema_version": {"const": "brandkit-discovery-owner-receipt.v1"}, "issuer": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._@:-]{0,127}$"},
+    "handoff_kind": {"enum": ["discovery", "visual-decisions"]}, "handoff_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]{0,127}$"},
+    "key_id": {"type": "string", "pattern": "^[0-9a-f]{16}$"}, "project_realpath_sha256": {"$ref": "#/$defs/hash"},
+    "run_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]{0,62}$"}, "handoff_sha256": {"$ref": "#/$defs/hash"},
+    "review_sha256": {"$ref": "#/$defs/hash"}, "confirmation_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]{7,127}$"}, "confirmation_statement": {"const": "Diese Entscheidungen bestätige ich."},
+    "progress_chain_id": {"$ref": "#/$defs/hash"}, "progress_head_sha256": {"$ref": "#/$defs/hash"}, "progress_turn": {"type": "integer", "minimum": 2},
+    "decisions": {"type": "array", "items": {"oneOf": [
+      {"type": "object", "additionalProperties": false, "required": ["id", "value", "source_ids"], "properties": {"id": {"$ref": "#/$defs/id"}, "value": {"type": "string", "minLength": 1}, "source_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/id"}}}},
+      {"type": "object", "additionalProperties": false, "required": ["id", "domain", "candidate_id", "candidate_value", "candidate_value_sha256", "source_ids"], "properties": {"id": {"$ref": "#/$defs/id"}, "domain": {"enum": ["color", "typography", "code-font", "logo", "lockup"]}, "candidate_id": {"$ref": "#/$defs/id"}, "candidate_value": {"type": "object", "minProperties": 1}, "candidate_value_sha256": {"$ref": "#/$defs/hash"}, "source_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/id"}}}}
+    ]}},
+    "source_inventory": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/file"}}, "artifact_inventory": {"type": "array", "items": {"$ref": "#/$defs/file"}},
+    "nonce": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "issued_at": {"type": "integer", "minimum": 0}, "expires_at": {"type": "integer", "minimum": 1},
+    "algorithm": {"const": "HMAC-SHA256"}, "hmac_sha256": {"$ref": "#/$defs/hash"}
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]{1,62}$"}, "hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "file": {"type": "object", "additionalProperties": false, "required": ["path", "role", "size", "sha256"], "properties": {"path": {"type": "string", "minLength": 1}, "role": {"enum": ["context", "adr", "source", "candidate-bundle", "candidate-review", "evidence"]}, "size": {"type": "integer", "minimum": 0}, "sha256": {"$ref": "#/$defs/hash"}}}
+  }
+}

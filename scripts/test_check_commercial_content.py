@@ -19,6 +19,26 @@ class CommercialContentScannerTests(unittest.TestCase):
     def test_json_schema_meta_schema_url_is_allowed(self) -> None:
         self.assertEqual([], scanner.scan_text('"https://json-schema.org/draft/2020-12/schema"', "schemas/example.schema.json"))
 
+    def test_optional_discovery_name_is_allowed_only_in_reviewed_contract_files(self) -> None:
+        name = "gri" + "ll-with-docs"
+        self.assertEqual([], scanner.scan_text(name, "skills/brandkit-interview/SKILL.md"))
+        self.assertTrue(scanner.scan_text(name, "notes/unreviewed.md"))
+        self.assertTrue(scanner.scan_text("gri" + "ll with docs", "skills/brandkit-interview/SKILL.md"))
+
+    def test_optional_discovery_allowlist_equals_real_literal_locations(self) -> None:
+        name = "gri" + "ll-with-docs"
+        actual = set()
+        for path in scanner.candidate_files():
+            if path.resolve() == scanner.SELF or not path.is_file():
+                continue
+            try:
+                text = path.read_text(encoding="utf-8")
+            except (UnicodeDecodeError, OSError):
+                continue
+            if name in text:
+                actual.add(path.relative_to(scanner.ROOT).as_posix())
+        self.assertEqual(actual, scanner.GRILL_DISCOVERY_FILES)
+
     def assert_rejected(self, text: str, source: str = "<text>") -> None:
         self.assertTrue(scanner.scan_text(text, source), msg=f"expected rejection: {text!r}")
 

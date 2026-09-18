@@ -1,0 +1,154 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "visual-decision-sources.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "reviewed_on",
+    "narrative_source_review",
+    "selected_dependency",
+    "candidates",
+    "policy"
+  ],
+  "properties": {
+    "schema_version": {"const": "visual-decision-sources.v1"},
+    "reviewed_on": {"type": "string", "format": "date"},
+    "narrative_source_review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["locator", "sha256"],
+      "properties": {
+        "locator": {"const": "sidecar:quality-loop/evidence/base-visual-decisions-source-review-r1.md"},
+        "sha256": {"const": "5123e834e1abd8635b950047ccaada3193e8c29d30b325aa7f30b0bce0f886cd"}
+      }
+    },
+    "selected_dependency": {"const": "impeccable"},
+    "candidates": {
+      "type": "array",
+      "minItems": 2,
+      "items": {"$ref": "#/$defs/candidate"}
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "minimum_independent_positive_signals",
+        "independence_fields",
+        "reputation_is_not_security_approval",
+        "install_rejected_candidates",
+        "runtime_route_rejected_candidates"
+      ],
+      "properties": {
+        "minimum_independent_positive_signals": {"const": 2},
+        "independence_fields": {"const": ["registrable_domain", "publisher_identity", "publisher_family"]},
+        "reputation_is_not_security_approval": {"const": true},
+        "install_rejected_candidates": {"const": false},
+        "runtime_route_rejected_candidates": {"const": false}
+      }
+    }
+  },
+  "$defs": {
+    "hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "gitHash": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "source_url", "registrable_domain", "publisher_identity", "publisher_family", "source_kind", "retrieved_at", "observed_claim", "sentiment"],
+      "properties": {
+        "path": {"type": "string", "pattern": "^trust/visual-decisions/reputation/[a-z0-9-]+\\.json$"},
+        "sha256": {"$ref": "#/$defs/hash"},
+        "source_url": {"type": "string", "format": "uri", "pattern": "^https://"},
+        "registrable_domain": {"type": "string", "minLength": 3},
+        "publisher_identity": {"type": "string", "minLength": 2},
+        "publisher_family": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+        "source_kind": {"enum": ["repository-metadata", "independent-marketplace-review", "independent-editorial-review", "independent-user-report"]},
+        "retrieved_at": {"type": "string", "format": "date"},
+        "observed_claim": {"type": "string", "minLength": 20},
+        "sentiment": {"const": "positive"}
+      }
+    },
+    "selected": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "commit", "tree", "canonical_subtree", "skill_tree", "release", "adapted_tree_sha256"],
+      "properties": {
+        "repository": {"const": "github:pbakaus/impeccable"},
+        "commit": {"const": "fcd7622cd2d8e2b09344ba8ede9fcac82cec4e70"},
+        "tree": {"const": "e5721fadc3ef0f9b2386b6f4330ba8490dd451bc"},
+        "canonical_subtree": {"const": ".agents/skills/impeccable"},
+        "skill_tree": {"const": "0024cd8b54c3e23531bdeaed20409b4ac569e2cc"},
+        "release": {"const": "4.1.1+fcd7622.brandkit6"},
+        "adapted_tree_sha256": {"const": "13de7f5be0d65efbcffae0845f2b52bd880d13c0855db576286733dc53ff947d"}
+      }
+    },
+    "license": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["spdx", "path", "sha256", "notice_path", "notice_sha256"],
+      "properties": {
+        "spdx": {"const": "Apache-2.0"},
+        "path": {"const": "LICENSE"},
+        "sha256": {"const": "02bb8c3b4e70190e3986c0404ad2fd8d639b4f534252d82379cc1b502b6d1812"},
+        "notice_path": {"const": "NOTICE.md"},
+        "notice_sha256": {"const": "c60a093c2845fd9fb82f9c6f742ece31f379f8190b535309d32d66c45ccffdcb"}
+      }
+    },
+    "security": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["default_off", "allowed_prebuild_routes", "forbidden_prebuild_routes", "mitigations"],
+      "properties": {
+        "default_off": {"const": ["browser", "hooks", "image_generation", "live", "network", "update"]},
+        "allowed_prebuild_routes": {"const": ["adapt", "colorize", "critique", "typeset"]},
+        "forbidden_prebuild_routes": {"const": ["extract", "image_generation", "live"]},
+        "mitigations": {
+          "type": "array",
+          "minItems": 3,
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 8}
+        }
+      }
+    },
+    "candidate": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["name", "decision", "selected_pin", "license", "security", "reputation_signals", "installed_by_this_integration", "runtime_route", "reason"],
+          "properties": {
+            "name": {"const": "impeccable"},
+            "decision": {"const": "selected"},
+            "selected_pin": {"$ref": "#/$defs/selected"},
+            "license": {"$ref": "#/$defs/license"},
+            "security": {"$ref": "#/$defs/security"},
+            "reputation_signals": {
+              "type": "array",
+              "minItems": 2,
+              "uniqueItems": true,
+              "items": {"$ref": "#/$defs/evidence"}
+            },
+            "installed_by_this_integration": {"const": false},
+            "runtime_route": {"const": "run-local-closed-reference-resolver"},
+            "reason": {"type": "string", "minLength": 20}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["name", "decision", "repository", "review_status", "blockers", "installed_by_this_integration", "runtime_route", "reason"],
+          "properties": {
+            "name": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+            "decision": {"const": "rejected"},
+            "repository": {"type": "string", "minLength": 8},
+            "review_status": {"const": "rejected-before-pin-or-install"},
+            "blockers": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 8}},
+            "installed_by_this_integration": {"const": false},
+            "runtime_route": {"const": null},
+            "reason": {"type": "string", "minLength": 20}
+          }
+        }
+      ]
+    }
+  }
+}

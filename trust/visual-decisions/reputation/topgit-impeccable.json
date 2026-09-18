@@ -1,0 +1,13 @@
+{
+  "schema_version": "reputation-evidence.v1",
+  "source_url": "https://topgit.dev/repo/pbakaus/impeccable",
+  "registrable_domain": "topgit.dev",
+  "publisher_identity": "TopGit",
+  "publisher_family": "topgit",
+  "source_kind": "independent-editorial-review",
+  "retrieved_at": "2026-09-03",
+  "locator": "repository review summary",
+  "observed_claim": "The editorial listing described Impeccable as a practical detector-supported frontend design aid and identified its Apache-2.0 origin.",
+  "sentiment": "positive",
+  "scope": "reputation-only-not-security-approval"
+}

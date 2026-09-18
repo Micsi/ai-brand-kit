@@ -55,6 +55,20 @@ CLAUDE_BRIDGE_FILES = {
     "skills/brandkit-build/assets/AGENTS.md.template",
     "tests/test_brandkit_skills.py",
 }
+GRILL_DISCOVERY_FILES = {
+    "README.md",
+    "brandkit-skill-contract.v1.json",
+    "docs/brandkit-skills-v1.md",
+    "scripts/brandkit_discovery.py",
+    "scripts/validate_brandkit_skills.py",
+    "schemas/brandkit-skill-contract.v1.schema.json",
+    "skill-contract-release.v1.json",
+    "skills/brandkit-interview/SKILL.md",
+    "skills/brandkit-interview/references/grill-with-docs-handoff.md",
+    "skills/brandkit-setup/SKILL.md",
+    "skills/brandkit-setup/references/workflow.md",
+    "tests/test_brandkit_skills.py",
+}
 ARTIFACT_LOCK = "toolchain/humanizer-de/requirements-precise.lock.txt"
 TOOLCHAIN_LOCK = "toolchain/humanizer-de/toolchain.lock.json"
 MERMAID_PACKAGE_LOCK = "toolchain/mermaid-svg/package-lock.json"
@@ -314,6 +328,8 @@ def scan_text(text: str, source: str = "<text>") -> list[str]:
     """Return all commercial-content findings in one UTF-8 text."""
     findings: list[str] = []
     commercial_text = text.replace("CLAUDE.md", "CANONICAL_AGENT_BRIDGE") if source in CLAUDE_BRIDGE_FILES else text
+    if source in GRILL_DISCOVERY_FILES:
+        commercial_text = re.sub(r"(?<!\w)grill-with-docs(?!\w)", "OPTIONAL_DISCOVERY_WRAPPER", commercial_text, flags=re.IGNORECASE)
     for label, pattern in FORBIDDEN_RULES:
         if pattern.search(commercial_text):
             findings.append(f"{source}: prohibited term: {label}")

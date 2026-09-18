@@ -231,11 +231,29 @@ class SharedToolchainContractTests(unittest.TestCase):
             args = type("Args", (), {"root": str(root)})()
             with mock.patch.object(toolchain, "validate_lock", return_value=(self.lock, {})), \
                  mock.patch.object(toolchain, "immutable_snapshot", side_effect=lambda record, destination, label: pathlib.Path(record["path"])), \
-                 mock.patch.object(toolchain, "safe_extract", side_effect=toolchain.ToolchainError("attack")), \
+                 mock.patch("runtime_archives.materialize", side_effect=toolchain.ToolchainError("attack")), \
                  self.assertRaises(toolchain.ToolchainError):
                 toolchain.install(args)
             self.assertFalse(root.exists())
             self.assertEqual([], list(parent.iterdir()))
+
+    def test_product_install_materializes_only_four_runtime_archives(self) -> None:
+        with tempfile.TemporaryDirectory() as raw:
+            parent = pathlib.Path(raw); root = parent / "install"
+            args = type("Args", (), {"root": str(root)})()
+            inputs = {name:parent / name for name in toolchain.CONSUMED_RUN_ARTIFACTS}
+            calls = []
+            def materialize(name, path, record, destination, final_root, key=None):
+                calls.append((name, path, destination, final_root, key)); destination.mkdir()
+            with mock.patch.object(toolchain, "validate_lock", return_value=(self.lock, {})), \
+                 mock.patch.object(toolchain, "install_artifact_inputs", return_value=inputs), \
+                 mock.patch("runtime_archives.materialize", side_effect=materialize), \
+                 mock.patch.object(toolchain, "scan_tree", return_value={"component_merkles":self.lock["normative"]["installed_inventory"]}), \
+                 mock.patch.object(toolchain, "verify_install"):
+                toolchain.install(args)
+            self.assertEqual(["humanizer", "mermaid", "graphviz", "pdf-home"], [item[0] for item in calls])
+            self.assertEqual(inputs["pdf_issuer_key"], calls[-1][-1])
+            self.assertTrue(root.is_dir())
 
     def test_verified_rollback_is_recoverable_quarantine_not_deletion(self) -> None:
         with tempfile.TemporaryDirectory() as raw:

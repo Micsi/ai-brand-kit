@@ -8,6 +8,7 @@ import os
 import pathlib
 import shutil
 import signal
+import stat
 import subprocess
 import sys
 import tarfile
@@ -43,6 +44,119 @@ class HarnessPhaseContractTests(unittest.TestCase):
                 return
             time.sleep(0.05)
         test.fail(f"owned descendant survived: {pid}")
+
+    def test_event_log_batches_durability_at_success_error_and_run_commit(self) -> None:
+        with tempfile.TemporaryDirectory() as raw:
+            root = pathlib.Path(raw)
+            event_log = phases.EventLog(root / "events.jsonl", "unit")
+            sync_name = "fdatasync" if hasattr(phases.os, "fdatasync") else "fsync"
+            with mock.patch.object(phases.os, sync_name) as sync:
+                event_log.append({"marker": 1})
+                event_log.append({"marker": 2})
+                self.assertEqual(0, sync.call_count, "append must not force durability per event")
+                event_log.sync()
+                self.assertEqual(1, sync.call_count)
+            event_log.close()
+
+            success = phases.PhaseDAG(root / "success", [phases.PhaseSpec("phase")])
+            def fake_atomic(path: pathlib.Path, value: dict) -> None:
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text(json.dumps(value) + "\n", encoding="utf-8")
+            with mock.patch.object(success.events, "sync", return_value=0) as sync, \
+                    mock.patch.object(phases, "atomic_json", side_effect=fake_atomic):
+                success.run("phase", lambda: ("0" * 64, 0, 0), inputs={}, code_paths=[])
+                self.assertEqual(0, sync.call_count, "in-memory phase completion is not a durable run commit")
+                success.finalize()
+                self.assertEqual(1, sync.call_count, "run closure requires exactly one event-log sync")
+
+            failure = phases.PhaseDAG(root / "failure", [phases.PhaseSpec("phase")])
+            with mock.patch.object(failure.events, "sync", return_value=0) as sync:
+                with self.assertRaisesRegex(ValueError, "primary"):
+                    failure.run("phase", lambda: (_ for _ in ()).throw(ValueError("primary")),
+                                inputs={}, code_paths=[])
+                self.assertEqual(1, sync.call_count, "error evidence requires exactly one event-log sync")
+
+    def test_atomic_json_syncs_file_then_parent_directory(self) -> None:
+        with tempfile.TemporaryDirectory() as raw:
+            calls: list[str] = []
+            def record(descriptor: int) -> None:
+                calls.append("directory" if stat.S_ISDIR(os.fstat(descriptor).st_mode) else "file")
+            def replace(source: pathlib.Path, target: pathlib.Path) -> None:
+                calls.append("replace")
+            with mock.patch.object(phases.os, "fsync", side_effect=record), \
+                    mock.patch.object(phases.os, "replace", side_effect=replace):
+                phases.atomic_json(pathlib.Path(raw) / "commits" / "receipt.json", {"closed": True})
+            self.assertEqual(["file", "replace", "directory"], calls)
+
+    def test_crash_windows_before_log_sync_and_between_sync_and_receipt_fail_closed(self) -> None:
+        def build(stage: pathlib.Path) -> None:
+            (stage / "payload").write_text("sealed")
+
+        with tempfile.TemporaryDirectory() as raw:
+            root = pathlib.Path(raw) / "before-sync"
+            dag = phases.PhaseDAG(root, [phases.PhaseSpec("source", resumable=True)])
+            dag.run_immutable("source", build, inputs={}, code_paths=[])
+            with mock.patch.object(dag.events, "sync", side_effect=OSError("crash before sync")):
+                with self.assertRaisesRegex(OSError, "crash before sync"):
+                    dag.finalize()
+            self.assertFalse((root / "receipts/source.json").exists())
+            self.assertFalse((root / "closures" / f"{dag.run_id}.json").exists())
+            with self.assertRaisesRegex(phases.PhaseError, "closed event/closure set"):
+                phases.PhaseDAG(root, [phases.PhaseSpec("source", resumable=True)], resume=True)
+
+    def test_post_receipt_preclosure_and_postrename_presync_fail_closed(self) -> None:
+        def build(stage: pathlib.Path) -> None:
+            (stage / "payload").write_text("sealed")
+        def visible_json(path: pathlib.Path, value: dict) -> None:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(json.dumps(value, sort_keys=True, separators=(",", ":")) + "\n",
+                            encoding="utf-8")
+
+        with tempfile.TemporaryDirectory() as raw:
+            root = pathlib.Path(raw) / "post-receipt"
+            dag = phases.PhaseDAG(root, [phases.PhaseSpec("source", resumable=True)])
+            dag.run_immutable("source", build, inputs={}, code_paths=[])
+            def fail_closure(path: pathlib.Path, value: dict) -> None:
+                if path.parent.name == "closures":
+                    raise OSError("crash after receipt before closure")
+                visible_json(path, value)
+            with mock.patch.object(dag.events, "sync", return_value=0), \
+                    mock.patch.object(phases, "atomic_json", side_effect=fail_closure):
+                with self.assertRaisesRegex(OSError, "crash after receipt before closure"):
+                    dag.finalize()
+            self.assertTrue((root / "receipts/source.json").is_file())
+            self.assertFalse((root / "closures" / f"{dag.run_id}.json").exists())
+            with self.assertRaisesRegex(phases.PhaseError, "closed event/closure set"):
+                phases.PhaseDAG(root, [phases.PhaseSpec("source", resumable=True)], resume=True)
+
+        with tempfile.TemporaryDirectory() as raw:
+            root = pathlib.Path(raw) / "post-rename"
+            dag = phases.PhaseDAG(root, [phases.PhaseSpec("phase")])
+            dag.run("phase", lambda: ("0" * 64, 0, 0), inputs={}, code_paths=[])
+            with mock.patch.object(dag.events, "sync", return_value=0), \
+                    mock.patch.object(phases.os, "fsync", side_effect=[None, OSError("parent sync failed")]):
+                with self.assertRaisesRegex(OSError, "parent sync failed"):
+                    dag.finalize()
+            self.assertFalse((root / "closures" / f"{dag.run_id}.json").exists())
+            with self.assertRaisesRegex(phases.PhaseError, "closed event/closure set"):
+                phases.PhaseDAG(root, [phases.PhaseSpec("phase")], resume=True)
+
+        with tempfile.TemporaryDirectory() as raw:
+            root = pathlib.Path(raw) / "after-sync"
+            dag = phases.PhaseDAG(root, [phases.PhaseSpec("source", resumable=True)])
+            original = phases.atomic_json
+            def crash_receipt(path: pathlib.Path, value: dict) -> None:
+                if path.parent.name == "receipts":
+                    raise OSError("crash between sync and receipt")
+                original(path, value)
+            dag.run_immutable("source", build, inputs={}, code_paths=[])
+            with mock.patch.object(phases, "atomic_json", side_effect=crash_receipt):
+                with self.assertRaisesRegex(OSError, "crash between sync and receipt"):
+                    dag.finalize()
+            self.assertFalse((root / "receipts/source.json").exists())
+            self.assertFalse((root / "closures" / f"{dag.run_id}.json").exists())
+            with self.assertRaisesRegex(phases.PhaseError, "closed event/closure set"):
+                phases.PhaseDAG(root, [phases.PhaseSpec("source", resumable=True)], resume=True)
 
     def test_instrumented_subprocess_records_real_output_file_and_counters(self) -> None:
         with tempfile.TemporaryDirectory() as raw:

@@ -33,6 +33,11 @@ explizitem Projekt-Opt-in aktiviert.
 8. Hooks, Updatecheck, Browser/Live, Bildgenerierung und Netz bleiben technisch
    gesperrt, bis eine geschlossene projektgebundene Capability-Datei die
    einzelne Funktion ausdruecklich aktiviert.
+9. Vor dem Brand-Paket darf `brandkit-visual-decisions` ausschließlich den
+   gepinnten Resolver aus dem aktuellen Run-Workspace für `colorize`,
+   `typeset`, `adapt` und `critique` verwenden. Kein Lookup unter `~/.agents`,
+   keine globale Installation und kein `extract`; `extract` bleibt bis nach
+   einem validierten Brand-Paket verboten.
 
 ## Zustaendigkeiten
 

@@ -26,6 +26,18 @@
         "handoff": {"enum": ["none", "brandkit-build", "brandkit-impeccable -> impeccable layout"]}
       }
     },
+    "visual_decision_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "outcome", "domains", "normative", "next_operation"],
+      "properties": {
+        "schema_version": {"const": "brandkit-visual-decision-result.v1"},
+        "outcome": {"enum": ["candidates-ready", "blocked"]},
+        "domains": {"type": "array", "uniqueItems": true, "items": {"enum": ["color", "typography", "code-font", "logo", "lockup"]}},
+        "normative": {"const": false},
+        "next_operation": {"enum": ["brandkit-interview:prepare-visual-confirmation", "resolve-blockers"]}
+      }
+    },
     "error": {
       "oneOf": [
         {"type": "null"},
@@ -37,9 +49,16 @@
       ]
     }
   },
-  "allOf": [{
-    "if": {"properties": {"skill": {"const": "brandkit-spacing"}}, "required": ["skill"]},
-    "then": {"required": ["spacing_result"]},
-    "else": {"not": {"required": ["spacing_result"]}}
-  }]
+  "allOf": [
+    {
+      "if": {"properties": {"skill": {"const": "brandkit-spacing"}}, "required": ["skill"]},
+      "then": {"required": ["spacing_result"]},
+      "else": {"not": {"required": ["spacing_result"]}}
+    },
+    {
+      "if": {"properties": {"skill": {"const": "brandkit-visual-decisions"}}, "required": ["skill"]},
+      "then": {"required": ["visual_decision_result"]},
+      "else": {"not": {"required": ["visual_decision_result"]}}
+    }
+  ]
 }

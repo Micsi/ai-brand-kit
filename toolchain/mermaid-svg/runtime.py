@@ -34,7 +34,12 @@ PHASE_TIMEOUTS = {
     "verify-runtime": 1800.0,
     "npm-ci": 600.0,
     "mmdc": 180.0,
-    "chrome": 120.0,
+    # A cold ad-hoc-signed Chrome-for-Testing framework on external APFS can
+    # spend well over two minutes in Darwin code-signing/page validation before
+    # Chromium creates its profile or DevTools endpoint.  Keep this bounded
+    # below the real component budget without misclassifying that cold start as
+    # a browser hang.
+    "chrome": 300.0,
 }
 DIAGNOSTIC_EXCERPT_BYTES = 8192
 CHROME_READY_MARKER = b"DevTools listening on ws://127.0.0.1:"
@@ -501,7 +506,12 @@ def process_group_state(pgid: int) -> str:
     return PROCESS_GROUP_UNKNOWN
 
 
-def terminate_group(pgid: int, proc: subprocess.Popen[bytes], grace: float = 2.0) -> tuple[bool, bool]:
+def terminate_group(
+    pgid: int,
+    proc: subprocess.Popen[bytes],
+    grace: float = 2.0,
+    kill_grace: float = 10.0,
+) -> tuple[bool, bool]:
     term_sent = False
     kill_sent = False
     if process_group_state(pgid) != PROCESS_GROUP_EMPTY:
@@ -525,11 +535,17 @@ def terminate_group(pgid: int, proc: subprocess.Popen[bytes], grace: float = 2.0
             pass
         except PermissionError as exc:
             raise RuntimeFailure(f"permission denied sending SIGKILL to process group {pgid}") from exc
+    reap_grace = kill_grace if kill_sent else grace
     try:
-        proc.wait(timeout=grace)
+        proc.wait(timeout=reap_grace)
     except subprocess.TimeoutExpired as exc:
         raise RuntimeFailure("process-group leader survived SIGKILL") from exc
-    deadline = time.monotonic() + grace
+    # Chrome's process group can contain grandchildren whose exit is reaped by
+    # launchd rather than by this supervisor.  On Darwin that reaping can lag
+    # the leader after SIGKILL, especially when the runtime lives on external
+    # storage.  Keep the TERM budget short, but give the already-killed group a
+    # separate finite disappearance budget before declaring cleanup unproven.
+    deadline = time.monotonic() + reap_grace
     while process_group_state(pgid) != PROCESS_GROUP_EMPTY and time.monotonic() < deadline:
         time.sleep(0.02)
     final_state = process_group_state(pgid)
@@ -620,6 +636,22 @@ def _shell_exit_code(returncode: int | None) -> int | None:
     return 128 - returncode if returncode < 0 else returncode
 
 
+def chrome_profile_probe(args: list[str]) -> dict:
+    """Capture a bounded persistent readiness clue without reading profile data."""
+    profiles = [Path(value.split("=", 1)[1]) for value in args if value.startswith("--user-data-dir=")]
+    if len(profiles) != 1 or not profiles[0].is_absolute():
+        return {"state": "invalid-profile-argument", "devtools_active_port": None, "top_level_entries": []}
+    profile = profiles[0]
+    try:
+        entries = sorted(path.name for path in profile.iterdir())[:64] if profile.is_dir() and not profile.is_symlink() else []
+        port = profile / "DevToolsActivePort"
+        active = port.read_text(encoding="utf-8", errors="replace")[:4096] if port.is_file() and not port.is_symlink() else None
+    except OSError as exc:
+        return {"state": f"unavailable:{type(exc).__name__}", "devtools_active_port": None, "top_level_entries": []}
+    return {"state": "present" if profile.is_dir() else "absent", "devtools_active_port": active,
+            "top_level_entries": entries}
+
+
 def browser_process_preflight(run_id: str, chrome: Path, args: list[str], log_dir: Path, *, cwd: Path,
                               env: dict[str, str], timeout: float | None = None) -> None:
     """Prove a real Chrome process reaches DevTools readiness, then reap it.
@@ -675,12 +707,14 @@ def browser_process_preflight(run_id: str, chrome: Path, args: list[str], log_di
         except BaseException as exc:
             cleanup_error = exc
         ended = time.monotonic()
+        profile_probe = chrome_profile_probe(args)
         log_event(events, {**base, "event": "end", "monotonic_seconds": ended,
                   "duration_seconds": round(ended - started, 6), "exit_code": proc.returncode,
                   "shell_exit_code": _shell_exit_code(proc.returncode), "timeout": timed_out,
                   "devtools_ready": ready_at is not None, "stable": stable,
                   "interrupted": primary_error is not None,
                   "controlled_termination": stable, "term_sent": term_sent, "kill_sent": kill_sent,
+                  "profile_probe": profile_probe,
                   "cleanup": "process-group-reaped" if cleanup_error is None else "process-group-cleanup-failed",
                   "cleanup_error": None if cleanup_error is None else f"{type(cleanup_error).__name__}: {cleanup_error}"})
     if primary_error is not None:

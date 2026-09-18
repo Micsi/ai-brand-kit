@@ -1,0 +1,149 @@
+{
+  "schema_version": "visual-decision-sources.v1",
+  "reviewed_on": "2026-09-03",
+  "narrative_source_review": {
+    "locator": "sidecar:quality-loop/evidence/base-visual-decisions-source-review-r1.md",
+    "sha256": "5123e834e1abd8635b950047ccaada3193e8c29d30b325aa7f30b0bce0f886cd"
+  },
+  "selected_dependency": "impeccable",
+  "candidates": [
+    {
+      "name": "impeccable",
+      "decision": "selected",
+      "selected_pin": {
+        "repository": "github:pbakaus/impeccable",
+        "commit": "fcd7622cd2d8e2b09344ba8ede9fcac82cec4e70",
+        "tree": "e5721fadc3ef0f9b2386b6f4330ba8490dd451bc",
+        "canonical_subtree": ".agents/skills/impeccable",
+        "skill_tree": "0024cd8b54c3e23531bdeaed20409b4ac569e2cc",
+        "release": "4.1.1+fcd7622.brandkit6",
+        "adapted_tree_sha256": "13de7f5be0d65efbcffae0845f2b52bd880d13c0855db576286733dc53ff947d"
+      },
+      "license": {
+        "spdx": "Apache-2.0",
+        "path": "LICENSE",
+        "sha256": "02bb8c3b4e70190e3986c0404ad2fd8d639b4f534252d82379cc1b502b6d1812",
+        "notice_path": "NOTICE.md",
+        "notice_sha256": "c60a093c2845fd9fb82f9c6f742ece31f379f8190b535309d32d66c45ccffdcb"
+      },
+      "security": {
+        "default_off": [
+          "browser",
+          "hooks",
+          "image_generation",
+          "live",
+          "network",
+          "update"
+        ],
+        "allowed_prebuild_routes": [
+          "adapt",
+          "colorize",
+          "critique",
+          "typeset"
+        ],
+        "forbidden_prebuild_routes": [
+          "extract",
+          "image_generation",
+          "live"
+        ],
+        "mitigations": [
+          "Resolve only the hash-bound route closure into the current run workspace.",
+          "Keep browser, hooks, image generation, live, network and update default-off.",
+          "Reject distinct-realpath skill-name collisions and all unpinned source bytes.",
+          "Treat model output as untrusted until deterministic domain validation and Owner review."
+        ]
+      },
+      "reputation_signals": [
+        {
+          "path": "trust/visual-decisions/reputation/github-impeccable.json",
+          "sha256": "ba16b380d6c2aa5e0d0256df36b021bc7fe31dc67c24c5e8cc303ffaeacdc616",
+          "source_url": "https://github.com/pbakaus/impeccable",
+          "registrable_domain": "github.com",
+          "publisher_identity": "GitHub, Inc.",
+          "publisher_family": "github",
+          "source_kind": "repository-metadata",
+          "retrieved_at": "2026-09-03",
+          "observed_claim": "The public repository showed 65197 stars, 4013 forks, active issue and pull-request surfaces, and an Apache-2.0 license.",
+          "sentiment": "positive"
+        },
+        {
+          "path": "trust/visual-decisions/reputation/skillworks-impeccable.json",
+          "sha256": "88f0eceb55d34de7aa151c48c07bd9c7ca53563ed6e1e7c11e4f4819fe9e097a",
+          "source_url": "https://skillworks.kynth.studio/marketplaces/pbakaus/impeccable/impeccable",
+          "registrable_domain": "kynth.studio",
+          "publisher_identity": "SkillWorks by Kynth Studio",
+          "publisher_family": "kynth-studio",
+          "source_kind": "independent-marketplace-review",
+          "retrieved_at": "2026-09-03",
+          "observed_claim": "The independent marketplace review scored the package 80 out of 100 and reported it as loadable.",
+          "sentiment": "positive"
+        },
+        {
+          "path": "trust/visual-decisions/reputation/topgit-impeccable.json",
+          "sha256": "6b06fb98678f7ca219c72dba24a80c55413d4c64e92488e434616a5ff4d940df",
+          "source_url": "https://topgit.dev/repo/pbakaus/impeccable",
+          "registrable_domain": "topgit.dev",
+          "publisher_identity": "TopGit",
+          "publisher_family": "topgit",
+          "source_kind": "independent-editorial-review",
+          "retrieved_at": "2026-09-03",
+          "observed_claim": "The editorial listing described Impeccable as a practical detector-supported frontend design aid and identified its Apache-2.0 origin.",
+          "sentiment": "positive"
+        }
+      ],
+      "installed_by_this_integration": false,
+      "runtime_route": "run-local-closed-reference-resolver",
+      "reason": "Selected because its exact audited release is already pinned and its design routes cover palette, typography, responsive presentation and critique behind BrandKit gates."
+    },
+    {
+      "name": "brand-guidelines",
+      "decision": "rejected",
+      "repository": "github:CODE-SAURABH/OpenSkills",
+      "review_status": "rejected-before-pin-or-install",
+      "blockers": [
+        "No sufficient independent reputation evidence was established.",
+        "No equivalent closed license, pin and security review was completed."
+      ],
+      "installed_by_this_integration": false,
+      "runtime_route": null,
+      "reason": "The functional description overlaps color and typography work, but the evidence threshold for a BrandKit dependency was not met."
+    },
+    {
+      "name": "brandkit",
+      "decision": "rejected",
+      "repository": "github:nexu-io/open-design",
+      "review_status": "rejected-before-pin-or-install",
+      "blockers": [
+        "The workflow centers on generated brand-board images.",
+        "That behavior conflicts with the Affinity-first and no silent raster substitute boundary."
+      ],
+      "installed_by_this_integration": false,
+      "runtime_route": null,
+      "reason": "Its image-oriented output would create an unsafe competing graphics path for this package."
+    },
+    {
+      "name": "brand-identity",
+      "decision": "rejected",
+      "repository": "github:AlterLab-IEU/AlterLab-FC-Skills",
+      "review_status": "rejected-before-pin-or-install",
+      "blockers": [
+        "The source mentions contrast and brand books but lacks a completed immutable pin review.",
+        "License, security surface and independent reputation evidence remain incomplete."
+      ],
+      "installed_by_this_integration": false,
+      "runtime_route": null,
+      "reason": "The candidate remains documented for audit but cannot enter installation or runtime routing."
+    }
+  ],
+  "policy": {
+    "minimum_independent_positive_signals": 2,
+    "independence_fields": [
+      "registrable_domain",
+      "publisher_identity",
+      "publisher_family"
+    ],
+    "reputation_is_not_security_approval": true,
+    "install_rejected_candidates": false,
+    "runtime_route_rejected_candidates": false
+  }
+}

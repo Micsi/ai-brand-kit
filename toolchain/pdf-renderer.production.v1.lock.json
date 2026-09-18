@@ -77,7 +77,7 @@
     },
     "installer": {
       "path": "toolchain/pdf-renderer/install-from-lock",
-      "sha256": "fecd224ed59e5a320bd41a55158def437a1762f0017f98c9a99c2573121d5024"
+      "sha256": "970bd75ddc14b9201d4a2b2de1bd6b2675990c425fd262c2c752baaa32fc513c"
     },
     "golden_generator": {
       "path": "scripts/generate_pdf_e2e_goldens.py",

@@ -1,20 +1,21 @@
 # BrandKit Skills v1
 
-Normativ sind `brandkit-skill-contract.v1.json`, die vier Kern-Skills, der
-optionale Adapter `skills/brandkit-spacing/SKILL.md` und
+Normativ sind `brandkit-skill-contract.v1.json`, die fünf Kern-Skills, der
+optionale Adapter `skills/brandkit-spacing/SKILL.md`, der Affinity-Adapter
+`skills/brandkit-affinity/SKILL.md` und
 `scripts/validate_brandkit_skills.py`.
 
 Der Skillvertrag wird geschlossen gegen
 `schemas/brandkit-skill-contract.v1.schema.json` validiert. Sein Abschnitt
 `public_contracts` bindet die von Skills genannten CLI-Subcommands und
 Python-Einstiegspunkte an den aktuellen Python-AST, das Brand-Paket an
-`brand-package.v1` sowie den vollständigen Dokumenttyp-Katalog an die vier
+`brand-package.v1` sowie den vollständigen Dokumenttyp-Katalog an die fünf
 versionierten Verträge. Fehlende, umbenannte oder zusätzlich eingecheckte
 Oberflächen sind Vertragsdrift und schlagen fehl.
 
 `progressive_disclosure.routes` ist die kanonische Ladematrix: Eine Route hat
 genau ein primäres Playbook und eine geschlossene, disjunkte Liste erlaubter
-Kontextdateien. Sie deckt alle sieben Repo-Skills genau einmal ab. Der
+Kontextdateien. Sie deckt alle acht Repo-Skills genau einmal ab. Der
 projektlokal erzeugte `DESIGN.md`-Vertrag nennt Brand Package
 `shared_visual_tokens` ausdrücklich als einzige normative Quelle portabler
 visueller Werte und materialisiert Leitidee, Rollen/Tokens, Typografie,
@@ -57,11 +58,64 @@ SHA-256-Input-Pin. Das geschlossene Resultat bindet Inventar-/Proposal-Hash,
 Zuordnungszahlen, Befunde und Handoff. Die maschinenlesbare Boundary steht
 unter `optional_adapters` und `routing` im Skillvertrag.
 
+`brandkit-affinity` bleibt ebenfalls außerhalb der Kernsequenz. Der Adapter
+beobachtet den nativen, lokalen Affinity-MCP-Server zunächst read-only. Neue
+Logo-/Lockup-Vektoren und Exporte werden nur nach einem projekt- und
+rungebundenen Mutation-Receipt in das run-lokale Staging geschrieben. Claude
+nutzt die projektlokale `.mcp.json`; Codex nutzt den gepinnten Bridge-Prozess
+über `bin/codex-brandkit`. Globale MCP-Konfigurationen werden nicht verändert.
+
 Rechtsaussagen brauchen eine vom Nutzer bereitgestellte offizielle Quelle.
 Ohne sie entsteht kein Claim, sondern `TODO(legal-review)`. Impeccable erhält
 nur den Übergabevertrag von `brandkit-impeccable`: Brand-Pin und
 `.brandkit/impeccable-product.json`; PRODUCT.md/DESIGN.md müssen vor der Route
-grün sein. Die vier Skills enthalten keine zweite UI-Anleitung.
+grün sein. Die fünf Skills enthalten keine zweite UI-Anleitung.
+
+## Optionale CI-Discovery
+
+Nach dem Readiness-Check kann der Owner `$brandkit-interview` ausdrücklich mit
+vertiefter Discovery starten. Der Wrapper, `grilling` und
+`domain-modeling` müssen aus `github:mattpocock/skills` am im Vertrag
+festgelegten Commit und mit der geschlossenen kanonischen Datei-/Hashmenge
+stammen. Setup prüft einen konkret benannten clean/detached Checkout mit
+`brandkit_discovery.py prepare`. Der zurückgegebene Trace bindet das exakte
+Run-CWD. Solange die persistierte Frontier offene Punkte enthält, bleibt jeder
+Folgeturn in `grilling`; erst abgeschlossene oder ausdrücklich offen markierte
+Punkte erlauben `domain-modeling`.
+`brandkit-interview` ruft den explicit-only Wrapper nie auf; er bleibt nur die
+gepinnten Orchestrierungsreferenz. Setup installiert oder aktiviert keinen
+Skill. Fehlt Checkout, Bridge, Abhängigkeit oder Pflichtartefakt, ist der nächste Schritt
+entweder das native Interview oder ein eigener ausdrücklicher
+Installations-/Aktivierungsauftrag.
+Fehlt ein Teil oder sind Quelle beziehungsweise Pin gemischt, bleibt das
+native `brandkit-interview` der vollständige Fallback.
+
+`CONTEXT.md` und `docs/adr/` bleiben im Discovery-Verzeichnis. Der geschlossene
+`domain-modeling` muss echte, nichtleere und relevante `CONTEXT.md`- und
+`docs/adr/*.md`-Dateien erzeugen. Der Handoff bindet diese Dokumente, alle
+Quellen und Entscheidungen geschlossen nach Pfad, Größe und SHA-256; ein
+isoliertes JSON ist kein Erfolg.
+Das Handoff-JSON bleibt intern. Interview rendert eine lesbare Chat-Review mit
+Entscheidungen, Quellen, offenen Punkten, getrennten Empfehlungen und
+Dokumentpfaden und fragt konkret nach Bestätigung oder Korrekturen. Erst nach
+expliziter Chat-Bestätigung führt der Agent intern `confirm` mit Review-Digest,
+Confirmation-ID und owner-only HMAC-Key sowie unmittelbar danach `consume` aus.
+Der Owner öffnet weder JSON noch Shell. Interview übernimmt ausschließlich dessen authentifizierte
+Entscheidungen und Quellenbytes. Unbestätigte Empfehlungen dürfen keine
+normativen Werte in `brand-raw.md` erzeugen. Der vollständige native
+Elf-Achsen-Pfad bleibt für alle nicht abgedeckten Punkte erhalten.
+
+Offene visuelle Domänen werden anschließend an `brandkit-visual-decisions`
+übergeben. Dessen Sheet ist unselected und nicht normativ. Der Owner nennt im
+Chat ausschließlich Kandidaten-IDs oder `open`/`not-applicable`; Interview
+prüft das aktuelle Run-Bundle, löst Werte und Hashes selbst auf und zeigt eine
+gefüllte Review. Erst eine danach ausdrücklich bestätigte Review darf den
+vorhandenen Receipt-/Consume-Pfad und den deterministischen `brand-raw.md`-
+Block erzeugen. Korrekturen ersetzen Handoff und Review und entwerten alte
+Receipts. Erforderliche offene Domänen beschränken den Build auf
+`package-draft-only`; `package-ready` verlangt byteidentischen Konsum oder
+keine offene visuelle Domäne. Der Prebuild-Impeccable-Resolver ist run-local;
+`~/.agents` und `extract` sind vor dem Paket ausgeschlossen.
 
 Der Publish-Textpfad verwendet den Markdown-Vertrag und den tatsächlichen
 `humanizer-de`-Mechanismus. Pass A umfasst Triage und den vollständigen
@@ -120,7 +174,7 @@ eigener Identität oder einen provider-nativen Alias erklärbar. Ein neuer Name
 darf Body/Referenzassets aus einer kanonischen Quelle wiederverwenden, braucht
 aber eigene deklarierte Manifest-/Transformidentität und Kollisionstests.
 Provider-spezifische Kopien des Skill-Bodies sind keine zulässige Erklärung.
-Die vier `brandkit-*`-Skills sind eigenständige kanonische Skills, keine
+Die fünf Kern-`brandkit-*`-Skills sind eigenständige kanonische Skills, keine
 umbenannten Impeccable-Ausgaben.
 
 ## Prüfung
@@ -157,10 +211,37 @@ python scripts/validate_brandkit_skills.py \
   --release-attestation /operator/path/skill-contract-release-attestation.json \
   --expected-release-attestation-sha256 <extern-gelieferter-sha256> \
   --owner-key /operator/read-only/brand-voice-pdf-owner.key \
-  --part1-snapshot /operator/immutable/part1-f5-snapshot.tar.gz
+  --part1-snapshot /operator/immutable/part1-f5-snapshot.tar.gz \
+  --release-evidence /operator/path/release-evidence.md
 ```
 
-`fixtures/brandkit-skills/dry-runs.v1.json` deckt alle vier Kern-Skills und den
+### Die Evidence hängt an der Signatur
+
+Das Statement bindet neben dem Manifest auch den **SHA-256 der Evidence**, für
+die es ausgestellt wurde, und zwar im signierten Rumpf. Grund ist ein
+eingetretener Fall: eine Evidence wurde nach dem Urteil ersetzt, und weil die
+Beurteilung keinen Digest nannte, blieb der Austausch unbemerkt. Gebunden
+bricht ein späterer Austausch die Signatur, statt unsichtbar zu bleiben. Die
+Prüfung ist auch hier ohne externe Eingabe fail-closed: ohne
+`--release-evidence` beziehungsweise `BRANDKIT_RELEASE_EVIDENCE` wird
+abgewiesen, und ein Rumpf ohne `evidence_sha256` gilt als nicht geschlossen.
+
+Damit sich die beiden Digests nicht gegenseitig voraussetzen, gilt eine feste
+**Reihenfolge**:
+
+1. Evidence schreiben — **ohne** den Digest ihrer Attestation darin.
+2. Evidence hashen.
+3. Attestation ausstellen, die diesen Evidence-Digest neben dem
+   Manifest-Digest im signierten Rumpf führt.
+4. Die Beurteilung nennt **Digest und Zeilenzahl** der Fassung, die sie
+   beurteilt hat.
+
+Braucht die Evidence einen Verweis auf ihre Attestation, dann ausschließlich
+über deren **Dateinamen**: der ändert sich mit dem Inhalt nicht, ein Digest
+schon — und ein Digest im Text zöge genau den Zirkel nach sich, den diese
+Reihenfolge auflöst.
+
+`fixtures/brandkit-skills/dry-runs.v1.json` deckt alle fünf Kern-Skills und den
 Spacing-Adapter ab. `fixtures/brandkit-skills/collision-dry-runs.v1.json`
 leitet die eindeutigen Routen aus dem Requesttext fuer Spacing-Audit,
 UI-Redesign, Brand-Paket-Build, PDF-Publikation und DESIGN.md sowie vier

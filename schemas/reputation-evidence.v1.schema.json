@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "reputation-evidence.v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "source_url",
+    "registrable_domain",
+    "publisher_identity",
+    "publisher_family",
+    "source_kind",
+    "retrieved_at",
+    "locator",
+    "observed_claim",
+    "sentiment",
+    "scope"
+  ],
+  "properties": {
+    "schema_version": {"const": "reputation-evidence.v1"},
+    "source_url": {"type": "string", "format": "uri", "pattern": "^https://"},
+    "registrable_domain": {"type": "string", "pattern": "^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?$"},
+    "publisher_identity": {"type": "string", "minLength": 2},
+    "publisher_family": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+    "source_kind": {
+      "enum": [
+        "repository-metadata",
+        "independent-marketplace-review",
+        "independent-editorial-review",
+        "independent-user-report"
+      ]
+    },
+    "retrieved_at": {"type": "string", "format": "date"},
+    "locator": {"type": "string", "minLength": 8},
+    "observed_claim": {"type": "string", "minLength": 20},
+    "sentiment": {"const": "positive"},
+    "scope": {"const": "reputation-only-not-security-approval"}
+  }
+}
