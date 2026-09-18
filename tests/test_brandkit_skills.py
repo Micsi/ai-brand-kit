@@ -42,7 +42,7 @@ DISCOVERY_HANDOFF = ".brandkit/work/ci-pilot/discovery/handoff.json"
 # so the rule is checked rather than remembered - see
 # ``test_no_test_substitutes_the_visual_core``.
 GUARDED_SEAM = frozenset({
-    "validate_bundle", "validate_source_contract", "render_sheet", "validate_logo_report",
+    "validate_bundle", "validate_source_contract", "render_sheet", "validate_logo_report", "validate_icon_report",
     "_validate_bundle_locked", "_render_sheet",
     "_validated_visual_bundle", "_closed_core_result", "_release_bound_source_contract",
     "_visual_source_records", "_visual_core",
@@ -109,7 +109,7 @@ def core_substitutions(source: str) -> list[str]:
 
 
 class BrandKitSkillContractTests(unittest.TestCase):
-    RELEASE_MANIFEST_SHA256 = "566622f1161393457020f07dc493c637183774ae9c2c83335b5009ad6177dcae"
+    RELEASE_MANIFEST_SHA256 = "efcd80a2377c14bf87644fc43e56a1dd7b72c30aa2d8ac54967aad3202fa8a14"
     def test_publish_skill_pins_claude_provider_without_conflating_agent_discovery(self) -> None:
         skill = (ROOT / "skills/brandkit-publish/SKILL.md").read_text(encoding="utf-8")
         self.assertIn("Claude, Codex und Hermes rufen denselben `brandkit-publish`-Skill auf", skill)

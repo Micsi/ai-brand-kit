@@ -734,6 +734,7 @@
         "validate_candidate_set",
         "validate_color_report",
         "validate_font_report",
+        "validate_icon_report",
         "validate_logo_report",
         "validate_playground_manifest",
         "validate_schema",
