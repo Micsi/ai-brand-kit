@@ -229,7 +229,7 @@
       "affinity-vector-workflow": {
         "path": "skills/brandkit-affinity/references/vector-workflow.md",
         "role": "authoring",
-        "sha256": "ef637df3de6ff49cd9a632da5fd9ce85a4bc291bda946ae3d00cd66876b6cf45"
+        "sha256": "1fbd9792adbdbcbb7cd94e2e822a83a6d71b03b7251c2c5ae888fedb4904f7ed"
       },
       "brand-package-schema": {
         "path": "schemas/brand-package.v1.schema.json",

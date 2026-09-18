@@ -20,9 +20,12 @@ oder Variante benötigt einen eigenen Receipt.
    Aufrufen fail-closed abgewiesen wird.
 4. **Ausführung.** Lies `preamble` und nur die für die deklarierte Operation
    benötigten SDK-Themen. Führe `create-logo-variant`,
-   `create-lockup-variant` oder `export-svg` mit den Constraints aus dem
-   gebundenen Visual Brief aus. Der Schritt ist abgeschlossen, wenn Affinity
-   genau das deklarierte editierbare oder exportierte Ziel erzeugt hat.
+   `create-lockup-variant`, `create-icon-variant` oder `export-svg` mit den
+   Constraints aus dem gebundenen Visual Brief aus. `create-icon-variant`
+   erzeugt die Datei genau eines Variantenwerts eines Icons, etwa `licht-an`;
+   jeder weitere Wert derselben Achse braucht seinen eigenen Receipt. Der
+   Schritt ist abgeschlossen, wenn Affinity genau das deklarierte editierbare
+   oder exportierte Ziel erzeugt hat.
 5. **Evidenz.** Protokolliere Ausgabehash, Maße, Farbraum und Exportparameter.
    Prüfe die für das Ziel anwendbaren Eigenschaften: SVG-Struktur,
    Kleinformat, Monochromdarstellung, Hell-/Dunkelgrund, Innenräume und Lockup.
