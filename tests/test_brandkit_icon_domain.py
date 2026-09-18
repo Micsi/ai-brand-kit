@@ -128,29 +128,6 @@ class IconBriefTests(unittest.TestCase):
             visual.validate_brief(brief, root, project_root=project, run_id="run-a")
 
 
-class IconBundleTests(unittest.TestCase):
-    """Until brandkit-icon-report.v1 exists, no icon candidate becomes eligible."""
-
-    def test_bundle_refuses_an_icon_candidate_it_cannot_yet_validate(self) -> None:
-        with tempfile.TemporaryDirectory() as project_name:
-            project = Path(project_name).resolve()
-            root = visual.visual_workspace(project, "run-a", create=True)
-            document = fixtures.color_bundle(project, root)
-            value = icon_value()
-            document["candidates"].append({"id": "icon-choice", "kind": "icon", "label": "Icon-Stil A", "value": value,
-                                           "value_sha256": "0" * 64, "source_ids": ["impeccable"], "status": "candidate"})
-            context = visual.candidate_context_sha256(document)
-            color = document["candidates"][0]["value"]
-            color["report"] = fixtures.canonical_write(root, "color-report.json", visual.color_contrast_report(
-                context, "color-a", fixtures.palette(), ["text", "icon"]))
-            value["report"] = fixtures.canonical_write(root, "icon-report.json", {"candidate_set_sha256": context, "objective_status": "pass"})
-            for candidate in document["candidates"]:
-                candidate["value_sha256"] = visual.sha256_bytes(visual.canonical_json(candidate["value"]))
-            fixtures.canonical_write(root, "candidate-set.json", document)
-            with self.assertRaisesRegex(visual.VisualDecisionError, "icon report validation is not available"):
-                visual.validate_bundle(project, "run-a", fixtures.NOW, sidecar_root=visual.ROOT.parents[1])
-
-
 class IconSheetTests(unittest.TestCase):
     """The sheet names every open domain; until it can show icons it refuses
     rather than dropping the open icon decision from the owner's view."""
@@ -291,6 +268,22 @@ class IconReportTests(IconReportFixture):
         with self.assertRaisesRegex(visual.VisualDecisionError, "against itself"):
             self.validate(report)
 
+    def test_each_variant_file_is_named_after_its_icon_and_value(self) -> None:
+        """ADR 0003: the file of a variant is <icon>-<value>; receipts bind that id."""
+        own_style = {"brand-fit": "required", "quality-benchmark": "required", "variant-pair": "required"}
+        cases = {
+            "a file named after another icon": lambda icon: icon["variants"][0].update(id="heizung-an"),
+            "one value twice": lambda icon: icon["variants"][1].update(value="an", id="licht-an"),
+            "an axis with a single value": lambda icon: icon["variants"].pop(),
+            "two files without an axis": lambda icon: icon.update(axis=None),
+        }
+        for name, change in cases.items():
+            with self.subTest(name):
+                icon = self.licht(dict(own_style)); change(icon)
+                if icon["axis"] is None: icon["human_reviews"].pop("variant-pair")
+                with self.assertRaisesRegex(visual.VisualDecisionError, "variant"):
+                    self.validate(self.report(icon))
+
     def test_a_violated_build_rule_prevents_release(self) -> None:
         """ADR 0006: a build-rule violation blocks and is not discussed."""
         cases = {
@@ -347,6 +340,31 @@ class IconReceiptTests(IconReportFixture):
         visual.validate_icon_report(report, self.root, self.observation, receipts, project_root=self.project, run_id="run-a",
                                     key=self.bundle["key"], replay_nonces=set(), now=fixtures.NOW)
 
+    def test_one_run_may_author_logo_and_icons_in_affinity(self) -> None:
+        """Logo and icon receipts share one inventory; neither branch may claim all of it."""
+        variant = self.authored("heizung-standard")
+        receipt = fixtures.canonical_write(self.root, "receipt-heizung-standard.json", self.receipt(variant))
+        document = json.loads((self.root / "candidate-set.json").read_text(encoding="utf-8"))
+        value = {"domain": "icon", "icons": [{"icon_id": "heizung", "axis": None, "variants": ["standard"]}],
+                 "creation_origin": "affinity-mcp", "report": {"path": "icon-report.json", "sha256": "0" * 64}}
+        document["candidates"].append({"id": "icon-choice", "kind": "icon", "label": "Icon-Stil A", "value": value,
+                                       "value_sha256": "0" * 64, "source_ids": ["impeccable"], "status": "candidate"})
+        context = visual.candidate_context_sha256(document)
+        logo = json.loads((self.root / "logo-report.json").read_text(encoding="utf-8")); logo["candidate_set_sha256"] = context
+        logo_binding = fixtures.canonical_write(self.root, "logo-report.json", logo)
+        for candidate in document["candidates"][:-1]:
+            candidate["value"]["report"] = dict(logo_binding)
+        report = self.report({"icon_id": "heizung", "axis": None, "variants": [variant],
+                              "human_reviews": {"brand-fit": "required", "quality-benchmark": "required"}})
+        report["candidate_set_sha256"] = context
+        value["report"] = fixtures.canonical_write(self.root, "icon-report.json", report)
+        for candidate in document["candidates"]:
+            candidate["value_sha256"] = visual.sha256_bytes(visual.canonical_json(candidate["value"]))
+        fixtures.canonical_write(self.root, "candidate-set.json", document)
+        auth = {**self.bundle["auth"], "receipts": {**self.bundle["auth"]["receipts"], "heizung-standard": receipt}}
+        result = visual.validate_bundle(self.project, "run-a", fixtures.NOW, sidecar_root=visual.ROOT.parents[1], affinity_auth=auth)
+        self.assertEqual({"logo-choice", "icon-choice"}, {item["id"] for item in result["eligible_candidates"]} & {"logo-choice", "icon-choice"})
+
     def test_an_authored_variant_is_accepted_under_its_own_receipt(self) -> None:
         variant = self.authored("heizung-standard")
         self.check(variant, {"heizung-standard": self.receipt(variant)})
@@ -361,6 +379,42 @@ class IconReceiptTests(IconReportFixture):
         for name, (receipts, message) in cases.items():
             with self.subTest(name), self.assertRaisesRegex(visual.VisualDecisionError, message):
                 self.check(variant, receipts)
+
+
+class IconBundleTests(IconReportFixture):
+    """A style candidate is eligible when its value and its icon report agree."""
+
+    def bundle(self, value: dict) -> dict:
+        document = fixtures.color_bundle(self.project, self.root)
+        self.observation = json.loads((self.root / "affinity-observation.json").read_text(encoding="utf-8"))
+        value = {**value, "report": {"path": "icon-report.json", "sha256": "0" * 64}}
+        document["candidates"].append({"id": "icon-choice", "kind": "icon", "label": "Icon-Stil A", "value": value,
+                                       "value_sha256": "0" * 64, "source_ids": ["impeccable"], "status": "candidate"})
+        context = visual.candidate_context_sha256(document)
+        document["candidates"][0]["value"]["report"] = fixtures.canonical_write(self.root, "color-report.json", visual.color_contrast_report(
+            context, "color-a", fixtures.palette(), ["text", "icon"]))
+        report = self.report(); report["candidate_set_sha256"] = context
+        value["report"] = fixtures.canonical_write(self.root, "icon-report.json", report)
+        for candidate in document["candidates"]:
+            candidate["value_sha256"] = visual.sha256_bytes(visual.canonical_json(candidate["value"]))
+        fixtures.canonical_write(self.root, "candidate-set.json", document)
+        return visual.validate_bundle(self.project, "run-a", fixtures.NOW, sidecar_root=visual.ROOT.parents[1])
+
+    HEIZUNG_STYLE = {"domain": "icon", "icons": [{"icon_id": "heizung", "axis": None, "variants": ["standard"]}],
+                     "creation_origin": "owner-supplied"}
+
+    def test_an_icon_style_with_an_agreeing_report_is_eligible(self) -> None:
+        self.assertIn("icon-choice", [item["id"] for item in self.bundle(self.HEIZUNG_STYLE)["eligible_candidates"]])
+
+    def test_a_style_value_that_differs_from_its_report_is_refused(self) -> None:
+        cases = {
+            "an icon the report does not show": {**self.HEIZUNG_STYLE, "icons": [{"icon_id": "licht", "axis": None, "variants": ["standard"]}]},
+            "an axis the report does not carry": {**self.HEIZUNG_STYLE, "icons": [{"icon_id": "heizung", "axis": "zustand", "variants": ["an", "aus"]}]},
+            "an origin the files do not have": {**self.HEIZUNG_STYLE, "creation_origin": "affinity-mcp"},
+        }
+        for name, value in cases.items():
+            with self.subTest(name), self.assertRaisesRegex(visual.VisualDecisionError, "icon report candidate/value differs"):
+                self.setUp(); self.bundle(value)
 
 
 class LogoRefusesIconOperationTests(unittest.TestCase):

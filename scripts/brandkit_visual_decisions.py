@@ -1755,6 +1755,11 @@ def validate_icon_report(report: dict[str, Any], root: Path, observation: dict[s
     mode_reviews = {"blind-test", "distinctness"} if supplement else {"brand-fit", "quality-benchmark"}
     variant_reviews = {f"size-{size}" for size in report["target_sizes_px"]} | {"optical-weight", "set-consistency"}
     for icon in report["icons"]:
+        values = [variant["value"] for variant in icon["variants"]]
+        if len(values) != len(set(values)) or (icon["axis"] is None) != (len(values) == 1):
+            raise VisualDecisionError(f"icon axis and variant values differ: {icon['icon_id']}")
+        if any(variant["id"] != f"{icon['icon_id']}-{variant['value']}" for variant in icon["variants"]):
+            raise VisualDecisionError(f"icon variant file is not named <icon>-<value>: {icon['icon_id']}")
         expected = mode_reviews | ({"variant-pair"} if icon["axis"] is not None else set())
         matrices = [(icon["icon_id"], icon["human_reviews"], expected)] + [(variant["id"], variant["human_reviews"], variant_reviews) for variant in icon["variants"]]
         for label, reviews, wanted in matrices:
@@ -2017,9 +2022,21 @@ def _validate_bundle_locked(project_root: Path, run_id: str, now: int, *, sideca
             if not valid or value["specimen_sha256"] != report["specimen_sha256"]:
                 raise VisualDecisionError("typography report candidate/value differs")
         elif candidate["kind"] == "icon":
-            # Held closed on purpose: the logo branch below would otherwise read
-            # an icon report as a logo report.  brandkit-icon-report.v1 opens it.
-            raise VisualDecisionError(f"icon report validation is not available: {candidate['id']}")
+            affinity_ids = {variant["id"] for icon in report.get("icons", []) for variant in icon.get("variants", []) if variant.get("creation_origin") == "affinity-mcp"}
+            if affinity_ids:
+                if auth_state is None: raise VisualDecisionError("Affinity-authored candidates require external authentication and replay state")
+                owner_key, _ledger_path, _ledger, _ledger_raw, nonces, receipts = auth_state
+                if not affinity_ids <= set(receipts): raise VisualDecisionError("Affinity receipt inventory differs from authored candidates")
+                validate_icon_report(report, workspace, observation, receipts, project_root=project_root, run_id=run_id, key=owner_key, replay_nonces=nonces, now=now)
+                used_receipts |= affinity_ids
+            else:
+                validate_icon_report(report, workspace, observation, project_root=project_root, run_id=run_id, now=now)
+            # The owner confirms a style (ADR 0001): the value names the icons,
+            # their axes and values; the report holds the files that make them.
+            shown = [{"icon_id": icon["icon_id"], "axis": icon["axis"], "variants": [variant["value"] for variant in icon["variants"]]} for icon in report["icons"]]
+            origins = {variant["creation_origin"] for icon in report["icons"] for variant in icon["variants"]}
+            if value["icons"] != shown or origins != {value["creation_origin"]}:
+                raise VisualDecisionError("icon report candidate/value differs")
         else:
             report_hash = value["report"]["sha256"]
             if report_hash not in validated_logo_reports:
@@ -2027,7 +2044,10 @@ def _validate_bundle_locked(project_root: Path, run_id: str, now: int, *, sideca
                 if affinity_ids:
                     if auth_state is None: raise VisualDecisionError("Affinity-authored candidates require external authentication and replay state")
                     owner_key, _ledger_path, _ledger, _ledger_raw, nonces, receipts = auth_state
-                    if set(receipts) != affinity_ids: raise VisualDecisionError("Affinity receipt inventory differs from authored candidates")
+                    # Logo and icon receipts share one inventory, so each branch asks
+                    # only for its own; the closing check below refuses any receipt
+                    # that no branch consumed.
+                    if not affinity_ids <= set(receipts): raise VisualDecisionError("Affinity receipt inventory differs from authored candidates")
                     validate_logo_report(report, workspace, observation, receipts, project_root=project_root, run_id=run_id, key=owner_key, replay_nonces=nonces, now=now)
                     used_receipts |= affinity_ids
                 else:
@@ -2047,7 +2067,7 @@ def _validate_bundle_locked(project_root: Path, run_id: str, now: int, *, sideca
         raise VisualDecisionError("recommendation references an ineligible candidate")
     if auth_state is not None:
         owner_key, ledger_path, ledger, ledger_raw, nonces, receipts = auth_state
-        if set(receipts) != used_receipts: raise VisualDecisionError("Affinity authentication contains unused receipts")
+        if set(receipts) != used_receipts: raise VisualDecisionError("Affinity receipt inventory differs from authored candidates: unused receipts")
         if commit and nonces != set(ledger["nonces"]): persist_replay_ledger(ledger_path, owner_key, ledger, ledger_raw, nonces)
     return {"candidate_set_sha256": candidate_sha, "eligible_candidates": eligible, "blockers": blockers}
 
