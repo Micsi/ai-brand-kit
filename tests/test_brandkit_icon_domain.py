@@ -227,6 +227,65 @@ class IconReportTests(unittest.TestCase):
         with self.assertRaises(visual.VisualDecisionError):
             self.validate(report)
 
+    def licht(self, icon_reviews: dict) -> dict:
+        variants = [self.variant("licht-an", HEIZUNG), self.variant("licht-aus", HEIZUNG + '<line x1="4" y1="4" x2="20" y2="20"/>')]
+        variants[1]["objective_checks"]["canonical_svg_sha256"] = visual._svg_static_checks(
+            (self.root / "licht-aus.svg").read_bytes(), "x", "licht-aus")["canonical_svg_sha256"]
+        return {"icon_id": "licht", "axis": "zustand", "variants": variants, "human_reviews": icon_reviews}
+
+    def test_the_review_matrix_follows_operating_mode_target_sizes_and_axis(self) -> None:
+        supplement = {"blind-test": "required", "distinctness": "required"}
+        own_style = {"brand-fit": "required", "quality-benchmark": "required"}
+        with self.subTest("supplement is judged by blind test and distinctness"):
+            report = self.report(self.licht({**supplement, "variant-pair": "required"}))
+            report.update(operating_mode="ergaenzung", benchmark={**report["benchmark"], "role": "style-reference"})
+            self.validate(report)
+        with self.subTest("own style is judged by brand fit and the quality reference"):
+            self.validate(self.report(self.licht({**own_style, "variant-pair": "required"})))
+        refusals = {
+            "own style asked for a blind test": (self.licht({**supplement, "variant-pair": "required"}), {}),
+            "an axis without judging the pair": (self.licht(own_style), {}),
+            "a target size nobody looked at": (self.licht({**own_style, "variant-pair": "required"}), {"target_sizes_px": [24, 48]}),
+            "supplement measured against a quality reference": (self.licht({**supplement, "variant-pair": "required"}), {"operating_mode": "ergaenzung"}),
+        }
+        for name, (icon, change) in refusals.items():
+            with self.subTest(name):
+                report = self.report(icon); report.update(change)
+                with self.assertRaisesRegex(visual.VisualDecisionError, "human-review matrix|benchmark"):
+                    self.validate(report)
+
+    def test_a_failed_human_review_makes_the_icon_ineligible(self) -> None:
+        for review in ("distinctness", "blind-test"):
+            with self.subTest(review):
+                reviews = {"blind-test": "pass", "distinctness": "pass", "variant-pair": "pass", review: "fail"}
+                report = self.report(self.licht(reviews))
+                report.update(operating_mode="ergaenzung", benchmark={**report["benchmark"], "role": "style-reference"})
+                with self.assertRaisesRegex(visual.VisualDecisionError, "not review-eligible"):
+                    self.validate(report)
+
+    def confirmed(self, file_id: str, body: str, **svg) -> dict:
+        return {"id": file_id, "asset": fixtures.write(self.root / f"{file_id}.svg", icon_svg(file_id, body, **svg))}
+
+    def test_a_new_icon_is_checked_against_the_confirmed_set(self) -> None:
+        with self.subTest("consistent with the confirmed set"):
+            report = self.report(); report["confirmed_set"] = [self.confirmed("wind-standard", '<path d="M4 8h12M4 16h16"/>')]
+            self.validate(report)
+        with self.subTest("the set was confirmed under a lighter stroke"):
+            report = self.report(); report["confirmed_set"] = [self.confirmed("wind-standard", '<path d="M4 8h12M4 16h16"/>', stroke_width="1.5")]
+            with self.assertRaisesRegex(visual.VisualDecisionError, "set consistency"):
+                self.validate(report)
+        with self.subTest("a confirmed file that changed since"):
+            report = self.report(); report["confirmed_set"] = [self.confirmed("wind-standard", '<path d="M4 8h12M4 16h16"/>')]
+            (self.root / "wind-standard.svg").write_bytes(icon_svg("wind-standard", '<path d="M4 8h16"/>'))
+            with self.assertRaises(visual.VisualDecisionError):
+                self.validate(report)
+
+    def test_set_consistency_is_never_measured_against_the_icon_itself(self) -> None:
+        report = self.report()
+        report["confirmed_set"] = [{"id": "heizung-standard", "asset": report["icons"][0]["variants"][0]["asset"]}]
+        with self.assertRaisesRegex(visual.VisualDecisionError, "against itself"):
+            self.validate(report)
+
     def test_a_violated_build_rule_prevents_release(self) -> None:
         """ADR 0006: a build-rule violation blocks and is not discussed."""
         cases = {

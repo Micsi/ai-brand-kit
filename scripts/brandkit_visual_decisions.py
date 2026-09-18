@@ -1711,6 +1711,12 @@ def _icon_static_checks(data: bytes, label: str, asset_id: str) -> dict[str, Any
             "canonical_svg_sha256": base["canonical_svg_sha256"]}
 
 
+def _icon_set_signature(checks: dict[str, Any]) -> tuple[Any, ...]:
+    """What every member of one set shares: canvas, stroke and paint."""
+    return (checks["view_box"], tuple(checks["stroke_widths"]), tuple(checks["stroke_linecaps"]),
+            tuple(checks["stroke_linejoins"]), checks["color_count"])
+
+
 def _require_icon_build_rules(checks: dict[str, Any], rules: dict[str, Any], label: str) -> None:
     """ADR 0006: a build-rule violation prevents release and is not discussed."""
     grid = rules["grid_units"]
@@ -1726,13 +1732,41 @@ def _require_icon_build_rules(checks: dict[str, Any], rules: dict[str, Any], lab
 
 def validate_icon_report(report: dict[str, Any], root: Path, observation: dict[str, Any], mutation_receipts: dict[str, dict[str, Any]] | None = None, *, project_root: Path | None = None, run_id: str | None = None, key: bytes | None = None, replay_nonces: set[str] | None = None, now: int | None = None) -> None:
     validate_schema(report, "icon")
+    # ADR 0005/0007: the benchmark and the owner-facing judgement follow the
+    # operating mode - blind test and distinctness in a supplement, brand fit
+    # and the quality reference in an own style.
+    supplement = report["operating_mode"] == "ergaenzung"
+    if report["benchmark"]["role"] != ("style-reference" if supplement else "quality-reference"):
+        raise VisualDecisionError("icon benchmark role differs from the operating mode")
+    # Set consistency is a statement about the set, so it is measured against
+    # the set the owner already confirmed - never against the icons under review.
+    # An empty set is legitimate: the first icon founds it and meets the rules alone.
+    own = {variant["id"] for icon in report["icons"] for variant in icon["variants"]}
+    own_files = {variant["asset"]["sha256"] for icon in report["icons"] for variant in icon["variants"]}
+    set_signature: set[tuple[Any, ...]] = set()
+    for member in report["confirmed_set"]:
+        if member["id"] in own or member["asset"]["sha256"] in own_files:
+            raise VisualDecisionError(f"icon set consistency measured against itself: {member['id']}")
+        data = _verify_bound_file(root, member["asset"], f"confirmed icon {member['id']}")
+        set_signature.add(_icon_set_signature(_icon_static_checks(data, f"confirmed icon {member['id']}", member["id"])))
+    mode_reviews = {"blind-test", "distinctness"} if supplement else {"brand-fit", "quality-benchmark"}
+    variant_reviews = {f"size-{size}" for size in report["target_sizes_px"]} | {"optical-weight", "set-consistency"}
     for icon in report["icons"]:
+        expected = mode_reviews | ({"variant-pair"} if icon["axis"] is not None else set())
+        matrices = [(icon["icon_id"], icon["human_reviews"], expected)] + [(variant["id"], variant["human_reviews"], variant_reviews) for variant in icon["variants"]]
+        for label, reviews, wanted in matrices:
+            if set(reviews) != wanted:
+                raise VisualDecisionError(f"icon human-review matrix is incomplete: {label}")
+            if "fail" in reviews.values():
+                raise VisualDecisionError(f"icon is not review-eligible: {label}")
         for variant in icon["variants"]:
             data = _verify_bound_file(root, variant["asset"], f"icon {variant['id']}")
             checks = _icon_static_checks(data, f"icon {variant['id']}", variant["id"])
             if variant["objective_checks"] != checks:
                 raise VisualDecisionError(f"icon objective checks differ: {variant['id']}")
             _require_icon_build_rules(checks, report["build_rules"], variant["id"])
+            if set_signature and set_signature != {_icon_set_signature(checks)}:
+                raise VisualDecisionError(f"icon breaks set consistency with the confirmed set: {variant['id']}")
 
 def _field_name_tokens(key: str) -> set[str]:
     """Every token a JSON field name spells, under both folds.
