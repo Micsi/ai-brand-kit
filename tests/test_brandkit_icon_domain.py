@@ -406,6 +406,13 @@ class IconBundleTests(IconReportFixture):
     def test_an_icon_style_with_an_agreeing_report_is_eligible(self) -> None:
         self.assertIn("icon-choice", [item["id"] for item in self.bundle(self.HEIZUNG_STYLE)["eligible_candidates"]])
 
+    def test_the_sheet_refuses_an_eligible_icon_it_cannot_show_yet(self) -> None:
+        """004 gives icons a section; until then an icon in the bundle is refused
+        by the sheet, whether or not the brief leaves the decision open."""
+        self.bundle(self.HEIZUNG_STYLE)
+        with self.assertRaisesRegex(visual.VisualDecisionError, "sheet has no section for icon"):
+            visual.render_sheet(self.project, "run-a", fixtures.NOW)
+
     def test_a_style_value_that_differs_from_its_report_is_refused(self) -> None:
         cases = {
             "an icon the report does not show": {**self.HEIZUNG_STYLE, "icons": [{"icon_id": "licht", "axis": None, "variants": ["standard"]}]},

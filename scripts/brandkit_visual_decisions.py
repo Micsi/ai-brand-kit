@@ -3924,6 +3924,10 @@ def _sheet_view(artifact_root: Path, brief: dict[str, Any], candidate_set: dict[
         kind, value = candidate["kind"], candidate["value"]
         if value["domain"] != kind:
             raise VisualDecisionError(f"candidate domain differs: {candidate['id']}")
+        if kind not in SHEET_DOMAINS:
+            # Without this the family switch below reads an icon report as a
+            # colour report.  004 gives icons their own section.
+            raise VisualDecisionError(f"sheet has no section for {kind} candidate: {candidate['id']}")
         family = "font" if kind in {"typography", "code-font"} else "logo" if kind in {"logo", "lockup"} else "color"
         key = (family, value["report"]["sha256"])
         report = reports.get(key)
