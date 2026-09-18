@@ -33,7 +33,7 @@
       "properties": {
         "schema_version": {"const": "brandkit-visual-decision-result.v1"},
         "outcome": {"enum": ["candidates-ready", "blocked"]},
-        "domains": {"type": "array", "uniqueItems": true, "items": {"enum": ["color", "typography", "code-font", "logo", "lockup"]}},
+        "domains": {"type": "array", "uniqueItems": true, "items": {"enum": ["color", "typography", "code-font", "logo", "lockup", "icon"]}},
         "normative": {"const": false},
         "next_operation": {"enum": ["brandkit-interview:prepare-visual-confirmation", "resolve-blockers"]}
       }

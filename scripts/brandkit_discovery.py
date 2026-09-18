@@ -42,7 +42,7 @@ PROTECTED_RUN_ID = "first-ci"
 # name to this literal in ``validate_source_contract``.
 SOURCE_CONTRACT_NAME = "visual-decision-sources.v1.json"
 BRAND_AXES = ("core-audience", "personality", "anti-character", "brand-architecture", "color", "typography", "grid-spacing", "components", "language-prohibitions", "target-formats", "image-rules")
-VISUAL_DOMAINS = ("color", "typography", "code-font", "logo", "lockup")
+VISUAL_DOMAINS = ("color", "typography", "code-font", "logo", "lockup", "icon")
 
 
 class DiscoveryError(ValueError):

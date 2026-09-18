@@ -214,7 +214,7 @@
       "affinity-mutation-receipt-schema": {
         "path": "schemas/brandkit-affinity-mutation-receipt.v1.schema.json",
         "role": "contract",
-        "sha256": "759a8ae7930f02b24ae8e73a29a16ec95ae528e1b82d2ec9d89c8bde9ee070df"
+        "sha256": "7c8f8aad03aeb80a851a960ae77a55d078183d65e5ba3e3014e5a30ce5eb1f69"
       },
       "affinity-observation-schema": {
         "path": "schemas/brandkit-affinity-observation.v1.schema.json",
@@ -249,7 +249,7 @@
       "discovery-owner-receipt-schema": {
         "path": "schemas/brandkit-discovery-owner-receipt.v1.schema.json",
         "role": "contract",
-        "sha256": "bd383392a8ba4891146f632bf03d007c651666156b2e2d9a8de399dd1ced3fd2"
+        "sha256": "022cf49b23b140c5c25b165b13359ac0243ad440d3950735e1d3c6d3fbab9c2b"
       },
       "document-type-schema": {
         "path": "schemas/document-type.v1.schema.json",
@@ -329,12 +329,12 @@
       "visual-brief-schema": {
         "path": "schemas/brandkit-visual-brief.v1.schema.json",
         "role": "contract",
-        "sha256": "ed4b5e2b8b28a8458ff4de9fa3814658989fb69c71d30035ab6b819449bb6dc1"
+        "sha256": "9b033f493979d53b9ef521ca8f6b8e4f5e46bed57bb5ecce5ec96d0c5df64859"
       },
       "visual-candidate-set-schema": {
         "path": "schemas/brandkit-visual-candidate-set.v1.schema.json",
         "role": "contract",
-        "sha256": "c89e66a49a754355c01e516bedb31cf0aa3e4eb220ec1cb7027c2fafed2503bd"
+        "sha256": "e6da0a467335b321a6fa7804334060bf04594714bfb5c7b20482a0f323863165"
       },
       "visual-decisions-workflow": {
         "path": "skills/brandkit-visual-decisions/references/workflow.md",
@@ -935,7 +935,8 @@
       "typography",
       "code-font",
       "logo",
-      "lockup"
+      "lockup",
+      "icon"
     ],
     "impeccable_prebuild": "run-local pinned resolver only; extract forbidden",
     "operations": [

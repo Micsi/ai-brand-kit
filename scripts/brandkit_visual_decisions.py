@@ -1666,6 +1666,8 @@ def validate_logo_report(report: dict[str, Any], root: Path, observation: dict[s
             if receipt is None or project_root is None or run_id is None or key is None or replay_nonces is None or now is None:
                 raise VisualDecisionError("each Affinity-authored logo requires its own complete mutation receipt")
             validate_affinity_mutation_receipt(receipt, observation, root, project_root=project_root, run_id=run_id, key=key, replay_nonces=replay_nonces, now=now)
+            if receipt["operation"] == "create-icon-variant":
+                raise VisualDecisionError(f"Affinity receipt operation belongs to the icon domain: {candidate['id']}")
             if receipt["outputs"] != [{"candidate_id": candidate["id"], **candidate["asset"]}]:
                 raise VisualDecisionError("Affinity receipt output does not bind its logo candidate")
         data = _verify_bound_file(root, candidate["asset"], f"logo {candidate['id']}")
@@ -1693,6 +1695,20 @@ def _field_name_tokens(key: str) -> set[str]:
     fold alone may be removed without losing a rejection.
     """
     return set(re.split(r"[-_]", key.lower())) | set(re.split(r"[-_]", ascii_lower(key)))
+
+
+def _validate_icon_axes(value: dict[str, Any], candidate_id: str) -> None:
+    """A variant is an axis at the icon, and each axis value yields one file.
+
+    An axis with a single value is no state, and several files without an axis
+    would be several icons under one name - the schema cannot tell either apart.
+    """
+    icon_ids = [icon["icon_id"] for icon in value["icons"]]
+    if len(icon_ids) != len(set(icon_ids)):
+        raise VisualDecisionError(f"icon appears more than once in style candidate: {candidate_id}")
+    for icon in value["icons"]:
+        if (icon["axis"] is None) != (len(icon["variants"]) == 1):
+            raise VisualDecisionError(f"icon axis and variant count differ: {candidate_id}/{icon['icon_id']}")
 
 
 def validate_candidate_set(value: dict[str, Any], root: Path) -> None:
@@ -1728,6 +1744,8 @@ def validate_candidate_set(value: dict[str, Any], root: Path) -> None:
         # can enter here; see _reject_sheet_control for why all three answer one
         # rule rather than one rule each.
         _reject_sheet_control(candidate["label"], f"candidate label {candidate['id']}")
+        if candidate["kind"] == "icon":
+            _validate_icon_axes(candidate["value"], candidate["id"])
     for recommendation in value["recommendations"]:
         if recommendation["candidate_id"] not in ids:
             raise VisualDecisionError("recommendation references an unknown candidate")
@@ -1900,6 +1918,10 @@ def _validate_bundle_locked(project_root: Path, run_id: str, now: int, *, sideca
                 valid = value["code_font_id"] in classes and classes[value["code_font_id"]] == "mono"
             if not valid or value["specimen_sha256"] != report["specimen_sha256"]:
                 raise VisualDecisionError("typography report candidate/value differs")
+        elif candidate["kind"] == "icon":
+            # Held closed on purpose: the logo branch below would otherwise read
+            # an icon report as a logo report.  brandkit-icon-report.v1 opens it.
+            raise VisualDecisionError(f"icon report validation is not available: {candidate['id']}")
         else:
             report_hash = value["report"]["sha256"]
             if report_hash not in validated_logo_reports:
@@ -3824,6 +3846,11 @@ def _sheet_view(artifact_root: Path, brief: dict[str, Any], candidate_set: dict[
                 raise VisualDecisionError("logo report candidate/value differs")
             entry["items"] = items
         domains[kind].append(entry)
+    # The sheet names every open domain.  One it has no section for would drop
+    # out of the owner's view unnoticed, so it is refused instead.
+    unshown = [kind for kind in brief["open_decisions"] if kind not in SHEET_DOMAINS]
+    if unshown:
+        raise VisualDecisionError(f"sheet has no section for open domain: {unshown}")
     return {"domains": domains, "open": [kind for kind in SHEET_DOMAINS if kind in brief["open_decisions"]]}
 
 
