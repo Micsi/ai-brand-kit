@@ -329,7 +329,7 @@
       "visual-brief-schema": {
         "path": "schemas/brandkit-visual-brief.v1.schema.json",
         "role": "contract",
-        "sha256": "9b033f493979d53b9ef521ca8f6b8e4f5e46bed57bb5ecce5ec96d0c5df64859"
+        "sha256": "e978d70ae29830f556ccbe0af01d748e80e2de990996ca903b469c967241748f"
       },
       "visual-candidate-set-schema": {
         "path": "schemas/brandkit-visual-candidate-set.v1.schema.json",
