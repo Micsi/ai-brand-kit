@@ -162,6 +162,13 @@ def validate_package(package: Path) -> tuple[dict[str, Any], Path, str]:
             if sha256_file(evidence) != asset["rights"]["evidence_sha256"]: raise ContractError(f"rights evidence hash mismatch: {aid}")
             ev = load_json(evidence); validate_schema(ev, "rights-evidence.v1.schema.json", f"rights evidence {aid}")
             if ev["asset_id"] != aid: raise ContractError(f"rights evidence asset mismatch: {aid}")
+    # Icon build rules (ADR 0001): every number stands on files the package binds.
+    icons = doc.get("shared_visual_tokens", {}).get("icons")
+    if icons is not None:
+        for name, binding in icons["provenance"].items():
+            if name == "tool": continue
+            target = safe_package_file(root, binding["path"], f"icon provenance {name}"); declared.add(binding["path"])
+            if sha256_file(target) != binding["sha256"]: raise ContractError(f"icon provenance hash mismatch: {name}")
     typography = doc["pdf"]["tokens"]["typography_roles"]
     pinned_pdf_fonts = {"builtin:Helvetica", "builtin:Helvetica-Bold", "builtin:Courier"}
     if any(font_id not in font_ids and font_id not in pinned_pdf_fonts for font_id in typography.values()):
