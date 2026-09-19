@@ -837,6 +837,10 @@ def color_contrast_report(candidate_set_sha256: str, candidate_id: str, roles: d
 
 def validate_brief(brief: dict[str, Any], root: Path, *, project_root: Path | None = None, run_id: str | None = None) -> None:
     validate_schema(brief, "brief")
+    # 004: an open icon decision is judged at target sizes the run binds here,
+    # never at sizes the sheet would pick; without the decision they mean nothing.
+    if ("icon" in brief["open_decisions"]) != ("icon_target_sizes_px" in brief):
+        raise VisualDecisionError("visual brief binds icon target sizes exactly when the icon decision is open")
     _verify_bound_file(root, brief["interview_handoff"], "interview handoff")
     if project_root is not None and brief["project_identity_sha256"] != project_identity(project_root):
         raise VisualDecisionError("visual brief project differs")
@@ -2024,6 +2028,8 @@ def _validate_bundle_locked(project_root: Path, run_id: str, now: int, *, sideca
             if not valid or value["specimen_sha256"] != report["specimen_sha256"]:
                 raise VisualDecisionError("typography report candidate/value differs")
         elif candidate["kind"] == "icon":
+            if report.get("target_sizes_px") != brief.get("icon_target_sizes_px"):
+                raise VisualDecisionError(f"icon report is not judged at the target sizes the brief binds: {candidate['id']}")
             affinity_ids = {variant["id"] for icon in report.get("icons", []) for variant in icon.get("variants", []) if variant.get("creation_origin") == "affinity-mcp"}
             if affinity_ids:
                 if auth_state is None: raise VisualDecisionError("Affinity-authored candidates require external authentication and replay state")

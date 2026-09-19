@@ -125,7 +125,23 @@ class IconBriefTests(unittest.TestCase):
                      "interview_handoff": fixtures.write(root / "interview-handoff.json", "{}"),
                      "open_decisions": ["color", "icon"], "locale": "de-DE", "viewports": [320, 768, 1440],
                      "offline": True, "normative": False}
+            brief["icon_target_sizes_px"] = [20, 24, 32]
             visual.validate_brief(brief, root, project_root=project, run_id="run-a")
+
+    def test_the_target_sizes_are_bound_in_the_brief_exactly_when_icon_is_open(self) -> None:
+        """004: the run binds its target sizes in the brief, the sheet never picks them."""
+        with tempfile.TemporaryDirectory() as project_name:
+            project = Path(project_name).resolve()
+            root = visual.visual_workspace(project, "run-a", create=True)
+            brief = {"schema_version": "brandkit-visual-brief.v1", "brief_id": "brief-a",
+                     "project_identity_sha256": visual.project_identity(project), "run_id": "run-a", "brand_id": "brand-a",
+                     "interview_handoff": fixtures.write(root / "interview-handoff.json", "{}"),
+                     "open_decisions": ["color", "icon"], "locale": "de-DE", "viewports": [320, 768, 1440],
+                     "offline": True, "normative": False}
+            with self.subTest("icon open without target sizes"), self.assertRaisesRegex(visual.VisualDecisionError, "target sizes"):
+                visual.validate_brief(brief, root)
+            with self.subTest("target sizes without an open icon decision"), self.assertRaisesRegex(visual.VisualDecisionError, "target sizes"):
+                visual.validate_brief({**brief, "open_decisions": ["color"], "icon_target_sizes_px": [24]}, root)
 
 
 class IconSheetTests(unittest.TestCase):
@@ -345,6 +361,10 @@ class IconReceiptTests(IconReportFixture):
         variant = self.authored("heizung-standard")
         receipt = fixtures.canonical_write(self.root, "receipt-heizung-standard.json", self.receipt(variant))
         document = json.loads((self.root / "candidate-set.json").read_text(encoding="utf-8"))
+        brief = json.loads((self.root / "visual-brief.json").read_text(encoding="utf-8"))
+        brief.update(open_decisions=["logo", "lockup", "icon"], icon_target_sizes_px=[24])
+        fixtures.canonical_write(self.root, "visual-brief.json", brief)
+        document["brief_sha256"] = visual.sha256_bytes(visual.canonical_json(brief))
         value = {"domain": "icon", "icons": [{"icon_id": "heizung", "axis": None, "variants": ["standard"]}],
                  "creation_origin": "affinity-mcp", "report": {"path": "icon-report.json", "sha256": "0" * 64}}
         document["candidates"].append({"id": "icon-choice", "kind": "icon", "label": "Icon-Stil A", "value": value,
@@ -384,9 +404,14 @@ class IconReceiptTests(IconReportFixture):
 class IconBundleTests(IconReportFixture):
     """A style candidate is eligible when its value and its icon report agree."""
 
-    def bundle(self, value: dict) -> dict:
+    def bundle(self, value: dict, *, brief_sizes: list[int] | None = [24]) -> dict:
         document = fixtures.color_bundle(self.project, self.root)
         self.observation = json.loads((self.root / "affinity-observation.json").read_text(encoding="utf-8"))
+        brief = json.loads((self.root / "visual-brief.json").read_text(encoding="utf-8"))
+        if brief_sizes is not None:
+            brief.update(open_decisions=["color", "icon"], icon_target_sizes_px=brief_sizes)
+        fixtures.canonical_write(self.root, "visual-brief.json", brief)
+        document["brief_sha256"] = visual.sha256_bytes(visual.canonical_json(brief))
         value = {**value, "report": {"path": "icon-report.json", "sha256": "0" * 64}}
         document["candidates"].append({"id": "icon-choice", "kind": "icon", "label": "Icon-Stil A", "value": value,
                                        "value_sha256": "0" * 64, "source_ids": ["impeccable"], "status": "candidate"})
@@ -412,6 +437,12 @@ class IconBundleTests(IconReportFixture):
         self.bundle(self.HEIZUNG_STYLE)
         with self.assertRaisesRegex(visual.VisualDecisionError, "sheet has no section for icon"):
             visual.render_sheet(self.project, "run-a", fixtures.NOW)
+
+    def test_the_report_is_judged_at_the_sizes_the_brief_binds(self) -> None:
+        with self.subTest("the report looked at other sizes"), self.assertRaisesRegex(visual.VisualDecisionError, "target sizes"):
+            self.bundle(self.HEIZUNG_STYLE, brief_sizes=[20, 24, 32])
+        with self.subTest("the brief leaves no icon decision open"), self.assertRaisesRegex(visual.VisualDecisionError, "target sizes"):
+            self.setUp(); self.bundle(self.HEIZUNG_STYLE, brief_sizes=None)
 
     def test_a_style_value_that_differs_from_its_report_is_refused(self) -> None:
         cases = {
