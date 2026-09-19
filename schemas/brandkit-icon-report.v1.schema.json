@@ -68,7 +68,7 @@
         "value": {"$ref": "#/$defs/id"},
         "id": {"$ref": "#/$defs/id"},
         "asset": {"$ref": "#/$defs/file"},
-        "creation_origin": {"enum": ["owner-supplied", "affinity-mcp"]},
+        "creation_origin": {"enum": ["owner-supplied", "affinity-mcp", "agent-drawn"]},
         "objective_checks": {
           "type": "object", "additionalProperties": false,
           "required": ["view_box", "color_count", "monochrome_static", "grid_aligned", "stroke_widths", "stroke_linecaps", "stroke_linejoins", "canonical_svg_sha256"],

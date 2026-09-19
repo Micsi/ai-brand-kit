@@ -310,6 +310,16 @@ class IconReportTests(IconReportFixture):
                 with self.assertRaisesRegex(visual.VisualDecisionError, "variant"):
                     self.validate(self.report(icon))
 
+    def test_an_agent_drawn_icon_names_its_origin_and_needs_no_receipt(self) -> None:
+        """005: without Affinity a builder agent draws the SVG; the report says
+        so instead of passing it off as owner-supplied."""
+        report = self.report()
+        report["icons"][0]["variants"][0]["creation_origin"] = "agent-drawn"
+        self.validate(report)
+        style = {"domain": "icon", "icons": [{"icon_id": "heizung", "axis": None, "variants": ["standard"]}],
+                 "creation_origin": "agent-drawn", "report": {"path": "icon-report.json", "sha256": "a" * 64}}
+        visual.validate_candidate_set(candidate_set(style), self.root)
+
     def test_a_violated_build_rule_prevents_release(self) -> None:
         """ADR 0006: a build-rule violation blocks and is not discussed."""
         cases = {
