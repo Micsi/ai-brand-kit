@@ -320,6 +320,28 @@ class IconReportTests(IconReportFixture):
                  "creation_origin": "agent-drawn", "report": {"path": "icon-report.json", "sha256": "a" * 64}}
         visual.validate_candidate_set(candidate_set(style), self.root)
 
+    def test_a_half_unit_grid_is_a_build_rule_of_its_own(self) -> None:
+        """Owner 2026-09-19: with a 1.5 stroke whole units buy no sharpness in
+        any target size, only coarse gaps; the rule set may take half units."""
+        cases = {"half units on a half-unit grid": ('<line x1="4.5" y1="4" x2="19.5" y2="4"/>', 0.5, None),
+                 "quarter units on a half-unit grid": ('<line x1="4.25" y1="4" x2="19.5" y2="4"/>', 0.5, "grid"),
+                 "half units on the default whole-unit grid": ('<line x1="4.5" y1="4" x2="19.5" y2="4"/>', None, "grid")}
+        for name, (body, step, refusal) in cases.items():
+            with self.subTest(name):
+                raw = icon_svg("heizung-standard", body)
+                variant = self.variant("heizung-standard", HEIZUNG)
+                variant["asset"] = fixtures.write(self.root / "heizung-standard.svg", raw)
+                variant["objective_checks"] = visual._icon_static_checks(raw, "icon", "heizung-standard", grid_step=step or 1)
+                report = self.report({"icon_id": "heizung", "axis": None, "variants": [variant],
+                                      "human_reviews": {"brand-fit": "required", "quality-benchmark": "required"}})
+                if step is not None:
+                    report["build_rules"]["grid_step"] = step
+                if refusal is None:
+                    self.validate(report)
+                else:
+                    with self.assertRaisesRegex(visual.VisualDecisionError, refusal):
+                        self.validate(report)
+
     def test_a_violated_build_rule_prevents_release(self) -> None:
         """ADR 0006: a build-rule violation blocks and is not discussed."""
         cases = {

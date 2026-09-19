@@ -52,6 +52,12 @@ class IconTokensTests(unittest.TestCase):
         doc, _root, _tree = brand_package.validate_package(self.package)
         self.assertEqual(1.5, doc["shared_visual_tokens"]["icons"]["build_rules"]["stroke_width"])
 
+    def test_the_package_may_carry_a_half_unit_grid(self) -> None:
+        icons = self.icons(); icons["build_rules"]["grid_step"] = 0.5
+        self.write(icons)
+        doc, _root, _tree = brand_package.validate_package(self.package)
+        self.assertEqual(0.5, doc["shared_visual_tokens"]["icons"]["build_rules"]["grid_step"])
+
     def test_a_provenance_file_that_changed_is_refused(self) -> None:
         self.write(self.icons())
         (self.package / "icons" / "measurement.json").write_text('{"changed": true}\n')

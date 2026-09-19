@@ -1693,8 +1693,13 @@ def validate_logo_report(report: dict[str, Any], root: Path, observation: dict[s
 _ICON_GEOMETRY = {"d", "points", "x", "y", "x1", "x2", "y1", "y2", "cx", "cy", "r", "rx", "ry", "width", "height"}
 
 
-def _icon_static_checks(data: bytes, label: str, asset_id: str) -> dict[str, Any]:
-    """The logo SVG checks plus what an icon set is judged on: grid and stroke."""
+def _icon_static_checks(data: bytes, label: str, asset_id: str, grid_step: float = 1) -> dict[str, Any]:
+    """The logo SVG checks plus what an icon set is judged on: grid and stroke.
+
+    ``grid_step`` is the build rule's coordinate step: whole units by default,
+    half units where the rule set says so.  Diagonals stay antialiased on any
+    grid; the step governs where straight strokes and gaps can sit.
+    """
     base = _svg_static_checks(data, label, asset_id)
     # The bytes, not a second decode: _svg_static_checks has bound and checked
     # the encoding already, and the decode sites of this module are counted.
@@ -1712,7 +1717,7 @@ def _icon_static_checks(data: bytes, label: str, asset_id: str) -> dict[str, Any
             elif name in _ICON_GEOMETRY and element is not root:
                 geometry.extend(float(item) for item in re.findall(r"-?(?:[0-9]+(?:\.[0-9]+)?|\.[0-9]+)", value))
     return {"view_box": base["view_box"], "color_count": base["color_count"], "monochrome_static": base["monochrome_static"],
-            "grid_aligned": all(value == int(value) for value in geometry),
+            "grid_aligned": all((value / grid_step).is_integer() for value in geometry),
             "stroke_widths": sorted(widths), "stroke_linecaps": sorted(caps), "stroke_linejoins": sorted(joins),
             "canonical_svg_sha256": base["canonical_svg_sha256"]}
 
@@ -1727,7 +1732,7 @@ def _require_icon_build_rules(checks: dict[str, Any], rules: dict[str, Any], lab
     """ADR 0006: a build-rule violation prevents release and is not discussed."""
     grid = rules["grid_units"]
     if checks["view_box"] != f"0 0 {grid} {grid}" or not checks["grid_aligned"]:
-        raise VisualDecisionError(f"icon leaves the {grid}-unit grid: {label}")
+        raise VisualDecisionError(f"icon leaves the {grid}-unit grid at step {rules.get('grid_step', 1)}: {label}")
     if checks["stroke_widths"] != [rules["stroke_width"]]:
         raise VisualDecisionError(f"icon stroke width differs from the build rule: {label}")
     if checks["stroke_linecaps"] != [rules["stroke_linecap"]] or checks["stroke_linejoins"] != [rules["stroke_linejoin"]]:
@@ -1796,7 +1801,7 @@ def validate_icon_report(report: dict[str, Any], root: Path, observation: dict[s
                 if receipt["outputs"] != [{"candidate_id": variant["id"], **variant["asset"]}]:
                     raise VisualDecisionError(f"Affinity receipt output does not bind its icon variant: {variant['id']}")
             data = _verify_bound_file(root, variant["asset"], f"icon {variant['id']}")
-            checks = _icon_static_checks(data, f"icon {variant['id']}", variant["id"])
+            checks = _icon_static_checks(data, f"icon {variant['id']}", variant["id"], report["build_rules"].get("grid_step", 1))
             if variant["objective_checks"] != checks:
                 raise VisualDecisionError(f"icon objective checks differ: {variant['id']}")
             _require_icon_build_rules(checks, report["build_rules"], variant["id"])
