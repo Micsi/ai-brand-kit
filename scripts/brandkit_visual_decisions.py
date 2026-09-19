@@ -1736,6 +1736,15 @@ def _require_icon_build_rules(checks: dict[str, Any], rules: dict[str, Any], lab
         raise VisualDecisionError(f"icon colour count differs from the build rule: {label}")
 
 
+def _require_icon_value_matches_report(value: dict[str, Any], report: dict[str, Any]) -> None:
+    """The owner confirms a style (ADR 0001): the value names the icons, their
+    axes and values; the report holds the files that make them."""
+    shown = [{"icon_id": icon["icon_id"], "axis": icon["axis"], "variants": [variant["value"] for variant in icon["variants"]]} for icon in report["icons"]]
+    origins = {variant["creation_origin"] for icon in report["icons"] for variant in icon["variants"]}
+    if value["icons"] != shown or origins != {value["creation_origin"]}:
+        raise VisualDecisionError("icon report candidate/value differs")
+
+
 def validate_icon_report(report: dict[str, Any], root: Path, observation: dict[str, Any], mutation_receipts: dict[str, dict[str, Any]] | None = None, *, project_root: Path | None = None, run_id: str | None = None, key: bytes | None = None, replay_nonces: set[str] | None = None, now: int | None = None) -> None:
     validate_schema(report, "icon")
     validate_affinity_observation(observation, root, project_root=project_root, run_id=run_id, now=now)
@@ -2039,12 +2048,7 @@ def _validate_bundle_locked(project_root: Path, run_id: str, now: int, *, sideca
                 used_receipts |= affinity_ids
             else:
                 validate_icon_report(report, workspace, observation, project_root=project_root, run_id=run_id, now=now)
-            # The owner confirms a style (ADR 0001): the value names the icons,
-            # their axes and values; the report holds the files that make them.
-            shown = [{"icon_id": icon["icon_id"], "axis": icon["axis"], "variants": [variant["value"] for variant in icon["variants"]]} for icon in report["icons"]]
-            origins = {variant["creation_origin"] for icon in report["icons"] for variant in icon["variants"]}
-            if value["icons"] != shown or origins != {value["creation_origin"]}:
-                raise VisualDecisionError("icon report candidate/value differs")
+            _require_icon_value_matches_report(value, report)
         else:
             report_hash = value["report"]["sha256"]
             if report_hash not in validated_logo_reports:
@@ -3450,7 +3454,8 @@ def validate_sheet_manifest(manifest: dict[str, Any], root: Path) -> None:
     if parser.csp != SHEET_CSP:
         raise VisualDecisionError("sheet CSP differs from the closed offline policy")
     required_sections = {"candidates-color", "candidates-typography", "candidates-code-font", "candidates-logo", "candidates-lockup", "recommendations", "owner-review"}
-    if parser.sections != required_sections:
+    # The icon section is there exactly when the run concerns icons (004).
+    if parser.sections not in (required_sections, required_sections | {"candidates-icon"}):
         raise VisualDecisionError("sheet semantic sections differ")
     # The two directions of "every stylesheet the browser loads is a stylesheet
     # this apparatus has read": no <link rel="stylesheet"> may name a member
@@ -3481,7 +3486,17 @@ def validate_sheet_manifest(manifest: dict[str, Any], root: Path) -> None:
 # locale; it names no brand, colour or family, and no font is recognised by its
 # name - ligatures are read out of the font's own GSUB table.
 SHEET_DOMAINS = ("color", "typography", "code-font", "logo", "lockup")
-DOMAIN_LABELS = {"color": "Farbe", "typography": "Typografie", "code-font": "Code-Font", "logo": "Logo", "lockup": "Lockup"}
+DOMAIN_LABELS = {"color": "Farbe", "typography": "Typografie", "code-font": "Code-Font", "logo": "Logo", "lockup": "Lockup", "icon": "Icons"}
+
+
+def _shown_domains(brief: dict[str, Any], candidate_set: dict[str, Any]) -> tuple[str, ...]:
+    """The sheet's domains: the five it always shows, and icons when they concern this run.
+
+    Icons join only when the brief leaves the decision open or the bundle
+    carries a style, so every sheet without icons stays byte for byte as it was.
+    """
+    icons = "icon" in brief["open_decisions"] or any(candidate["kind"] == "icon" for candidate in candidate_set["candidates"])
+    return SHEET_DOMAINS + (("icon",) if icons else ())
 #: The GSUB features that make a code font draw ligatures by default.
 LIGATURE_FEATURES = frozenset({"liga", "calt"})
 #: The GSUB features that give a font a second set of digits, read out of the
@@ -3927,16 +3942,17 @@ def _sheet_view(artifact_root: Path, brief: dict[str, Any], candidate_set: dict[
     # bundle may share a nonce, whichever report carries them.  The external
     # ledger is not read here - see _render_sheet.
     nonces: set[str] = set()
-    domains: dict[str, list[dict[str, Any]]] = {kind: [] for kind in SHEET_DOMAINS}
+    shown = _shown_domains(brief, candidate_set)
+    domains: dict[str, list[dict[str, Any]]] = {kind: [] for kind in shown}
     for candidate in candidate_set["candidates"]:
         kind, value = candidate["kind"], candidate["value"]
         if value["domain"] != kind:
             raise VisualDecisionError(f"candidate domain differs: {candidate['id']}")
-        if kind not in SHEET_DOMAINS:
-            # Without this the family switch below reads an icon report as a
-            # colour report.  004 gives icons their own section.
+        if kind not in shown:
+            # Without this the family switch below would read the report of an
+            # unknown kind as a colour report.
             raise VisualDecisionError(f"sheet has no section for {kind} candidate: {candidate['id']}")
-        family = "font" if kind in {"typography", "code-font"} else "logo" if kind in {"logo", "lockup"} else "color"
+        family = "font" if kind in {"typography", "code-font"} else "logo" if kind in {"logo", "lockup"} else "icon" if kind == "icon" else "color"
         key = (family, value["report"]["sha256"])
         report = reports.get(key)
         if report is None:
@@ -3945,6 +3961,15 @@ def _sheet_view(artifact_root: Path, brief: dict[str, Any], candidate_set: dict[
                 validate_color_report(report)
             elif family == "font":
                 validate_font_report(report, artifact_root)
+            elif family == "icon":
+                if report.get("target_sizes_px") != brief.get("icon_target_sizes_px"):
+                    raise VisualDecisionError(f"icon report is not judged at the target sizes the brief binds: {candidate['id']}")
+                if logo_authentication is None:
+                    validate_icon_report(report, artifact_root, affinity_observation)
+                else:
+                    validate_icon_report(report, artifact_root, affinity_observation, logo_authentication["receipts"],
+                                         project_root=logo_authentication["project_root"], run_id=logo_authentication["run_id"],
+                                         key=logo_authentication["key"], replay_nonces=nonces, now=logo_authentication["now"])
             elif logo_authentication is None:
                 validate_logo_report(report, artifact_root, affinity_observation)
             else:
@@ -3969,6 +3994,9 @@ def _sheet_view(artifact_root: Path, brief: dict[str, Any], candidate_set: dict[
             if None in fonts or classes != (["sans", "serif"] if kind == "typography" else ["mono"]) or value["specimen_sha256"] != report["specimen_sha256"]:
                 raise VisualDecisionError("typography report candidate/value differs")
             entry["fonts"] = fonts
+        elif family == "icon":
+            _require_icon_value_matches_report(value, report)
+            entry["icons"] = report["icons"]
         else:
             items = [item for item in report["candidates"] if (item["variant"] in {"mark", "favicon"}) == (kind == "logo")]
             identifiers = value["logo_candidate_ids"] if kind == "logo" else value["lockup_candidate_ids"]
@@ -3978,10 +4006,11 @@ def _sheet_view(artifact_root: Path, brief: dict[str, Any], candidate_set: dict[
         domains[kind].append(entry)
     # The sheet names every open domain.  One it has no section for would drop
     # out of the owner's view unnoticed, so it is refused instead.
-    unshown = [kind for kind in brief["open_decisions"] if kind not in SHEET_DOMAINS]
+    unshown = [kind for kind in brief["open_decisions"] if kind not in shown]
     if unshown:
         raise VisualDecisionError(f"sheet has no section for open domain: {unshown}")
-    return {"domains": domains, "open": [kind for kind in SHEET_DOMAINS if kind in brief["open_decisions"]]}
+    return {"domains": domains, "open": [kind for kind in shown if kind in brief["open_decisions"]], "shown": shown,
+            "icon_target_sizes_px": brief.get("icon_target_sizes_px", [])}
 
 
 def _sheet_assets(view: dict[str, Any], artifact_root: Path) -> dict[str, Any]:
@@ -4012,6 +4041,12 @@ def _sheet_assets(view: dict[str, Any], artifact_root: Path) -> dict[str, Any]:
                 digest = item["asset"]["sha256"]
                 if digest not in logos:
                     logos[digest] = _verify_bound_file(artifact_root, item["asset"], f"logo {item['id']}")
+    # Icon files are SVG members like the logos and are written the same way.
+    for entry in view["domains"].get("icon", []):
+        for variant in (variant for icon in entry["icons"] for variant in icon["variants"]) if entry["eligible"] else ():
+            digest = variant["asset"]["sha256"]
+            if digest not in logos:
+                logos[digest] = _verify_bound_file(artifact_root, variant["asset"], f"icon {variant['id']}")
     return {"faces": faces, "fonts": fonts, "facts": facts, "logos": logos}
 
 
@@ -4507,7 +4542,8 @@ def _render_sheet(
     candidate_set_sha256 = candidate_file_sha256 or sha256_bytes(canonical_json(candidate_set))
     assets = _sheet_assets(view, artifact_root)
     domains, faces, facts, escape = view["domains"], assets["faces"], assets["facts"], html.escape
-    eligible = {kind: [entry for entry in domains[kind] if entry["eligible"]] for kind in SHEET_DOMAINS}
+    shown = view["shown"]
+    eligible = {kind: [entry for entry in domains[kind] if entry["eligible"]] for kind in shown}
 
     swatch_rules: list[str] = []
     color_cards: list[str] = []
@@ -4574,15 +4610,41 @@ def _render_sheet(
                          "<p>16/24/32 px, Monochrom, Clipping und Lesbarkeit: menschliche Prüfung erforderlich.</p></article>")
         return cards
 
+    def icon_cards() -> list[str]:
+        """004: a contact sheet per target size, then every file at every size.
+
+        The enlarged view is extra and says so; it never stands in for a
+        target size.  Icons draw in currentColor, which an <img> cannot
+        inherit - they render black, so there is no dark row.
+        """
+        cards = []; sizes = view["icon_target_sizes_px"]
+        for entry in eligible.get("icon", []):
+            files = [(icon, variant) for icon in entry["icons"] for variant in icon["variants"]]
+            def image(variant: dict[str, Any], size: int | str) -> str:
+                return f'<img src="assets/{variant["asset"]["sha256"]}.svg" alt="{escape(variant["id"])} {size} px">'
+            contact = "".join(f'<div class="icon-row icon-px-{size}"><p>{size} px</p>' + "".join(image(variant, size) for _icon, variant in files) + "</div>" for size in sizes)
+            details = []
+            for icon, variant in files:
+                reviews = ", ".join(f"{escape(name)}: {escape(state)}" for name, state in sorted(variant["human_reviews"].items()))
+                details.append(f'<div class="icon-variant"><p>{escape(icon["icon_id"])} · {escape(variant["value"])} · {escape(variant["id"])}</p>'
+                               + "".join(f'<div class="icon-px-{size}"><p>{size} px</p>{image(variant, size)}</div>' for size in sizes)
+                               + f'<div class="icon-enlarged"><p>96 px, vergrößert, ersetzt nicht die Zielgröße</p>{image(variant, 96)}</div>'
+                               + f"<p>Prüfstand: {reviews}</p></div>")
+            judgement = "; ".join(f"{escape(icon['icon_id'])}: " + ", ".join(f"{escape(name)} {escape(state)}" for name, state in sorted(icon["human_reviews"].items())) for icon in entry["icons"])
+            cards.append(f'<article class="card"><h3>Kandidat {escape(entry["candidate"]["id"])}</h3>'
+                         f'<p>Betriebsart: {escape(entry["report"]["operating_mode"])} · Messlatte: {escape(entry["report"]["benchmark"]["name"])}</p>'
+                         f'<div class="icon-contact"><p>Kontaktabzug</p>{contact}</div>{"".join(details)}<p>Urteil je Icon: {judgement}</p></article>')
+        return cards
+
     references = {
         "color": "Jede Farbansicht setzt dieselben generischen Systemschriften: Überschriften serifenlos, Fließtext mit Serifen. Sie gehören zu keinem Typografiekandidaten.",
         "typography": "Jeder gesetzte Text hat denselben Inhalt und steht auf derselben neutralen Graupalette dieses Bogens. Sie gehört zu keinem Farbkandidaten. Die Specimens laufen nicht mit gleichem Grad, sondern mit gleicher x-Höhe: der Grad je Kandidat folgt daraus und ist ausgewiesen, der Zeilenabstand ist absolut gleich.",
         "code-font": "Jeder Codeblock hat denselben Inhalt und steht auf neutralem Grund, der zu keinem Farbkandidaten gehört. Auch hier ist auf gleiche x-Höhe normalisiert und der Grad je Kandidat ausgewiesen.",
     }
-    titles = {"color": "Farbkandidaten", "typography": "Typografiekandidaten", "code-font": "Code-Font-Kandidaten", "logo": "Logo-Kandidaten", "lockup": "Lockup-Kandidaten"}
-    cards = {"color": color_cards, "typography": type_cards, "code-font": code_cards, "logo": logo_cards("logo"), "lockup": logo_cards("lockup")}
+    titles = {"color": "Farbkandidaten", "typography": "Typografiekandidaten", "code-font": "Code-Font-Kandidaten", "logo": "Logo-Kandidaten", "lockup": "Lockup-Kandidaten", "icon": "Icon-Stile"}
+    cards = {"color": color_cards, "typography": type_cards, "code-font": code_cards, "logo": logo_cards("logo"), "lockup": logo_cards("lockup"), "icon": icon_cards()}
     sections = []
-    for kind in SHEET_DOMAINS:
+    for kind in shown:
         blocked = [entry for entry in domains[kind] if not entry["eligible"]]
         reference = (f'<p class="reference"><strong>Referenzbelegung, keine Empfehlung:</strong> {escape(references[kind])} '
                      "Freie Kombinationen zeigt der nicht normative Playground.</p>") if kind in references and cards[kind] else ""
@@ -4593,7 +4655,7 @@ def _render_sheet(
                         + "</section>")
     overview = _sheet_table(("Domäne", "Visual Brief", "Prüfbare Kandidaten", "Blockiert"),
                             [(DOMAIN_LABELS[kind], "offen" if kind in view["open"] else "nicht offen", str(len(eligible[kind])), str(len(domains[kind]) - len(eligible[kind])))
-                             for kind in SHEET_DOMAINS])
+                             for kind in shown])
     recommendations = "".join(
         f'<li><strong>Unverbindliche Empfehlung:</strong> {escape(item["candidate_id"])} — {escape(item["rationale"])}</li>'
         for item in candidate_set["recommendations"]
@@ -4607,7 +4669,10 @@ def _render_sheet(
         + _face_metric_rules("face", index, facts[digest], SHEET_ROLE_SELECTORS, SHEET_ROLE_WEIGHTS, sheet_targets)
         for (digest, classification), index in faces.items()
     )
-    css = _sheet_css(font_faces, " ".join(swatch_rules))
+    icon_rules = [f".icon-px-{size} img{{width:{size}px;height:{size}px}}" for size in view["icon_target_sizes_px"]]
+    if "icon" in shown:
+        icon_rules.append(".icon-enlarged img{width:96px;height:96px} .icon-row,.icon-variant{display:flex;flex-wrap:wrap;gap:1rem;align-items:flex-end;padding:.5rem;background:#fff;border:1px solid var(--line)}")
+    css = _sheet_css(font_faces, " ".join(swatch_rules + icon_rules))
     document = f"""<!doctype html>
 <html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="{SHEET_CSP}"><title>BrandKit Visual Decisions</title><link rel="stylesheet" href="style.css"></head>
 <body><main><h1>Visueller Entscheidungsbogen</h1><p class="notice"><strong>Nicht normativ.</strong> Kandidaten und Empfehlungen sind getrennte Prüfartefakte. Dieser Bogen trifft keine Auswahl.</p><div class="overview">{overview}</div>{"".join(sections)}<section id="recommendations"><h2>Unverbindliche Empfehlungen</h2><ul>{recommendations}</ul></section><section id="owner-review"><h2>Owner-Review</h2><p>Keine Auswahlmöglichkeit in diesem Artefakt. Die Bestätigung erfolgt im bestehenden Interviewdialog.</p><ul><li>Prüfe den Bogen bei 320, 768 und 1440 CSS-Pixeln sowie bei 200 % Zoom.</li><li>Nenne danach je Domäne nur Candidate-IDs oder open beziehungsweise not-applicable.</li><li>Die Specimens sind je Kandidat auf gleiche x-Höhe normalisiert. Der je Kandidat ausgewiesene Grad ist die Folge davon und keine Empfehlung.</li><li>Ohne gepinnten Renderer bleiben Font-Load und Fallback, Pixel-Clipping, Kleinstdetails und Screenshot-Reflow not-run.</li></ul></section><footer>Affinity MCP: {escape(affinity_observation['status'])}.</footer></main></body></html>
@@ -5293,6 +5358,10 @@ def _render_playground(
 ) -> dict[str, Any]:
     """Write the playground for reports this function re-validates itself (see _sheet_view)."""
     view = _sheet_view(artifact_root, brief, candidate_set, affinity_observation, logo_authentication=logo_authentication)
+    if "icon" in view["shown"]:
+        # The playground has no icon view yet; dropping icons silently would
+        # show the owner a run without the decision it still has to take.
+        raise VisualDecisionError("playground has no view for icon candidates")
     content = _sample_content(brief)
     candidate_set_sha256 = candidate_file_sha256 or sha256_bytes(canonical_json(candidate_set))
     assets = _sheet_assets(view, artifact_root)

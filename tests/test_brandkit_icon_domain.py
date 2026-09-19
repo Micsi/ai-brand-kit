@@ -144,20 +144,6 @@ class IconBriefTests(unittest.TestCase):
                 visual.validate_brief({**brief, "open_decisions": ["color"], "icon_target_sizes_px": [24]}, root)
 
 
-class IconSheetTests(unittest.TestCase):
-    """The sheet names every open domain; until it can show icons it refuses
-    rather than dropping the open icon decision from the owner's view."""
-
-    def test_sheet_refuses_a_brief_with_an_open_icon_decision(self) -> None:
-        with tempfile.TemporaryDirectory() as temp_name:
-            project = Path(temp_name).resolve() / "project"; project.mkdir()
-            root = visual.visual_workspace(project, "run-a", create=True)
-            now = int(time.time())
-            fixtures.multi_domain_bundle(project, root, now, {"color": 1}, open_decisions=["color", "icon"])
-            with self.assertRaisesRegex(visual.VisualDecisionError, "icon"):
-                visual.render_sheet(project, "run-a", now)
-
-
 RULES = {"grid_units": 24, "stroke_width": 2, "stroke_linecap": "round", "stroke_linejoin": "round", "color_count": 1}
 
 
@@ -172,6 +158,8 @@ HEIZUNG = '<path d="M6 4v16M12 4v16M18 4v16"/><line x1="4" y1="20" x2="20" y2="2
 
 class IconReportFixture(unittest.TestCase):
     """Builders only; the tests live in the subclasses."""
+
+    sizes = [24]
 
     def setUp(self) -> None:
         temp = tempfile.TemporaryDirectory(); self.addCleanup(temp.cleanup)
@@ -189,7 +177,7 @@ class IconReportFixture(unittest.TestCase):
                   "canonical_svg_sha256": visual._svg_static_checks(raw, file_id, file_id)["canonical_svg_sha256"]}
         return {"value": file_id.split("-", 1)[1], "id": file_id, "asset": asset, "creation_origin": "owner-supplied",
                 "objective_checks": checks,
-                "human_reviews": {"size-24": "required", "optical-weight": "required", "set-consistency": "required"}}
+                "human_reviews": {**{f"size-{size}": "required" for size in self.sizes}, "optical-weight": "required", "set-consistency": "required"}}
 
     def report(self, *icons: dict) -> dict:
         source = fixtures.write(self.root / "rules-source.md", "Owner-Bestaetigung der Bauregeln")
@@ -197,7 +185,7 @@ class IconReportFixture(unittest.TestCase):
                 "affinity_observation_sha256": visual.sha256_bytes(visual.canonical_json(self.observation)),
                 "operating_mode": "eigenstil",
                 "benchmark": {"name": "Fixture Quality Set", "role": "quality-reference", "source": source},
-                "target_sizes_px": [24], "build_rules": {**RULES, "source": source}, "confirmed_set": [],
+                "target_sizes_px": list(self.sizes), "build_rules": {**RULES, "source": source}, "confirmed_set": [],
                 "icons": list(icons) or [{"icon_id": "heizung", "axis": None,
                                           "variants": [self.variant("heizung-standard", HEIZUNG)],
                                           "human_reviews": {"brand-fit": "required", "quality-benchmark": "required"}}],
@@ -404,26 +392,31 @@ class IconReceiptTests(IconReportFixture):
 class IconBundleTests(IconReportFixture):
     """A style candidate is eligible when its value and its icon report agree."""
 
-    def bundle(self, value: dict, *, brief_sizes: list[int] | None = [24]) -> dict:
+    def bundle(self, value: dict | None, *, brief_sizes: list[int] | None = [24], now: int = fixtures.NOW) -> dict:
         document = fixtures.color_bundle(self.project, self.root)
         self.observation = json.loads((self.root / "affinity-observation.json").read_text(encoding="utf-8"))
+        # The sheet checks the observation against the clock, as the logo path does.
+        self.observation.update(observed_at=now - 10, expires_at=now + 10)
+        fixtures.canonical_write(self.root, "affinity-observation.json", self.observation)
         brief = json.loads((self.root / "visual-brief.json").read_text(encoding="utf-8"))
         if brief_sizes is not None:
             brief.update(open_decisions=["color", "icon"], icon_target_sizes_px=brief_sizes)
         fixtures.canonical_write(self.root, "visual-brief.json", brief)
         document["brief_sha256"] = visual.sha256_bytes(visual.canonical_json(brief))
-        value = {**value, "report": {"path": "icon-report.json", "sha256": "0" * 64}}
-        document["candidates"].append({"id": "icon-choice", "kind": "icon", "label": "Icon-Stil A", "value": value,
-                                       "value_sha256": "0" * 64, "source_ids": ["impeccable"], "status": "candidate"})
+        if value is not None:
+            value = {**value, "report": {"path": "icon-report.json", "sha256": "0" * 64}}
+            document["candidates"].append({"id": "icon-choice", "kind": "icon", "label": "Icon-Stil A", "value": value,
+                                           "value_sha256": "0" * 64, "source_ids": ["impeccable"], "status": "candidate"})
         context = visual.candidate_context_sha256(document)
         document["candidates"][0]["value"]["report"] = fixtures.canonical_write(self.root, "color-report.json", visual.color_contrast_report(
             context, "color-a", fixtures.palette(), ["text", "icon"]))
-        report = self.report(); report["candidate_set_sha256"] = context
-        value["report"] = fixtures.canonical_write(self.root, "icon-report.json", report)
+        if value is not None:
+            report = self.report(); report["candidate_set_sha256"] = context
+            value["report"] = fixtures.canonical_write(self.root, "icon-report.json", report)
         for candidate in document["candidates"]:
             candidate["value_sha256"] = visual.sha256_bytes(visual.canonical_json(candidate["value"]))
         fixtures.canonical_write(self.root, "candidate-set.json", document)
-        return visual.validate_bundle(self.project, "run-a", fixtures.NOW, sidecar_root=visual.ROOT.parents[1])
+        return visual.validate_bundle(self.project, "run-a", now, sidecar_root=visual.ROOT.parents[1])
 
     HEIZUNG_STYLE = {"domain": "icon", "icons": [{"icon_id": "heizung", "axis": None, "variants": ["standard"]}],
                      "creation_origin": "owner-supplied"}
@@ -431,18 +424,54 @@ class IconBundleTests(IconReportFixture):
     def test_an_icon_style_with_an_agreeing_report_is_eligible(self) -> None:
         self.assertIn("icon-choice", [item["id"] for item in self.bundle(self.HEIZUNG_STYLE)["eligible_candidates"]])
 
-    def test_the_sheet_refuses_an_eligible_icon_it_cannot_show_yet(self) -> None:
-        """004 gives icons a section; until then an icon in the bundle is refused
-        by the sheet, whether or not the brief leaves the decision open."""
-        self.bundle(self.HEIZUNG_STYLE)
-        with self.assertRaisesRegex(visual.VisualDecisionError, "sheet has no section for icon"):
-            visual.render_sheet(self.project, "run-a", fixtures.NOW)
+    def test_an_open_icon_decision_without_a_style_is_stated_as_open(self) -> None:
+        """The sheet names every open domain; it neither drops nor refuses it."""
+        now = int(time.time())
+        self.bundle(None, now=now)
+        visual.render_sheet(self.project, "run-a", now)
+        page = (self.root / "sheet" / "index.html").read_text(encoding="utf-8")
+        section = next(node for node in fixtures.nodes(fixtures.PageTree(page).root, "section") if node["attrs"].get("id") == "candidates-icon")
+        self.assertIn("Offen: das Bundle enthält keine Kandidaten für diese Domäne.", fixtures.text_of(section))
+
+    def test_the_playground_refuses_icons_it_cannot_show(self) -> None:
+        now = int(time.time())
+        self.bundle(self.HEIZUNG_STYLE, now=now)
+        with self.assertRaisesRegex(visual.VisualDecisionError, "playground has no view for icon"):
+            visual.render_playground(self.project, "run-a", now)
 
     def test_the_report_is_judged_at_the_sizes_the_brief_binds(self) -> None:
         with self.subTest("the report looked at other sizes"), self.assertRaisesRegex(visual.VisualDecisionError, "target sizes"):
             self.bundle(self.HEIZUNG_STYLE, brief_sizes=[20, 24, 32])
         with self.subTest("the brief leaves no icon decision open"), self.assertRaisesRegex(visual.VisualDecisionError, "target sizes"):
             self.setUp(); self.bundle(self.HEIZUNG_STYLE, brief_sizes=None)
+
+    def test_the_sheet_shows_a_contact_sheet_and_each_icon_at_every_target_size(self) -> None:
+        """004: the style is judged as a set, each icon at every bound size; an
+        enlarged view is extra and never replaces a target size."""
+        self.sizes = [20, 24, 32]
+        variants = [self.variant("licht-an", HEIZUNG), self.variant("licht-aus", '<path d="M6 4v16"/>')]
+        variants[1]["objective_checks"]["canonical_svg_sha256"] = visual._svg_static_checks(
+            (self.root / "licht-aus.svg").read_bytes(), "x", "licht-aus")["canonical_svg_sha256"]
+        style = {"domain": "icon", "icons": [{"icon_id": "licht", "axis": "zustand", "variants": ["an", "aus"]}], "creation_origin": "owner-supplied"}
+        self.report = lambda *icons, _report=self.report: _report({"icon_id": "licht", "axis": "zustand", "variants": variants,
+                                                                     "human_reviews": {"brand-fit": "required", "quality-benchmark": "required", "variant-pair": "required"}})
+        now = int(time.time())
+        self.bundle(style, brief_sizes=[20, 24, 32], now=now)
+        visual.render_sheet(self.project, "run-a", now)
+        page = (self.root / "sheet" / "index.html").read_text(encoding="utf-8")
+        css = (self.root / "sheet" / "style.css").read_text(encoding="utf-8")
+        section = next(node for node in fixtures.nodes(fixtures.PageTree(page).root, "section") if node["attrs"].get("id") == "candidates-icon")
+        contact = next(fixtures.nodes(section, css="icon-contact"))
+        for size in (20, 24, 32):
+            self.assertIn(f".icon-px-{size} img{{width:{size}px;height:{size}px}}", css)
+            row = next(fixtures.nodes(contact, css=f"icon-px-{size}"))
+            self.assertEqual(2, len(list(fixtures.nodes(row, "img"))), f"contact sheet row {size} px")
+        for variant in ("licht-an", "licht-aus"):
+            card = next(node for node in fixtures.nodes(section, css="icon-variant") if variant in fixtures.text_of(node))
+            self.assertEqual({"icon-px-20", "icon-px-24", "icon-px-32", "icon-enlarged"},
+                             {cls for node in fixtures.nodes(card) for cls in node["attrs"].get("class", "").split() if cls.startswith("icon-px-") or cls == "icon-enlarged"})
+            self.assertIn("vergrößert, ersetzt nicht die Zielgröße", fixtures.text_of(card))
+        self.assertIn("Icons", page)
 
     def test_a_style_value_that_differs_from_its_report_is_refused(self) -> None:
         cases = {
