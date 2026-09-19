@@ -156,6 +156,28 @@ def icon_svg(file_id: str, body: str, *, stroke_width: str = "2", view_box: str 
 HEIZUNG = '<path d="M6 4v16M12 4v16M18 4v16"/><line x1="4" y1="20" x2="20" y2="20"/>'
 
 
+def licht_style(root: Path, observation: dict, sizes: list[int]) -> tuple[dict, dict]:
+    """A complete own-style candidate - licht with the axis zustand - and its
+    report, on disk under ``root``; for tests outside this module."""
+    variants = []
+    for value, body in (("an", HEIZUNG), ("aus", '<path d="M6 4v16"/>')):
+        file_id = f"licht-{value}"; raw = icon_svg(file_id, body)
+        variants.append({"value": value, "id": file_id, "asset": fixtures.write(root / f"{file_id}.svg", raw),
+                         "creation_origin": "owner-supplied", "objective_checks": visual._icon_static_checks(raw, file_id, file_id),
+                         "human_reviews": {**{f"size-{size}": "required" for size in sizes}, "optical-weight": "required", "set-consistency": "required"}})
+    source = fixtures.write(root / "rules-source.md", "Owner-Bestaetigung der Bauregeln")
+    report = {"schema_version": "brandkit-icon-report.v1", "candidate_set_sha256": "0" * 64,
+              "affinity_observation_sha256": visual.sha256_bytes(visual.canonical_json(observation)),
+              "operating_mode": "eigenstil", "benchmark": {"name": "Fixture Quality Set", "role": "quality-reference", "source": source},
+              "target_sizes_px": list(sizes), "build_rules": {**RULES, "source": source}, "confirmed_set": [],
+              "icons": [{"icon_id": "licht", "axis": "zustand", "variants": variants,
+                         "human_reviews": {"brand-fit": "required", "quality-benchmark": "required", "variant-pair": "required"}}],
+              "objective_status": "pass", "human_review_status": "required"}
+    value = {"domain": "icon", "icons": [{"icon_id": "licht", "axis": "zustand", "variants": ["an", "aus"]}],
+             "creation_origin": "owner-supplied", "report": fixtures.canonical_write(root, "icon-report.json", report)}
+    return value, report
+
+
 class IconReportFixture(unittest.TestCase):
     """Builders only; the tests live in the subclasses."""
 

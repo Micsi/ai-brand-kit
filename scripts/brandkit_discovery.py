@@ -1188,6 +1188,26 @@ def _visual_resolved_values(project: Path, document: dict[str, Any]) -> dict[str
         if hashlib.sha256(raw).hexdigest() != binding["sha256"]:
             raise DiscoveryError("visual decision report differs from the value that binds it")
         report = load_json_bytes(raw, "visual decision report")
+        if domain == "icon":
+            # A style resolves into the files it stands for: one row per variant
+            # file, named by icon and value, bound by the digest of its bytes.
+            icons = report.get("icons") if isinstance(report, dict) else None
+            if not isinstance(icons, list) or not icons:
+                raise DiscoveryError("visual decision names a candidate its report does not carry")
+            rows = []
+            for icon in icons:
+                for variant in icon.get("variants", []) if isinstance(icon, dict) else []:
+                    asset = variant.get("asset") if isinstance(variant, dict) else None
+                    row = {"kandidat": variant.get("id") if isinstance(variant, dict) else None, "icon": icon.get("icon_id"),
+                           "variante": variant.get("value") if isinstance(variant, dict) else None,
+                           "asset_sha256": asset.get("sha256") if isinstance(asset, dict) else None}
+                    if not all(isinstance(text, str) for text in row.values()):
+                        raise DiscoveryError("visual decision report lacks a value the review has to show")
+                    rows.append(row)
+            if not rows:
+                raise DiscoveryError("visual decision names a candidate its report does not carry")
+            resolved[decision["id"]] = rows
+            continue
         listed = report.get("candidates") if isinstance(report, dict) else None
         candidates = {item.get("id"): item for item in listed if isinstance(item, dict)} if isinstance(listed, list) else {}
         field, many = _VALUE_CANDIDATE_FIELDS[domain]

@@ -1346,6 +1346,35 @@ class VisualDecisionsRealCoreTests(unittest.TestCase):
             },
         }
 
+    def test_an_icon_style_is_resolved_into_its_variant_files_for_the_owner(self) -> None:
+        """011/004: the owner confirms a style by the files it stands for - one
+        row per variant file, with icon, value and the digest of its bytes."""
+        from tests import test_brandkit_icon_domain as icons
+        with tempfile.TemporaryDirectory() as temporary:
+            project, key = self._project(Path(temporary))
+            workspace = visual_decisions.visual_workspace(project, self.RUN, create=True)
+            now = int(time.time())
+            candidate_set = multi_domain_bundle(project, workspace, now, {"color": 1}, run_id=self.RUN, open_decisions=["color"])
+            brief = json.loads((workspace / "visual-brief.json").read_bytes())
+            brief.update(open_decisions=["color", "icon"], icon_target_sizes_px=[24])
+            candidate_set["brief_sha256"] = visual_decisions.sha256_bytes(visual_decisions.canonical_json(brief))
+            (workspace / "visual-brief.json").write_bytes(visual_decisions.canonical_json(brief))
+            observation = json.loads((workspace / "affinity-observation.json").read_bytes())
+            value, report = icons.licht_style(workspace, observation, [24])
+            candidate_set["candidates"].append({"id": "icon-choice", "kind": "icon", "label": "Icon-Stil A", "value": value,
+                                                "value_sha256": "0" * 64, "source_ids": ["impeccable"], "status": "candidate"})
+            rebind(workspace, candidate_set)
+            self._owner_inputs(project)
+            state = self._state(project, self._sheet(project, now), domains=("color", "icon"))
+            for choice in state["owner_selection"]["choices"]:
+                choice["candidate_id"] = {"color": "color-a", "icon": "icon-choice"}[choice["domain"]]
+            prepared = discovery.prepare_visual_confirmation(project, self.RUN, key, state, now=now)
+            resolved = self._resolved((project / prepared["filled_review"]["path"]).read_text(encoding="utf-8"))
+            files = {variant["id"]: variant["asset"]["sha256"] for variant in report["icons"][0]["variants"]}
+            self.assertEqual([{"kandidat": "licht-an", "icon": "licht", "variante": "an", "asset_sha256": files["licht-an"]},
+                              {"kandidat": "licht-aus", "icon": "licht", "variante": "aus", "asset_sha256": files["licht-aus"]}],
+                             resolved["icon: icon-choice"])
+
     def _owner_inputs(self, project: Path) -> None:
         (project / ".brandkit/work/ci-pilot/brand-raw.md").write_text("# Brand raw\n", encoding="utf-8")
         (project / self.WORKSPACE / "owner-selection.txt").write_text("Ich waehle diese Kandidaten.\n", encoding="utf-8")
