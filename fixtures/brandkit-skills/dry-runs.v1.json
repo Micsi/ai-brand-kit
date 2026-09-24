@@ -780,7 +780,7 @@
     {
       "path": "brandkit-skill-contract.v1.json",
       "role": "contract",
-      "sha256": "bb8c60d3479c2ffbec19f53d622246b09c62e4ea4e6b576025c1c813e8d67efa"
+      "sha256": "9d51bbaf004c51063db67cc4a77af5366cce0ddf5f7b3aa99c185eacc73ef699"
     },
     {
       "path": "impeccable-adapter.v1.json",

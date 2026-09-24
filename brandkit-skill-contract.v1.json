@@ -234,7 +234,7 @@
       "brand-package-schema": {
         "path": "schemas/brand-package.v1.schema.json",
         "role": "contract",
-        "sha256": "c5128fc1c582f38188a9fe8ccf037e4cb98ec21eb1a2c498d14bb0df59fac475"
+        "sha256": "6f7f5fb5e06003853b2981da02e6f2d9bc3e617ff678266f40b4a44991cd68cb"
       },
       "build-workflow": {
         "path": "skills/brandkit-build/references/workflow.md",
@@ -334,7 +334,7 @@
       "visual-candidate-set-schema": {
         "path": "schemas/brandkit-visual-candidate-set.v1.schema.json",
         "role": "contract",
-        "sha256": "e6da0a467335b321a6fa7804334060bf04594714bfb5c7b20482a0f323863165"
+        "sha256": "5a7949100c75cbdb79f026465b378c7ffe0d71f9a0ceb179aed1d5d85ac1bac3"
       },
       "visual-decisions-workflow": {
         "path": "skills/brandkit-visual-decisions/references/workflow.md",

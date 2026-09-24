@@ -3,7 +3,7 @@
   "members": [
     {
       "path": "brandkit-skill-contract.v1.json",
-      "sha256": "bb8c60d3479c2ffbec19f53d622246b09c62e4ea4e6b576025c1c813e8d67efa"
+      "sha256": "9d51bbaf004c51063db67cc4a77af5366cce0ddf5f7b3aa99c185eacc73ef699"
     },
     {
       "path": "schemas/brandkit-skill-contract.v1.schema.json",
@@ -35,7 +35,7 @@
     },
     {
       "path": "schemas/brand-package.v1.schema.json",
-      "sha256": "c5128fc1c582f38188a9fe8ccf037e4cb98ec21eb1a2c498d14bb0df59fac475"
+      "sha256": "6f7f5fb5e06003853b2981da02e6f2d9bc3e617ff678266f40b4a44991cd68cb"
     },
     {
       "path": "schemas/document-type.v1.schema.json",
@@ -79,7 +79,7 @@
     },
     {
       "path": "scripts/brand_package.py",
-      "sha256": "9ebc674f1586f9684f2b717062d58e7f803990997cf7dce7111503a7e7453238"
+      "sha256": "834d5dd351bdb874413492dd5d0f75f17a8751991b5bdf14b7eb4df2c55d881d"
     },
     {
       "path": "scripts/brandkit_discovery.py",
@@ -107,7 +107,7 @@
     },
     {
       "path": "fixtures/brandkit-skills/dry-runs.v1.json",
-      "sha256": "e54f74025498c2274016f0a463d9ffeda88a0cf08ee156b71ccbbe919fe12503"
+      "sha256": "8859f604273d4d92b70147bb057d658a4acfe9328f310bc426ecd44d4c766fa6"
     },
     {
       "path": "fixtures/brandkit-skills/discovery-handoff.valid.json",
@@ -199,7 +199,7 @@
     },
     {
       "path": "schemas/brandkit-visual-candidate-set.v1.schema.json",
-      "sha256": "e6da0a467335b321a6fa7804334060bf04594714bfb5c7b20482a0f323863165"
+      "sha256": "5a7949100c75cbdb79f026465b378c7ffe0d71f9a0ceb179aed1d5d85ac1bac3"
     },
     {
       "path": "schemas/reputation-evidence.v1.schema.json",
@@ -211,7 +211,7 @@
     },
     {
       "path": "scripts/brandkit_visual_decisions.py",
-      "sha256": "ef414a777188dd12d441e2a5a5c5a25ec5373e0312b0b90287c40dce18e18c80"
+      "sha256": "331350828e34cfabad20ea7d3ffd604c9d0a7302f3f1e3fc9b4843c51ef2907e"
     },
     {
       "path": "scripts/validate_visual_decision_sources.py",
