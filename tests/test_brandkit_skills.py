@@ -25,6 +25,8 @@ from scripts.validate_brandkit_skills import COLLISION_FIXTURES, FIXTURES, IMPEC
 # The core module imports its siblings by bare name, the way it does under its
 # own suite and under the CLI; the adapter reaches it as scripts.* from here.
 sys.path.insert(0, str(ROOT / "scripts"))
+# Sidecar-Wurzel: der Fork liegt unter <sidecar>/code/ai-brand-kit.
+SIDECAR = Path(os.environ.get("BRANDKIT_SIDECAR", ROOT.parents[1]))
 import scripts.brandkit_visual_decisions as visual_decisions
 
 # The bundle builders of the *core* suite, reused verbatim.  A fixture written
@@ -195,7 +197,7 @@ class BrandKitSkillContractTests(unittest.TestCase):
             self.assertTrue(any("load trace is not disjoint" in item for item in errors), errors)
 
     def test_optional_discovery_bundle_is_closed_and_pinned_to_official_bytes(self) -> None:
-        upstream = Path("/Volumes/Daten/Projekte/BrandKit/external-sources/mattpocock-skills")
+        upstream = SIDECAR / "external-sources/mattpocock-skills"
         with tempfile.TemporaryDirectory() as temporary:
             checkout = Path(temporary) / "bundle"
             subprocess.run(["git", "clone", "-q", "--no-hardlinks", str(upstream), str(checkout)], check=True)
@@ -563,8 +565,8 @@ class BrandKitSkillContractTests(unittest.TestCase):
         self.assertEqual(["new-work.md"], routes["shape"]["transitive"])
         self.assertEqual("init", routes["teach"]["alias"])
         self.assertEqual([], validate_real_impeccable_context_matrix())
-        craft = transitive_playbook_trace("craft", Path("/Volumes/Daten/Projekte/BrandKit/external-sources/impeccable/.agents/skills/impeccable"))
-        shape = transitive_playbook_trace("shape", Path("/Volumes/Daten/Projekte/BrandKit/external-sources/impeccable/.agents/skills/impeccable"))
+        craft = transitive_playbook_trace("craft", SIDECAR / "external-sources/impeccable/.agents/skills/impeccable")
+        shape = transitive_playbook_trace("shape", SIDECAR / "external-sources/impeccable/.agents/skills/impeccable")
         self.assertEqual(1, sum(item["role"] == "primary" for item in craft))
         self.assertEqual(1, sum(item["role"] == "primary" for item in shape))
         self.assertIn({"path":"new-work.md", "role":"primary"}, craft)
@@ -593,7 +595,7 @@ class BrandKitSkillContractTests(unittest.TestCase):
             self.assertTrue(any("invented normative roles" in item for item in errors), errors)
 
     def test_impeccable_source_blob_pin_and_productive_init_wrapper(self) -> None:
-        source = Path("/Volumes/Daten/Projekte/BrandKit/external-sources/impeccable/.agents/skills/impeccable")
+        source = SIDECAR / "external-sources/impeccable/.agents/skills/impeccable"
         for relative in ("reference/polish.md", "scripts/context.mjs"):
             with tempfile.TemporaryDirectory() as temporary:
                 copy = Path(temporary) / "impeccable"; shutil.copytree(source, copy)
@@ -605,7 +607,7 @@ class BrandKitSkillContractTests(unittest.TestCase):
             project = Path(temporary) / "project"; project.mkdir(); old = b"# Product\n\n## Platform\n\nios\n\nOLD-AUTHORITY\n"; (project / "PRODUCT.md").write_bytes(old)
             product = Path(temporary) / "new-product.md"; new = b"# Product\n\n<!-- impeccable:product-schema 1 -->\n\n## Platform\n\nadaptive\n"; product.write_bytes(new)
             command = [sys.executable, str(ROOT / "scripts/impeccable_adapter.py"), "init-defer", "--project", str(project), "--product", str(product), "--source-root", str(source)]
-            env = {**os.environ, "PYTHONPATH":f"{ROOT / 'scripts'}:/Users/joh/.local/lib/python3.13/site-packages"}
+            env = {**os.environ, "PYTHONPATH":f"{ROOT / 'scripts'}:{Path.home() / '.local/lib/python3.13/site-packages'}"}
             result = subprocess.run(command, text=True, capture_output=True, env=env)
             self.assertEqual(0, result.returncode, result.stderr); output = json.loads(result.stdout)
             self.assertEqual(new, (project / "PRODUCT.md").read_bytes())

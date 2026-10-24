@@ -34,11 +34,11 @@ class RuntimeArchiveTests(unittest.TestCase):
    first=ra.bindings(lock,"mermaid");lock["artifacts"]["mermaid_bundle"]["sha256"]="changed";self.assertNotEqual(first,ra.bindings(lock,"mermaid"))
  def test_old_builder_root_is_rejected_by_productive_builder_gate(self):
   with tempfile.TemporaryDirectory() as raw:
-   base=pathlib.Path(raw);root=base/"root";root.mkdir()
-   (root/"payload").write_text("/Volumes/Daten/Projekte/BrandKit/.runtime/old-root/bin")
+   base=pathlib.Path(raw).resolve();root=base/"root";root.mkdir()
+   (root/"payload").write_text(f"{base}/old-root/bin")
    archive,_=ra.tree_archive(root)
    with self.assertRaisesRegex(ra.st.ToolchainError,"builder-root"):
-    ra.reject_builder_root(archive,pathlib.Path("/Volumes/Daten/Projekte/BrandKit/.runtime/old-root"))
+    ra.reject_builder_root(archive,base/"old-root")
  def test_top_lock_closes_real_archives_and_run_consumers(self):
   lock=json.loads((ROOT/"toolchain/toolchain.lock.json").read_text())
   self.assertEqual(set(lock["runtime_archives"]),set(ra.COMPONENTS))

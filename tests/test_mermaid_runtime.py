@@ -14,6 +14,8 @@ from unittest.mock import Mock, call, patch
 
 
 ROOT = Path(__file__).resolve().parents[1]
+# Laufzeitablage des Sidecars: der Fork liegt unter <sidecar>/code/ai-brand-kit.
+RUNTIME_TMP = str(ROOT.parents[1] / ".runtime/tmp")
 SPEC = importlib.util.spec_from_file_location("mermaid_runtime", ROOT / "toolchain/mermaid-svg/runtime.py")
 runtime = importlib.util.module_from_spec(SPEC)
 assert SPEC.loader is not None
@@ -105,7 +107,7 @@ class ProcessPhasePrimaryErrorTests(unittest.TestCase):
         proc = Mock(pid=123, returncode=None)
         proc.wait.side_effect = wait_error
         cleanup = runtime.RuntimeFailure("cleanup evidence failed")
-        with tempfile.TemporaryDirectory(dir="/Volumes/Daten/Projekte/BrandKit/.runtime/tmp") as temporary:
+        with tempfile.TemporaryDirectory(dir=RUNTIME_TMP) as temporary:
             log_dir = Path(temporary)
             with patch.object(runtime.subprocess, "Popen", return_value=proc), patch.object(runtime.os, "getpgid", return_value=123), \
                  patch.object(runtime, "terminate_group", side_effect=cleanup):
@@ -141,7 +143,7 @@ class ProcessPhasePrimaryErrorTests(unittest.TestCase):
             if writes == 2:
                 raise OSError("end event unavailable")
 
-        with tempfile.TemporaryDirectory(dir="/Volumes/Daten/Projekte/BrandKit/.runtime/tmp") as temporary:
+        with tempfile.TemporaryDirectory(dir=RUNTIME_TMP) as temporary:
             with patch.object(runtime.subprocess, "Popen", return_value=proc), \
                  patch.object(runtime.os, "getpgid", return_value=123), \
                  patch.object(runtime, "terminate_group", return_value=(True, True)), \
@@ -154,7 +156,7 @@ class ProcessPhasePrimaryErrorTests(unittest.TestCase):
     def test_real_short_timeout_reaps_process_group(self) -> None:
         command = ["/bin/sleep", "30"]
         started = time.monotonic()
-        with tempfile.TemporaryDirectory(dir="/Volumes/Daten/Projekte/BrandKit/.runtime/tmp") as temporary:
+        with tempfile.TemporaryDirectory(dir=RUNTIME_TMP) as temporary:
             log_dir = Path(temporary)
             with self.assertRaisesRegex(runtime.RuntimeFailure, "Mermaid phase timed out: mmdc"):
                 runtime.process_phase("real-timeout", "mmdc", command, log_dir, timeout=0.05)
@@ -168,7 +170,7 @@ class ProcessPhasePrimaryErrorTests(unittest.TestCase):
 
     def test_nonzero_exit_preserves_code_and_bounded_stderr_cause(self) -> None:
         command = [str(runtime.PYTHON), "-c", "import sys; print('chrome-first-cause', file=sys.stderr); raise SystemExit(42)"]
-        with tempfile.TemporaryDirectory(dir="/Volumes/Daten/Projekte/BrandKit/.runtime/tmp") as temporary:
+        with tempfile.TemporaryDirectory(dir=RUNTIME_TMP) as temporary:
             log_dir = Path(temporary)
             with self.assertRaises(runtime.RuntimeFailure) as raised:
                 runtime.process_phase("real-failure", "chrome", command, log_dir, timeout=5)
@@ -183,7 +185,7 @@ class ProcessPhasePrimaryErrorTests(unittest.TestCase):
 class LegacyBrowserIsolationTests(unittest.TestCase):
     def test_cold_chrome_budget_is_finite_and_profile_probe_is_bounded(self) -> None:
         self.assertEqual(300.0, runtime.PHASE_TIMEOUTS["chrome"])
-        with tempfile.TemporaryDirectory(dir="/Volumes/Daten/Projekte/BrandKit/.runtime/tmp") as temporary:
+        with tempfile.TemporaryDirectory(dir=RUNTIME_TMP) as temporary:
             profile = Path(temporary)
             (profile / "DevToolsActivePort").write_text("9222\n/devtools/browser/id\n")
             for index in range(80):
@@ -225,7 +227,7 @@ class LegacyBrowserIsolationTests(unittest.TestCase):
 
 class OfflineMaterializerTests(unittest.TestCase):
     def setUp(self) -> None:
-        self.base = Path(tempfile.mkdtemp(dir="/Volumes/Daten/Projekte/BrandKit/.runtime/tmp"))
+        self.base = Path(tempfile.mkdtemp(dir=RUNTIME_TMP))
         self.addCleanup(runtime.remove_partial_tree, self.base)
 
     def _fixture(self, *, member_name: str = "package/cli.js", package_name: str = "example-cli",
