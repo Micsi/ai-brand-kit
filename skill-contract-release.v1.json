@@ -103,7 +103,7 @@
     },
     {
       "path": "scripts/validate_brandkit_skills.py",
-      "sha256": "0af8dbac501f4e084693815f43a411af95edf0b07170b352f0f5475bae857cbb"
+      "sha256": "f51c1a0e6c4be7c0c18d9a76f8176d8e588cbef11ae28d7fa337a2a99d2e5e45"
     },
     {
       "path": "fixtures/brandkit-skills/dry-runs.v1.json",

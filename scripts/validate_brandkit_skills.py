@@ -28,6 +28,8 @@ import yaml
 from yaml.events import AliasEvent
 
 ROOT = Path(__file__).resolve().parents[1]
+# Sidecar-Wurzel: der Fork liegt unter <sidecar>/code/ai-brand-kit; BRANDKIT_SIDECAR ueberschreibt.
+SIDECAR = Path(os.environ.get("BRANDKIT_SIDECAR", ROOT.parents[1]))
 CONTRACT = ROOT / "brandkit-skill-contract.v1.json"
 FIXTURES = ROOT / "fixtures/brandkit-skills/dry-runs.v1.json"
 COLLISION_FIXTURES = ROOT / "fixtures/brandkit-skills/collision-dry-runs.v1.json"
@@ -37,7 +39,7 @@ CANONICAL_SKILLS = [*CONTRACT_SKILLS, "brandkit-activate", "brandkit-affinity", 
 IMPECCABLE_COMMANDS = ["craft", "shape", "init", "document", "extract", "critique", "audit", "polish", "bolder", "quieter", "distill", "harden", "onboard", "animate", "colorize", "typeset", "layout", "delight", "overdrive", "clarify", "adapt", "optimize", "live"]
 IMPECCABLE_SOURCE = Path(os.environ.get(
     "BRANDKIT_IMPECCABLE_SOURCE",
-    "/Volumes/Daten/Projekte/BrandKit/external-sources/impeccable/.agents/skills/impeccable",
+    str(SIDECAR / "external-sources/impeccable/.agents/skills/impeccable"),
 ))
 RELEASE_MANIFEST = "skill-contract-release.v1.json"
 AFFINITY_TOOLCHAIN_MEMBERS = {
@@ -221,7 +223,7 @@ def _import_locator(root: Path, value: str) -> Any:
 def verified_impeccable_snapshot(root: Path, source_root: Path | None = None):
     """Copy descriptor-verified bytes from a materialization of the pinned Git tree."""
     source = source_root or Path(os.environ.get("BRANDKIT_IMPECCABLE_SOURCE", str(IMPECCABLE_SOURCE)))
-    checkout = Path("/Volumes/Daten/Projekte/BrandKit/external-sources/impeccable")
+    checkout = (SIDECAR / "external-sources/impeccable")
     verifier = _import_locator(root, "scripts/impeccable_adapter.py:verify_source_bytes")
     blobs = verifier(source, checkout)
     with tempfile.TemporaryDirectory(prefix="impeccable-verified-source-") as temporary:
@@ -413,7 +415,7 @@ def validate_real_impeccable_context_matrix(skill_root: Path = IMPECCABLE_SOURCE
                 product = f"# Product\n\n<!-- impeccable:product-schema 1 -->\n\n## Platform\n\n{platform}\n".encode()
                 try:
                     wrapper = _import_locator(root, "scripts/impeccable_adapter.py:init_defer")
-                    result = wrapper(project, product, skill_root, Path("/Volumes/Daten/Projekte/BrandKit/external-sources/impeccable"))
+                    result = wrapper(project, product, skill_root, (SIDECAR / "external-sources/impeccable"))
                     events = result["events"]
                     native_reads = [item["path"] for item in events if item["event"] == "read" and item["path"].startswith("reference/")]
                     expected_native = [] if platform == "web" else [f"reference/{platform}.md"] if platform != "adaptive" else ["reference/ios.md", "reference/android.md"]
@@ -738,7 +740,7 @@ def _verify_part1_snapshot(snapshot: Path, payload: dict[str, Any], owner_key: P
         if regular != expected_members or root_doc.get("member_count") != payload["part1_pass"]["members"]:
             raise ValueError("Part1 snapshot closed member set mismatch")
         snapshot_parent = Path(temporary) / "trusted"; snapshot_parent.mkdir(mode=0o700)
-        bootstrap = Path("/Volumes/Daten/Projekte/BrandKit/quality-loop/trusted-verifiers/brandkit-candidate-trust-v1.py")
+        bootstrap = (SIDECAR / "quality-loop/trusted-verifiers/brandkit-candidate-trust-v1.py")
         result = subprocess.run([
             sys.executable, str(bootstrap), "--expected-bootstrap-sha256", payload["part1_bootstrap_sha256"],
             "--evidence-root", str(evidence), "--root", root_rel, "--signature", signature_rel,
@@ -843,9 +845,9 @@ def validate_release_manifest(root: Path, *, expected_attestation_sha256: str | 
                     errors.append("external release evidence is missing")
                 elif payload.get("evidence_sha256") != sha256(evidence):
                     errors.append("release evidence differs from external attestation")
-                part1_root = Path("/Volumes/Daten/Projekte/BrandKit/quality-loop/evidence/base-part1-trust-f5-evidence-root.json")
-                part1_signature = Path("/Volumes/Daten/Projekte/BrandKit/quality-loop/evidence/base-part1-trust-f5-evidence-signature.json")
-                bootstrap = Path("/Volumes/Daten/Projekte/BrandKit/quality-loop/trusted-verifiers/brandkit-candidate-trust-v1.py")
+                part1_root = (SIDECAR / "quality-loop/evidence/base-part1-trust-f5-evidence-root.json")
+                part1_signature = (SIDECAR / "quality-loop/evidence/base-part1-trust-f5-evidence-signature.json")
+                bootstrap = (SIDECAR / "quality-loop/trusted-verifiers/brandkit-candidate-trust-v1.py")
                 if (payload["part1_root_sha256"] != sha256(part1_root)
                     or payload["part1_signature_sha256"] != sha256(part1_signature)
                     or payload["part1_bootstrap_sha256"] != sha256(bootstrap)):

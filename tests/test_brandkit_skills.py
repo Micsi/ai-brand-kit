@@ -111,7 +111,7 @@ def core_substitutions(source: str) -> list[str]:
 
 
 class BrandKitSkillContractTests(unittest.TestCase):
-    RELEASE_MANIFEST_SHA256 = "6fa9faa675321ec9fed805eb652872021859a96da03f99c12d079a53fa77f6f9"
+    RELEASE_MANIFEST_SHA256 = "5e29481903f74a5f20a0cd7cc9d5b532cb87ac4c94f4f0a3a3cb92303daff4fa"
     def test_publish_skill_pins_claude_provider_without_conflating_agent_discovery(self) -> None:
         skill = (ROOT / "skills/brandkit-publish/SKILL.md").read_text(encoding="utf-8")
         self.assertIn("Claude, Codex und Hermes rufen denselben `brandkit-publish`-Skill auf", skill)
