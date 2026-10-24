@@ -1,0 +1,42 @@
+{
+  "schema_version": "markdown-contract.v3",
+  "extends": {
+    "contract": "markdown-contract.v2",
+    "path": "markdown-contract.v2.json",
+    "sha256": "5e54a95b00e8b778384f5cf1bfbcdbe721136e6142b9b31b9e6ffa1fce868ba4",
+    "compatibility": "all-v2-documents-remain-valid-with-identical-ast-semantics"
+  },
+  "validator": {
+    "path": "scripts/markdown_contract_v3.py",
+    "base_validator": "scripts/markdown_contract.py",
+    "base_validator_unchanged": true
+  },
+  "additions": {
+    "code-fence": {
+      "node_type": "code",
+      "open": "^```(?P<language>[a-z0-9][a-z0-9+#._-]{0,23})?$",
+      "close": "^```$",
+      "placement": "document-level-only",
+      "content": "non-empty-bytes-kept-exactly-no-inline-interpretation-no-line-starting-with-backticks",
+      "humanizer_role": "code",
+      "admission": "document-types-that-allow-callout"
+    },
+    "strong": {
+      "token_type": "strong",
+      "syntax": "**text**",
+      "inner": "single-line-no-asterisk-not-starting-or-ending-with-whitespace",
+      "contexts": ["paragraph", "list-item"],
+      "children": "inline-tokens-of-the-same-context-without-links",
+      "delimiters": "protected-structural-bytes",
+      "admission": "document-types-that-allow-paragraph"
+    }
+  },
+  "unchanged_from_v2": {
+    "page-break": "::: page-break directly before an H2 or H3, after section content, if the document type sets layout.manual_page_break",
+    "unknown-code-fences": "every fence that is neither a diagram fence nor a v3 code fence stays rejected"
+  },
+  "publication": {
+    "status": "not-admitted",
+    "reason": "renderer-trust and humanizer publication gates are bound to markdown-contract.v2"
+  }
+}
