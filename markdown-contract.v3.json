@@ -1,5 +1,6 @@
 {
   "schema_version": "markdown-contract.v3",
+  "revision": 2,
   "extends": {
     "contract": "markdown-contract.v2",
     "path": "markdown-contract.v2.json",
@@ -25,10 +26,28 @@
       "token_type": "strong",
       "syntax": "**text**",
       "inner": "single-line-no-asterisk-not-starting-or-ending-with-whitespace",
-      "contexts": ["paragraph", "list-item"],
+      "contexts": [
+        "paragraph",
+        "list-item"
+      ],
       "children": "inline-tokens-of-the-same-context-without-links",
       "delimiters": "protected-structural-bytes",
       "admission": "document-types-that-allow-paragraph"
+    },
+    "heading-4": {
+      "node_type": "heading",
+      "level": 4,
+      "syntax": "#### text {#id}",
+      "placement": "document-level-after-an-h3-or-h4",
+      "text": "like-h1-h3-no-strong",
+      "renderer_bookmark_level": "below-h3"
+    },
+    "table-widths": {
+      "syntax": "::: table-widths <weight> <weight> ...",
+      "weights": "one-integer-1-to-99-per-column",
+      "placement": "line-directly-before-the-table-header",
+      "effect": "relative-column-widths-attached-as-table.widths",
+      "without_directive": "renderer-derives-widths-from-content"
     }
   },
   "unchanged_from_v2": {
@@ -38,5 +57,9 @@
   "publication": {
     "status": "not-admitted",
     "reason": "renderer-trust and humanizer publication gates are bound to markdown-contract.v2"
+  },
+  "revisions": {
+    "1": "code-fence, strong",
+    "2": "heading-4, table-widths (backward compatible: every revision-1 document keeps its AST)"
   }
 }

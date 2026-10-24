@@ -42,6 +42,7 @@ class ContractFile(unittest.TestCase):
         self.assertEqual("markdown-contract.v3", contract["schema_version"])
         self.assertEqual(mc.sha((ROOT / "markdown-contract.v2.json").read_bytes()), contract["extends"]["sha256"])
         self.assertEqual("markdown-contract.v2", contract["extends"]["contract"])
+        self.assertEqual(2, contract["revision"])
 
     def test_v2_pins_stay_byte_identical(self):
         self.assertEqual("5e54a95b00e8b778384f5cf1bfbcdbe721136e6142b9b31b9e6ffa1fce868ba4", mc.sha((ROOT / "markdown-contract.v2.json").read_bytes()))
@@ -142,6 +143,51 @@ class Validate(unittest.TestCase):
     def test_run_validate_returns_v3_ast(self):
         ast = v3.run_validate(FIXTURE, None, ASSET_ROOT, False, None)
         self.assertEqual("markdown-contract.v3", ast["contract"])
+
+
+class HeadingFour(unittest.TestCase):
+    def test_h4_after_h3_is_a_level_four_heading(self):
+        ast = parse(with_block("### Oben {#oben}\n\nText.\n\n#### Unten {{number:metric-value|42 %}} {#unten}\n\nMehr Text.\n"))
+        h4 = next(n for n in ast["children"] if n.get("id") == "unten")
+        self.assertEqual(("heading", 4), (h4["type"], h4["level"]))
+        self.assertIn("{{number:metric-value|42 %}}", h4["text"])
+
+    def test_h4_line_is_protected_and_link_target(self):
+        source = with_block("### Oben {#oben}\n\n#### Unten {#unten}\n\nSiehe [unten](#unten).\n"); ast = parse(source)
+        data = source.encode(); start = data.index(b"#### Unten")
+        seg = next(s for s in ast["humanizer_segments"]["partition"] if s["start_byte"] <= start < s["end_byte"])
+        self.assertEqual("protected", seg["classification"])
+
+    def test_h4_needs_a_preceding_h3_and_h5_stays_forbidden(self):
+        for block in ("#### Allein {#allein}\n", "### Oben {#oben}\n\n##### Fuenf {#fuenf}\n", "::: {.note #n2 title=\"N\"}\n#### In Kasten {#ik}\n:::\n"):
+            with self.subTest(block=block), self.assertRaises(mc.ContractError):
+                parse(with_block(block, before="## Umfang {#scope}") if "Allein" not in block else FIXTURE.read_text().replace("## Kurzfassung {#executive-summary}\n", "## Kurzfassung {#executive-summary}\n\n" + block, 1))
+
+
+class TableWidths(unittest.TestCase):
+    TABLE = "| Schwere | Befund | Risiko |\n| --- | --- | --- |\n| Hoch | Installer | Sehr langer Text |\n"
+
+    def test_widths_attach_to_the_following_table(self):
+        ast = parse(with_block("::: table-widths 1 3 6\n" + self.TABLE))
+        table = next(n for n in ast["children"] if n["type"] == "table" and n["headers"][0] == "Schwere")
+        self.assertEqual([1, 3, 6], table["widths"])
+
+    def test_table_without_directive_has_no_widths(self):
+        ast = parse(with_block(self.TABLE))
+        table = next(n for n in ast["children"] if n["type"] == "table" and n["headers"][0] == "Schwere")
+        self.assertNotIn("widths", table)
+
+    def test_invalid_widths_are_rejected(self):
+        for block in ("::: table-widths 1 3\n" + TableWidths.TABLE, "::: table-widths 1 3 0\n" + TableWidths.TABLE,
+                      "::: table-widths 1 3 6\n\n" + TableWidths.TABLE, "::: table-widths 1 3 6\nText.\n", "::: table-widths\n" + TableWidths.TABLE):
+            with self.subTest(block=block), self.assertRaises(mc.ContractError):
+                parse(with_block(block))
+
+    def test_directive_bytes_are_protected(self):
+        source = with_block("::: table-widths 1 3 6\n" + self.TABLE); ast = parse(source)
+        start = source.encode().index(b"::: table-widths")
+        seg = next(s for s in ast["humanizer_segments"]["partition"] if s["start_byte"] <= start < s["end_byte"])
+        self.assertEqual("protected", seg["classification"])
 
 
 if __name__ == "__main__":

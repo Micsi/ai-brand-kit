@@ -6,6 +6,9 @@ v3 adds two elements and changes nothing else:
 * Code fences (```` ```lang ```` ... ```` ``` ````) at document level. The
   content is kept byte-exact and is never interpreted.
 * Strong emphasis (``**text**``) in paragraphs and list items.
+* H4 headings (``#### text {#id}``) after an H3 (revision 2).
+* ``::: table-widths w1 w2 ...`` directly before a table: relative column
+  weights for renderers (revision 2).
 
 The v2 validator (scripts/markdown_contract.py) is hash-pinned by the renderer
 lock, the skill release and embedded copies. This module therefore imports it
@@ -32,6 +35,9 @@ CONTRACT_SCHEMA = "markdown-contract.v3.schema.json"
 
 FENCE_OPEN_RE = re.compile(r"```(?P<language>[a-z0-9][a-z0-9+#._-]{0,23})?")
 STRONG_RE = re.compile(r"\*\*(?=[^\s*])(?P<inner>[^*\r\n]*?[^\s*])\*\*")
+H4_RE = re.compile(r"####\s+(?P<text>.+?)\s+\{#(?P<id>" + mc.ID + r")\}\s*")
+TABLE_WIDTHS_RE = re.compile(r"::: table-widths(?P<weights>(?: [1-9][0-9]?){2,12})")
+TABLE_SEPARATOR = r"\s*\|?\s*:?-{3,}:?\s*(?:\|\s*:?-{3,}:?\s*)+\|?\s*"
 
 
 def load_contract() -> dict[str, Any]:
@@ -44,15 +50,16 @@ def load_contract() -> dict[str, Any]:
 
 
 class Parser(mc.Parser):
-    """v2 parser plus code fences and strong emphasis."""
+    """v2 parser plus code fences, H4, table widths and strong emphasis."""
 
     def blocks(self, start: int, end: int, stop_directive: bool = False, container: str = "document") -> tuple[list[dict[str, Any]], int]:
         if container != "document" or stop_directive:
             return super().blocks(start, end, stop_directive, container)
-        fences = self._code_fences(start, end)
-        # Hide the fence lines from the v2 parser: it sees blank lines, which end
+        fences, headings, widths = self._scan(start, end)
+        # Hide the v3 lines from the v2 parser: it sees blank lines, which end
         # paragraphs, lists and tables exactly like a block boundary does.
-        saved = {k: self.lines[k] for open_, close in fences for k in range(open_, close + 1)}
+        hidden = [k for open_, close in fences for k in range(open_, close + 1)] + list(headings) + list(widths)
+        saved = {k: self.lines[k] for k in hidden}
         try:
             for k in saved:
                 self.lines[k] = "\n"
@@ -60,18 +67,29 @@ class Parser(mc.Parser):
         finally:
             for k, line in saved.items():
                 self.lines[k] = line
-        return self._insert_code(nodes, fences), i
+        return self._merge(nodes, fences, headings, widths), i
 
-    def _code_fences(self, start: int, end: int) -> list[tuple[int, int]]:
-        fences: list[tuple[int, int]] = []; i = start
+    def _scan(self, start: int, end: int) -> tuple[list[tuple[int, int]], dict[int, re.Match[str]], dict[int, list[int]]]:
+        fences: list[tuple[int, int]] = []; headings: dict[int, re.Match[str]] = {}; widths: dict[int, list[int]] = {}; i = start
         while i < end:
             line = self.lines[i].rstrip("\n")
             if line.startswith("```{"):
                 close = next((j for j in range(i + 1, end) if self.lines[j].rstrip("\n") == "```"), None)
                 i = end if close is None else close + 1; continue
+            if line.startswith("::: table-widths"):
+                match = TABLE_WIDTHS_RE.fullmatch(line)
+                if not match: raise mc.ContractError(f"line {i+1}: table-widths needs one weight 1-99 per column")
+                header = self.lines[i + 1].rstrip("\n") if i + 1 < end else ""
+                separator = self.lines[i + 2].rstrip("\n") if i + 2 < end else ""
+                if "|" not in header or not re.fullmatch(TABLE_SEPARATOR, separator):
+                    raise mc.ContractError(f"line {i+1}: table-widths must directly precede a table")
+                widths[i] = [int(x) for x in match.group("weights").split()]; i += 1; continue
             if line.startswith(":::") and line != "::: page-break":
                 close = next((j for j in range(i + 1, end) if self.lines[j].rstrip("\n") == ":::"), None)
                 i = end if close is None else close + 1; continue
+            heading = H4_RE.fullmatch(line)
+            if heading:
+                headings[i] = heading; i += 1; continue
             if FENCE_OPEN_RE.fullmatch(line):
                 close = next((j for j in range(i + 1, end) if self.lines[j].rstrip("\n") == "```"), None)
                 if close is None: raise mc.ContractError(f"line {i+1}: code fence is not closed")
@@ -80,10 +98,10 @@ class Parser(mc.Parser):
                     raise mc.ContractError(f"line {i+1}: code fence is not closed before the next fence line")
                 fences.append((i, close)); i = close + 1; continue
             i += 1
-        return fences
+        return fences, headings, widths
 
-    def _insert_code(self, nodes: list[dict[str, Any]], fences: list[tuple[int, int]]) -> list[dict[str, Any]]:
-        by_line = {}
+    def _merge(self, nodes: list[dict[str, Any]], fences: list[tuple[int, int]], headings: dict[int, re.Match[str]], widths: dict[int, list[int]]) -> list[dict[str, Any]]:
+        by_line: dict[int, tuple[int, dict[str, Any]]] = {}
         for number, (open_, close) in enumerate(fences, 1):
             ident = f"code-{number}"
             language = FENCE_OPEN_RE.fullmatch(self.lines[open_].rstrip("\n")).group("language")
@@ -92,14 +110,30 @@ class Parser(mc.Parser):
             self._record("code", ident, body, self.offsets[open_ + 1])
             self._record("directive", ident, self.lines[close], self.offsets[close])
             by_line[open_ + 1] = (close + 1, {"type": "code", "language": language, "text": body, "line": open_ + 1})
-        out: list[dict[str, Any]] = []; skip_until = 0
+        for k, match in headings.items():
+            text, ident = match.group("text"), match.group("id")
+            self._claim_id(ident, "H4")
+            self.inline(text, self.offsets[k] + match.start("text"), mutable_context=False)
+            self._record("directive", ident, self.lines[k], self.offsets[k])
+            by_line[k + 1] = (k + 1, {"type": "heading", "level": 4, "text": text, "id": ident, "line": k + 1})
+        for k in widths:
+            self._record("directive", "table-widths", self.lines[k], self.offsets[k])
+        out: list[dict[str, Any]] = []; skip_until = 0; level = 0
         for node in nodes:
             line = node.get("line", 0)
             if line in by_line and node["type"] == "blank":
-                skip_until, code = by_line.pop(line); out.append(code); continue
-            if node["type"] == "blank" and line <= skip_until: continue
+                skip_until, node = by_line.pop(line)
+            elif node["type"] == "blank" and line <= skip_until:
+                continue
+            if node["type"] == "heading":
+                if node["level"] == 4 and level < 3: raise mc.ContractError(f"line {node['line']}: H4 requires a preceding H3")
+                level = node["level"]
+            if node["type"] == "table" and node["line"] - 1 in [k + 1 for k in widths]:
+                weights = widths.pop(node["line"] - 2)
+                if len(weights) != len(node["headers"]): raise mc.ContractError(f"line {node['line'] - 1}: table-widths needs one weight per column")
+                node["widths"] = weights
             out.append(node)
-        if by_line: raise mc.ContractError("internal error: code fence lost during parsing")
+        if by_line or widths: raise mc.ContractError("internal error: v3 element lost during parsing")
         return out
 
     def inline(self, text: str, char_start: int, *, mutable_context: bool = True) -> list[dict[str, Any]]:
