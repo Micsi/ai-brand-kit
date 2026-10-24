@@ -14,6 +14,7 @@ import io
 import json
 import os
 import pathlib
+import re
 import signal
 import shutil
 import socket
@@ -26,6 +27,48 @@ import uuid
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 LOCK_PATH = ROOT / "toolchain/toolchain.lock.json"
 HASH = set("0123456789abcdef")
+# Artefaktpfade im Lock stehen relativ zu einer benannten Wurzel, damit das Lock
+# keine persoenlichen absoluten Pfade traegt. Absolute Pfade bleiben fuer
+# Laufzeitkopien und Testdatensaetze zulaessig.
+ARTIFACT_PATH_RE = re.compile(r"\$\{(BRANDKIT_SIDECAR|HOME)\}/(.+)")
+
+
+def artifact_roots() -> dict[str, pathlib.Path]:
+    """BRANDKIT_SIDECAR: Umgebung oder Fork-Lage <sidecar>/code/ai-brand-kit; HOME: Benutzerverzeichnis."""
+    return {"BRANDKIT_SIDECAR": pathlib.Path(os.environ.get("BRANDKIT_SIDECAR") or ROOT.parents[1]),
+            "HOME": pathlib.Path(os.environ.get("HOME") or pathlib.Path.home())}
+
+
+def _artifact_relative(value: object, label: str) -> tuple[str, list[str]] | None:
+    """Syntaxpruefung ohne Dateisystemzugriff. None bedeutet: absoluter Pfad."""
+    if not isinstance(value, str) or not value or "\0" in value:
+        raise ToolchainError(f"artifact path is invalid: {label}")
+    match = ARTIFACT_PATH_RE.fullmatch(value)
+    if match is None:
+        if not pathlib.PurePosixPath(value).is_absolute():
+            raise ToolchainError(f"artifact path is relative without a root token: {label}")
+        return None
+    relative = match.group(2)
+    parts = relative.split("/")
+    if "\\" in relative or any(part in ("", ".", "..") for part in parts):
+        raise ToolchainError(f"artifact path leaves its root: {label}")
+    return match.group(1), parts
+
+
+def artifact_path(value: object, label: str = "artifact") -> pathlib.Path:
+    """Lock-Pfad -> Dateisystempfad. Ein Symlink darf die Wurzel nicht verlassen."""
+    relative = _artifact_relative(value, label)
+    if relative is None:
+        return pathlib.Path(value)
+    token, parts = relative
+    root = artifact_roots()[token]
+    if not root.is_absolute():
+        raise ToolchainError(f"artifact root is not absolute: {token}")
+    path = root.joinpath(*parts)
+    real_root, real = os.path.realpath(root), os.path.realpath(path)
+    if os.path.commonpath([real_root, real]) != real_root:
+        raise ToolchainError(f"artifact path escapes its root through a link: {label}")
+    return path
 
 
 class ToolchainError(RuntimeError):
@@ -192,13 +235,12 @@ def validate_lock_structure(path: pathlib.Path = LOCK_PATH) -> tuple[dict, dict[
         closed(record, required, f"artifact {name}")
         if record["kind"] != expected_kinds[name]:
             raise ToolchainError(f"artifact kind differs: {name}")
-        artifact = pathlib.Path(record["path"])
-        if not artifact.is_absolute():
-            raise ToolchainError(f"artifact path is relative: {name}")
+        artifact_form = _artifact_relative(record["path"], name)
         digest(record["sha256"], f"artifact {name}")
         if "manifest" in record:
-            manifest = pathlib.Path(record["manifest"])
-            if not manifest.is_absolute() or manifest.parent != artifact:
+            manifest_form = _artifact_relative(record["manifest"], f"{name} manifest")
+            if ((artifact_form is None) != (manifest_form is None)
+                    or pathlib.PurePosixPath(record["manifest"]).parent != pathlib.PurePosixPath(record["path"])):
                 raise ToolchainError(f"artifact manifest path binding differs: {name}")
             digest(record["manifest_sha256"], f"{name} manifest")
     runtime_fields = {"schema_version", "component", "relocation_token", "format", "source_digest", "package_digest",
@@ -1113,7 +1155,7 @@ def _manifest_members(raw: bytes, label: str) -> dict[str, dict]:
 
 def _sequential_artifact_snapshot(name: str, record: dict, snapshot_parent: pathlib.Path | None,
                                   fault_hook=None) -> dict:
-    source = pathlib.Path(record["path"])
+    source = artifact_path(record["path"], name)
     before = _source_identity(source)
     if fault_hook: fault_hook("after_precheck", name, source)
     consumed = snapshot_parent is not None
@@ -1152,7 +1194,7 @@ def _sequential_artifact_snapshot(name: str, record: dict, snapshot_parent: path
     else:
         if source.name != digest(record["sha256"], f"artifact {name}") or "manifest" not in record:
             raise ToolchainError(f"content-addressed artifact identity differs: {name}")
-        manifest_path = pathlib.Path(record["manifest"])
+        manifest_path = artifact_path(record["manifest"], f"{name} manifest")
         if manifest_path.parent != source or manifest_path.is_symlink() or not manifest_path.is_file():
             raise ToolchainError(f"artifact manifest path differs: {name}")
         manifest_raw = manifest_path.read_bytes()
@@ -1192,7 +1234,7 @@ def _sequential_artifact_snapshot(name: str, record: dict, snapshot_parent: path
         snapshot_record = {"path":str(target.resolve()), "inventory":inventory,
                            "tree_digest":hashlib.sha256(json.dumps(inventory, sort_keys=True,
                            separators=(",", ":")).encode()).hexdigest(), "files":files, "bytes":total}
-    return {"source_path":str(source), "source_identity_before":hashlib.sha256(json.dumps(before,
+    return {"source_path":record["path"], "source_identity_before":hashlib.sha256(json.dumps(before,
             sort_keys=True, separators=(",", ":")).encode()).hexdigest(),
             "source_identity_after":hashlib.sha256(json.dumps(after, sort_keys=True,
             separators=(",", ":")).encode()).hexdigest(), "files":files, "bytes":total,
@@ -1345,21 +1387,21 @@ def validate_lock(path: pathlib.Path = LOCK_PATH) -> tuple[dict, dict[str, dict]
     for name, record in lock["artifacts"].items():
         if name.startswith("runtime_"):
             component = name.removeprefix("runtime_").replace("_", "-")
-            runtime_archives.inspect_archive(pathlib.Path(record["path"]), lock["runtime_archives"][component])
+            runtime_archives.inspect_archive(artifact_path(record["path"], name), lock["runtime_archives"][component])
         else:
             verify_artifact_record(record, name)
     return lock, components
 
 
 def verify_artifact_record(record: dict, label: str) -> None:
-    path = pathlib.Path(record["path"])
+    path = artifact_path(record["path"], label)
     if path.is_symlink() or not path.exists():
         raise ToolchainError(f"artifact disappeared or became linked: {label}")
     if path.is_file():
         if sha(path) != record["sha256"]:
             raise ToolchainError(f"artifact changed: {label}")
         return
-    manifest = pathlib.Path(record["manifest"])
+    manifest = artifact_path(record["manifest"], f"{label} manifest")
     if manifest.parent != path or manifest.is_symlink() or sha(manifest) != record["manifest_sha256"]:
         raise ToolchainError(f"artifact manifest changed: {label}")
     verify_closed_artifact_directory(path, manifest)
@@ -1367,7 +1409,7 @@ def verify_artifact_record(record: dict, label: str) -> None:
 
 def immutable_snapshot(record: dict, destination: pathlib.Path, label: str) -> pathlib.Path:
     """Copy verified bytes once, recheck the source, then consume only the copy."""
-    source = pathlib.Path(record["path"])
+    source = artifact_path(record["path"], label)
     verify_artifact_record(record, label)
     holder = destination / label
     holder.mkdir(mode=0o700)
@@ -1422,7 +1464,7 @@ def content_hash(root: pathlib.Path) -> str:
 
 
 def verify_manifested_directory(root: pathlib.Path, record: dict, schema_version: str) -> None:
-    manifest = load(pathlib.Path(record["manifest"]))
+    manifest = load(artifact_path(record["manifest"], "artifact manifest"))
     closed(manifest, {"schema_version", "files"}, "artifact manifest")
     if manifest["schema_version"] != schema_version:
         raise ToolchainError("artifact manifest schema differs")

@@ -1,7 +1,7 @@
 {
   "schema_version": "mermaid-svg-toolchain.v1",
   "platform": "darwin-arm64",
-  "python": {"version":"3.12.12","executable":"/opt/homebrew/bin/python3.12","sha256":"51041dcef59a872d4e411dfd26f6264f70bd67294bebbe52a707490726f0d1a6"},
+  "python": {"version":"3.12.15","executable":"/opt/homebrew/bin/python3.12","sha256":"c4e9f06cb179ae4b3728c748990fbbef7f30580ea42c0eb9c702ebc7c7861c89"},
   "package_lock": {"path":"toolchain/mermaid-svg/package-lock.json","sha256":"95105169465de88e690ca0c23deb0feb3f12ab919c64e0af3d142f5428b9ae5c","lockfile_version":3,"package_count":269,"root_package":"@mermaid-js/mermaid-cli","root_version":"11.9.0","transitive_integrity_count":268},
   "package_json": {"path":"toolchain/mermaid-svg/package.json","sha256":"2101e2cb29232454c856b8d9abe4df423b01bf7936ee3aa263a1c9092ebec235"},
   "artifact_bundle": {"path":"/Volumes/Daten/Projekte/BrandKit/external-artifacts/mermaid-svg/3dcbf4ebfcbe0fb08e5b7261dbabf72b56c62517c875bbacd7b9dc75c2971120","tree_sha256":"3dcbf4ebfcbe0fb08e5b7261dbabf72b56c62517c875bbacd7b9dc75c2971120","manifest_sha256":"00c687014b79d617b5d126e3397daebb2dd14a3703034ae8085659ab478f23bb","file_count":550},

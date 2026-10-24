@@ -225,11 +225,11 @@ def build_component(name, output, work):
     work.mkdir(parents=True); root=work/name
     try:
       if name=="humanizer":
-        root.mkdir();st.build_humanizer(root,lock,pathlib.Path(lock["artifacts"]["humanizer_source"]["path"]),pathlib.Path(lock["artifacts"]["humanizer_wheelhouse"]["path"]));st.relocate_humanizer_install(root,root,TOKEN/name)
+        root.mkdir();st.build_humanizer(root,lock,st.artifact_path(lock["artifacts"]["humanizer_source"]["path"]),st.artifact_path(lock["artifacts"]["humanizer_wheelhouse"]["path"]));st.relocate_humanizer_install(root,root,TOKEN/name)
       elif name=="pdf-home":
-        subprocess.run([str(st.ROOT/"toolchain/pdf-renderer/install-from-lock"),str(root),lock["artifacts"]["pdf_wheelhouse"]["path"],lock["artifacts"]["pdf_issuer_key"]["path"]],check=True,env={**os.environ,"PYTHONDONTWRITEBYTECODE":"1"});st.relocate_pdf_install(root,root,TOKEN/name)
-      elif name=="mermaid": subprocess.run([str(st.ROOT/"toolchain/mermaid-svg/install-offline"),str(root),lock["artifacts"]["mermaid_bundle"]["path"]],check=True)
-      else: subprocess.run([str(st.ROOT/"toolchain/graphviz-svg/install-offline"),str(root),lock["artifacts"]["graphviz_bundle"]["path"]],check=True)
+        subprocess.run([str(st.ROOT/"toolchain/pdf-renderer/install-from-lock"),str(root),str(st.artifact_path(lock["artifacts"]["pdf_wheelhouse"]["path"])),str(st.artifact_path(lock["artifacts"]["pdf_issuer_key"]["path"]))],check=True,env={**os.environ,"PYTHONDONTWRITEBYTECODE":"1"});st.relocate_pdf_install(root,root,TOKEN/name)
+      elif name=="mermaid": subprocess.run([str(st.ROOT/"toolchain/mermaid-svg/install-offline"),str(root),str(st.artifact_path(lock["artifacts"]["mermaid_bundle"]["path"]))],check=True)
+      else: subprocess.run([str(st.ROOT/"toolchain/graphviz-svg/install-offline"),str(root),str(st.artifact_path(lock["artifacts"]["graphviz_bundle"]["path"]))],check=True)
       raw,manifest=tree_archive(root,exclude=(".agents/keys/brand-voice-pdf.key",) if name=="pdf-home" else ())
       reject_builder_root(raw,work)
       record={"schema_version":"brandkit-runtime-archive.v1","component":name,

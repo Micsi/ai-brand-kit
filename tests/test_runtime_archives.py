@@ -47,7 +47,7 @@ class RuntimeArchiveTests(unittest.TestCase):
   for name,record in lock["runtime_archives"].items():
    self.assertEqual(ra.bindings(lock,name),{key:record[key] for key in ("source_digest","package_digest","transform_digest")})
    artifact=lock["artifacts"]["runtime_"+name.replace("-","_")]
-   path=pathlib.Path(artifact["path"])
+   path=ra.st.artifact_path(artifact["path"])
    self.assertTrue(path.is_file());self.assertEqual(record["archive_size"],path.stat().st_size)
  def archive(self,base,entries,archive_format="ustar"):
   payloads={entry["path"]:entry.pop("data") for entry in entries if entry["type"]=="file"}

@@ -21,7 +21,7 @@
   },
   "python": {
     "implementation": "CPython",
-    "version": "3.12.12",
+    "version": "3.12.15",
     "platform": "macOS-arm64",
     "requirements_lock": "requirements-precise.lock.txt",
     "installer_flags": ["--only-binary=:all:", "--require-hashes"],

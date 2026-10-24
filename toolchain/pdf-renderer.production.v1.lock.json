@@ -37,7 +37,7 @@
     },
     "brand_resolver": {
       "path": "scripts/brand_package.py",
-      "sha256": "18cf212059dd9865d04abad5252b7b5778e776e8b3f80d63b43f7934773ee7ec"
+      "sha256": "834d5dd351bdb874413492dd5d0f75f17a8751991b5bdf14b7eb4df2c55d881d"
     },
     "graphviz_bundle_verifier": {
       "path": "toolchain/graphviz-svg/verify-bundle",
@@ -125,11 +125,11 @@
     },
     "mermaid_lock": {
       "path": "toolchain/mermaid-svg.v1.lock.json",
-      "sha256": "b31362934ac34a04bce7d700d85c92b6da0db6911e7a1eb719e9b9f03e7ffba7"
+      "sha256": "bcdeb5a1180f6a002f2db0433356e522bb044ed6971191497f6773d701da905a"
     },
     "mermaid_lock_schema": {
       "path": "schemas/mermaid-svg-toolchain.v1.schema.json",
-      "sha256": "b2d8f58ffdac367fbdb9c7e48370f3426dbab9508fa8e5857219131296792f05"
+      "sha256": "85fce82844a173c02d2761e0f74e521527c35bc5bfe4b4efae595d07709cd7a7"
     },
     "mermaid_linux_worker_entrypoint": {
       "path": "toolchain/mermaid-svg/linux-worker-entrypoint",
@@ -235,7 +235,7 @@
       "pdftotext_sha256": "c3eb5a97db48fcaeae84433b98fdf34c70a5502af3709a74475ca4aed29acb03",
       "version": "26.04.0"
     },
-    "python": "3.12.12"
+    "python": "3.12.15"
   },
   "schema_version": "pdf-renderer-lock.v1",
   "wheelhouse": {

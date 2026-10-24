@@ -6,12 +6,14 @@ import importlib.util
 import json
 import os
 import pathlib
+import sys
 import tempfile
 import tarfile
 import unittest
 from unittest import mock
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "scripts"))  # validate_lock_structure importiert runtime_archives
 SPEC = importlib.util.spec_from_file_location("h2_shared_toolchain", ROOT / "scripts/shared_toolchain.py")
 toolchain = importlib.util.module_from_spec(SPEC)
 assert SPEC.loader
@@ -274,7 +276,7 @@ class RunInputPreflightTests(unittest.TestCase):
 
     def test_structure_validation_does_not_open_external_artifact_paths(self) -> None:
         real_lock = json.loads((ROOT/"toolchain/toolchain.lock.json").read_text())
-        external = [pathlib.Path(record["path"]).resolve(strict=False) for record in real_lock["artifacts"].values()]
+        external = [toolchain.artifact_path(record["path"], name).resolve(strict=False) for name, record in real_lock["artifacts"].items()]
         original_open = pathlib.Path.open
         def guarded(path: pathlib.Path, *args, **kwargs):
             resolved = path.resolve(strict=False)
@@ -285,6 +287,54 @@ class RunInputPreflightTests(unittest.TestCase):
             lock, components = toolchain.validate_lock_structure()
         self.assertEqual(set(lock["artifacts"]), set(real_lock["artifacts"]))
         self.assertEqual(5, len(components))
+
+
+class ArtifactRootTests(unittest.TestCase):
+    """Lock-Pfade relativ zu ${BRANDKIT_SIDECAR} oder ${HOME}: kein Ausbruch, keine Link-Umgehung."""
+
+    def setUp(self) -> None:
+        self.tmp = tempfile.TemporaryDirectory()
+        base = pathlib.Path(self.tmp.name).resolve()
+        self.sidecar = base / "sidecar"; self.home = base / "home"; self.outside = base / "outside"
+        for path in (self.sidecar / "external-artifacts", self.home / ".agents/keys", self.outside):
+            path.mkdir(parents=True)
+        (self.sidecar / "external-artifacts/a.tar").write_bytes(b"a")
+        (self.outside / "secret").write_bytes(b"s")
+        env = mock.patch.dict(os.environ, {"BRANDKIT_SIDECAR": str(self.sidecar), "HOME": str(self.home)})
+        env.start(); self.addCleanup(env.stop); self.addCleanup(self.tmp.cleanup)
+
+    def test_tokens_resolve_against_their_root(self) -> None:
+        self.assertEqual(self.sidecar / "external-artifacts/a.tar", toolchain.artifact_path("${BRANDKIT_SIDECAR}/external-artifacts/a.tar"))
+        self.assertEqual(self.home / ".agents/keys/k.key", toolchain.artifact_path("${HOME}/.agents/keys/k.key"))
+
+    def test_absolute_paths_stay_for_runtime_copies(self) -> None:
+        self.assertEqual(self.outside / "secret", toolchain.artifact_path(str(self.outside / "secret")))
+
+    def test_escape_and_malformed_paths_fail(self) -> None:
+        for value in ("${BRANDKIT_SIDECAR}/../outside/secret", "${BRANDKIT_SIDECAR}/external-artifacts/../../outside/secret",
+                      "${BRANDKIT_SIDECAR}/./a", "${BRANDKIT_SIDECAR}//a", "${BRANDKIT_SIDECAR}/", "${BRANDKIT_SIDECAR}/a\\b",
+                      "${UNKNOWN}/a", "external-artifacts/a.tar", "~/a", ""):
+            with self.subTest(value=value), self.assertRaises(toolchain.ToolchainError):
+                toolchain.artifact_path(value)
+
+    def test_symlink_out_of_the_root_fails(self) -> None:
+        (self.sidecar / "external-artifacts/link").symlink_to(self.outside)
+        (self.sidecar / "external-artifacts/file-link").symlink_to(self.outside / "secret")
+        for value in ("${BRANDKIT_SIDECAR}/external-artifacts/link/secret", "${BRANDKIT_SIDECAR}/external-artifacts/file-link"):
+            with self.subTest(value=value), self.assertRaisesRegex(toolchain.ToolchainError, "link"):
+                toolchain.artifact_path(value)
+
+    def test_symlink_inside_the_root_is_allowed(self) -> None:
+        (self.sidecar / "inner").symlink_to(self.sidecar / "external-artifacts")
+        self.assertEqual(self.sidecar / "inner/a.tar", toolchain.artifact_path("${BRANDKIT_SIDECAR}/inner/a.tar"))
+
+    def test_real_lock_has_no_personal_absolute_artifact_paths(self) -> None:
+        lock = json.loads((ROOT / "toolchain/toolchain.lock.json").read_text())
+        for name, record in lock["artifacts"].items():
+            for field in ("path", "manifest"):
+                if field in record:
+                    with self.subTest(artifact=name, field=field):
+                        self.assertRegex(record[field], r"^\$\{(BRANDKIT_SIDECAR|HOME)\}/")
 
 
 if __name__ == "__main__":
