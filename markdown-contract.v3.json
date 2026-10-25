@@ -1,6 +1,6 @@
 {
   "schema_version": "markdown-contract.v3",
-  "revision": 2,
+  "revision": 3,
   "extends": {
     "contract": "markdown-contract.v2",
     "path": "markdown-contract.v2.json",
@@ -48,6 +48,20 @@
       "placement": "line-directly-before-the-table-header",
       "effect": "relative-column-widths-attached-as-table.widths",
       "without_directive": "renderer-derives-widths-from-content"
+    },
+    "running-title": {
+      "syntax": "::: running-title <text>",
+      "placement": "line-directly-before-an-h2-may-follow-page-break",
+      "text": "like-heading-text-protected-literals-allowed-no-bare-numbers",
+      "effect": "heading.running_title; renderers use it as running title from that page until the next one",
+      "without_directive": "document-title-as-before"
+    },
+    "page-note": {
+      "syntax": "reference [^name] inline (paragraph, list, heading, table cell); definition [^name]: Text as a document-level line",
+      "names": "id pattern of v2; a name that is a declared source keeps the v2 source footnote",
+      "validation": "every reference has exactly one definition and every definition at least one reference",
+      "node_type": "note",
+      "effect": "renderers set the text at the foot of the page of the first reference"
     }
   },
   "unchanged_from_v2": {
@@ -60,6 +74,7 @@
   },
   "revisions": {
     "1": "code-fence, strong",
-    "2": "heading-4, table-widths (backward compatible: every revision-1 document keeps its AST)"
+    "2": "heading-4, table-widths (backward compatible: every revision-1 document keeps its AST)",
+    "3": "running-title, page-note (backward compatible: every revision-2 document keeps its AST)"
   }
 }

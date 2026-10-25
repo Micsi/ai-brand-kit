@@ -9,6 +9,12 @@ v3 adds two elements and changes nothing else:
 * H4 headings (``#### text {#id}``) after an H3 (revision 2).
 * ``::: table-widths w1 w2 ...`` directly before a table: relative column
   weights for renderers (revision 2).
+* ``::: running-title Text`` directly before an H2: running title for the
+  footer from that page on (revision 3).
+* Page notes (revision 3): ``[^name]`` references anywhere inline (also in
+  headings and table cells) and ``[^name]: Text`` definitions at document
+  level, for names that are not declared sources. Declared sources keep the
+  v2 source footnote semantics.
 
 The v2 validator (scripts/markdown_contract.py) is hash-pinned by the renderer
 lock, the skill release and embedded copies. This module therefore imports it
@@ -36,6 +42,7 @@ CONTRACT_SCHEMA = "markdown-contract.v3.schema.json"
 FENCE_OPEN_RE = re.compile(r"```(?P<language>[a-z0-9][a-z0-9+#._-]{0,23})?")
 STRONG_RE = re.compile(r"\*\*(?=[^\s*])(?P<inner>[^*\r\n]*?[^\s*])\*\*")
 H4_RE = re.compile(r"####\s+(?P<text>.+?)\s+\{#(?P<id>" + mc.ID + r")\}\s*")
+RUNNING_TITLE_RE = re.compile(r"::: running-title (?P<text>\S.*?)\s*")
 TABLE_WIDTHS_RE = re.compile(r"::: table-widths(?P<weights>(?: [1-9][0-9]?){2,12})")
 TABLE_SEPARATOR = r"\s*\|?\s*:?-{3,}:?\s*(?:\|\s*:?-{3,}:?\s*)+\|?\s*"
 
@@ -55,10 +62,10 @@ class Parser(mc.Parser):
     def blocks(self, start: int, end: int, stop_directive: bool = False, container: str = "document") -> tuple[list[dict[str, Any]], int]:
         if container != "document" or stop_directive:
             return super().blocks(start, end, stop_directive, container)
-        fences, headings, widths = self._scan(start, end)
+        fences, headings, widths, running, notes = self._scan(start, end)
         # Hide the v3 lines from the v2 parser: it sees blank lines, which end
         # paragraphs, lists and tables exactly like a block boundary does.
-        hidden = [k for open_, close in fences for k in range(open_, close + 1)] + list(headings) + list(widths)
+        hidden = [k for open_, close in fences for k in range(open_, close + 1)] + list(headings) + list(widths) + list(running) + list(notes)
         saved = {k: self.lines[k] for k in hidden}
         try:
             for k in saved:
@@ -67,10 +74,11 @@ class Parser(mc.Parser):
         finally:
             for k, line in saved.items():
                 self.lines[k] = line
-        return self._merge(nodes, fences, headings, widths), i
+        return self._merge(nodes, fences, headings, widths, running, notes), i
 
-    def _scan(self, start: int, end: int) -> tuple[list[tuple[int, int]], dict[int, re.Match[str]], dict[int, list[int]]]:
-        fences: list[tuple[int, int]] = []; headings: dict[int, re.Match[str]] = {}; widths: dict[int, list[int]] = {}; i = start
+    def _scan(self, start: int, end: int) -> tuple[list[tuple[int, int]], dict[int, re.Match[str]], dict[int, list[int]], dict[int, re.Match[str]]]:
+        fences: list[tuple[int, int]] = []; headings: dict[int, re.Match[str]] = {}; widths: dict[int, list[int]] = {}
+        running: dict[int, re.Match[str]] = {}; notes: dict[int, re.Match[str]] = {}; i = start
         while i < end:
             line = self.lines[i].rstrip("\n")
             if line.startswith("```{"):
@@ -84,6 +92,16 @@ class Parser(mc.Parser):
                 if "|" not in header or not re.fullmatch(TABLE_SEPARATOR, separator):
                     raise mc.ContractError(f"line {i+1}: table-widths must directly precede a table")
                 widths[i] = [int(x) for x in match.group("weights").split()]; i += 1; continue
+            note = mc.FOOTNOTE_RE.fullmatch(line)
+            if note and note.group(1) not in self.sources:
+                notes[i] = note; i += 1; continue
+            if line.startswith("::: running-title"):
+                match = RUNNING_TITLE_RE.fullmatch(line)
+                if not match: raise mc.ContractError(f"line {i+1}: running-title needs a text")
+                following = mc.HEADING_RE.fullmatch(self.lines[i + 1].rstrip("\n")) if i + 1 < end else None
+                if not following or len(following.group(1)) != 2:
+                    raise mc.ContractError(f"line {i+1}: running-title must directly precede an H2")
+                running[i] = match; i += 1; continue
             if line.startswith(":::") and line != "::: page-break":
                 close = next((j for j in range(i + 1, end) if self.lines[j].rstrip("\n") == ":::"), None)
                 i = end if close is None else close + 1; continue
@@ -98,9 +116,10 @@ class Parser(mc.Parser):
                     raise mc.ContractError(f"line {i+1}: code fence is not closed before the next fence line")
                 fences.append((i, close)); i = close + 1; continue
             i += 1
-        return fences, headings, widths
+        return fences, headings, widths, running, notes
 
-    def _merge(self, nodes: list[dict[str, Any]], fences: list[tuple[int, int]], headings: dict[int, re.Match[str]], widths: dict[int, list[int]]) -> list[dict[str, Any]]:
+    def _merge(self, nodes: list[dict[str, Any]], fences: list[tuple[int, int]], headings: dict[int, re.Match[str]], widths: dict[int, list[int]],
+               running: dict[int, re.Match[str]], notes: dict[int, re.Match[str]]) -> list[dict[str, Any]]:
         by_line: dict[int, tuple[int, dict[str, Any]]] = {}
         for number, (open_, close) in enumerate(fences, 1):
             ident = f"code-{number}"
@@ -118,6 +137,18 @@ class Parser(mc.Parser):
             by_line[k + 1] = (k + 1, {"type": "heading", "level": 4, "text": text, "id": ident, "line": k + 1})
         for k in widths:
             self._record("directive", "table-widths", self.lines[k], self.offsets[k])
+        for k, match in notes.items():
+            ident, text = match.group(1), match.group(2)
+            if ident in self.footnote_defs: raise mc.ContractError(f"line {k+1}: duplicate footnote definition {ident}")
+            self.footnote_defs.add(ident)
+            self._record("directive", f"note-{ident}", self.lines[k][:match.start(2)], self.offsets[k])
+            inline = self.inline(text, self.offsets[k] + match.start(2), mutable_context=True)
+            by_line[k + 1] = (k + 1, {"type": "note", "id": ident, "text": text, "inline": inline, "line": k + 1})
+        titles: dict[int, str] = {}
+        for k, match in running.items():
+            self.inline(match.group("text"), self.offsets[k] + match.start("text"), mutable_context=False)
+            self._record("directive", "running-title", self.lines[k], self.offsets[k])
+            titles[k + 2] = match.group("text")
         out: list[dict[str, Any]] = []; skip_until = 0; level = 0
         for node in nodes:
             line = node.get("line", 0)
@@ -128,12 +159,13 @@ class Parser(mc.Parser):
             if node["type"] == "heading":
                 if node["level"] == 4 and level < 3: raise mc.ContractError(f"line {node['line']}: H4 requires a preceding H3")
                 level = node["level"]
+                if node["line"] in titles: node["running_title"] = titles.pop(node["line"])
             if node["type"] == "table" and node["line"] - 1 in [k + 1 for k in widths]:
                 weights = widths.pop(node["line"] - 2)
                 if len(weights) != len(node["headers"]): raise mc.ContractError(f"line {node['line'] - 1}: table-widths needs one weight per column")
                 node["widths"] = weights
             out.append(node)
-        if by_line or widths: raise mc.ContractError("internal error: v3 element lost during parsing")
+        if by_line or widths or titles: raise mc.ContractError("internal error: v3 element lost during parsing")
         return out
 
     def inline(self, text: str, char_start: int, *, mutable_context: bool = True) -> list[dict[str, Any]]:
@@ -169,6 +201,8 @@ def _v2_view(ast: dict[str, Any]) -> tuple[dict[str, Any], set[str]]:
             else: out.append(token)
         return out
     def node(value: dict[str, Any]) -> dict[str, Any]:
+        if value["type"] == "note":
+            return {"type": "footnote", "source_id": value["id"], "text": value["text"], "line": value["line"]}
         if value["type"] == "code":
             used.add("code")
             return {"type": "callout", "kind": "verbatim", "attrs": {}, "children": [{"type": "verbatim-text", "text": value["text"]}], "line": value["line"]}

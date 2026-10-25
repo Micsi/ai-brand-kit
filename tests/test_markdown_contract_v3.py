@@ -42,7 +42,7 @@ class ContractFile(unittest.TestCase):
         self.assertEqual("markdown-contract.v3", contract["schema_version"])
         self.assertEqual(mc.sha((ROOT / "markdown-contract.v2.json").read_bytes()), contract["extends"]["sha256"])
         self.assertEqual("markdown-contract.v2", contract["extends"]["contract"])
-        self.assertEqual(2, contract["revision"])
+        self.assertEqual(3, contract["revision"])
 
     def test_v2_pins_stay_byte_identical(self):
         self.assertEqual("5e54a95b00e8b778384f5cf1bfbcdbe721136e6142b9b31b9e6ffa1fce868ba4", mc.sha((ROOT / "markdown-contract.v2.json").read_bytes()))
@@ -188,6 +188,61 @@ class TableWidths(unittest.TestCase):
         start = source.encode().index(b"::: table-widths")
         seg = next(s for s in ast["humanizer_segments"]["partition"] if s["start_byte"] <= start < s["end_byte"])
         self.assertEqual("protected", seg["classification"])
+
+
+class RunningTitle(unittest.TestCase):
+    def test_running_title_attaches_to_the_following_h2(self):
+        ast = parse(with_block("::: running-title Technischer Teil {{number:metric-value|42 %}}", before="## Umfang {#scope}"))
+        scope = next(n for n in ast["children"] if n.get("id") == "scope")
+        self.assertEqual("Technischer Teil {{number:metric-value|42 %}}", scope["running_title"])
+
+    def test_running_title_may_follow_a_page_break(self):
+        ast = parse(with_block("::: page-break\n::: running-title Technischer Teil", before="## Umfang {#scope}"))
+        scope = next(n for n in ast["children"] if n.get("id") == "scope")
+        self.assertEqual("Technischer Teil", scope["running_title"])
+
+    def test_directive_bytes_are_protected(self):
+        source = with_block("::: running-title Technischer Teil", before="## Umfang {#scope}"); ast = parse(source)
+        start = source.encode().index(b"::: running-title")
+        seg = next(s for s in ast["humanizer_segments"]["partition"] if s["start_byte"] <= start < s["end_byte"])
+        self.assertEqual("protected", seg["classification"])
+
+    def test_invalid_running_titles_are_rejected(self):
+        for block, before in (("::: running-title\n", "## Umfang {#scope}"), ("::: running-title Text\n\n", "## Umfang {#scope}"),
+                              ("### Unter {#unter}\n\n::: running-title Text\n", "### Unter {#unter}\n"),
+                              ("::: running-title Teil 2\n", "## Umfang {#scope}"), ("::: running-title Text\nAbsatz.\n", "## Umfang {#scope}")):
+            with self.subTest(block=block), self.assertRaises(mc.ContractError):
+                source = with_block(block, before=before) if not block.startswith("###") else with_block("::: running-title Text\n### Unter {#unter}\n\nText.\n")
+                parse(source)
+
+
+class PageNotes(unittest.TestCase):
+    NOTES = ("### Oben {#oben}\n\nText mit Verweis.[^hinweis-a]\n\n#### Unten mit Stern[^hinweis-b] {#unten}\n\n"
+             "| Spalte | Wert |\n| --- | --- |\n| Zelle[^hinweis-c] | x |\n\n"
+             "[^hinweis-a]: Erste Fussnote.\n\n[^hinweis-b]: Zweite Fussnote mit {{number:metric-value|42 %}}.\n\n[^hinweis-c]: Dritte Fussnote.\n")
+
+    def test_page_notes_are_nodes_and_refs_resolve(self):
+        ast = parse(with_block(self.NOTES))
+        notes = [n for n in ast["children"] if n["type"] == "note"]
+        self.assertEqual(["hinweis-a", "hinweis-b", "hinweis-c"], [n["id"] for n in notes])
+        self.assertEqual("Erste Fussnote.", notes[0]["inline"][0]["text"])
+        source_footnotes = [n for n in ast["children"] if n["type"] == "footnote"]
+        self.assertEqual(["source-one"], [n["source_id"] for n in source_footnotes])
+
+    def test_missing_definition_reference_or_duplicate_is_rejected(self):
+        for block in ("Text.[^fehlt-a]\n", "[^ohne-verweis]: Text.\n",
+                      "Text.[^doppelt]\n\n[^doppelt]: Eins.\n\n[^doppelt]: Zwei.\n"):
+            with self.subTest(block=block), self.assertRaises(mc.ContractError):
+                parse(with_block(block))
+
+    def test_note_prefix_is_protected_and_text_is_prose(self):
+        source = with_block(self.NOTES); ast = parse(source); data = source.encode()
+        start = data.index(b"[^hinweis-a]: ")
+        seg = next(s for s in ast["humanizer_segments"]["partition"] if s["start_byte"] <= start < s["end_byte"])
+        self.assertEqual("protected", seg["classification"])
+        text = data.index(b"Erste Fussnote.")
+        seg = next(s for s in ast["humanizer_segments"]["partition"] if s["start_byte"] <= text < s["end_byte"])
+        self.assertEqual("mutable", seg["classification"])
 
 
 if __name__ == "__main__":
